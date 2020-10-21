@@ -551,12 +551,16 @@ class Transactions extends MX_Controller {
 
                 "branch_id" => $this->session->userdata['loggedin']['branch_id']
             );
-            
+
+            $wheres     =   array(
+
+                "status" => "1"
+            );
 
             //Block List
             $paddycollection['blocks']  =   $this->Paddy->f_get_particulars("md_block",NULL,$where, 0);
 	
-            $paddycollection['banks']  =   $this->Paddy->f_get_particulars("md_paddy_bank",NULL,NULL, 0);
+            $paddycollection['banks']  =   $this->Paddy->f_get_particulars("md_paddy_bank",NULL,$wheres, 0);
 
             $this->load->view('post_login/main');
             $this->load->view("paddycollection/add_fle", $paddycollection);
@@ -1442,7 +1446,9 @@ class Transactions extends MX_Controller {
         $bulk_trans_id = $data["2"];
         $valid=0;
 
-        $paddy_data  = $this->Paddy->coll_received($soc_id,$trans_dt,$bulk_trans_id);
+        $paddy_data    = $this->Paddy->coll_received($soc_id,$trans_dt,$bulk_trans_id);
+        $paddy_forwad  = $this->Paddy->coll_forward($soc_id,$trans_dt,$bulk_trans_id);
+
 
         $data_array = array(
 
@@ -1465,11 +1471,32 @@ class Transactions extends MX_Controller {
                 "created_dt"    =>  date('Y-m-d h:i:s')
 
             );
-        
 
-        $data  = $this->Paddy->f_ifsccode($trans_dt,$bulk_trans_id,$soc_id);
+            foreach($paddy_forwad as $row){
+                        
+                    $dataf[] = array(
 
-        $datas = $this->Paddy->f_transcheck($trans_dt,$bulk_trans_id,$soc_id);
+                    'forward_dt'              =>  date('Y-m-d h:i:s'),
+                    'forward_bulk_trans_id'   =>  $row->forward_bulk_trans_id,
+                    'forward_trans_id'        =>  $row->forward_trans_id,
+                    'ifsc_code'               =>  $row->ifsc_code,
+                    'acc_no'                  =>  $row->acc_no,
+                    "forward_sl"              =>  $row->book_no,
+                    "bank_id"                 =>  $row->bank_sl_no,
+                    "kms_id"                  =>  $this->session->userdata['loggedin']['kms_id']
+                
+                     );                  
+                }  
+       
+
+        $data     = $this->Paddy->f_ifsccode($trans_dt,$bulk_trans_id,$soc_id);
+
+        $reg_qty  = $this->Paddy->f_regno_amt($trans_dt,$bulk_trans_id,$soc_id);
+
+        $regvalid = 0;
+
+        $qtyvalid = 0;
+
 
        foreach( $data as $value ) {
                   
@@ -1480,32 +1507,66 @@ class Transactions extends MX_Controller {
                  }
         }
 
-        if($datas == '0'){
+        foreach($reg_qty as $reqty ) {
 
-
-           if($valid=='0' ){
-            $this->Paddy->f_forward_paddycollection($trans_dt,$bulk_trans_id,$soc_id);
-
-                $this->Paddy->f_insert('td_received', $data_array);
-            echo "<script>
-                alert('Procurement data forwarded successfully');
-                window.location.href='f_paddycollection';
-                </script>";
-
-           }else{
-
-            echo "<script>
-                alert('Procurement data Not forwarded Some Problem In IFSC CODE');
-                window.location.href='f_paddycollection';
-                </script>";
-             }
-
-        }else{
-               echo "<script>
-                alert('Procurement data Not forwarded Some Problem In File Uploading');
-                window.location.href='f_paddycollection';
-                </script>";
+                $query = $this->db->get_where('td_farmer_reg', array('reg_no' => $reqty->reg_no))->num_rows();
+                  
+                 if($query == "0"){
+                    $regvalid = $regvalid+1;
+                 }else{
+                    $regvalid = $regvalid+0;
+                 }
+                 if($reqty->quantity > "90"){
+                    $qtyvalid = $qtyvalid+1;
+                 }else{
+                    $qtyvalid = $qtyvalid+0;
+                 }
         }
+
+
+           if($regvalid =='0'){
+
+
+                        if($qtyvalid == '0'){
+
+
+                            if($valid=='0'){
+
+                                $this->Paddy->f_forward_paddycollection($trans_dt,$bulk_trans_id,$soc_id);
+
+                                $this->Paddy->f_insert_multiple('td_collections_forward', $dataf);
+
+                                $this->Paddy->f_insert('td_received', $data_array);
+                                 echo "<script>
+                                alert('Procurement data forwarded successfully');
+                                window.location.href='f_paddycollection';
+                                </script>";
+                            }else{
+
+                                    echo "<script>alert('Procurement data Not forwarded Some Problem In IFSC Code');
+                                        window.location.href='f_paddycollection';
+                                      </script>";
+
+                                }
+
+                               
+                        }else{
+
+                                echo "<script>alert('Procurement data Not forwarded Some Problem In Quantity');
+                                        window.location.href='f_paddycollection';
+                                      </script>";
+
+                        }
+
+           
+
+            }else{
+
+            echo "<script>
+                alert('Procurement data Not forwarded Some Problem In Farmer Name');
+                window.location.href='f_paddycollection';
+                </script>";
+                }
      
 
    

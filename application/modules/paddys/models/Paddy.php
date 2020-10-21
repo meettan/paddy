@@ -982,7 +982,16 @@ class Paddy extends CI_Model {
          $kms_id=$this->session->userdata['loggedin']['kms_id'];
          $sql = "Select ifsc_code 
             from td_collections
-             where kms_id = $kms_id and soc_id = '$soc_id' and trans_dt = '$trans_dt' and bulk_trans_id = $bulk_trans_id";
+             where kms_id = $kms_id and soc_id = '$soc_id' and trans_dt = '$trans_dt' and bulk_trans_id = '$bulk_trans_id'";
+
+        $data = $this->db->query($sql);
+        return $data->result();
+     }
+     public function f_regno_amt($trans_dt,$bulk_trans_id,$soc_id){
+         $kms_id=$this->session->userdata['loggedin']['kms_id'];
+         $sql = "Select reg_no,quantity 
+            from td_collections
+             where kms_id = $kms_id and soc_id = '$soc_id' and trans_dt = '$trans_dt' and bulk_trans_id = '$bulk_trans_id'";
 
         $data = $this->db->query($sql);
         return $data->result();
@@ -1381,7 +1390,21 @@ class Paddy extends CI_Model {
  
      }
 
-   public function checkparticular($wqsc_no,$account_type){
+    public function coll_forward($soc_id,$trans_dt,$bulk_trans_id){
+       
+        $sql = "select forward_bulk_trans_id,forward_trans_id,ifsc_code,acc_no,book_no,bank_sl_no
+                 from   td_collections
+                 where soc_id = '$soc_id'
+                 and  trans_dt = '$trans_dt'
+                 and  bulk_trans_id = '$bulk_trans_id'";
+         
+         $data = $this->db->query($sql);
+        
+         return $data->result();
+ 
+    }
+
+    public function checkparticular($wqsc_no,$account_type){
 
 
         $sql="SELECT count(b.account_type) as cnt FROM td_fund_requisition a,td_fund_requisition_dtls b
