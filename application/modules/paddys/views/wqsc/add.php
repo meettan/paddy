@@ -130,7 +130,7 @@
 
                     <div class="col-sm-4">
 
-                        <select name="goodown_dist" id="goodown_dist" class="form-control required">
+                        <select name="goodown_dist" id="goodown_dist" class="form-control" required>
                             <option value="">Select</option>
                             <?php
                                 foreach($dist as $dlist){

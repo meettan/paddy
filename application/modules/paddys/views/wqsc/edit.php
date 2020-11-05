@@ -147,7 +147,7 @@
                                 foreach($dist as $dlist){
                             ?>
                                 <option value="<?php echo $dlist->district_code;?>" 
-                           <?php   if($dlist->district_code  == $wqsc_dtls->branch_id) echo "selected"; ?>      
+                           <?php   if($dlist->district_code  == $wqsc_dtls->goodown_dist) echo "selected"; ?>      
                                     ><?php echo $dlist->district_name;?></option>
                             <?php
                                 }

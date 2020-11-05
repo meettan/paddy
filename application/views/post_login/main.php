@@ -144,10 +144,14 @@
 
                         <a href="<?php echo site_url('paddys/transactions/f_neft_reconcil'); ?>">NEFT Reconciliation</a>
                         <a href="<?php echo site_url('paddys/transactions/f_singlecheque'); ?>">Cheque Detail</a>
-                        <?php if($this->session->userdata['loggedin']['user_id']=="bholanathm" && $this->session->userdata['loggedin']['ho_flag'] =="Y"){ ?>
+                           <?php 
+                        
+                        if($this->session->userdata['loggedin']['ho_flag'] =="Y"){
+                        if($this->session->userdata['loggedin']['user_id']=="bholanathm" || $this->session->userdata['loggedin']['user_id'] =="barund"){
+                        ?>
                         <a href="<?php echo site_url('payment/requisitionho'); ?>">Fund Requisition</a>
 
-                        <?php }?>
+                        <?php } }?>
                         <?php if($this->session->userdata['loggedin']['user_id']=="anirbanc" && $this->session->userdata['loggedin']['ho_flag'] =="Y"){ ?>
                         <a href="<?php echo site_url('payment/requisitionho2'); ?>">Fund Requisition</a>
 
