@@ -1392,11 +1392,14 @@ class Paddy extends CI_Model {
 
     public function coll_forward($soc_id,$trans_dt,$bulk_trans_id){
        
-        $sql = "select forward_bulk_trans_id,forward_trans_id,ifsc_code,acc_no,book_no,bank_sl_no
-                 from   td_collections
-                 where soc_id = '$soc_id'
-                 and  trans_dt = '$trans_dt'
-                 and  bulk_trans_id = '$bulk_trans_id'";
+        $sql =  "select a.trans_dt,a.reg_no,a.forward_bulk_trans_id,a.amount,a.forward_trans_id,a.ifsc_code,
+                 a.acc_no,a.book_no,a.bank_sl_no,b.farm_name,b.address,b.pin_no,b.mobile_number,b.email,c.bank_name
+                 from  td_collections a,td_farmer_reg b,md_paddy_bank c
+                 where a.reg_no         = b.reg_no
+                 and   a.bank_sl_no     = c.sl_no
+                 and   a.soc_id         = '$soc_id'
+                 and   a.trans_dt       = '$trans_dt'
+                 and   a.bulk_trans_id  = '$bulk_trans_id'";
          
          $data = $this->db->query($sql);
         

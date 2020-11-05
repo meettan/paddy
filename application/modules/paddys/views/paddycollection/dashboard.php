@@ -65,11 +65,7 @@
                                     data-placement="bottom"  title="Edit">
                                     <i class="fa fa-edit fa-2x" style="color: #007bff"></i>
                                 </a>
-                        <?php //} ?>    
-                     
-                     
-                           <!--      <a href="<?php //echo site_url("paddys/transactions/f_masterroll_print");?>?soc_id=<?=$padl_dtl->soc_id;?>/<?=$padl_dtl->trans_dt;?>/<?=$padl_dtl->bulk_trans_id;?>" 
-                                        data-toggle="tooltip" data-placement="bottom" title="Print Muster Roll"><i class="fa fa-print fa-3x" style="color: #007bff"></i></a>      -->                 
+                        <?php //} ?>                     
          
    
                               </td>
@@ -77,7 +73,7 @@
                                 <td> 
 
                                     <?php if($padl_dtl->status == 0 && $padl_dtl->chq_status == 'U') { ?> 
-                            <a href="<?php echo site_url("paddys/transactions/f_paddycol_forward");?>?soc_id=<?=$padl_dtl->soc_id;?>/<?=$padl_dtl->trans_dt;?>/<?=$padl_dtl->bulk_trans_id;?>"><button class="btn btn-primary" id="">Forward</button></a>
+                            <a href="<?php echo site_url("paddys/bankintegration/f_paddycol_forward");?>?soc_id=<?=$padl_dtl->soc_id;?>/<?=$padl_dtl->trans_dt;?>/<?=$padl_dtl->bulk_trans_id;?>"><button class="btn btn-primary" id="">Forward</button></a>
                                 <?php }elseif($padl_dtl->status == 1 && $padl_dtl->chq_status == 'U'){
 
                                   echo "Forwarded";
