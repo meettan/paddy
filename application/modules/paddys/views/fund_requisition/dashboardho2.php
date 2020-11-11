@@ -39,6 +39,7 @@
 
                     <tr>
                         <th>Sl No.</th>
+                        <th>District</th>
                         <th>Requisition No.</th>
                         <th>Wqsc/CS No.</th>
                         <th>Date</th>
@@ -64,6 +65,7 @@
 
                             <tr>
                                 <td><?php echo ++$i; ?></td>
+                                <td><?php echo get_district_name($p_dtls->branch_id); ?></td>
                                 <td><?php echo $p_dtls->req_no; ?></td>
                                 <td><?php echo $p_dtls->wqsc; ?></td>
                                 <td><?php echo date('d/m/Y', strtotime($p_dtls->req_dt)); ?></td>
@@ -75,7 +77,7 @@
 
                                      } elseif($p_dtls->approve2 == "1"){ 
 
-                                            echo '<span style="color:Green">Approved</span>';
+                                            echo '<span style="color:Green">Recommend</span>';
 
                                      } else{ echo '<span style="color:red">Hold</span>';} ?>
                                          
@@ -114,6 +116,7 @@
 
                     <tr>
                         <th>Sl No.</th>
+                        <th>District</th>
                         <th>Requisition No.</th>
                         <th>Wqsc/CS No.</th>
                         <th>Date</th>

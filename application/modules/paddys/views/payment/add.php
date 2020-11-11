@@ -123,13 +123,12 @@
 
                 </div>
 
-            
 
             </div>  
             
              <div class="form-group row">
 
-<!-- 
+        <!-- 
                 <label for="memo_no" class="col-sm-1 col-form-label">Memo No:</label>
 
                 <div class="col-sm-3">
@@ -405,18 +404,16 @@
  -->
             <table class="table">
                 <tfoot>
-                   <!--  <tr>
-                    
-                        <td colspan="7" style="text-align: right;">Total Amount:</td>
-                        <td><input type="text" class="no-border tot_payble" readonly></td>
-
-                    </tr> -->
+                  
 
                     <tr>
-                        <td colspan="7" style="text-align: right;" class="col-sm-10">Less Butta:</td>
+                        <td colspan="1" style="text-align:left;color:green" class="col-sm-3">Requisition Ammount:</td>
+                         <td colspan="1" class="col-sm-2" ><b id="allocated_amt"></b></td>
+                         <td colspan="5" style="text-align: right;" class="col-sm-5">Less Butta:</td>
                         <td><input type="text" name="qty_butta"  class="col-sm-2 form-control less_butta"></td>
                     </tr>
-                     <tr>
+
+                    <tr>
                         <td colspan="7" style="text-align: right;">Less Gunny Cut:</td>
                         <td><input type="text" class="form-control less_gunny" name="gunny_cut" value="0.00"></td>
                     </tr>
@@ -668,19 +665,36 @@
 
                 var string = '<table class="table" ><thead><tr><th>Particulars.</th><th>Rate/Qtls Paddy</th><th>Total Amount(Rs)</th><th>TDS Amount (Less)@2.00%</th><th>CGST (Add)@2.5%</th><th>SGST(Add)@2.5%</th><th>Claimed Amount(Rs)</th><th>Payable Amount(Rs) </th></tr></thead><tbody>';
                     
-                var price_sum    = 0;
+                var price_sum       = 0;
+
+                var price_sancation = 0;
+
 
                 $.each(JSON.parse(data), function( index, value ) {
 
-                    string += '<tr><td>' + value.param_name + '<input type="hidden" class="form-control" readonly name="particulars[]" value="' + value.sl_no +'"/></td><td>' + value.per_unit_rate + '<input type="hidden" class="form-control" readonly name="rate_per_qtls[]" value="' + value.per_unit_rate +'"/></td><td>' + value.total_amt + '<input type="hidden" class="form-control" readonly name="amounts[]" value="' + value.total_amt +'"/></td><td>' + value.tds_amt + '<input type="hidden" class="form-control" readonly name="tds_amount[]" value="' + value.tds_amt +'"/></td><td>' + value.cgst_amt + '<input type="hidden" class="form-control" readonly name="cgst[]" value="' + value.cgst_amt +'"/></td><td>' + value.sgst_amt + '<input type="hidden" class="form-control" readonly name="sgst[]" value="' + value.sgst_amt +'"/></td><td>' + value.claim_amt + '<input type="hidden" class="form-control" readonly name="claim_amt[]" value="' + value.claim_amt +'"/></td><td>' + value.payble_amt + '<input type="hidden" class="form-control" readonly name="paybel[]" value="' + value.payble_amt +'"/></td></tr>';
+
+                    price_sancation += parseFloat(value.payble_amt);
+
+                    if(value.payment_flag == "1"){
+
+                         string += '<tr><td>' + value.param_name + '<input type="hidden" class="form-control" readonly name="particulars[]" value="' + value.sl_no +'"/></td><td>' + value.per_unit_rate + '<input type="hidden" class="form-control" readonly name="rate_per_qtls[]" value="' + value.per_unit_rate +'"/></td><td>' + value.total_amt + '<input type="hidden" class="form-control" readonly name="amounts[]" value="' + value.total_amt +'"/></td><td>' + value.tds_amt + '<input type="hidden" class="form-control" readonly name="tds_amount[]" value="' + value.tds_amt +'"/></td><td>' + value.cgst_amt + '<input type="hidden" class="form-control" readonly name="cgst[]" value="' + value.cgst_amt +'"/></td><td>' + value.sgst_amt + '<input type="hidden" class="form-control" readonly name="sgst[]" value="' + value.sgst_amt +'"/></td><td>' + value.claim_amt + '<input type="hidden" class="form-control" readonly name="claim_amt[]" value="' + value.claim_amt +'"/></td><td>' + value.payble_amt + '<input type="hidden" class="form-control" readonly name="paybel[]" value="' + value.payble_amt +'"/></td></tr>';
 
                     price_sum    += parseFloat(value.payble_amt); 
+
+
+                    }
+
+                   
+
+
                      
                 });
-                        string +='<tr><td colspan="7">Total</td><td> <input type="text" class="form-control" id="tot_rice" value="'+price_sum+'" readonly></td> <td></td></tr></tbody></table>';
+                        string +='<tr><td colspan="7">Allocated Amt</td><td> <input type="text" class="form-control" id="tot_rice" value="'+price_sum+'" readonly></td> <td></td></tr></tbody></table>';
 
                     $('#bill_dtls').html(string);
                     $('.payble_amount').val(price_sum);
+                    $('#allocated_amt').html(price_sancation);
+                  
 
 
                 

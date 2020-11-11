@@ -493,16 +493,12 @@ $('#form').submit(function(event){
 
         $( document ).ajaxComplete(function() {
             $(".status").change(function(){
-              $(this)
-                  .parents('td')
-                  .next()
-                  .find('input')
-                  .prop('disabled', !$(this).is(":checked"));
-         $(this).closest('tr').find(".reg_no").prop('disabled', !$(this).is(":checked"));
-          $(this).closest('tr').find(".quantity").prop('disabled', !$(this).is(":checked"));
-                  $(this).closest('tr').find(".cheque_no").prop('disabled', !$(this).is(":checked"));
-                  $(this).closest('tr').find(".cheque_date").prop('disabled', !$(this).is(":checked"));
-                  $(this).closest('tr').find(".cheque_amount").prop('disabled', !$(this).is(":checked"));
+              $(this).parents('td').next().find('input').prop('disabled', !$(this).is(":checked"));
+              $(this).closest('tr').find(".reg_no").prop('disabled', !$(this).is(":checked"));
+              $(this).closest('tr').find(".quantity").prop('disabled', !$(this).is(":checked"));
+              $(this).closest('tr').find(".cheque_no").prop('disabled', !$(this).is(":checked"));
+              $(this).closest('tr').find(".cheque_date").prop('disabled', !$(this).is(":checked"));
+              $(this).closest('tr').find(".cheque_amount").prop('disabled', !$(this).is(":checked"));
           }); 
         
         });

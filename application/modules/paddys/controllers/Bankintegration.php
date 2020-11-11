@@ -16,6 +16,7 @@ class Bankintegration extends MX_Controller {
         //For Individual Functions
         $this->load->model('Paddy');
         $this->load->helper('paddyrate');
+        $this->load->helper('file');
 
         //For User's Authentication
         if(!isset($this->session->userdata['loggedin']['user_id'])){
@@ -32,15 +33,19 @@ class Bankintegration extends MX_Controller {
     public function f_paddycol_forward() {
         
 
-        $data=explode ("/", $this->input->get('soc_id'));
-        $soc_id = $data["0"];
-        $trans_dt = $data["1"];
-        $bulk_trans_id = $data["2"];
+        $soc_id = $this->input->get('soc_id');
+        $trans_dt = $this->input->get('trans_dt');
+        $forward_bulk_trans_id = base64_decode($this->input->get('forward_bulk_trans_id'));
+        $bulk_trans_id         = $this->input->get('bulk_trans_id');
         $valid=0;
 
         $paddy_data    = $this->Paddy->coll_received($soc_id,$trans_dt,$bulk_trans_id);
         $paddy_forwad  = $this->Paddy->coll_forward($soc_id,$trans_dt,$bulk_trans_id);
 
+
+        $farmer_data =  $this->Paddy->f_collection_details_icici($soc_id,$trans_dt,$forward_bulk_trans_id);
+
+      
 
         $data_array = array(
 
@@ -66,141 +71,47 @@ class Bankintegration extends MX_Controller {
 
             foreach($paddy_forwad as $row){
                         
-                    $dataf[] = array(
+                                $dataf[] = array(
 
-                    'forward_dt'              =>  date('Y-m-d h:i:s'),
-                    'forward_bulk_trans_id'   =>  $row->forward_bulk_trans_id,
-                    'forward_trans_id'        =>  $row->forward_trans_id,
-                    'ifsc_code'               =>  $row->ifsc_code,
-                    'acc_no'                  =>  $row->acc_no,
-                    "forward_sl"              =>  $row->book_no,
-                    "bank_id"                 =>  $row->bank_sl_no,
-                    "kms_id"                  =>  $this->session->userdata['loggedin']['kms_id']
+                                'forward_dt'              =>  date('Y-m-d h:i:s'),
+                                'forward_bulk_trans_id'   =>  $row->forward_bulk_trans_id,
+                                'forward_trans_id'        =>  $row->forward_trans_id,
+                                'ifsc_code'               =>  $row->ifsc_code,
+                                'acc_no'                  =>  $row->acc_no,
+                                "forward_sl"              =>  $row->book_no,
+                                "bank_id"                 =>  $row->bank_sl_no,
+                                "kms_id"                  =>  $this->session->userdata['loggedin']['kms_id']
+                            
+                                 );
+
+                }
+            
+
+            $data = '';
+            $slno = '0';
+
+           foreach($farmer_data as $row)
+                {
+
+                $i = ++$slno;
+              
+                $data .= $i.'|'.$row->forward_trans_id.'|'.$row->amount.'|'.'11'.'|'.'098301002773'.'|'.'THE WEST BENGAL STATE CO OPERATIVE MARKETING FEDERATION LTD(BENFED)'.'|'.'SMS'.'|'.'9674746908'.'|'.'THE WEST BENGAL STATE CO OPERATIVE MARKETING FEDERATION LTD(BENFED)'.'|'.$row->fifsc.'|'.'11'.'|'.$row->faccount.'|'.$row->farm_name.'|'.$row->bulk_id."\r\n";
+
+                }
+                               
+          
+            $path = $_SERVER['DOCUMENT_ROOT'].'/downloads';
+
+            if ( ! write_file($path.'/log_'.time().'.txt',$data)) {
                 
-                     );
+              // echo 'Unable to write the file';
+            }
+            else{ 
 
+               //echo 'File written!';
+            }
+       
 
-                    $var["RECORD"][] = array(
-                                            'PAYMENT_DETAILS' => [ array(
-                                                        'PAYMENTS'=> array(
-                                                                            "API_VERSION"        => "1",
-                                                                            "CORP_CODE"          => "DEMOCORP57",
-                                                                            "CMPY_CODE"          => "1",
-                                                                            "TXN_CRNCY"          => "INR",
-                                                                            "TXN_PAYMODE"        => "NEFT",
-                                                                            "CUST_UNIQ_REF"      => $row->forward_trans_id.'_'.$row->book_no,
-                                                                            "TXN_TYPE"           => "CUST",
-                                                                            "TXN_AMOUNT"         => $row->amount,
-                                                                            "CORP_ACC_NUM"       => "910020034508608",
-                                                                            "CORP_IFSC_CODE"     => "AXIS789087",
-                                                                            "ORIG_USERID"        => "DEMOCORP78",
-                                                                            "USER_DEPARTMENT"    => "PAYMENT",
-                                                                            "TRANSMISSION_DATE"  => date('Y-m-d h:i:s'),
-                                                                            "BENE_CODE"          => substr($row->reg_no,16),
-                                                                            "VALUE_DATE"         => $row->trans_dt,
-                                                                            "RUN_IDENTIFICATION" => $row->forward_bulk_trans_id,
-                                                                            "FILE_NAME"          => $row->forward_bulk_trans_id,
-                                                                            "BENE_NAME"          => $row->farm_name,
-                                                                            "BENE_ACC_NUM"       => $row->acc_no,
-                                                                            "BENE_IFSC_CODE"     => $row->ifsc_code,
-                                                                            "BENE_AC_TYPE"       => "SB",
-                                                                            "BENE_BANK_NAME"     => "",
-                                                                            "BASE_CODE"          => "DEMOCORP",
-                                                                            "CHEQUE_NUMBER"      => "",
-                                                                            "CHEQUE_DATE"        => [],
-                                                                            "PAYABLE_LOCATION"   => "1",
-                                                                            "PRINT_LOCATION"     => "1",
-                                                                            "PRODUCT_CODE"       => "B",
-                                                                            "BATCH_ID"           => "1",
-                                                                            "BENE_ADDR_1"        => $row->address,
-                                                                            "BENE_ADDR_2"        => "",
-                                                                            "BENE_ADDR_3"        => "",
-                                                                            "BENE_CITY"          => "KOLKATA",
-                                                                            "BENE_STATE"         => "WEST BENGAL",
-                                                                            "BENE_PINCODE"       => $row->pin_no,
-                                                                            "CORP_EMAIL_ADDR"    => "test@axisbank.com",
-                                                                            "BENE_EMAIL_ADDR1"   => $row->email,
-                                                                            "BENE_EMAIL_ADDR2"   => "",
-                                                                            "BENE_MOBILE_NO"     => $row->mobile_number,
-                                                                            "ENRICHMENT1"        => "test1",
-                                                                            "ENRICHMENT2"        => "test1",
-                                                                            "ENRICHMENT3"        => "test1",
-                                                                            "ENRICHMENT4"        =>"test1",
-                                                                            "ENRICHMENT5"        => "test1",
-                                                                            "STATUS_ID"          =>"1"
-                                                                        ),
-
-                                                        'INVOICE' =>  array(
-
-                                                                            "INVOICE_NUMBER"=> "",
-                                                                            "INVOICE_DATE"=> "",
-                                                                            "NET_AMOUNT"=> "",
-                                                                            "TAX"=>"",
-                                                                            "CASH_DISCOUNT"=>"",
-                                                                            "INVOICE_AMOUNT"=> ""
-                                                                        )
-                                                                )
-                                                ]
-                                            );
-
-                       
-
-                         
-
-            } 
-
-           $aPublicKey = "-----BEGIN PGP PUBLIC KEY BLOCK-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-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
-4qlzVizetUxBKHdaGkGJv8RH7x2eyPrfiUu/ug==
-=juvi
------END PGP PUBLIC KEY BLOCK-----
-";
-
-
-              $gpg = new nicoSWD\GPG\GPG();
-              $pubKey = new nicoSWD\GPG\PublicKey($aPublicKey);
-        //      //$sign   = new OpenPGP();
-        //      $datas  = $gpg->gpgLiteral($var);
-           
-
-         $data = $gpg->encrypt($pubKey,json_encode($var));      
-          echo $data;
-        echo "</br>";    
-        die();
 
         $data     = $this->Paddy->f_ifsccode($trans_dt,$bulk_trans_id,$soc_id);
 
@@ -283,7 +194,96 @@ t8FLho/KKSCppZJFrZEYpvxpZbigkZ39q4hhBBgRCAAJBQJfl+HAAhsMAAoJEO6m
 
    
     }
-    
+
+    // **************************** Code For Reading Files For  Developed By Lokesh On 11/11/2020"  *************************** //
+
+    public function readfile(){
+
+             $path       = $_SERVER['DOCUMENT_ROOT'].'/downloads/';
+
+             $files = scandir($path,1);
+             $newest_file = $files[0];
+        
+            $handle     = file_get_contents($path.$newest_file);
+
+        
+                    $var_array_parent = explode("\n",$handle);
+
+                    foreach($var_array_parent as $value)
+                    {
+
+                    $var_array = explode("|",$value);
+              
+
+                   if ( ! isset($var_array[1])) {
+
+                            $var_array[0]  = null;
+                            $var_array[1]  = null;
+                            $var_array[2]  = null;
+                            $var_array[3]  = null;
+                            $var_array[4]  = null;
+                            $var_array[5]  = null;
+                            $var_array[6]  = null;
+                            $var_array[7]  = null;
+                            $var_array[8]  = null;
+                            $var_array[9]  = null;
+                            $var_array[10] = null;
+                            $var_array[11] = null;
+                            $var_array[12] = null;
+                            $var_array[13] = null;
+                            $var_array[14] = null;
+                            $var_array[15] = null;
+
+
+                    }
+
+                    $data = array(
+                                'r1'   => $var_array[0],
+                                'r2'   => $var_array[1],
+                                'r3'   => $var_array[2],
+                                'r4'   => $var_array[3],
+                                'r5'   => $var_array[4],
+                                'r6'   => $var_array[5],
+                                'r7'   => $var_array[6],
+                                'r8'   => $var_array[7],
+                                'r9'   => $var_array[8],
+                                'r10'  => $var_array[9],
+                                'r11'  => $var_array[10],
+                                'r12'  => $var_array[11],
+                                'r13'  => $var_array[12],
+                                'r14'  => $var_array[13],
+                                'r15'  => $var_array[14],
+                                'r16'  => $var_array[15]
+                                );
+
+                        if ( isset($var_array[0])) {
+
+                        $this->db->insert('icici_bank_record',$data);
+
+                        }
+
+                    }
+
+
+           // rename($path."Pay.txt", "http://localhost/paddy/downloads/my_file.txt");
+
+
+            $filePath = $path.$newest_file;
+  
+            /* Store the path of destination file */
+            $destinationFilePath = 'downloads/'.$newest_file;
+              
+            /* Move File from images to copyImages folder */
+
+            copy($filePath, $destinationFilePath);
+
+            unlink($filePath);
+       
+
+        
+     }
+
+     
 
 
 

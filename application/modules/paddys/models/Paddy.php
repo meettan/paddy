@@ -1004,7 +1004,7 @@ class Paddy extends CI_Model {
         $data = $this->db->query($sql);
         return $data->num_rows();
      }
-     
+    
     public function f_farmer_detail_cheque($soc_id,$trans_dt,$bulk_trans_id){
 
         $kms_id=$this->session->userdata['loggedin']['kms_id'];
@@ -1019,6 +1019,25 @@ class Paddy extends CI_Model {
             and   a.bank_sl_no = e.sl_no
             and a.kms_id = $kms_id and a.soc_id = '$soc_id' and a.trans_dt = '$trans_dt' and a.bulk_trans_id = $bulk_trans_id and a.dwn_flag = '0' ";
    
+
+        $data = $this->db->query($sql);
+       
+        return $data->result();
+    }
+   /// Code after Chnaging md_paddy_bank table  On 09/11/2020/  By Lokesh Kumar Jha //
+    public function f_collection_details_icici($soc_id,$trans_dt,$forward_bulk_trans_id){
+
+        $kms_id=$this->session->userdata['loggedin']['kms_id'];
+
+        $sql ="Select a.trans_dt trans_dt,a.forward_trans_id forward_trans_id,b.farm_name farm_name,e.acc_no acc_no,e.bank_id bank_id,a.acc_no faccount,a.ifsc_code fifsc, e.ifs ifs, a.amount amount,a.soc_id soc_id,a.branch_id dist_code,a.forward_bulk_trans_id bulk_id
+            from td_collections a, td_farmer_reg b ,md_paddy_bank e
+            where a.reg_no = b.reg_no 
+            and a.bank_sl_no = e.sl_no
+            and a.kms_id = $kms_id 
+            and a.soc_id = '$soc_id' 
+            and a.trans_dt = '$trans_dt' 
+            and a.forward_bulk_trans_id = '$forward_bulk_trans_id' 
+            and a.dwn_flag = '0' ";
 
         $data = $this->db->query($sql);
        

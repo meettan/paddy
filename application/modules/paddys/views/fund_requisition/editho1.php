@@ -420,7 +420,7 @@
                         <option value="">Select</option>    
 
                          
-                        <option value="1" <?php if(isset($bill_dtls->approve1)){ if($bill_dtls->approve1 =="1") {echo "Selected";}}?>>Approved</option> 
+                        <option value="1" <?php if(isset($bill_dtls->approve1)){ if($bill_dtls->approve1 =="1") {echo "Selected";}}?>>Recommend</option> 
                         <option value="2" <?php if(isset($bill_dtls->approve1)){ if($bill_dtls->approve1 =="2") {echo "Selected";}}?>>Hold</option>   
 
                     </select>    

@@ -7,7 +7,7 @@
           if($bill_dtls->ho_flag == 1) { ?> 
 
         <form method="POST" 
-            id="form" action="<?php echo site_url("payment/requisition_secondapproved");?>" >
+            id="form" action="<?php echo site_url("payment/fund_allocation");?>" >
 
         <?php } ?>
 
@@ -136,12 +136,12 @@
              <div class="form-group row">
 
 
-                 <label for="memo_no" class="col-sm-1 col-form-label">RRO No:</label>
+                <label for="memo_no" class="col-sm-1 col-form-label">RRO No:</label>
 
                 <div class="col-sm-5">
 
-                    <input type="text" class="form-control" readonly="" name="memo_no" id="memo_no" 
-                    value="<?php if(isset($bill_dtls->memo_no)){ echo $bill_dtls->memo_no ;} ?>" >
+                    <input type="text" class="form-control" readonly="" name="memo_no" id="memo_no"
+                    id="memo_no" value="<?php if(isset($bill_dtls->memo_no)){ echo $bill_dtls->memo_no ;} ?>" />
 
                 </div>
 
@@ -151,7 +151,7 @@
 
                 <div class="col-sm-5">
 
-                        <input type="date" class="form-control" readonly="" name="memo_dt" id="memo_dt" value="<?php if(isset($bill_dtls->memo_dt)){ echo $bill_dtls->memo_dt ;} ?>" >
+                        <input type="date" class="form-control" readonly="" name="memo_dt" id="memo_dt" value="<?php if(isset($bill_dtls->memo_dt)){ echo $bill_dtls->memo_dt ;} ?>">
 
                 </div>
 
@@ -189,14 +189,12 @@
 
                 <div class="col-sm-5">
 
-                        <input type="text" class="form-control" readonly="" name="goodown_dist" id="goodown_dist" >
+                        <input type="text" class="form-control" readonly="" name="goodown_dist" id="goodown_dist" value="<?php if(isset($bill_dtls->district_name)){ echo $bill_dtls->district_name ;} ?>">
 
                 </div>
 
                
             </div>
-
-
            
 
             <div class="form-group row">
@@ -204,23 +202,15 @@
                  <label for="soc_mill_dis" class="col-sm-1 col-form-label">Soc Mill Distance:</label>
 
                     <div class="col-sm-5">
-                               <input type="text" readonly="" class="form-control" name="soc_mill_dis" id="soc_mill_dis">
+                    <input type="text" readonly="" class="form-control" name="soc_mill_dis" id="soc_mill_dis" value="">
                     </div>
 
                    <label for="rm_gd_dist" class="col-sm-1 col-form-label">Goodown Distance:</label>
 
                     <div class="col-sm-5">
-                               <input type="text" class="form-control" readonly="" name="rm_gd_dist" id="rm_gd_dist">
+                               <input type="text" class="form-control" readonly="" name="rm_gd_dist" id="rm_gd_dist" value="<?php if(isset($bill_dtls->rm_gd_dist)){ echo $bill_dtls->rm_gd_dist ;} ?>" >
                     </div>
                         
-            </div>
-
-             <div id="wqsc_dtls">
-                
-                   
-                       
-                
-                  
             </div>
 
             <div class="form-header">
@@ -243,6 +233,7 @@
                         <th>SGST <br> (Add) <br> @2.5%</th>
                         <th>Claimed Amount(Rs)</th>
                         <th>Payable Amount(Rs)</th>
+                        <th>Option</th>
                     <!--     <th><button type="button" class="btn btn-success addAnotherRow"><i class="fa fa-plus"></i></button></th> -->
 
                     </tr>
@@ -252,13 +243,16 @@
                 <tbody id="intro1" class="tables">
                     
                     
-                    <?php  $sum = 0;
+                    <?php  $sum             = 0;
+                           $allocate_amount = 0;
                         $flag = false;
                            unset($bill_master[4]);
                         foreach($charges as $c_list){
                     ?>
                         <tr>
-                            <td><select class="form-control particulars" name="particulars[]" disabled>
+                            <td>
+                              <input type="hidden" name="particulars[]" value="<?=$c_list->account_type?>">
+                              <select class="form-control particulars" name="partic[]" disabled>
 
                                     <option value="">Select</option>
                                      <option value="0" <?php if($c_list->account_type == "0"){echo "selected";} ?> >Transportation Charges of Paddy</option>
@@ -359,20 +353,18 @@
                                        class="form-control paybel" 
                                        name="paybel[]" readonly
                                        value="<?php echo $c_list->payble_amt; 
-                                                $sum +=$c_list->payble_amt; 
+
+                                                $sum +=$c_list->payble_amt;
+
+                                                if($c_list->payment_flag == 1){ 
+                                                  $allocate_amount +=$c_list->payble_amt;
+                                                  
+                                                } 
                                                ?>">
 
                             </td>
                             <td>
-                                <?php
-                                    if($flag){
-                                        ?>
-                                        
-                                      <!--   <button type="button" class="btn btn-danger removeRow"><i class="fa fa-remove"></i></button> -->
-
-                                        <?php
-                                    }
-                                ?>
+                              <input type="checkbox"  class="status" name="status[]" value="<?=$c_list->account_type?>" <?php  if($c_list->payment_flag == 1){ echo "checked" ;} ?> >
                             </td>
                         </tr>
                     <?php
@@ -383,9 +375,10 @@
 
                 <tfoot>
                     <tr>
-                    
-                        <td colspan="7" style="text-align: right;">Total Amount:</td>
-                        <td colspan="2"><?php echo $sum ?></td>
+                        <td  colspan="3"  style="text-align: right;color:green"><b>Allocate Amount:</b></td>
+                        <td  style="text-align: right;" ><b id="allocate_amount"><?php echo $allocate_amount ?></b></td>
+                        <td colspan="3" style="text-align: right;">Total Amount:</td>
+                        <td colspan="1"><?php echo $sum ?></td>
 
                     </tr>
 
@@ -394,52 +387,16 @@
 
                 </tfoot>
             </table>
-              <?php if($bill_dtls->approve2 == "0" OR $bill_dtls->approve2 == "2" ) { ?> 
 
+             <?php if($bill_dtls->fund_flag == "0") { ?> 
+          
 
-          <div class="form-group row">
-
-                <label for="soc_name" class="col-sm-2 col-form-label">Remarks:</label>
-
-                <div class="col-sm-10">
-
-                      <textarea class="form-control" name="remark2"><?php if(isset($bill_dtls->remark2)){ echo $bill_dtls->remark2;}?></textarea>
-
-                </div>
-
-               
-
-          </div>  
-
-          <div class="form-group row">
-
-                <label for="soc_name" class="col-sm-2 col-form-label">Please Procced:</label>
-
-                <div class="col-sm-3">
-
-                    <select type="text" class="form-control" name="approve_status" id="approve_status" required>
-
-                        <option value="">Select</option>    
-
-                        <option value="1" 
-                        <?php if(isset($bill_dtls->approve2)){ if($bill_dtls->approve2 =="1") {echo "Selected";}}?> >Recommend</option> 
-                        <option value="2" 
-                        <?php if(isset($bill_dtls->approve2)){ if($bill_dtls->approve2 =="2") {echo "Selected";}}?> >Hold</option>    
-
-                    </select>    
-
-                </div>
-
-               
-
-            </div>  
-
-       
+        
             <div class="form-group row">
 
                 <div class="col-sm-5">
 
-                    <input type="submit" class="btn btn-info" value="Submit" />
+                    <input type="submit" class="btn btn-info" value="Allocate Fund" />
 
                 </div>
 
@@ -457,6 +414,41 @@
    // $("#form").validate();
 
    // $( ".sch_cd" ).select2();
+
+    $(".status").change(function(){
+
+         
+
+
+           //var allocatefund = "<?php //echo $allocate_amount ?>";
+
+            var allocatefund = parseFloat($('#allocate_amount').html());
+
+            var sum = 0 ;
+
+            var amt = parseFloat($(this).closest('tr').find(".paybel").val());
+
+       
+        if($(this).prop("checked") == true){
+
+                   allocatefund = (parseFloat(allocatefund + amt)).toFixed(2);
+        
+        
+            }else if($(this). prop("checked") == false){
+
+          
+                 allocatefund = (parseFloat(allocatefund - amt)).toFixed(2);
+
+
+             }
+             
+              $('#allocate_amount').html(parseFloat(allocatefund).toFixed(2));
+
+
+                allocatefund = 0 ;
+          
+       
+        }); 
 
 </script>
 
@@ -503,7 +495,6 @@
                         string +='<tr><td colspan="2">Total</td><td> <input type="text" class="form-control" id="gunnt_total" value="'+gunny_sum+'" readonly></td><td> <input type="text" class="form-control" id="cmr_total" value="'+quantity_sum+'" readonly></td><td></td><td> <input type="text" class="form-control" id="tot_deduction" value="'+dedu_sum+'" readonly></td><td> <input type="text" class="form-control" id="tot_rice" value="'+price_sum+'" readonly></td> <td></td><td><input type="text" class="form-control" id="gunny_cut" value="'+gunny_cut+'" readonly></td></tr></tbody></table>';
 
                     $('#wqsc_dtls').html(string);
-
                 
             });
 

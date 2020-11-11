@@ -151,7 +151,8 @@
                         ?>
                         <a href="<?php echo site_url('payment/requisitionho'); ?>">Fund Requisition</a>
 
-                        <?php } }?>
+                        <?php } 
+                                    }?>
                         <?php if($this->session->userdata['loggedin']['user_id']=="anirbanc" && $this->session->userdata['loggedin']['ho_flag'] =="Y"){ ?>
                         <a href="<?php echo site_url('payment/requisitionho2'); ?>">Fund Requisition</a>
 
@@ -162,6 +163,10 @@
                         <a href="<?php echo site_url('payment/requisitionho3'); ?>">Fund Requisition</a>
 
                         <?php }?>
+                         <?php if($this->session->userdata['loggedin']['user_id']=="anirbanc" && $this->session->userdata['loggedin']['ho_flag'] =="Y"){ ?>
+                         <a href="<?php echo site_url('payment/fundallocation'); ?>">Fund Allocation</a>
+
+                            <?php }?>
 
 
                             <?php } ?>

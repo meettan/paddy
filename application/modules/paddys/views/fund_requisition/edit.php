@@ -240,6 +240,7 @@
                         <th>SGST <br> (Add) <br> @2.5%</th>
                         <th>Claimed Amount(Rs)</th>
                         <th>Payable Amount(Rs)</th>
+                        <th>Option</th>
                     <!--     <th><button type="button" class="btn btn-success addAnotherRow"><i class="fa fa-plus"></i></button></th> -->
 
                     </tr>
@@ -249,7 +250,8 @@
                 <tbody id="intro1" class="tables">
                     
                     
-                    <?php  $sum = 0;
+                    <?php   $sum             = 0;
+                            $allocate_amount = 0;
                         $flag = false;
                       
                         foreach($charges as $c_list){
@@ -357,8 +359,16 @@
                                        name="paybel[]" readonly
                                        value="<?php echo $c_list->payble_amt; 
                                                 $sum +=$c_list->payble_amt; 
+
+                                                 if($c_list->payment_flag == 1){ 
+                                                  $allocate_amount +=$c_list->payble_amt;
+                                                  
+                                                } 
                                                ?>">
 
+                            </td>
+                             <td>
+                              <input type="checkbox"  class="status" name="status[]" value="<?=$c_list->account_type?>" <?php  if($c_list->payment_flag == 1){ echo "checked" ;} ?> >
                             </td>
                             <td>
                                 <?php
@@ -380,8 +390,9 @@
 
                 <tfoot>
                     <tr>
-                    
-                        <td colspan="7" style="text-align: right;">Total Amount:</td>
+                        <td  colspan="3"  style="text-align: right;color:green"><b>Allocate Amount:</b></td>
+                        <td  style="text-align: right;" ><b id="allocate_amount"><?php echo $allocate_amount ?></b></td>
+                        <td colspan="3" style="text-align: right;">Total Amount:</td>
                         <td colspan="2"><?php echo $sum ?></td>
 
                     </tr>

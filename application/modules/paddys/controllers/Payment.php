@@ -49,7 +49,7 @@ class Payment extends MX_Controller {
 
     public function f_requisitionho(){
 
-        if($this->session->userdata['loggedin']['user_id']=="bholanathm" && $this->session->userdata['loggedin']['ho_flag'] =="Y"){
+        if($this->session->userdata['loggedin']['user_id']=="bholanathm" || $this->session->userdata['loggedin']['user_id'] =="barund"){
 
         $select    = array("a.*","b.soc_name","c.mill_name","d.wqsc_no wqsc");
     
@@ -72,10 +72,10 @@ class Payment extends MX_Controller {
 
         $this->load->view('post_login/footer');
 
-        }else{
+         }else{
 
-            redirect('User_Login/login');
-        } 
+             redirect('User_Login/login');
+         } 
         
     }
     public function f_requisitionho2(){
@@ -143,6 +143,150 @@ class Payment extends MX_Controller {
 
             redirect('User_Login/login');
         }  
+        
+    }
+    public function f_fundallocation(){
+
+        if($this->session->userdata['loggedin']['user_id']=="anirbanc" && $this->session->userdata['loggedin']['ho_flag'] =="Y"){
+
+        $select    = array("a.*","b.soc_name","c.mill_name","d.wqsc_no wqsc");
+    
+        $where     =   array(
+                "a.soc_id  = b.society_code"  => NULL,
+                "a.mill_id = c.sl_no"  => NULL,
+                "a.wqsc_no = d.id"  => NULL,
+                "a.kms_id"     => $this->session->userdata['loggedin']['kms_id'],
+                "d.kms_id"     => $this->session->userdata['loggedin']['kms_id'],
+                "a.ho_flag"    => "1",
+                "a.approve1"   => "1",
+                "a.approve2"   => "1",
+                "a.approve3"   => "1"
+            );
+
+        $data['payment_dtls']    =   $this->Paddy->f_get_particulars("td_fund_requisition a,md_society b,md_mill c,td_wqsc d",$select,$where, 0);
+
+        $this->load->view('post_login/main');
+
+        $this->load->view("fund_requisition/dash_fund_alloc", $data);
+
+        $this->load->view('search/search');
+
+        $this->load->view('post_login/footer');
+
+        }else{
+
+            redirect('User_Login/login');
+        } 
+        
+    }
+
+    public function f_fund_allocation() {
+
+        if($this->session->userdata['loggedin']['user_id']=="anirbanc" && $this->session->userdata['loggedin']['ho_flag'] =="Y"){
+
+
+       
+        if($_SERVER['REQUEST_METHOD'] == "POST") {
+
+
+             $status     = $this->input->post('status');
+             $particular = $this->input->post('particulars');
+        
+
+
+            $where = array(
+
+                'req_no' => $this->input->post('req_no')
+            );
+                foreach($particular as $parti){
+
+                    if (in_array($parti, $status)) {
+
+                                     // echo "exist</br>";
+
+                            }else{
+
+                                 $data_array = array(
+                
+                                 "payment_flag"    =>  "0"
+                
+                                 );
+
+                                $wheres = array(
+
+                                        'req_no'       => $this->input->post('req_no'),
+                                        'account_type' => $parti
+                                );
+
+                                  $this->Paddy->f_edit('td_fund_requisition_dtls', $data_array,$wheres);
+                            }
+                }
+
+                $data_arrays = array(
+    
+                    "fund_flag"      =>  "1",
+
+                    "funded_by"      =>  $this->session->userdata['loggedin']['user_name'],
+    
+                    "funded_dt"      =>  date('Y-m-d h:i:s')
+
+                );
+                
+               $this->Paddy->f_edit('td_fund_requisition', $data_arrays,$where);
+
+               $this->session->set_flashdata('msg', 'Successfully Updated!');
+
+               redirect('payment/fundallocation');
+
+        }
+        else {
+
+            //Bill Master Details
+            $payment['bill_master']     =   $this->Paddy->f_get_particulars("md_comm_params", array('sl_no', 'param_name'), NULL, 0);
+
+            $select = array("a.*","b.wqsc_no wqsc","b.memo_no memo_no","b.memo_dt memo_dt","b.goodown_name goodown_name","b.goodown_dist goodown_dist","c.district_name","d.rm_gd_dist");
+
+
+            $where  =   array(
+
+                "a.wqsc_no = b.id"  => NULL,
+                "b.goodown_dist = c.district_code"  => NULL,
+                "b.memo_no      = d.do_number"  => NULL,
+                "a.req_no"      => base64_decode($this->input->get('req_no')),
+                "b.kms_id"      => $this->session->userdata['loggedin']['kms_id'],
+                "d.kms_year"    => $this->session->userdata['loggedin']['kms_id']
+              
+            );
+
+            $wheres  =   array(
+              
+                "req_no"   => base64_decode($this->input->get('req_no'))
+              
+            );
+
+            $payment['bill_dtls']  = $this->Paddy->f_get_particulars("td_fund_requisition a,td_wqsc b,md_district c,td_cmr_delivery d",$select,$where,1);          
+         
+                     
+            $payment['charges']    = $this->Paddy->f_get_particulars("td_fund_requisition_dtls",NULL,$wheres, 0);
+
+            unset($where);
+            $where      =   array("branch_id"  => $this->session->userdata['loggedin']['branch_id']);
+        
+            $payment['blocks']        =   $this->Paddy->f_get_particulars("md_block", NULL,NULL, 0);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("fund_requisition/editfund_allocation", $payment);
+
+            $this->load->view('post_login/footer');
+
+        }
+
+           }else{
+
+            redirect('User_Login/login');
+        } 
+        
         
     }
 
@@ -370,7 +514,8 @@ class Payment extends MX_Controller {
             $wheres  =   array(
 
               
-                "req_no"   => $this->input->get('req_no')
+                "req_no"       => $this->input->get('req_no')
+                // "payment_flag" => "1"
               
             );
 
@@ -708,7 +853,7 @@ class Payment extends MX_Controller {
 
         $where = array(
 
-            "a.wqsc_no  = b.wqsc_no"  => NULL,
+            "a.id  = b.wqsc_no"  => NULL,
             "b.req_no"                => $this->input->post("req_no"),
             "b.kms_id"                => $this->session->userdata['loggedin']['kms_id']
             );
@@ -721,16 +866,18 @@ class Payment extends MX_Controller {
 
     public function paddy_qty_on_sanc() {
 
-        $select   = array("sum(b.paddy_qty) paddy_qty","sum(b.quantity) totCmr");
+        $select   = array("sum(c.paddy_qty) paddy_qty","sum(c.quantity) totCmr");
 
         $where = array(
 
-            "a.wqsc_no  = b.wqsc_no"  => NULL,
-            "a.req_no"                => $this->input->post("req_no"),
-            "a.kms_id"                => $this->session->userdata['loggedin']['kms_id']
+            "a.wqsc_no  = b.id"      => NULL,
+            "b.wqsc_no  = c.wqsc_no" => NULL,
+            "a.req_no"               => $this->input->post("req_no"),
+            "a.kms_id"               => $this->session->userdata['loggedin']['kms_id']
+
             );
 
-        $sancs   =   $this->Paddy->f_get_particulars("td_fund_requisition a,td_wqsc_dtls b",$select,$where, 1);
+        $sancs   =   $this->Paddy->f_get_particulars("td_fund_requisition a,td_wqsc b,td_wqsc_dtls c",$select,$where, 1);
 
         echo json_encode($sancs);
 

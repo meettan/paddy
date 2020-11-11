@@ -37,6 +37,7 @@
                         <th>Marketing</th>
                         <th>Accounts</th>
                         <th>Admin</th>
+                        <th>Fund Allocation</th>
                         <th>Option</th>
 
 
@@ -74,8 +75,16 @@
 
                                             }else{
 
-                                                echo '<span style="color:green">Sancation No</span></br>';
-                                                echo $p_dtls->sanc_no;
+                                                if($p_dtls->fund_flag==1){
+
+                                                     echo '<span style="color:green">Sancation No</span></br>';
+                                                     echo '<span style="color:orange"><b>'.$p_dtls->sanc_no.'</b></span>';
+                                                }else{
+
+                                                    echo "Forwarded ";
+                                                }
+
+                                               
 
                                             }                                  
                                         }
@@ -88,7 +97,7 @@
 
                                      } elseif($p_dtls->approve1 == "1"){ 
 
-                                            echo '<span style="color:Green">Approved</span>';
+                                            echo '<span style="color:Green">Recommend</span>';
 
                                      } else{  
 
@@ -102,7 +111,7 @@
 
                                      } elseif($p_dtls->approve2 == "1"){ 
 
-                                            echo '<span style="color:Green">Approved</span>';
+                                            echo '<span style="color:Green">Recommend</span>';
 
                                      } else{ echo '<span style="color:red">Hold</span>';} ?>
                                          
@@ -117,6 +126,14 @@
 
                                      } else{ echo '<span style="color:red">Hold</span>';} ?>
                                          
+                                </td>
+                                <td>
+                                    <?php if($p_dtls->fund_flag == "1") {
+
+                                            echo '<span style="color:orange">YES</span>';
+
+                                     }  else{ echo '<span style="color:red">NO</span>';} ?>
+
                                 </td>
                                 <td>
                                 
@@ -174,6 +191,7 @@
                         <th>Marketing</th>
                         <th>Accounts</th>
                         <th>Admin</th>
+                        <th>Fund Allocation</th>
                         <th>Option</th>
 
                     </tr>

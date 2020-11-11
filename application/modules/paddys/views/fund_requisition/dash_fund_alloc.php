@@ -4,7 +4,7 @@
             
             <div class="col-lg-9 col-sm-12">
 
-                <h1><strong>Fund Requisition</strong></h1>
+                <h1><strong>Fund Allocation</strong></h1>
 
             </div>
 
@@ -39,15 +39,15 @@
 
                     <tr>
                         <th>Sl No.</th>
-                         <th>District</th>
+                        <th>District</th>
                         <th>Requisition No.</th>
-                        <th>Wqsc/CS No.</th>
-                        <th>Date</th>
-                        <th>Society Name</th>
-                        <th>Mill Name</th>
+                        <th>SANC No.</th>
                         <th>Status</th>
+                        <th>Allocate Fund</th>
+                        <th>Funded By</th>
+                        <th>Fund Allocation Date</th>
+                       
                         <th>Option</th>
-
 
                     </tr>
 
@@ -67,33 +67,34 @@
                                 <td><?php echo ++$i; ?></td>
                                 <td><?php echo get_district_name($p_dtls->branch_id); ?></td>
                                 <td><?php echo $p_dtls->req_no; ?></td>
-                                <td><?php echo $p_dtls->wqsc; ?></td>
-                                <td><?php echo date('d/m/Y', strtotime($p_dtls->req_dt)); ?></td>
-                                <td><?php echo $p_dtls->soc_name; ?> </td>
-                                <td><?php echo $p_dtls->mill_name?></td>
-                                <td><?php if($p_dtls->approve3 == "0") {
+                                <td><?php echo $p_dtls->sanc_no; ?></td>
+                           <!--      <td><?php //echo date('d/m/Y', strtotime($p_dtls->req_dt)); ?></td> -->
+                               
+                                <td><?php if($p_dtls->approve3 == "1"){ 
 
-                                            echo '<span style="color:blue">Pending</span>';
-
-                                     } elseif($p_dtls->approve3 == "1"){ 
-
-                                            echo '<span style="color:Green">Approved</span>';
+                                            echo '<span style="color:Green">Allocate Fund</span>';
 
                                      } else{ echo '<span style="color:red">Hold</span>';} ?>
                                          
                                 </td>
+                                 <td> <?php if($p_dtls->fund_flag == "1") {
+
+                                            echo '<span style="color:orange">YES</span>';
+
+                                     }  else{ echo '<span style="color:red">NO</span>';} ?> </td>
+                                     <td><?php echo $p_dtls->funded_by?></td>
+                                <td><?php echo $p_dtls->funded_dt?></td>
                                 <td>
                                 
-                                    <a href="<?php echo base_url();?>index.php/payment/requisition_lastapproved?req_no=<?php echo base64_encode($p_dtls->req_no); ?>" 
+                                    <a href="<?php echo base_url();?>index.php/payment/fund_allocation?req_no=<?php echo base64_encode($p_dtls->req_no); ?>" 
                                         data-toggle="tooltip"
                                         data-placement="bottom" 
-                                        title="Edit"
-                                    >
+                                        title="Edit">
 
                                         <i class="fa fa-edit fa-2x" style="color: #007bff"></i>
                                         
                                     </a>
-                                   
+                                 
                                 </td>
 
                             </tr>
@@ -116,16 +117,15 @@
                 <tfoot>
 
                     <tr>
-                        <th>Sl No.</th>
-                         <th>District</th>
+                         <th>Sl No.</th>
+                        <th>District</th>
                         <th>Requisition No.</th>
-                        <th>Wqsc/CS No.</th>
-                        <th>Date</th>
-                        <th>Society Name</th>
-                        <th>Mill Name</th>
+                        <th>SANC No.</th>
                         <th>Status</th>
+                        <th>Allocate Fund</th>
+                        <th>Funded By</th>
+                        <th>Fund Allocation Date</th>
                         <th>Option</th>
-
                     </tr>
                 
                 </tfoot>

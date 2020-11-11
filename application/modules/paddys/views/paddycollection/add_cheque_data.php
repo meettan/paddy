@@ -43,8 +43,16 @@
 
                 </div>
                 <div class="form-group row">
+
+                  <?php if($this->session->userdata['loggedin']['kms_id'] > 2 ){?>
                 <div class="col-sm-2"><b>File Number : </b></div>
                 <div class="col-sm-2"><?php if(isset($farme->forward_bulk_trans_id)){ echo $farme->forward_bulk_trans_id; }?> </div>
+                  <?php }else{ ?>
+
+                <div class="col-sm-2"><b>Bulk Transaction Id : </b></div>
+                <div class="col-sm-2"><?php if(isset($farme->bulk_trans_id)){ echo $farme->bulk_trans_id; }?> </div>
+                  <?php } ?>
+
                 <div class="col-sm-2"><b>Bank Name :</b> </div>
                 <div class="col-sm-3"><?php if(isset($farme->bank_name)){ echo $farme->bank_name; }?> </div>
 

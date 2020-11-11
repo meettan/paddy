@@ -60,12 +60,12 @@
                           <td ><?php echo $padl_dtl->tot_qty; ?></td>
                           <td ><?php echo $padl_dtl->tot_amt; ?></td>
                           <td style="text-align: ;">
-                        <?php //if($padl_dtl->status == 0) { ?>
+                       
                         <a href="<?php echo base_url()?>index.php/paddys/transactions/f_cheque_add?soc_id=<?=$padl_dtl->soc_id;?>/<?=$padl_dtl->trans_dt;?>/<?=$padl_dtl->bulk_trans_id;?>/<?=$padl_dtl->chq_status;?>" data-toggle="tooltip"
                                     data-placement="bottom"  title="Edit">
                                     <i class="fa fa-edit fa-2x" style="color: #007bff"></i>
                                 </a>
-                        <?php //} ?>                     
+                                 
          
    
                               </td>
@@ -73,7 +73,7 @@
                                 <td> 
 
                                     <?php if($padl_dtl->status == 0 && $padl_dtl->chq_status == 'U') { ?> 
-                            <a href="<?php echo site_url("paddys/bankintegration/f_paddycol_forward");?>?soc_id=<?=$padl_dtl->soc_id;?>/<?=$padl_dtl->trans_dt;?>/<?=$padl_dtl->bulk_trans_id;?>"><button class="btn btn-primary" id="">Forward</button></a>
+                            <a href="<?php echo site_url("paddys/bankintegration/f_paddycol_forward");?>?soc_id=<?=$padl_dtl->soc_id;?>&trans_dt=<?=$padl_dtl->trans_dt;?>&forward_bulk_trans_id=<?=base64_encode($padl_dtl->forward_bulk_trans_id);?>&bulk_trans_id=<?=$padl_dtl->bulk_trans_id;?>"><button class="btn btn-primary" id="">Forward</button></a>
                                 <?php }elseif($padl_dtl->status == 1 && $padl_dtl->chq_status == 'U'){
 
                                   echo "Forwarded";
