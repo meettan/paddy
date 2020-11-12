@@ -771,7 +771,7 @@ class Payment extends MX_Controller {
         }
         
     }
-
+       //   Code Updated on 12/11/2020  ///
     public function sanc_no_list() {
 
         $where = array(
@@ -781,7 +781,8 @@ class Payment extends MX_Controller {
             "mill_id"    => $this->input->post("mill_id"),
             "kms_id"     => $this->session->userdata['loggedin']['kms_id'],
             "ho_flag"    => 1,
-            "sanc_no!="  => NULL 
+            "fund_flag"  => '1',
+            "sanc_no!="  => NULL
  
             );
 
