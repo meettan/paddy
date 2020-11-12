@@ -818,7 +818,8 @@ class Payment extends MX_Controller {
 
             "a.account_type  = b.sl_no"  => NULL,
             "a.req_no"                   => $this->input->post("req_no"),
-            "b.cat"                      => "M"
+            "b.cat"                      => "M",
+            "a.account_type !="          => "8"
             );
 
         $sancs   =   $this->Paddy->f_get_particulars("td_fund_requisition_dtls a,md_comm_params b",NULL,$where, 0);
