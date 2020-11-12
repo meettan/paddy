@@ -791,7 +791,7 @@ class Payment extends MX_Controller {
           echo json_encode($sancs);
 
     }
-
+    // ******* Code For Sanction Detail For Society Commission  on Sancation No Developed on 12/11/2020   ******  ///
     public function sanc_no_dtls() {
 
 
@@ -824,6 +824,43 @@ class Payment extends MX_Controller {
             );
 
         $sancs   =   $this->Paddy->f_get_particulars("td_fund_requisition_dtls a,md_comm_params b",NULL,$where, 0);
+
+        echo json_encode($sancs);
+
+    }
+    
+    ///*********  Code Written for Total Requisition Amount on 12/11/2020      *******///
+
+    public function tot_requisition_amt() {
+
+        $select   = array("sum(payble_amt) payble_amt");
+
+        $where = array(
+
+            "req_no"        => $this->input->post("req_no")
+            
+        );
+
+        $sancs   =   $this->Paddy->f_get_particulars("td_fund_requisition_dtls",$select,$where,1);
+
+        echo json_encode($sancs);
+
+    }
+
+    ///*********  Code Written for Total Allocated Amount on 12/11/2020      *******///
+
+    public function tot_allocated_amt() {
+
+        $select   = array("sum(payble_amt) payble_amt");
+
+        $where = array(
+
+            "req_no"        => $this->input->post("req_no"),
+            "payment_flag"  => '1'
+            
+        );
+
+        $sancs   =   $this->Paddy->f_get_particulars("td_fund_requisition_dtls",$select,$where,1);
 
         echo json_encode($sancs);
 
@@ -963,9 +1000,9 @@ class Payment extends MX_Controller {
 
                     "rate"                =>  $this->input->post('rate'),
     
-                    "qty"                 =>  $this->input->post('qty'),
+                   // "qty"                 =>  $this->input->post('qty'),
 
-                    "amount_claimed"      =>  $this->input->post('amount_claimed'),
+                   // "amount_claimed"      =>  $this->input->post('amount_claimed'),
     
                     "tot_amt"             =>  $this->input->post('paid_amt'),
 

@@ -192,33 +192,7 @@
                
             </div>
 
-            <div class="form-group row">
-              <!--   <label for="goodown_name" class="col-sm-1 col-form-label">Goodown name:</label>
-
-                <div class="col-sm-3">
-
-                    <input type="text"
-                            class="form-control" readonly
-                            name="goodown_name"
-                            id="goodown_name"/>
-
-                </div>
-              
-
-                <label for="goodown_dist" class="col-sm-1 col-form-label">Goodown District:</label>
-
-                <div class="col-sm-3">
-
-                        <input type="text"
-                            class="form-control" readonly
-                            name="goodown_dist"
-                            id="goodown_dist"/>
-
-                </div> -->
-
-
-               
-            </div>
+         
             <div class="form-group row">
 
                  <label for="pool_type" class="col-sm-1 col-form-label">Pool Type:</label>
@@ -236,53 +210,24 @@
 
                 </div>
 
-               <!--  <label for="inter_district:" class="col-sm-1 col-form-label">Inter District:</label>
+          
+                <label for="mandi_board" class="col-sm-1 col-form-label">Mandi Board Name:</label>
 
                 <div class="col-sm-3">
+                           <input type="text"
+                        class="form-control" name="mandi_board" id="mandi_board" required/>
+                </div>
 
-                               <input type="text"
-                            class="form-control" readonly
-                            name="inter_district"
-                            id="inter_district"/>
-                </div> -->
+                <label for="mandi_board" class="col-sm-1 col-form-label">Mandi Board Address:</label>
 
-
-              <!--   <label for="soc_mill_dis" class="col-sm-1 col-form-label">Soc Mill Distance:</label>
-
-                    <div class="col-sm-3">
-                               <input type="text" readonly
-                            class="form-control" 
-                            name="soc_mill_dis"
-                            id="soc_mill_dis"/>
-                    </div> -->
-                    <label for="mandi_board" class="col-sm-1 col-form-label">Mandi Board Name:</label>
-
-                    <div class="col-sm-3">
-                               <input type="text"
-                            class="form-control" name="mandi_board" id="mandi_board" required/>
-                    </div>
-
-                    <label for="mandi_board" class="col-sm-1 col-form-label">Mandi Board Address:</label>
-
-                    <div class="col-sm-3">
-                               <input type="text"
-                            class="form-control" name="mandi_board_addr" id="mandi_board_addr" required/>
-                    </div>
+                <div class="col-sm-3">
+                           <input type="text"
+                        class="form-control" name="mandi_board_addr" id="mandi_board_addr" required/>
+                </div>
 
                         
             </div>
 
-          <!--   <div class="form-group row">
-
-                    <label for="rm_gd_dist" class="col-sm-1 col-form-label">Goodown Distance:</label>
-
-                    <div class="col-sm-3">
-                               <input type="text"
-                            class="form-control" readonly
-                            name="rm_gd_dist"
-                            id="rm_gd_dist"/>
-                    </div>
-            </div> -->
             
             <div class="form-group row">
                 
@@ -408,13 +353,15 @@
 
                     <tr>
                         <td colspan="1" style="text-align:left;color:green" class="col-sm-3">Requisition Ammount:</td>
-                         <td colspan="1" class="col-sm-2" ><b id="allocated_amt"></b></td>
+                         <td colspan="1" class="col-sm-2" ><b id="requisition_amt"></b></td>
                          <td colspan="5" style="text-align: right;" class="col-sm-5">Less Butta:</td>
                         <td><input type="text" name="qty_butta"  class="col-sm-2 form-control less_butta"></td>
                     </tr>
 
                     <tr>
-                        <td colspan="7" style="text-align: right;">Less Gunny Cut:</td>
+                        <td  style="text-align:left;color:green" class="col-sm-3">Allocated Ammount:</td>
+                         <td class="col-sm-2" ><b id="allocated_amt"></b></td>
+                        <td colspan="5" style="text-align: right;">Less Gunny Cut:</td>
                         <td><input type="text" class="form-control less_gunny" name="gunny_cut" value="0.00"></td>
                     </tr>
 
@@ -601,31 +548,7 @@
         });
 
         $('#mill_name').change(function(){
-                
-               
-                // $.post( 
-                //     '<?php //echo site_url("paddys/payment/wqsc_list");?>',
 
-                //     { 
-
-                //         soc_id : $("#soc_name").val(),
-                //         mill_id: $(this).val()
-
-                //     }
-
-                // ).done(function(data){
-
-                //     var string = '<option value="">Select</option>';
-
-                //     $.each(JSON.parse(data), function( index, value ) {
-
-                //         string += '<option value="' + value.wqsc_no + '">' + value.wqsc_no + '</option>'
-
-                //     });
-
-                //     $('#wqsc').html(string);
-
-                // });
 
                  $.post( 
                     '<?php echo site_url("paddys/payment/soc_mill_distance");?>',
@@ -650,7 +573,8 @@
 
         $('#sanc_no').change(function(){
 
-          
+               var requisition_amt = 0;
+               var price_sancation = 0;
                
 
             $.post('<?php echo site_url("paddys/payment/sanc_no_dtls_for_mill"); ?>',
@@ -667,9 +591,6 @@
                     
                 var price_sum       = 0;
 
-                var price_sancation = 0;
-
-
                 $.each(JSON.parse(data), function( index, value ) {
 
 
@@ -683,24 +604,48 @@
 
 
                     }
-
-                   
-
-
                      
                 });
-                        string +='<tr><td colspan="7">Allocated Amt</td><td> <input type="text" class="form-control" id="tot_rice" value="'+price_sum+'" readonly></td> <td></td></tr></tbody></table>';
+                        string +='<tr><td colspan="7">Payable Amt</td><td> <input type="text" class="form-control" id="tot_rice" value="'+price_sum+'" readonly></td> <td></td></tr></tbody></table>';
 
                     $('#bill_dtls').html(string);
                     $('.payble_amount').val(price_sum);
-                    $('#allocated_amt').html(price_sancation);
-                  
-
-
+                   // $('#allocated_amt').html(price_sancation);
                 
             });
 
 
+            $.post('<?php echo site_url("paddys/payment/tot_requisition_amt"); ?>',
+            
+                {
+                    req_no:   $(this).val()
+            
+                }
+
+            )
+            .done(function(data){
+
+                 requisition_amt = JSON.parse(data);
+                 $('#requisition_amt').html(requisition_amt.payble_amt);
+
+                
+            });
+
+            $.post('<?php echo site_url("paddys/payment/tot_allocated_amt"); ?>',
+            
+                {
+                    req_no:   $(this).val()
+            
+                }
+
+            )
+            .done(function(data){
+
+                 allocated_amt = JSON.parse(data);
+                 $('#allocated_amt').html(allocated_amt.payble_amt);
+
+                
+            });
 
      
     });

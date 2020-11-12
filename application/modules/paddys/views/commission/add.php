@@ -410,9 +410,6 @@
 
     $('#sanc_no').change(function(){
 
-          
-               
-
             $.post('<?php echo site_url("paddys/payment/sanc_no_dtls"); ?>',
             
                 {
@@ -429,7 +426,7 @@
 
                 $.each(JSON.parse(data), function( index, value ) {
 
-                    string += '<tr><td>' + value.param_name + '</td><td>' + value.per_unit_rate + '</td><td>' + value.total_amt + '</td><td>' + value.tds_amt + '</td><td>' + value.cgst_amt + '</td><td>' + value.sgst_amt + '</td><td>' + value.claim_amt + '</td><td>' + value.payble_amt + '</td></tr>';
+                    string += '<tr><td>' + value.param_name + '</td><td><input type="hidden" name="rate" value="'+ value.per_unit_rate +'">' + value.per_unit_rate + '</td><td>' + value.total_amt + '</td><td><input type="hidden" name="tds_amt" value="'+ value.tds_amt +'">' + value.tds_amt + '</td><td>' + value.cgst_amt + '</td><td>' + value.sgst_amt + '</td><td>' + value.claim_amt + '</td><td>' + value.payble_amt + '</td></tr>';
 
                     price_sum    += parseFloat(value.payble_amt); 
                      
