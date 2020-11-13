@@ -317,7 +317,7 @@ class Transactions extends MX_Controller {
 
             $select     =   array(
 
-                "t.*","s.soc_name soc_name","m.mill_name mill_name"
+                "t.*","s.soc_name soc_name","m.mill_name mill_name","per_qui_rate"
     
             );
 
@@ -328,6 +328,8 @@ class Transactions extends MX_Controller {
 
                 "t.mill_id = m.sl_no"    => NULL,
 
+                "t.kms_year = p.kms_yr"    => NULL,
+
                 "t.branch_id"  => $this->session->userdata['loggedin']['branch_id'],
 
                 "t.kms_year"   => $this->session->userdata['loggedin']['kms_id'],
@@ -337,7 +339,7 @@ class Transactions extends MX_Controller {
                  
            // $workorder['mill_dtls'] = $this->Paddy->f_get_particulars("md_mill", NULL,NULL, 0);
 
-            $workorder['workorder_dtls']= $this->Paddy->f_get_particulars("td_work_order t,md_society s,md_mill m", NULL, $where, 1);
+            $workorder['workorder_dtls']= $this->Paddy->f_get_particulars("td_work_order t,md_society s,md_mill m,md_paddy_rate p", NULL, $where, 1);
             
             $this->load->view('post_login/main');
 
@@ -495,7 +497,7 @@ class Transactions extends MX_Controller {
 
                         "bulk_trans_id"       => $bulk_trns_id,
 
-                        'forward_bulk_trans_id' =>  $dist_sort_code.'/'.substr($kms_year,2).'/'.$bulk_trns_id,
+                        'forward_bulk_trans_id' =>  $dist_sort_code.'_'.substr($kms_year,2).'_'.$bulk_trns_id,
 
                         "bank_sl_no"          => $bank_sl_no,
 
@@ -1226,11 +1228,13 @@ class Transactions extends MX_Controller {
     }
     public function f_pad_sig_delete(){
 
-        $data=explode ("/", $this->input->get('soc_id'));
+        $data = explode("/", $this->input->get('soc_id'));
+        echo $this->input->get('soc_id');
         $soc_id = $data["0"];
         $trans_dt = $data["1"];
         $bulk_trans_id = $data["2"];
         $trans_id = $data["3"];
+        $status = $data["4"];
 
         $where      =   array(
 
@@ -1244,9 +1248,9 @@ class Transactions extends MX_Controller {
 
         );
 
-        $data = $this->Paddy->f_delete("td_collections", $where);
+       $data = $this->Paddy->f_delete("td_collections", $where);
 
-        redirect('paddys/transactions/f_cheque_add?soc_id='.$this->input->get('soc_id'));
+       redirect('paddys/transactions/f_cheque_add?soc_id='.$soc_id.'/'.$trans_dt.'/'.$bulk_trans_id.'/'.$status);
 
     }
 

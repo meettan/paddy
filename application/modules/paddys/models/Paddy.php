@@ -1029,7 +1029,7 @@ class Paddy extends CI_Model {
 
         $kms_id=$this->session->userdata['loggedin']['kms_id'];
 
-        $sql ="Select a.trans_dt trans_dt,a.forward_trans_id forward_trans_id,b.farm_name farm_name,e.acc_no acc_no,e.bank_id bank_id,a.acc_no faccount,a.ifsc_code fifsc, e.ifs ifs, a.amount amount,a.soc_id soc_id,a.branch_id dist_code,a.forward_bulk_trans_id bulk_id
+        $sql ="Select a.trans_dt trans_dt,a.forward_trans_id forward_trans_id,a.reg_no reg_no,a.book_no book_no,b.farm_name farm_name,e.acc_no acc_no,e.bank_id bank_id,a.acc_no faccount,a.ifsc_code fifsc, e.ifs ifs, a.amount amount,a.soc_id soc_id,a.branch_id dist_code,a.forward_bulk_trans_id bulk_id
             from td_collections a, td_farmer_reg b ,md_paddy_bank e
             where a.reg_no = b.reg_no 
             and a.bank_sl_no = e.sl_no
@@ -1423,6 +1423,20 @@ class Paddy extends CI_Model {
          $data = $this->db->query($sql);
         
          return $data->result();
+ 
+    }
+    //// ********** Code Written For Getting Bank Detail for Forwading Data to Bank For Payemnt on 12/11/2020  **************** ///
+
+    public function bank_detail_for_forward($soc_id,$trans_dt,$bulk_trans_id){
+       
+        $sql =  "select bank_sl_no from  td_collections
+                 where soc_id         = '$soc_id'
+                 and   trans_dt       = '$trans_dt'
+                 and   bulk_trans_id  = '$bulk_trans_id' ";
+         
+        $data = $this->db->query($sql);
+        
+        return $data->row()->bank_sl_no;
  
     }
 

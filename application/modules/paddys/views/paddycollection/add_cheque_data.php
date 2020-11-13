@@ -101,7 +101,7 @@
               
               <td>
                   <?php if($farmer_dtl->status == 0 && $farmer_dtl->chq_status == 'U' ) { ?>
-               <button type="button" class="delete" id="<?=$farmer_dtl->soc_id;?>/<?=$farmer_dtl->trans_dt;?>/<?=$farmer_dtl->bulk_trans_id;?>/<?=$farmer_dtl->trans_id;?>" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-times fa-2x" style="color: red"></i></button>
+               <button type="button" class="delete" id="<?=$farmer_dtl->soc_id;?>/<?=$farmer_dtl->trans_dt;?>/<?=$farmer_dtl->bulk_trans_id;?>/<?=$farmer_dtl->trans_id;?>/<?=$farmer_dtl->chq_status;?>" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-times fa-2x" style="color: red"></i></button>
                 <?php  } ?> 
               </td></tr>
             

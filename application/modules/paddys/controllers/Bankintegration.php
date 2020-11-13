@@ -33,20 +33,20 @@ class Bankintegration extends MX_Controller {
     public function f_paddycol_forward() {
         
 
-        $soc_id = $this->input->get('soc_id');
-        $trans_dt = $this->input->get('trans_dt');
+        $soc_id                = $this->input->get('soc_id');
+        $trans_dt              = $this->input->get('trans_dt');
         $forward_bulk_trans_id = base64_decode($this->input->get('forward_bulk_trans_id'));
         $bulk_trans_id         = $this->input->get('bulk_trans_id');
-        $valid=0;
+        $valid                 = 0;
 
         $paddy_data    = $this->Paddy->coll_received($soc_id,$trans_dt,$bulk_trans_id);
+
         $paddy_forwad  = $this->Paddy->coll_forward($soc_id,$trans_dt,$bulk_trans_id);
 
+        $bank_id       = $this->Paddy->bank_detail_for_forward($soc_id,$trans_dt,$bulk_trans_id);
 
         $farmer_data =  $this->Paddy->f_collection_details_icici($soc_id,$trans_dt,$forward_bulk_trans_id);
-
-      
-
+                    
         $data_array = array(
 
                 "trans_dt"      =>  $paddy_data->trans_dt,                
@@ -84,34 +84,8 @@ class Bankintegration extends MX_Controller {
                             
                                  );
 
-                }
+            }
             
-
-            $data = '';
-            $slno = '0';
-
-           foreach($farmer_data as $row)
-                {
-
-                $i = ++$slno;
-              
-                $data .= $i.'|'.$row->forward_trans_id.'|'.$row->amount.'|'.'11'.'|'.'098301002773'.'|'.'THE WEST BENGAL STATE CO OPERATIVE MARKETING FEDERATION LTD(BENFED)'.'|'.'SMS'.'|'.'9674746908'.'|'.'THE WEST BENGAL STATE CO OPERATIVE MARKETING FEDERATION LTD(BENFED)'.'|'.$row->fifsc.'|'.'11'.'|'.$row->faccount.'|'.$row->farm_name.'|'.$row->bulk_id."\r\n";
-
-                }
-                               
-          
-            $path = $_SERVER['DOCUMENT_ROOT'].'/downloads';
-
-            if ( ! write_file($path.'/log_'.time().'.txt',$data)) {
-                
-              // echo 'Unable to write the file';
-            }
-            else{ 
-
-               //echo 'File written!';
-            }
-       
-
 
         $data     = $this->Paddy->f_ifsccode($trans_dt,$bulk_trans_id,$soc_id);
 
@@ -161,13 +135,66 @@ class Bankintegration extends MX_Controller {
                                      $this->Paddy->f_insert_multiple('td_collections_forward', $dataf);
 
                                      $this->Paddy->f_insert('td_received', $data_array);
+
+                                    if($bank_id == '3'){                                    //ICICI BANK
+
+                                    $data = '';
+                                    $slno = '0';
+
+                                        foreach($farmer_data as $row){
+
+
+
+                                            $i = ++$slno;
+                                          
+                                            $data .= $i.'|'.$row->forward_trans_id.$row->book_no.'|'.$row->amount.'|'.'11'.'|'.'098301002773'.'|'.'THE WEST BENGAL STATE CO OPERATIVE MARKETING FEDERATION LTD(BENFED)'.'|'.'SMS'.'|'.'9674746908'.'|'.'THE WEST BENGAL STATE CO OPERATIVE MARKETING FEDERATION LTD(BENFED)'.'|'.$row->fifsc.'|'.'11'.'|'.$row->faccount.'|'.$row->farm_name.'|'.$row->bulk_id."\r\n";
+
+                                        }
+                                                           
+                                        $path = $_SERVER['DOCUMENT_ROOT'].'/downloads';
+
+                                        if ( ! write_file($path.'/log_'.time().'.txt',$data)) {
+                                            
+                                          
+                                        }
+
+                                    }elseif( $bank_id == '4' ){                             //Axis Bank                                          
+
+                                        $data = '';
+                                    
+
+                                        foreach($farmer_data as $row){
+
+
+                                          
+                                            $data .= 'P^NE^MEDI^'.$row->forward_trans_id.$row->book_no.'^000000000000^'.date('Y-m-d').'^INR^'.$row->amount.'^'.$row->farm_name.'^'.substr($row->reg_no,16).'^'.$row->faccount.'^'.'10'.'^^^^^^^'.$row->fifsc.'^^^^^^^^^^^^^^^^^^^benfedpaddy1920@gmail.com^^^'."\r\n";
+
+                                        }
+
+                                        $data = rtrim($data);
+                                        
+                                                           
+                                        $path = $_SERVER['DOCUMENT_ROOT'].'/downloads';
+
+                                        $filename = '/123_H2H_'.date('Y-m-d H:i:s').'_'.$forward_bulk_trans_id.'.txt';
+
+                                        if ( ! write_file($path.$filename,$data)) {
+                                            
+                                          // echo 'Unable to write the file';
+                                        }
+
+
+
+                                    }
+                                    
+
                                      echo "<script>
                                            alert('Procurement data forwarded successfully');
                                            window.location.href='".base_url()."index.php/paddys/transactions/f_paddycollection';
                                            </script>";
                             }else{
 
-                                    echo "<script>alert('Procurement data Not forwarded Some Problem In IFSC Code');
+                                    echo "<script>alert('Procurement Data Not forwarded Problem In IFSC Code');
                                           window.location.href='".base_url()."index.php/paddys/transactions/f_paddycollection';
                                          </script>";
 
@@ -175,18 +202,16 @@ class Bankintegration extends MX_Controller {
                                
                     }else{
 
-                            echo "<script>alert('Procurement data Not forwarded Some Problem In Quantity');
+                            echo "<script>alert('Procurement Data Not forwarded Problem In Quantity');
                                         window.location.href='".base_url()."index.php/paddys/transactions/f_paddycollection';
                                       </script>";
 
                     }
 
-           
-
-        }else{
+            }else{
 
                  echo "<script>
-                 alert('Procurement data Not forwarded Some Problem In Farmer Name');
+                 alert('Procurement Data Not forwarded  Problem In Farmer Name');
                  window.location.href='".base_url()."index.php/paddys/transactions/f_paddycollection';
                  </script>";
                 }
@@ -205,7 +230,6 @@ class Bankintegration extends MX_Controller {
              $newest_file = $files[0];
         
             $handle     = file_get_contents($path.$newest_file);
-
         
                     $var_array_parent = explode("\n",$handle);
 
@@ -263,9 +287,6 @@ class Bankintegration extends MX_Controller {
                         }
 
                     }
-
-
-           // rename($path."Pay.txt", "http://localhost/paddy/downloads/my_file.txt");
 
 
             $filePath = $path.$newest_file;
