@@ -1749,7 +1749,7 @@ class Add_new extends MX_Controller {
 
        
 
-        $data["target"]=$agreement->agreementno;
+        $data["target"] = $agreement->agreementno;
 
         echo json_encode($data);
 

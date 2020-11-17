@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
 class Bankintegration extends MX_Controller {
 
     protected $sysdate;
@@ -13,7 +14,6 @@ class Bankintegration extends MX_Controller {
 
         $this->load->library('form_validation');
         //$this->load->library('lib/openpgp');
-        //For Individual Functions
         $this->load->model('Paddy');
         $this->load->helper('paddyrate');
         $this->load->helper('file');
@@ -45,7 +45,9 @@ class Bankintegration extends MX_Controller {
 
         $bank_id       = $this->Paddy->bank_detail_for_forward($soc_id,$trans_dt,$bulk_trans_id);
 
-        $farmer_data =  $this->Paddy->f_collection_details_icici($soc_id,$trans_dt,$forward_bulk_trans_id);
+        $bank_data     = $this->Paddy->f_get_particulars("md_paddy_bank", NULL,array("bank_id" => $bank_id), 1);
+
+        $farmer_data   =  $this->Paddy->f_collection_details_icici($soc_id,$trans_dt,$forward_bulk_trans_id);
                     
         $data_array = array(
 
@@ -158,39 +160,52 @@ class Bankintegration extends MX_Controller {
                                           
                                         }
 
-                                    }elseif( $bank_id == '4' ){                             //Axis Bank                                          
+                                    }elseif( $bank_id == '4' ){        //Axis Bank                                          
 
                                         $data = '';
+                                        $trn_type = '';
+
                                     
 
                                         foreach($farmer_data as $row){
+                                                
+                                                    if(substr($row->fifsc,0,3) == 'UTI'){
 
-
+                                                        $trn_type = "FT";
+                                                            
+                                                    }else{
+                                                            $trn_type = "NE";
+                                                    
+                                                    }
+                                        
                                           
-                                            $data .= 'P^NE^MEDI^'.$row->forward_trans_id.$row->book_no.'^000000000000^'.date('Y-m-d').'^INR^'.$row->amount.'^'.$row->farm_name.'^'.substr($row->reg_no,16).'^'.$row->faccount.'^'.'10'.'^^^^^^^'.$row->fifsc.'^^^^^^^^^^^^^^^^^^^benfedpaddy1920@gmail.com^^^'."\r\n";
+                                            $data .= 'P^'.$trn_type.'^'.$bank_data->corporate_code.'^'.$row->forward_trans_id.$row->book_no.'^'.$bank_data->acc_no.'^'.date('Y-m-d').'^INR^'.$row->amount.'^'.$row->farm_name.'^'.substr($row->reg_no,16).'^'.$row->faccount.'^'.'10'.'^^^^^^^'.$row->fifsc.'^^^^^^^^^^^^^^^^^^^benfedpaddy1920@gmail.com^^^'."\r\n";
 
                                         }
 
                                         $data = rtrim($data);
+                                    
+                                        $datetime = strtotime(date('Y-m-d H:i:s'));
                                         
-                                                           
-                                        $path = $_SERVER['DOCUMENT_ROOT'].'/downloads';
+                                        $datetimes = date('Y_m_d_H_i_s',$datetime);
+                                        
+                                        $filename = 'DEMOCORP212_'.$datetimes.'_'.$forward_bulk_trans_id.'.txt';
+                                        
+                                
+                                        if (write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)
+                                        {
+                                           echo 'Unable to write the file';
 
-                                        $filename = '/123_H2H_'.date('Y-m-d H:i:s').'_'.$forward_bulk_trans_id.'.txt';
+                                        } else {
 
-                                        if ( ! write_file($path.$filename,$data)) {
-                                            
-                                          // echo 'Unable to write the file';
+                                            echo 'File written!';                           
                                         }
-
-
 
                                     }
                                     
 
-                                     echo "<script>
-                                           alert('Procurement data forwarded successfully');
-                                           window.location.href='".base_url()."index.php/paddys/transactions/f_paddycollection';
+                                    echo "<script> alert('Procurement data forwarded successfully');
+                                     window.location.href='".base_url()."index.php/paddys/transactions/f_paddycollection';
                                            </script>";
                             }else{
 
@@ -300,12 +315,7 @@ class Bankintegration extends MX_Controller {
 
             unlink($filePath);
        
-
-        
      }
 
-     
-
-
-
+   
 }    

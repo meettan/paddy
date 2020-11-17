@@ -15,7 +15,7 @@
 
             <h3 style="margin-bottom:30px">
 
-                <small><a href="<?php echo site_url("paddys/transactions/f_paddycollection_add");?>" class="btn btn-primary" style="width: 100px;">Add</a></small>
+              <!--   <small><a href="<?php //echo site_url("paddys/transactions/f_paddycollection_add");?>" class="btn btn-primary" style="width: 100px;">Add</a></small> -->
                  <small><a href="<?php echo site_url("paddys/transactions/f_paddycollupload");?>" class="btn btn-primary" style="width: 100px;">Upload</a></small>
                 <span class="confirm-div" style="float:right; color:green;"></span>
                <!--  <div class="input-group" style="margin-left:75%;">

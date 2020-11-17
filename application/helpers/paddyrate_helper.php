@@ -57,12 +57,14 @@
       // return  $kms_yr;
    }
    
-   function get_farmer_name($kms_yr,$reg_no){
+   //unction get_farmer_name($kms_yr,$reg_no){
+    function get_farmer_name($reg_no){
 
     $ci =& get_instance();
     $ci->load->database();
-    $sql="SELECT farm_name
-           FROM td_farmer_reg WHERE kms_id='".$kms_yr."' AND reg_no ='".$reg_no."' ";
+   //$sql="SELECT farm_name FROM td_farmer_reg WHERE kms_id='".$kms_yr."' AND reg_no ='".$reg_no."' ";
+
+    $sql="SELECT farm_name FROM td_farmer_reg WHERE reg_no ='".$reg_no."' ";
    
      $paddy  =   $ci->db->query($sql)->row();
      

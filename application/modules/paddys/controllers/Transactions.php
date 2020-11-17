@@ -461,17 +461,24 @@ class Transactions extends MX_Controller {
             }
         }else{
 
- //For Cheque Details uploadation
+
             if(!empty($_FILES['f_procurement_detail']['name']) && in_array($_FILES['f_procurement_detail']['type'],$csvMimes)){
                        
                 $csvFile  = fopen($_FILES['f_procurement_detail']['tmp_name'], 'r');
 
-                $forward_trans_id = $this->Paddy->f_get_particulars("td_collections",array("MAX(forward_trans_id) forward_trans_id"),array('kms_id' => $kms_id), 1);
+                $trans_id = $this->Paddy->f_get_particulars("td_collections",array("ifnull(MAX(trans_id),0) trans_id"),array('kms_id' => $kms_id), 1);
+
+                $ftrans_id = $this->Paddy->f_get_particulars("td_collections",array("ifnull(MAX(trans_id),0) trans_id"),array('kms_id' => $kms_id), 1);
               
-                $forward_trans_id = $forward_trans_id->forward_trans_id;
+                $trans_id = $trans_id->trans_id;
+
+                $for_trans_id = $ftrans_id->trans_id;
+
                 
                     
                     while(($line = fgetcsv($csvFile)) !== FALSE){
+
+                       // $trans_id = $trans_id++;
                         
                     $data[] = array(
 
@@ -491,9 +498,9 @@ class Transactions extends MX_Controller {
  
                         "trans_dt"            =>  $trans_dt,
 
-                        "trans_id"            =>  $line[0],
+                        "trans_id"            =>  $trans_id++,
 
-                        'forward_trans_id'    =>  $branch_cd.str_pad($forward_trans_id++,8,"0",STR_PAD_LEFT),
+                        'forward_trans_id'    =>  $branch_cd.str_pad($for_trans_id++,8,"0",STR_PAD_LEFT),
 
                         "bulk_trans_id"       => $bulk_trns_id,
 
@@ -532,9 +539,10 @@ class Transactions extends MX_Controller {
                 }  
                     
                     unset($data[0]);
+
                     $data = array_values($data);
 
-                fclose($csvFile);
+                   fclose($csvFile);
 
                 $this->Paddy->f_insert_multiple('td_collections', $data);
             }
