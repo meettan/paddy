@@ -34,7 +34,7 @@ class Transactions extends MX_Controller {
 
         $select     =   array(
 
-            "t.trans_dt","t.pre_order_no", "t.order_no","t.soc_id","t.block","t.approval_status",
+            "t.trans_dt","t.pre_order_no", "t.order_no","t.soc_id","t.block","t.approval_status","t.created_by","t.approved_by",
 
             "t.mill_id", "t.paddy_qty", "s.soc_name","m.mill_name","t.branch_id","t.kms_year"
 

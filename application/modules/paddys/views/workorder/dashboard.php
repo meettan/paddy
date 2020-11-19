@@ -25,6 +25,8 @@
                         <th>Transaction Date </th>
                         <th>Order No</th>
                         <th>Quantity(Quintal)</th>
+                        <th>Created By</th>
+                        <th>Approved By</th>
                         <th>Option</th>
 
                     </tr>
@@ -48,19 +50,15 @@
                             <td ><?php echo $work_order->soc_name; ?></td>
                             <td><?php echo $work_order->mill_name; ?></td>
                             <td><?php echo date('d/m/Y',strtotime($work_order->trans_dt)); ?></td>
-                             <td><?php echo $work_order->pre_order_no; ?><?php echo $work_order->order_no; ?></td>
-                             <td><?php echo $work_order->paddy_qty; ?></td>
-                              <td>
-                            <a href="<?php echo site_url("paddys/transactions/f_workorder_edit");?>?order_no=<?php echo $work_order->order_no; ?>/<?php echo $work_order->branch_id;?>/<?php echo $work_order->kms_year;?>" 
+                            <td><?php echo $work_order->pre_order_no; ?><?php echo $work_order->order_no; ?></td>
+                            <td><?php echo $work_order->paddy_qty; ?></td>
+                            <td><?php echo $work_order->created_by; ?></td>
+                            <td><?php echo $work_order->approved_by; ?></td>
+                            <td><a href="<?php echo site_url("paddys/transactions/f_workorder_edit");?>?order_no=<?php echo $work_order->order_no; ?>/<?php echo $work_order->branch_id;?>/<?php echo $work_order->kms_year;?>" 
                                             data-toggle="tooltip" data-placement="bottom" title="Edit" >
-                                            <i class="fa fa-edit fa-2x" style="color: #007bff"></i>
-                                            </a>
-                            <a href="<?php echo site_url("paddys/transactions/f_workorder_print");?>?order_no=<?php echo $work_order->order_no;?>" 
-                                            data-toggle="tooltip" data-placement="bottom" title="Print" >
-                                            <i class="fa fa-print fa-2x" style="color: #007bff"></i>
-                                            </a>                
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
+                                            <i class="fa fa-edit fa-2x" style="color: #007bff"></i></a>
+                                           
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <?php  if($work_order->approval_status !="A") {?>
                                    <button type="button" class="delete"
                                         id="<?php echo $work_order->order_no; ?>"
@@ -71,12 +69,16 @@
                                     </button> 
                                     <button class="btn btn-danger" disabled="">Unpproved</button>
                                             <?php }else{  ?>
-
+                                                   <a href="<?php echo site_url("paddys/transactions/f_workorder_print");?>?order_no=<?php echo $work_order->order_no;?>" 
+                                            data-toggle="tooltip" data-placement="bottom" title="Print" >
+                                            <i class="fa fa-print fa-2x" style="color: #007bff"></i></a>  
                             <button class="btn btn-success" disabled="">Approved</button>
+                            
+                            
 
                                                     <?php  } ?> 
 
-                                                </td>
+                                </td>
                         </tr>                    
                                             <?php
                                        }
@@ -92,6 +94,8 @@
                         <th>Transaction Date </th>
                         <th>Order No</th>
                         <th>Quantity</th>
+                        <th>Created By</th>
+                        <th>Approved By</th>
                         <th>Option</th>
                     </tr>
                 </tfoot>

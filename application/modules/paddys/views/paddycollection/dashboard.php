@@ -36,10 +36,13 @@
                         <th>Procurement Dt</th>        
                         <th>Quantity</th>
                         <th width="50px">Amount</th>
+                        <th>Uploaded By</th>
                         <th>Option</th>
-                        <th>Forward For Download</th>
+                        <th>Forward </th>
+                        <th>Forwarded By</th>
                         <th>Delete</th>
                     </tr>
+
                 </thead>
                 <tbody> 
 
@@ -59,20 +62,15 @@
                           <td ><?php echo date('d/m/Y',strtotime($padl_dtl->trans_dt)); ?></td>
                           <td ><?php echo $padl_dtl->tot_qty; ?></td>
                           <td ><?php echo $padl_dtl->tot_amt; ?></td>
+                          <td ><?php echo $padl_dtl->created_by; ?></td>
                           <td style="text-align: ;">
-                       
-                        <a href="<?php echo base_url()?>index.php/paddys/transactions/f_cheque_add?soc_id=<?=$padl_dtl->soc_id;?>/<?=$padl_dtl->trans_dt;?>/<?=$padl_dtl->bulk_trans_id;?>/<?=$padl_dtl->chq_status;?>" data-toggle="tooltip"
+                          <a href="<?php echo base_url()?>index.php/paddys/transactions/f_cheque_add?soc_id=<?=$padl_dtl->soc_id;?>/<?=$padl_dtl->trans_dt;?>/<?=$padl_dtl->bulk_trans_id;?>/<?=$padl_dtl->chq_status;?>" data-toggle="tooltip"
                                     data-placement="bottom"  title="Edit">
                                     <i class="fa fa-edit fa-2x" style="color: #007bff"></i>
                                 </a>
-                                 
-         
-   
-                              </td>
-                          
-                                <td> 
-
-                                    <?php if($padl_dtl->status == 0 && $padl_dtl->chq_status == 'U') { ?> 
+                          </td>
+                          <td> 
+                            <?php if($padl_dtl->status == 0 && $padl_dtl->chq_status == 'U') { ?> 
                             <a href="<?php echo site_url("paddys/bankintegration/f_paddycol_forward");?>?soc_id=<?=$padl_dtl->soc_id;?>&trans_dt=<?=$padl_dtl->trans_dt;?>&forward_bulk_trans_id=<?=base64_encode($padl_dtl->forward_bulk_trans_id);?>&bulk_trans_id=<?=$padl_dtl->bulk_trans_id;?>"><button class="btn btn-primary" id="">Forward</button></a>
                                 <?php }elseif($padl_dtl->status == 1 && $padl_dtl->chq_status == 'U'){
 
@@ -96,6 +94,7 @@
                                 } 
                                  ?>    
                                 </td>
+                                <td><?php echo $padl_dtl->forwarded_by; ?></td>
                                  <td>
                                     <?php if($padl_dtl->status == 0 && $padl_dtl->chq_status == 'U') { ?>
 
@@ -130,8 +129,10 @@
                         <th>Procurement Dt</th> 
                         <th>Quantity</th>
                         <th width="50px">Amount</th>
+                        <th>Uploaded By</th>
                         <th>Option</th>
                         <th>Forward</th>
+                        <th>Forwarded By</th>
                         <th>Delete</th>
                     </tr>
                 

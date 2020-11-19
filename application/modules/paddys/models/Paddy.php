@@ -155,7 +155,7 @@ class Paddy extends CI_Model {
 
     public function f_get_soc_mil($brn_cd,$kms_id){
         $sql = $this->db->query("SELECT a.branch_id branch_id,a.soc_id soc_id,a.mill_id mill_id,
-                                        a.distance distance,a.reg_no agreementno,a.target target,
+                                        a.distance distance,a.reg_no agreementno,a.target target,a.created_by created_by,a.modified_by modified_by,
                                         a.kms_id kms_id,b.soc_name soc_name,c.mill_name mill_name
                                  FROM md_soc_mill a,
                                  md_society b,md_mill c  
@@ -669,6 +669,8 @@ class Paddy extends CI_Model {
                       sum(b.quantity)tot_qty,
                       sum(b.amount)tot_amt,
                       b.status status,
+                      b.created_by created_by,
+                      b.forwarded_by forwarded_by,
                       b.chq_status chq_status,
                       b.bank_sl_no bank_sl_no,
                       c.bank_id bank_id,
@@ -686,6 +688,8 @@ class Paddy extends CI_Model {
                          b.forward_bulk_trans_id,
                          b.trans_dt,
                          b.status,
+                         b.created_by,
+                         b.forwarded_by,
                          b.chq_status,
                          b.bank_sl_no
                 order by b.trans_dt,b.bulk_trans_id
@@ -1157,9 +1161,9 @@ class Paddy extends CI_Model {
         $sql="UPDATE `td_collections` SET `certificate_1` = '$certificate_1',`certificate_2`='$certificate_2' WHERE trans_dt = '$trans_dt' AND `bulk_trans_id` = $bulk_trans_id AND `soc_id` = $soc_id";
         $this->db->query($sql);
     }
-    public function f_forward_paddycollection($trans_dt,$bulk_trans_id,$soc_id){
+    public function f_forward_paddycollection($trans_dt,$bulk_trans_id,$soc_id,$forwarded_by,$forwarded_dt){
 
-        $sql="UPDATE `td_collections` SET `status` = '1' WHERE trans_dt = '$trans_dt' AND `bulk_trans_id` = $bulk_trans_id AND `soc_id` = $soc_id";
+        $sql="UPDATE `td_collections` SET `status` = '1',forwarded_by ='$forwarded_by',forwarded_dt ='$forwarded_dt' WHERE trans_dt = '$trans_dt' AND `bulk_trans_id` = $bulk_trans_id AND `soc_id` = $soc_id";
         $this->db->query($sql);
     }
     public function f_forward_reissue_paddycollection($trans_dt,$bulk_trans_id,$soc_id){

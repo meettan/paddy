@@ -1,5 +1,5 @@
     <div class="wraper">      
-
+        <div class="col-md-3"></div>
         <div class="col-md-6 container form-wraper">   
 
             <form method="POST" action="<?php echo site_url("paddys/add_new/f_society_mill_edit");?>">

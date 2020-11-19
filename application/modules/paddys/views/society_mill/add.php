@@ -1,5 +1,5 @@
     <div class="wraper">      
-
+<div class="col-md-3"></div>
         <div class="col-md-6 container form-wraper">
 
             <form method="POST" 
@@ -87,7 +87,7 @@
 
                        <div class="col-sm-8">
 
-                                <input type="text" class="form-control" name="reg_no" id="reg_no" />
+                                <input type="text" class="form-control" name="reg_no" id="reg_no"  required/>
 
                         </div>
                 </div>  
@@ -146,7 +146,7 @@ $("#soc_id").change(function(e){
        
             var target=data.target;
            
-          $('#reg_no').val(target);
+          //$('#reg_no').val(target);
       
        
         }

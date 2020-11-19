@@ -32,8 +32,10 @@
                         <th>Sl. No.</th>
                         <th>Society</th>
                         <th>Mills</th>
-                        <th>Agreement No.</th>
+                        <!-- <th>Agreement No.</th> -->
                         <th>Target(Quintal)</th>
+                        <th>Created By</th>
+                        <th>Modified By</th>
                         <th>Option</th>
 
                     </tr>
@@ -53,8 +55,10 @@
                                 <td ><?php echo ++$count; ?></td>
                                 <td ><?php echo $soc_mill_dtl->soc_name; ?></td>
                                 <td><?php echo $soc_mill_dtl->mill_name; ?></td>
-                                <td><?php echo $soc_mill_dtl->agreementno; ?></td>
+                             <!--    <td><?php //echo $soc_mill_dtl->agreementno; ?></td> -->
                                 <td><?php echo $soc_mill_dtl->target; ?></td>
+                                <td><?php echo $soc_mill_dtl->created_by; ?></td>
+                                <td><?php echo $soc_mill_dtl->modified_by; ?></td>
                                 <td>
                                     <a href="<?php echo site_url("paddys/add_new/f_society_mill_edit")?>/?branch_id=<?php echo $soc_mill_dtl->branch_id;?>&soc_id=<?php echo $soc_mill_dtl->soc_id;?>&mill_id=<?php echo $soc_mill_dtl->mill_id;?>&kms_id=<?php echo $soc_mill_dtl->kms_id;?>" 
                                         data-toggle="tooltip"  data-placement="bottom"  title="Edit">
@@ -74,8 +78,10 @@
                         <th>Sl. No.</th>
                         <th>Society</th>
                         <th>Mills</th>
-                        <th>Agreement No.</th>
+                       <!--  <th>Agreement No.</th> -->
                         <th>Target(Quintal)</th>
+                        <th>Created By</th>
+                        <th>Modified By</th>
                         <th>Option</th>
                     </tr>
                 </tfoot>

@@ -55,7 +55,7 @@ class Bankintegration extends MX_Controller {
 
                 "kms_year"      =>  $this->session->userdata['loggedin']['kms_id'],
 
-                "branch_id"      =>  $this->session->userdata['loggedin']['branch_id'],
+                "branch_id"     =>  $this->session->userdata['loggedin']['branch_id'],
 
                 "dist"          =>  $this->session->userdata['loggedin']['dist_id'],
 
@@ -132,7 +132,7 @@ class Bankintegration extends MX_Controller {
 
                             if($valid=='0'){
 
-                                     $this->Paddy->f_forward_paddycollection($trans_dt,$bulk_trans_id,$soc_id);
+                                     $this->Paddy->f_forward_paddycollection($trans_dt,$bulk_trans_id,$soc_id,$this->session->userdata['loggedin']['user_name'],date('Y-m-d h:i:s'));
 
                                      $this->Paddy->f_insert_multiple('td_collections_forward', $dataf);
 
@@ -316,102 +316,6 @@ class Bankintegration extends MX_Controller {
             unlink($filePath);
        
      }
-
-  // **************************** Code For Reading Axis Bank Files For Developed By Lokesh On 18/11/2020"  *************************** //
-
-    public function read_axis_reversefile(){
-
-             $newest_file = null;
-             $path        = $_SERVER['DOCUMENT_ROOT'].'/downloads/';
-             $files       = scandir($path,1);
-             $newest_file = $files[0];
-              
-             $handle      = file_get_contents($path.$newest_file);
-
-                    $var_array_parent = explode("\n",$handle);
-
-                    foreach($var_array_parent as $value)
-                    {
-
-                    $var_array = explode("^",$value);
-              
-
-                   if ( ! isset($var_array[11])) {
-
-                            $var_array[0]  = null;
-                            $var_array[1]  = null;
-                            $var_array[2]  = null;
-                            $var_array[3]  = null;
-                            $var_array[4]  = null;
-                            $var_array[5]  = null;
-                            $var_array[6]  = null;
-                            $var_array[7]  = null;
-                            $var_array[8]  = null;
-                            $var_array[9]  = null;
-                            $var_array[10] = null;
-                            $var_array[11] = null;
-                            $var_array[12] = null;
-                            $var_array[13] = null;
-                            $var_array[14] = null;
-                            $var_array[15] = null;
-                            $var_array[16] = null;
-                            $var_array[17] = null;
-                          
-                    }
-
-                    $data = array(
-                                'bank_id'             => '4',
-                                'forward_trans_id'    => substr($var_array[0], 0, -1),
-                                'book_no'             => substr($var_array[0],-1),
-                                'corporate_code'      => $var_array[1],
-                                'payment_run_date'    => $var_array[2],
-                                'product_code'        => $var_array[3],
-                                'utr_no'              => $var_array[4],
-                                'status_code'         => $var_array[6],
-                                'status_description'  => $var_array[7],
-                                'batch_no'            => $var_array[8],
-                                'reg_no'              => $var_array[9],
-                                'value_date'          => $var_array[10],
-                                'bank_ref_no'         => $var_array[11],
-                                'amount'              => $var_array[12],
-                                'dr_ac_no'            => $var_array[13],
-                                'dr_ifsc_code'        => $var_array[14],
-                                'dr_cr_flag'          => $var_array[15],
-                                'cr_acc_no'           => $var_array[16],
-                                'file_no'             => $var_array[17]
-                                );
-
-                        if ( isset($var_array[11])) {
-
-                        $this->db->insert('td_reverse_feed',$data);
-
-                        }
-
-                    }
-
-
-            $filePath = $path.$newest_file;
-  
-            /* Store the path of destination file */
-            $destinationFilePath = 'downloads/'.$newest_file;
-              
-            /* Move File from images to copyImages folder */
-
-            if(strlen($newest_file) > 4){
-
-                copy($filePath, $destinationFilePath);
-
-                unlink($filePath);
-
-            }else{
-
-                echo "File Does Not Exit";
-
-            }
-
-            
-       
-    }
 
    
 }    
