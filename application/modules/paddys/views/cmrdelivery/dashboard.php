@@ -35,9 +35,11 @@
                         <th>Society Name</th>
                         <th>Mill Name</th>
                         <th>Do Number</th>
-                        <th>Trans Number</th>
-                        <th>CMR delivery</th>
+                        <!-- <th>Trans Number</th>
+                        <th>CMR delivery</th> -->
                         <th>Delivery Date</th>
+                        <th>Created By</th>
+                        <th>Modified By</th>
                         <th>Option</th>
                     </tr>
 
@@ -63,9 +65,11 @@
                                 <td><?php echo $b_dtls->soc_name; ?></td>
                                 <td><?php echo $b_dtls->mill_name; ?></td>
                                 <td><?php echo $b_dtls->do_number; ?></td>
-                                <td> <?php echo $b_dtls->trans_no; ?></td>
-                                <td><?php echo $b_dtls->tot_delivery; ?></td>
+                              <!--   <td> <?php //echo $b_dtls->trans_no; ?></td>
+                                <td><?php //echo $b_dtls->tot_delivery; ?></td> -->
                                 <td><?php echo $b_dtls->delivery_dt; ?></td>
+                                <td><?php echo $b_dtls->created_by; ?></td>
+                                <td><?php echo $b_dtls->modified_by; ?></td>
 
                                 <td>
 
@@ -107,9 +111,11 @@
                         <th>Society Name</th>
                         <th>Mill Name</th>
                         <th>Do Number</th>
-                        <th>Trans Number</th>
-                        <th>CMR delivery</th>
+                        <!-- <th>Trans Number</th>
+                        <th>CMR delivery</th> -->
                         <th>Delivery Date</th>
+                        <th>Created By</th>
+                        <th>Modified By</th>
                         <th>Option</th>
                     </tr>
                 

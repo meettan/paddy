@@ -103,7 +103,7 @@
 
                 <div class="col-sm-4">
 
-                <select type="text" class="form-control sch_cd" name="pool" id="pool" required>
+                <select type="text" class="form-control" name="pool" id="pool" required>
 
                     <option value="">Select Pool</option>    
                     <option value="C" >CENTRAL</option> 

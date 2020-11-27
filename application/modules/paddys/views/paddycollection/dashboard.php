@@ -69,9 +69,11 @@
                                     <i class="fa fa-edit fa-2x" style="color: #007bff"></i>
                                 </a>
                           </td>
-                          <td> 
-                            <?php if($padl_dtl->status == 0 && $padl_dtl->chq_status == 'U') { ?> 
-                            <a href="<?php echo site_url("paddys/bankintegration/f_paddycol_forward");?>?soc_id=<?=$padl_dtl->soc_id;?>&trans_dt=<?=$padl_dtl->trans_dt;?>&forward_bulk_trans_id=<?=base64_encode($padl_dtl->forward_bulk_trans_id);?>&bulk_trans_id=<?=$padl_dtl->bulk_trans_id;?>"><button class="btn btn-primary" id="">Forward</button></a>
+                          <td style="color:blue"> <b>
+                            <?php if($padl_dtl->status == 0 && $padl_dtl->chq_status == 'U') { 
+                          
+                                     echo "Data Uploaded"; ?> 
+                              
                                 <?php }elseif($padl_dtl->status == 1 && $padl_dtl->chq_status == 'U'){
 
                                   echo "Forwarded";
@@ -79,6 +81,7 @@
                                 }elseif($padl_dtl->status == 1 && $padl_dtl->chq_status == 'C'){
 
                                   echo "Cleared";
+
                                 }elseif($padl_dtl->status == 1 && $padl_dtl->chq_status == 'R'){
 
                                   echo "Returned";
@@ -86,13 +89,15 @@
                                 }elseif($padl_dtl->status == 0 && $padl_dtl->chq_status == 'R'){
 
                                   echo "Returned";
+
                                 }elseif($padl_dtl->status == 1 && $padl_dtl->chq_status == 'I'){
 
                                   echo "Cheque Returned";
                                 }elseif($padl_dtl->status == 0 && $padl_dtl->chq_status == 'C'){
                                     echo "Cleared";
                                 } 
-                                 ?>    
+                                 ?>  
+                                 </b>  
                                 </td>
                                 <td><?php echo $padl_dtl->forwarded_by; ?></td>
                                  <td>

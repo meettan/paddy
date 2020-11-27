@@ -32,9 +32,11 @@
                         <th>Date</th>
                         <th>Society Name</th>
                         <th>Mill Name</th>
-                        <th>Paddy Milled</th>
-                        <th>Paddy Type</th>
+                        <!-- <th>Paddy Milled</th>
+                        <th>Paddy Type</th> -->
                         <th>CMR offered</th>
+                        <th>Created By</th>
+                        <th>Modified By</th>
                         <th>Option</th>
                         <th>Print</th>
                     </tr>
@@ -56,9 +58,11 @@
                             <td ><?php echo date('d/m/Y',strtotime($cmrd_dtl->trans_dt)); ?></td>
                             <td ><?php echo $cmrd_dtl->soc_name; ?></td>
                             <td ><?php echo $cmrd_dtl->mill_name; ?></td>
-                            <td ><?php echo $cmrd_dtl->milled; ?></td>
-                            <td ><?php if($cmrd_dtl->rice_type=="P"){ echo "Par Bolied";} else{ echo "Raw Rice";} ?></td>
+                         <!--    <td ><?php //echo $cmrd_dtl->milled; ?></td>
+                            <td ><?php //if($cmrd_dtl->rice_type=="P"){ echo "Par Bolied";} else{ echo "Raw Rice";} ?></td> -->
                             <td ><?php echo $cmrd_dtl->cmr_offered_now; ?></td>
+                            <td ><?php echo $cmrd_dtl->created_by; ?></td>
+                            <td ><?php echo $cmrd_dtl->modified_by; ?></td>
                             <td>
                                 <a href="f_offered_edit?trans_no=<?php echo $cmrd_dtl->trans_no; ?>" data-toggle="tooltip" data-placement="bottom" class="btn btn-primary view">
                                 <i class="fa fa-eye">Edit</i>
@@ -102,9 +106,11 @@
                         <th>Date</th>
                         <th>Society Name</th>
                         <th>Mill Name</th>
-                        <th>Paddy Milled</th>
-                        <th>Paddy Type</th>
+                       <!--  <th>Paddy Milled</th>
+                        <th>Paddy Type</th> -->
                         <th>CMR offered</th>
+                        <th>Created By</th>
+                        <th>Modified By</th>
                         <th>Option</th>
                         <th>Print</th>
                     </tr>

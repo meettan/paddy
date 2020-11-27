@@ -137,7 +137,7 @@ tr:hover {background-color: #f5f5f5;}
                                      <td><?php echo $i++; ?></td>
                                      <td><?php echo date('d/m/Y',strtotime($neft->trans_dt)); ?></td>
                                      <td><?php echo $neft->reg_no; ?></td>
-                                     <td><?php echo get_farmer_name($this->session->userdata['loggedin']['kms_id'],$neft->reg_no);?></td>
+                                     <td><?php echo get_farmer_name($neft->reg_no);?></td>
                                      <td><?php echo $neft->quantity;  
                                                    $qty += $neft->quantity;
 

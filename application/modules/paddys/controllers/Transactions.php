@@ -404,9 +404,9 @@ class Transactions extends MX_Controller {
 
             $dist_sort_code = $this->session->userdata['loggedin']['dist_sort_code'];
 
-            $branch_cd   = $this->session->userdata['loggedin']['branch_id'];
+            $branch_cd      = $this->session->userdata['loggedin']['branch_id'];
 
-            $trans_type  = "N";
+            $trans_type     = "N";
 
             $bulk_trns_id = $this->Paddy->f_get_particulars("td_collections",array("MAX(bulk_trans_id) bulk_trans_id"),array('branch_id' => $this->session->userdata['loggedin']['branch_id'],'kms_id' => $kms_id), 1);
               
@@ -2700,7 +2700,7 @@ class Transactions extends MX_Controller {
 
             "t.trans_dt", "t.branch_id","t.trans_no", "t.dist", "paddy_qty",
 
-            "m.soc_name", "md.mill_name", "t.created_by"
+            "m.soc_name", "md.mill_name", "t.created_by","t.modified_by"
 
         );
 
@@ -2879,14 +2879,11 @@ class Transactions extends MX_Controller {
     #After Milling Mill Offer CMR to the DO 
 
     public function f_offered() {
-        
-        //District List
-       
 
         //Retriving CMR offered Details from table td_cmr_offered
         $select     =   array(
 
-            "t.trans_dt", "t.trans_no", "t.milled","t.rice_type","t.cmr_offered_now","t.resultant_cmr",
+            "t.trans_dt", "t.trans_no", "t.milled","t.rice_type","t.cmr_offered_now","t.resultant_cmr","t.created_by","t.modified_by",
 
             "s.soc_name", "md.mill_name",
 
@@ -3169,7 +3166,7 @@ class Transactions extends MX_Controller {
         //Retriving CMR doisseued Details
         $select     =   array(
 
-            "t.trans_dt", "t.trans_no", "t.dist","t.do_number",
+            "t.trans_dt", "t.trans_no", "t.dist","t.do_number","t.created_by","t.modified_by",
 
             "m.soc_name", "md.mill_name", "t.tot_doisseued"
 
@@ -3449,7 +3446,7 @@ class Transactions extends MX_Controller {
         //Retriving CMR delivery Details
         $select     =   array(
 
-            "t.trans_dt", "t.trans_no", "t.dist", "t.do_number",
+            "t.trans_dt", "t.trans_no", "t.dist", "t.do_number","t.created_by", "t.modified_by",
 
             "m.soc_name", "md.mill_name", "t.tot_delivery","t.delivery_dt"
 

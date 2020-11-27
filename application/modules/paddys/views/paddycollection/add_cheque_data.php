@@ -116,16 +116,26 @@
             </table>
             <div class="form-group row">
 
-            <div class="col-sm-10">
+            <div class="col-sm-6">
                 <?php if($farmer_dtl->status == 0 && $farmer_dtl->chq_status == 'U') { ?>
                 <input type="submit" id="submit" class="btn btn-info" value="Save"/>
                  <?php  } ?> 
-                 </div>
+                 </div>    
+           
+            </div>
+            </form>
+
+        <div class="form-group row">
+          <div class="col-sm-6"></div>
+          <div class="col-sm-5">
+                <?php if($farmer_dtl->status == 0 && $farmer_dtl->chq_status == 'U') { ?>
+                 <a href="<?php echo site_url("paddys/bankintegration/f_paddycol_forward");?>?soc_id=<?=$farme->soc_id;?>&trans_dt=<?=$farme->trans_dt;?>&forward_bulk_trans_id=<?=base64_encode($farme->forward_bulk_trans_id);?>&bulk_trans_id=<?=$farme->bulk_trans_id;?>"><button class="btn btn-primary" id="">Forward</button></a>
+                 <?php  } ?> 
             </div>
         </div>
-        </form>
 
-
+        </div>
+ 
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

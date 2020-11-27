@@ -276,9 +276,9 @@
                         <th width="25%">Particulars</th>
                         <th>Rate/Qtls <br>Paddy</th>
                         <th>Total Amount <br> (Rs)</th>
-                        <th>TDS Amount <br>(Less) <br> @2.00%</th>
-                        <th>CGST <br> (Add) <br> @2.5%</th>
-                        <th>SGST <br> (Add) <br> @2.5%</th>
+                        <th>TDS Amount <br>(Less) </th>
+                        <th>CGST <br> (Add) </th>
+                        <th>SGST <br> (Add) </th>
                         <th>Claimed Amount(Rs)</th>
                         <th>Payable Amount(Rs)</th>
                         <th><button type="button" class="btn btn-success addAnotherRow"><i class="fa fa-plus"></i></button></th>
@@ -732,7 +732,6 @@
         //Millers Payment Details
         $('#intro1').on('change', '.particulars', function(){
 
-
             let indexNo = $('.particulars').index(this);
 
             $('.rate_per_qtls:eq('+indexNo+')').val("");
@@ -747,92 +746,196 @@
 
             var  val    = $(this).val();
 
-                if(val == 0 ){
+           
+
+                if(val == 3 || val == 4 || val == 5){
 
 
-                 $.get('<?php echo site_url("paddys/payment/transport_rate"); ?>',{
-
+              //   $.get('<?php //echo site_url("paddys/payment/transport_rate"); ?>',{
+                 $.get('<?php echo site_url("paddy/billMasterDetails"); ?>',{
                  //   riceType: $('#rice_type').val(),
                     sl_no: $(this).val()
 
                 }).done(function(data){
 
-                    let values = JSON.parse(data);
-                    var rate_1     = values[0].amount;
-                    var rate_2     = values[1].amount;
-                    var rate_3     = values[2].amount;
-                    var distance_1 = 0;
-                    var distance_2 = 0;
-                    var distance_3 = 0;
-                    var tds        = 0.00;
-                    var cgst       = 0.00;
-                    var payable_amt= 0.00;
-                    var tot_amt    = 0.00;
-                    var tot_pady   = parseFloat($('#totPaddy').val());
+                    let values      = JSON.parse(data);
+                    var rate_1      = values.val;
+                    var rate_2      = values.val;
+                    var rate_3      = values.val;
+                    var distance_1  = 0;
+                    var distance_2  = 0;
+                    var distance_3  = 0;
+                    var tds         = values.tds;
+                    var cgst        = 0.00;
+                    var payable_amt = 0.00;
+                    var tot_amt     = 0.00;
+                    var tot_pady    = parseFloat($('#totPaddy').val());
 
                     var tot_distance = $('#soc_mill_dis').val();
 
-                    if(tot_distance <= 25){
+                    // if(tot_distance <= 25){
+
+                    //      $('.rate_per_qtls:eq('+indexNo+')').val(rate_1);
+
+                    //      var tot_amt = parseFloat(rate_1 * tot_pady);
+
+                    //      $('.amounts:eq('+indexNo+')').val(tot_amt.toFixed(2));
+
+                    //       $('.tds_amount:eq('+indexNo+')').val(tds.toFixed(2));
+                    //       $('.cgst:eq('+indexNo+')').val(cgst.toFixed(2));
+                    //       $('.sgst:eq('+indexNo+')').val(cgst.toFixed(2));
+
+                    //       var payable_amt = parseFloat(tot_amt+tds+cgst+cgst);
+
+                    //       $('.paybel:eq('+indexNo+')').val(payable_amt.toFixed(2));
+                    //       $('.payble_amount').val(sumValuesOf('paybel').toFixed());
+
+                    // }else if(tot_distance <= 50){
+                    //         distance_1 = 25;
+                    //     var payment_1  = parseFloat(tot_pady*rate_1);
+                    //         distance_2 = tot_distance - distance_1;
+                    //         console.log(distance_2);
+                    //     var payment_2  = parseFloat(distance_2*rate_2*tot_pady);
+                           
+                    //         $('.rate_per_qtls:eq('+indexNo+')').val(rate_1+','+rate_2);
+
+                    //         $('.amounts:eq('+indexNo+')').val((payment_1 + payment_2).toFixed(2));
+
+                    //         tot_amt = payment_1 + payment_2;
+
+                    //       $('.tds_amount:eq('+indexNo+')').val(tds.toFixed(2));
+                    //       $('.cgst:eq('+indexNo+')').val(cgst.toFixed(2));
+                    //       $('.sgst:eq('+indexNo+')').val(cgst.toFixed(2));
+
+                    //       var payable_amt = parseFloat(tot_amt+tds+cgst+cgst);
+                          
+                    //       $('.paybel:eq('+indexNo+')').val(payable_amt.toFixed(2));
+                    //       $('.payble_amount').val(sumValuesOf('paybel').toFixed());
+
+                    // }else if(tot_distance > 50){
+
+                    //         distance_1 = 25;
+                    //     var payment_1  = parseFloat(tot_pady*rate_1);
+                    //         distance_2 = 25;
+                    //     var payment_2  = parseFloat(distance_2*rate_2*tot_pady);
+                    //         distance_3 = tot_distance -50;
+                    //     var payment_3  = parseFloat(distance_3*rate_3*tot_pady);   
+
+                    //         $('.rate_per_qtls:eq('+indexNo+')').val(rate_1+','+rate_2+','+rate_3);
+
+                    //         $('.amounts:eq('+indexNo+')').val((payment_1 + payment_2 + payment_3).toFixed(2));  
+
+                    //            tot_amt = payment_1 + payment_2;
+
+                    //        $('.tds_amount:eq('+indexNo+')').val(tds.toFixed(2));
+                    //        $('.cgst:eq('+indexNo+')').val(cgst.toFixed(2));
+                    //        $('.sgst:eq('+indexNo+')').val(cgst.toFixed(2));
+
+                    //        var payable_amt = parseFloat(tot_amt+tds+cgst+cgst);
+                          
+                    //        $('.paybel:eq('+indexNo+')').val(payable_amt.toFixed(2));
+                    //        $('.payble_amount').val(sumValuesOf('paybel').toFixed());           
+
+                    //     }
+
+                      if(val == 3){
 
                          $('.rate_per_qtls:eq('+indexNo+')').val(rate_1);
 
                          var tot_amt = parseFloat(rate_1 * tot_pady);
 
+                         console.log(rate_1);
+                         console.log(tot_pady);
+
                          $('.amounts:eq('+indexNo+')').val(tot_amt.toFixed(2));
 
-                          $('.tds_amount:eq('+indexNo+')').val(tds.toFixed(2));
+                         tds = ((tds*tot_amt)/100).toFixed(2);
+
+                          $('.tds_amount:eq('+indexNo+')').val(tds);
                           $('.cgst:eq('+indexNo+')').val(cgst.toFixed(2));
                           $('.sgst:eq('+indexNo+')').val(cgst.toFixed(2));
 
-                          var payable_amt = parseFloat(tot_amt+tds+cgst+cgst);
+                          var payable_amt = parseFloat(tot_amt-tds+cgst+cgst);
 
                           $('.paybel:eq('+indexNo+')').val(payable_amt.toFixed(2));
                           $('.payble_amount').val(sumValuesOf('paybel').toFixed());
 
-                    }else if(tot_distance <= 50){
+                    }else if(val == 4){
+
+                        if(tot_distance > 25){
+
+                            tot_amt    =0;
                             distance_1 = 25;
-                        var payment_1  = parseFloat(tot_pady*rate_1);
+                           if(tot_distance <= 50){
                             distance_2 = tot_distance - distance_1;
+                        }else{
+
+                            distance_2 = 25;
+                        }
+                    
                         var payment_2  = parseFloat(distance_2*rate_2*tot_pady);
                            
-                            $('.rate_per_qtls:eq('+indexNo+')').val(rate_1+','+rate_2);
+                            $('.rate_per_qtls:eq('+indexNo+')').val(rate_2);
 
-                            $('.amounts:eq('+indexNo+')').val((payment_1 + payment_2).toFixed(2));
+                            $('.amounts:eq('+indexNo+')').val((payment_2).toFixed(2));
 
-                            tot_amt = payment_1 + payment_2;
+                            tot_amt =  payment_2;
 
-                          $('.tds_amount:eq('+indexNo+')').val(tds.toFixed(2));
+                            tds = ((tds*tot_amt)/100).toFixed(2);
+
+                          $('.tds_amount:eq('+indexNo+')').val(tds);
                           $('.cgst:eq('+indexNo+')').val(cgst.toFixed(2));
                           $('.sgst:eq('+indexNo+')').val(cgst.toFixed(2));
 
-                          var payable_amt = parseFloat(tot_amt+tds+cgst+cgst);
+                          var payable_amt = parseFloat(tot_amt-tds+cgst+cgst);
                           
                           $('.paybel:eq('+indexNo+')').val(payable_amt.toFixed(2));
                           $('.payble_amount').val(sumValuesOf('paybel').toFixed());
 
-                    }else if(tot_distance > 50){
+                        }else{
+                        
+                                alert("Invalid Selection");
+                                $('.amounts:eq('+indexNo+')').prop('readonly', true);
+                                $('.claim_amt:eq('+indexNo+')').prop('readonly', true);
+                                $('.paybel:eq('+indexNo+')').prop('readonly', true);
 
-                            distance_1 = 25;
-                        var payment_1  = parseFloat(tot_pady*rate_1);
-                            distance_2 = 25;
-                        var payment_2  = parseFloat(distance_2*rate_2*tot_pady);
+                        }  
+
+
+                    }else if(val == 5 ){
+                            
+
+                          if(tot_distance > 50){
+                      
                             distance_3 = tot_distance -50;
-                        var payment_3  = parseFloat(distance_3*rate_3*tot_pady);   
+                            var payment_3  = parseFloat(distance_3*rate_3*tot_pady);   
 
-                            $('.rate_per_qtls:eq('+indexNo+')').val(rate_1+','+rate_2+','+rate_3);
+                            $('.rate_per_qtls:eq('+indexNo+')').val(rate_3);
 
-                            $('.amounts:eq('+indexNo+')').val((payment_1 + payment_2 + payment_3).toFixed(2));  
+                            $('.amounts:eq('+indexNo+')').val((payment_3).toFixed(2));  
 
-                               tot_amt = payment_1 + payment_2;
+                               tot_amt = payment_3;
 
-                           $('.tds_amount:eq('+indexNo+')').val(tds.toFixed(2));
+                               tds = ((tds*tot_amt)/100).toFixed(2);
+
+                           $('.tds_amount:eq('+indexNo+')').val(tds);
                            $('.cgst:eq('+indexNo+')').val(cgst.toFixed(2));
                            $('.sgst:eq('+indexNo+')').val(cgst.toFixed(2));
 
-                           var payable_amt = parseFloat(tot_amt+tds+cgst+cgst);
+                           var payable_amt = parseFloat(tot_amt-tds+cgst+cgst);
                           
                            $('.paybel:eq('+indexNo+')').val(payable_amt.toFixed(2));
-                           $('.payble_amount').val(sumValuesOf('paybel').toFixed());           
+                           $('.payble_amount').val(sumValuesOf('paybel').toFixed());  
+
+                       }else{
+                                 alert("You Selected Particular Above Distance");
+
+                                  $('.amounts:eq('+indexNo+')').prop('readonly', true);
+                                  $('.claim_amt:eq('+indexNo+')').prop('readonly', true);
+                                  $('.paybel:eq('+indexNo+')').prop('readonly', true);
+
+                           }
+
 
                         }
                     
@@ -1017,7 +1120,7 @@
              
              var cgsts   = parseFloat($(this).closest('tr').find(".cgst").val());
 
-              var sgsts   = parseFloat($(this).closest('tr').find(".sgst").val());
+              var sgsts  = parseFloat($(this).closest('tr').find(".sgst").val());
 
              if($.isNumeric(amounts)){
                amount = parseFloat(amounts);
@@ -1075,7 +1178,6 @@
             $('.less_butta').change();
             
         });
-
       
 
     });
@@ -1092,9 +1194,6 @@
 
     });
 // $(document).ready(function(){
-
-// $("#form").on('submit', function(e){
-//         $('#intro1 tr').each(function() {
 
           $('#intro1').on('change', '.particulars', function(){
 

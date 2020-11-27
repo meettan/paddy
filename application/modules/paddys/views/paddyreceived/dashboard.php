@@ -33,7 +33,8 @@
                         <th>Society Name</th>
                         <th>Mill Name</th>
                         <th>Paddy Quantity</th>
-                        <th>Created By</th>
+                      
+                        <th>Modified By</th>
                         <th>Option</th>
 
                     </tr>
@@ -58,7 +59,8 @@
                             <td><?php echo $preceive_dtl->soc_name; ?></td>
                             <td ><?php echo $preceive_dtl->mill_name; ?></td>
                             <td><?php echo $preceive_dtl->paddy_qty; ?></td>
-                            <td><?php echo $preceive_dtl->created_by; ?></td>
+                         
+                            <td><?php echo $preceive_dtl->modified_by; ?></td>
                           <td>
 
                          <a href="f_received_edit?trans_no=<?php echo $preceive_dtl->trans_no; ?>" 
@@ -98,7 +100,8 @@
                         <th>Society Name</th>
                         <th>Mill Name</th>
                         <th>Paddy Quantity</th>
-                        <th>Created By</th>
+                       
+                        <th>Modified By</th>
                         <th>Option</th>
 
                     </tr>

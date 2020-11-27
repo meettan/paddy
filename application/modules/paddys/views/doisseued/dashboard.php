@@ -33,8 +33,10 @@
                         <th>Society Name</th>
                         <th>Mill Name</th>
                         <th>Do Number</th>
-                        <th>DO Issued</th>
-                        <th>CMR delivery</th>
+                        <!-- <th>DO Issued</th>
+                        <th>CMR delivery</th> -->
+                        <th>Created By</th>
+                        <th>Modified By</th>
                         <th>Option</th>
                     </tr>
 
@@ -56,10 +58,11 @@
                                 <td><?php echo $b_dtls->soc_name; ?></td>
                                  <td><?php echo $b_dtls->mill_name; ?></td>
                                 <td><?php echo $b_dtls->do_number; ?></td>
-                                <td><?php echo $b_dtls->tot_doisseued; ?></td>
+                               <!--  <td><?php //echo $b_dtls->tot_doisseued; ?></td>
 
-                                 <td><?php echo get_totcmr_delivery($this->session->userdata['loggedin']['kms_id'],$this->session->userdata['loggedin']['branch_id'],$b_dtls->do_number); ?></td>
-
+                                 <td><?php //echo get_totcmr_delivery($this->session->userdata['loggedin']['kms_id'],$this->session->userdata['loggedin']['branch_id'],$b_dtls->do_number); ?></td> -->
+                                 <td><?php echo $b_dtls->created_by; ?></td>
+                                 <td><?php echo $b_dtls->modified_by; ?></td>
                                 <td>
 
                                 <a href="<?=base_url();?>index.php/paddys/transactions/f_doisseued_edit?trans_no=<?php echo $b_dtls->trans_no; ?>" data-toggle="tooltip" data-placement="bottom" class="btn btn-primary view">
@@ -100,8 +103,10 @@
                         <th>Society Name</th>
                         <th>Mill Name</th>
                         <th>DO Number</th>
-                        <th>DO Isseued</th>
-                        <th>CMR delivery</th>
+                       <!--  <th>DO Isseued</th>
+                        <th>CMR delivery</th> -->
+                        <th>Created By</th>
+                        <th>Modified By</th>
                         <th>Option</th>
 
                     </tr>

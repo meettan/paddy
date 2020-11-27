@@ -82,7 +82,8 @@ class Bankintegration extends MX_Controller {
                                 'acc_no'                  =>  $row->acc_no,
                                 "forward_sl"              =>  $row->book_no,
                                 "bank_id"                 =>  $row->bank_sl_no,
-                                "kms_id"                  =>  $this->session->userdata['loggedin']['kms_id']
+                                "kms_id"                  =>  $this->session->userdata['loggedin']['kms_id'],
+                                "forwarded_by"            =>  $this->session->userdata['loggedin']['user_name']
                             
                                  );
 
@@ -149,10 +150,12 @@ class Bankintegration extends MX_Controller {
 
                                             $i = ++$slno;
                                           
-                                            $data .= $i.'|'.$row->forward_trans_id.$row->book_no.'|'.$row->amount.'|'.'11'.'|'.'098301002773'.'|'.'THE WEST BENGAL STATE CO OPERATIVE MARKETING FEDERATION LTD(BENFED)'.'|'.'SMS'.'|'.'9674746908'.'|'.'THE WEST BENGAL STATE CO OPERATIVE MARKETING FEDERATION LTD(BENFED)'.'|'.$row->fifsc.'|'.'11'.'|'.$row->faccount.'|'.$row->farm_name.'|'.$row->bulk_id."\r\n";
+                                            $data .= $i.'|'.$row->forward_trans_id.$row->book_no.'|'.$row->amount.'|'.'11'.'|'.'098301002773'.'|'.'THE WEST BENGAL STATE CO OPERATIVE MARKETING FEDERATION LTD(BENFED)'.'|'.'SMS'.'|'.'9674746908'.'|'.'THE WEST BENGAL STATE CO OPERATIVE MARKETING FEDERATION LTD(BENFED)'.'|'.$row->fifsc.'|'.'11'.'|'.$row->faccount.'|'.$row->farm_name.'|'.$row->bulk_id.'|'.'T'."\r\n";
 
                                         }
-                                                           
+                                          
+                                        $data = rtrim($data);   
+                                                      
                                         $path = $_SERVER['DOCUMENT_ROOT'].'/downloads';
 
                                         if ( ! write_file($path.'/log_'.time().'.txt',$data)) {
@@ -189,7 +192,7 @@ class Bankintegration extends MX_Controller {
                                         
                                         $datetimes = date('Y_m_d_H_i_s',$datetime);
                                         
-                                        $filename = 'DEMOCORP212_'.$datetimes.'_'.$forward_bulk_trans_id.'.txt';
+                                        $filename = 'TWBSCOMFL_'.$datetimes.'_'.$forward_bulk_trans_id.'.txt';
                                         
                                 
                                         if (write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)

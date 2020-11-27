@@ -35,6 +35,8 @@
                         <th>Mill Name</th>
                         <th>Memo Number</th>
                         <th>Memo Date</th>
+                        <th>Created By</th>
+                       <!--  <th>Modified By</th> -->
                         <th>Option</th>
 
                     </tr>
@@ -61,6 +63,8 @@
                                 <td><?php echo $wqsc_dtl->mill_name; ?></td>
                                 <td><?php echo $wqsc_dtl->memo_no; ?></td>
                                 <td> <?php echo $wqsc_dtl->memo_dt; ?></td>
+                                <td><?php echo $wqsc_dtl->created_by; ?></td>
+                                <!-- <td> <?php //echo $wqsc_dtl->modified_by; ?></td> -->
                                 <td>
 
                                 <a href="wqsc_edit?trans_no=<?php echo $wqsc_dtl->id; ?>&wqsc_no=<?php echo $wqsc_dtl->wqsc_no; ?>" data-toggle="tooltip" data-placement="bottom" class="btn btn-primary view">
@@ -100,6 +104,8 @@
                         <th>Mill Name</th>
                         <th>Memo Number</th>
                         <th>Memo Date</th>
+                        <th>Created By</th>
+                      <!--   <th>Modified By</th> -->
                         <th>Option</th>
 
                     </tr>
