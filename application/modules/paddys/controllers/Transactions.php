@@ -3676,9 +3676,13 @@ class Transactions extends MX_Controller {
 
             $data_array = array(
                 
-                "trans_dt"      =>  $this->input->post('trans_dts'),                
+                "trans_dt"      =>  $this->input->post('trans_dts'),
 
-                "rm_gd_dist"    =>  $this->input->post('rm_gd_dist'),    
+                "dist"          =>  $this->input->post('dist'),               
+
+                "rm_gd_dist"    =>  $this->input->post('rm_gd_dist'), 
+
+                "inter_dist"    =>  $this->input->post('inter_dist'), 
 
                 "modified_by"   =>  $this->session->userdata['loggedin']['user_name'],
 

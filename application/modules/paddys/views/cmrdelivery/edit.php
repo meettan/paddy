@@ -190,7 +190,7 @@
 
                         <div class="col-sm-4">
 
-                            <select name="dist" id="dist" class="form-control required" disabled>
+                            <select name="dist" id="dist" class="form-control required" >
 
                                 <option value="">Select</option>
 
@@ -630,6 +630,23 @@
                 $('#submit').attr('type', 'button');
 
             }
+
+        });
+
+          $("#dist").change(function(){
+
+        var current_dist = <?php echo $this->session->userdata['loggedin']['branch_id'];?>;
+        var dist         = $(this).val();
+
+        if(current_dist == dist)
+            {
+                 $("#inter_dist").val("N");
+            }else{
+
+                     $("#inter_dist").val("Y");
+                 }
+
+          
 
         });
 

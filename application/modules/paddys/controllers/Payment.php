@@ -1549,7 +1549,6 @@ class Payment extends MX_Controller {
 
     }
     
-
     public function tot_paddy_received() {
 
         $select =  array( "sum(paddy_qty) as tot" );

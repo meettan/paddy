@@ -142,7 +142,7 @@
                       foreach($dist as $dlist){  ?>
 
                   <option value="<?php echo $dlist->district_code;?>"
-                 <?php echo ($dlist->district_code == $doisseued_dtls->dist)?'selected':'';?>>
+                 <?php echo ($dlist->district_code == $doisseued_dtls->dist)?'selected':'';?> >
                  <?php echo $dlist->district_name;?></option>
 
                    <?php     }   ?>    
