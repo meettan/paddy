@@ -4067,8 +4067,6 @@ class Transactions extends MX_Controller {
 
             //  $this->Paddy->f_delete('td_wqsc', $whered);
              $count = count($this->input->post('sub_wqsc'));
-
-
            
 
              for($i= 0 ;$i< $count ;$i++)
@@ -4143,7 +4141,10 @@ class Transactions extends MX_Controller {
             );
             $wqsc['blocks']      =  $this->Paddy->f_get_particulars("md_block",NULL,$wheres, 0); 
             $wqsc['wqsc_dtls']    =  $this->Paddy->f_get_particulars("td_wqsc",NULL,$where, 1);
+           
             $wqsc['wqsc_dtlss']   =  $this->Paddy->f_get_particulars("td_wqsc_dtls",NULL,$wheredl, 0);
+
+           
             $this->load->view('post_login/main');
 
             $this->load->view("wqsc/edit", $wqsc);

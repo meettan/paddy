@@ -100,6 +100,8 @@
 
                     <div class="col-sm-4">
 
+                   <!--      <input type="text" name ="memo_no" id="memo_no" class="form-control" value="<?php //echo $wqsc_dtls->memo_no;?>" readonly> -->
+
                         <select type="text" class="form-control" name="memo_no" id="memo_no" disabled="">
 
                             <option value="">Select</option>    
@@ -483,6 +485,8 @@
             .done(function(data){
 
                 let temp = JSON.parse(data);
+                   console.log(temp);
+
                     var dataaa =temp.trans_dt;
 
                     var curr_date = dataaa.split("-");

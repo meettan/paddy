@@ -29,7 +29,7 @@
 
                         <option value="">Select</option>    
 
-                        <option value="">Select District First</option>    
+                        <option value="">Select Block First</option>    
 
                     </select>
 

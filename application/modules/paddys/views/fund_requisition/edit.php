@@ -391,9 +391,9 @@
                 <tfoot>
                     <tr>
                         <td  colspan="3"  style="text-align: right;color:green"><b>Allocate Amount:</b></td>
-                        <td  style="text-align: right;" ><b id="allocate_amount"><?php echo $allocate_amount ?></b></td>
+                        <td  style="text-align: right;" ><b id="allocate_amount"><?php echo round($allocate_amount); ?></b></td>
                         <td colspan="3" style="text-align: right;">Total Amount:</td>
-                        <td colspan="2"><?php echo $sum ?></td>
+                        <td colspan="2"><?php echo round($sum); ?></td>
 
                     </tr>
 

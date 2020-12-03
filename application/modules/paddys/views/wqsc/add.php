@@ -648,6 +648,8 @@ $(document).ready(function(){
         $('#intro1').on('change', '.moisture_ext_amt', function(){
 
             let indexNo = $('.quantity').index(this);
+
+            var price  = 0 ;
         
             $('.tot_price:eq('+indexNo+')').val("");         
             $('.paybel:eq('+indexNo+')').val("");
@@ -677,12 +679,13 @@ $(document).ready(function(){
                             price += parseFloat($(this).val());
                         });
 
-                         $('#tot_rice').val(price);
+                         $('#tot_rice').val(price.toFixed(2));
         });
 
         $('#intro1').on('change', '.moisture_extra', function(){
 
             let indexNo = $('.quantity').index(this);
+            var price   = 0.00;
         
             $('.tot_price:eq('+indexNo+')').val("");         
             $('.paybel:eq('+indexNo+')').val("");
@@ -713,8 +716,47 @@ $(document).ready(function(){
                             price += parseFloat($(this).val());
                         });
 
-                         $('#tot_rice').val(price);
+                         $('#tot_rice').val(price.toFixed(2));
         });
+
+        //  $('#intro1').on('change', '.moisture_ext_amt', function(){
+
+        //     let indexNo = $('.quantity').index(this);
+        //     var prices   = 0.00;
+        
+        //     $('.tot_price:eq('+indexNo+')').val("");         
+        //     $('.paybel:eq('+indexNo+')').val("");
+
+        //             var val    = parseFloat($(this).val());
+        //             var quantity = parseFloat($('.quantity:eq('+indexNo+')').val());
+        //             var moisture_extra = parseFloat($('.moisture_extra:eq('+indexNo+')').val());
+                   
+                 
+        //             var tot_amt = 0.00;
+        //             var rate   = parseFloat($('#rate_per_quintal').val());
+
+        //                 var moisture_amt = parseFloat(rate * moisture_extra);
+        //                 var tot_amt = parseFloat(rate * quantity);
+        //                 var amt     = parseFloat(tot_amt-moisture_amt);
+        //                      $('.tot_price:eq('+indexNo+')').val(amt.toFixed(2));
+        //                 $('.moisture_ext_amt:eq('+indexNo+')').val(moisture_amt.toFixed(2));
+                   
+        //                 var sum_deduct    = 0;
+                      
+        //                 $('.moisture_ext_amt').each(function() {
+        //                     sum_deduct += parseFloat($(this).val());
+        //                 });
+
+        //                 $('#tot_deduction').val(sum_deduct);
+
+        //                 $('.tot_price').each(function() {
+
+        //                     prices += parseFloat($(this).val());
+
+        //                 });
+        //              console.log(prices);
+        //                  $('#tot_rice').val(prices.toFixed(2));
+        // });
 
 
 

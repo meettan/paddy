@@ -72,10 +72,10 @@
                 $paddy_qty = 0;
                 $amount = 0;
             foreach($farmer_dtls as $farmer_dtl) { ?>
-            <tr <?php if(get_farmer_name($this->session->userdata['loggedin']['kms_id'],$farmer_dtl->reg_no) == "Not Found"){
+            <tr <?php if(get_farmer_name($farmer_dtl->reg_no) == "Not Found"){
               echo 'style="background-color: red;"';
             } ?> ><td><?=++$count;?></td>
-              <td><?=get_farmer_name($this->session->userdata['loggedin']['kms_id'],$farmer_dtl->reg_no)?></td>
+              <td><?=get_farmer_name($farmer_dtl->reg_no)?></td>
               <td><?=$farmer_dtl->reg_no?><input type="hidden" value="<?=$farmer_dtl->reg_no?>" name="reg_no[]"></td>
               <td>
                   <input type="text" name="quantity[]" value="<?=$farmer_dtl->quantity?>" class="form-control quantity" readonly>
