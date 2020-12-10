@@ -1082,16 +1082,16 @@ class Add_new extends MX_Controller {
                     while(($line = fgetcsv($csvFile)) !== FALSE){
                         
                     $data = array(
-                         'sl_no'       =>  $line[2],
+                        'sl_no'       =>  $line[2],
                         'dist'         =>  $line[0],
                         'block'        =>  $line[1],
                         'branch_id'    =>  $line[0],
                         'society_code' =>  $line[2],
                         'soc_name'     =>  $line[3],
                         'pan_no'       =>  $line[4],
-                        'inchargename' => $line[5],
-                        'ph_no'        => $line[6],
-                        'agreementno'  => $line[7],
+                        'inchargename' =>  $line[5],
+                        'ph_no'        =>  $line[6],
+                        'agreementno'  =>  $line[7],
                         'created_by'   =>  $this->session->userdata['loggedin']['user_name'],
                         'created_dt'   =>  date('Y-m-d')
                         
@@ -1134,6 +1134,65 @@ class Add_new extends MX_Controller {
             $this->load->view('post_login/footer');
         }
         
+    }
+
+    public function f_society_update() {
+
+        $url = 'https://procurement.wbfood.in/api/Statusupd/Proccentre'; /*Society*/
+        
+        
+        $data = array('authcode' => 'ahtr*125#');
+        $options = array(
+            'http' => array(
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
+                'content' => http_build_query($data)
+            )
+        );
+
+      
+        $context = stream_context_create($options);
+        $result  = file_get_contents($url, false, $context);
+
+        $data   = json_decode($result);
+
+         $j=0;
+
+        foreach ($data as $value) {
+
+                      $data = array(
+                            'sl_no'        =>  $value->pc_code,
+                            'dist'         =>  $value->DistCode,
+                            'block'        =>  $value->BlockCode,
+                            'branch_id'    =>  $value->DistCode,
+                            'society_code' =>  $value->pc_code,
+                            'soc_name'     =>  $value->CentreName,
+                            'pan_no'       =>  $value->CentrePan,
+                            'inchargename' =>  $value->CentreInCharge,
+                            'ph_no'        =>  $value->mobileno,
+                            'agreementno'  =>  $value->AgreementNo,
+                            'created_by'   =>  $this->session->userdata['loggedin']['user_name'],
+                            'created_dt'   =>  date('Y-m-d')
+                                                  
+                     );
+
+                    $query = $this->db->get_where('md_society', array('sl_no ='=> $value->pc_code));
+        
+                        if ($query->num_rows() == 0)
+                            {   
+                                 $this->Paddy->f_insert('md_society', $data); 
+                                   
+                                        $j++;
+                                     
+                            }
+
+            }
+
+            $this->session->set_flashdata('msg', $j.' Records successfully added!');
+
+            redirect('paddys/add_new/f_society');
+
+
     }
 
     //Society details edit in the table md_society
@@ -1543,6 +1602,58 @@ class Add_new extends MX_Controller {
             $this->load->view('post_login/footer');
         }
         
+    }
+    //   Mill update using Food Api  10/12/2020 //
+    public function f_mill_update() {
+
+        $url = 'https://procurement.wbfood.in/api/Statusupd/RiceMill'; /*Mill*/
+        
+        
+        $data = array('authcode' => 'ahtr*125#');
+        $options = array(
+            'http' => array(
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
+                'content' => http_build_query($data)
+            )
+        );
+
+      
+        $context = stream_context_create($options);
+        $result  = file_get_contents($url, false, $context);
+
+        $data   = json_decode($result);
+
+         $j=0;
+
+        foreach ($data as $value) {
+
+                       $data = array(
+                                'sl_no'        =>  $value->r_mill_cd,
+                                'dist'         =>  $value->DistrictCode,
+                                'block'        =>  '0'.$value->BlockCode,
+                                'mill_code'    =>  $value->r_mill_cd,
+                                'mill_name'    =>  $value->RiceMillerName,
+                                'branch_id'    =>  $value->DistrictCode
+                                   );
+
+                    $query = $this->db->get_where('md_mill', array('mill_code ='=> $value->r_mill_cd));
+        
+                        if ($query->num_rows() == 0)
+                            {   
+                                 $this->Paddy->f_insert('md_mill', $data); 
+                                   
+                                        $j++;
+                                     
+                            }
+
+            }
+
+            $this->session->set_flashdata('msg', $j.' Records successfully added!');
+
+            redirect('paddys/add_new/f_mill');
+
+
     }
 
     //Mill details edit in the table md_mill
@@ -2099,6 +2210,83 @@ class Add_new extends MX_Controller {
         }
         
     }
+
+    public function f_farmreg_update() {
+        
+        $date = date('Y-m-d');
+
+        $url = 'https://procurement.wbfood.in/api/Statusupd/Framerregdtls';/*Farmer*/
+        $j=0;
+
+       // while ($date <= '2020-12-09') {
+        
+        $date1 = date("d/m/Y", strtotime($date));
+        
+        $data = array('authcode' => 'ahtr*125#','dt_from' => $date1);
+
+        $options = array(
+            'http' => array(
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
+                'content' => http_build_query($data)
+            )
+        );
+      
+        $context = stream_context_create($options);
+        $result  = file_get_contents($url, false, $context);
+
+        $data   = json_decode($result);
+
+        foreach ($data as $value) {
+
+                    $data = array(
+                        "kms_id"           =>  $this->session->userdata['loggedin']['kms_id'],
+                        "branch_id"        =>  $value->districtcode,
+                        "dist"             =>  $value->districtcode,
+                        "block"            =>  $value->blockcode,
+                        'soc_id'           =>  $value->proccentreid,
+                        'reg_dt'           =>  date("Y-m-d", strtotime($value->regdt)),
+                        'reg_no'           =>  $value->regno,
+                        'farm_name'        =>  $value->name,
+                        'father_name'      =>  $value->father_mother_spouse_name,
+                        'relation'         =>  $value->relation_with_farmer,
+                        'caste'            =>  $value->Caste,
+                        'address'          =>  $value->address,
+                        'epic_no'          =>  $value->epic_no,
+                        'villagecode'      =>  $value->villagecode,
+                        'account_no'       =>  $value->bank_accno,
+                        'ifsc_code'        =>  $value->bank_ifsc,
+                        'land_holding'     =>  $value->land_area_hectare,
+                        'land_description' =>  $value->land_desc,
+                        'farmer_type'      =>  $value->krishakbandhu,
+                        "created_by"       =>  $this->session->userdata['loggedin']['user_name'],
+                        "created_dt"       =>  date('Y-m-d')
+                                                  
+                     );
+
+                    $query = $this->db->get_where('temp_farmer_reg', array('reg_no ='=> $value->regno));
+            
+                        if ($query->num_rows() == 0)
+                            {   
+                               $id = $this->Paddy->f_insert('temp_farmer_reg', $data);  
+                                if(isset($id)){
+                                    $j++;
+                                }  
+                           }
+
+            }
+
+        //     $date = date("Y-m-d", strtotime($date. "+1 day"));
+        // }
+
+            //For notification storing message
+            $this->session->set_flashdata('msg', $j.' Record Successfully added!');
+
+            redirect('paddys/add_new/f_farmer');
+        
+    }
+    
+
       //For Farmer Details Modal
     public function f_getFarmerDetails(){
 

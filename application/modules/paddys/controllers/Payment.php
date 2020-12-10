@@ -1525,11 +1525,13 @@ class Payment extends MX_Controller {
             "a.soc_name" => $this->input->post("soc_id"),
             "a.mill_id"  => $this->input->post("mill_id"),
             "a.id"       => $this->input->post("wqsc"),
+            "c.branch_id"=> $this->session->userdata['loggedin']['branch_id'],
+            "c.kms_year" => $this->session->userdata['loggedin']['kms_id'],
             "a.kms_id"   => $this->session->userdata['loggedin']['kms_id']
  
              );
 
-        $socmill  =   $this->Paddy->f_get_particulars("td_wqsc a,md_district b,td_cmr_delivery c",NULL,$where, 1);
+        $socmill  =   $this->Paddy->f_get_particulars("td_wqsc a,md_district b,td_cmr_delivery c",$select,$where, 1);
 
         echo json_encode($socmill);
 

@@ -77,6 +77,26 @@
       return $farmer;
 
     }
+
+    function get_block_name($block){
+
+    $ci =& get_instance();
+    $ci->load->database();
+   //$sql="SELECT farm_name FROM td_farmer_reg WHERE kms_id='".$kms_yr."' AND reg_no ='".$reg_no."' ";
+
+    $sql="SELECT block_name FROM md_block WHERE blockcode ='".$block."' ";
+   
+     $paddy  =   $ci->db->query($sql)->row();
+     
+       if($paddy){
+         $block = $paddy->block_name;
+      }else{
+       
+        $block = "Not Found";
+      }
+      return $block;
+
+    }
   
 
   function get_bank_id($bank_sl_no){

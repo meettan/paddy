@@ -146,19 +146,30 @@ class Bankintegration extends MX_Controller {
 
                                         foreach($farmer_data as $row){
 
-
-
                                             $i = ++$slno;
                                           
-                                            $data .= $i.'|'.$row->forward_trans_id.$row->book_no.'|'.$row->amount.'|'.'11'.'|'.'098301002773'.'|'.'THE WEST BENGAL STATE CO OPERATIVE MARKETING FEDERATION LTD(BENFED)'.'|'.'SMS'.'|'.'9674746908'.'|'.'THE WEST BENGAL STATE CO OPERATIVE MARKETING FEDERATION LTD(BENFED)'.'|'.$row->fifsc.'|'.'11'.'|'.$row->faccount.'|'.$row->farm_name.'|'.$row->bulk_id.'|'.'T'."\r\n";
+                                            $data .= $i.'|'.$row->forward_trans_id.$row->book_no.'|'.$row->amount.'|'.'11'.'|'.$bank_data->acc_no.'|'.'THE WEST BENGAL STATE CO OPERATIVE MARKETING FEDERATION LTD(BENFED)'.'|'.'SMS'.'|'.'9674746908'.'|'.'THE WEST BENGAL STATE CO OPERATIVE MARKETING FEDERATION LTD(BENFED)'.'|'.$row->fifsc.'|'.'11'.'|'.$row->faccount.'|'.$row->farm_name.'|'.$row->bulk_id.'|'.'T'."\r\n";
 
                                         }
                                           
                                         $data = rtrim($data);   
-                                                      
-                                        $path = $_SERVER['DOCUMENT_ROOT'].'/downloads';
 
-                                        if ( ! write_file($path.'/log_'.time().'.txt',$data)) {
+                                        $datetime = strtotime(date('Y-m-d H:i:s'));
+                                        
+                                        $datetimes = date('dmY',$datetime);
+                                        
+                                        $filename = 'BENFED1_BENFED1H2HUPLD_'.$datetimes.'_'.$forward_bulk_trans_id.'.txt';
+                                                      
+                                       // $path = $_SERVER['DOCUMENT_ROOT'].'/downloads';
+
+                                        if ( ! write_file(FCPATH .$bank_data->folder_path.$filename,$data)) {
+
+
+                                           echo 'Unable to write the file';
+
+                                        } else {
+
+                                            echo 'File written!';  
                                             
                                           
                                         }

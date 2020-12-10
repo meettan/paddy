@@ -301,7 +301,7 @@ class Transactions extends MX_Controller {
             $this->Paddy->f_edit('td_work_order', $data_array, $where);
 
             //For notification storing message
-            $this->session->set_flashdata('msg', 'Successfully edited!');
+            $this->session->set_flashdata('msg', 'Successfully Approved!');
 
             redirect('paddys/transactions/f_workorder');
         
@@ -317,7 +317,7 @@ class Transactions extends MX_Controller {
 
             $select     =   array(
 
-                "t.*","s.soc_name soc_name","m.mill_name mill_name","per_qui_rate"
+                "t.*","s.soc_name soc_name","m.mill_name mill_name","p.per_qui_rate per_qui_rate"
     
             );
 
@@ -339,11 +339,19 @@ class Transactions extends MX_Controller {
                  
            // $workorder['mill_dtls'] = $this->Paddy->f_get_particulars("md_mill", NULL,NULL, 0);
 
-            $workorder['workorder_dtls']= $this->Paddy->f_get_particulars("td_work_order t,md_society s,md_mill m,md_paddy_rate p", NULL, $where, 1);
-            
+            $workorder['workorder_dtls']= $this->Paddy->f_get_particulars("td_work_order t,md_society s,md_mill m,md_paddy_rate p", $select, $where, 1);
+
             $this->load->view('post_login/main');
 
-            $this->load->view("workorder/print_data", $workorder);
+            if($this->session->userdata['loggedin']['kms_id'] == 2 ){
+
+                $this->load->view("workorder/print_data_2019", $workorder);
+
+            }else{
+                $this->load->view("workorder/print_data", $workorder);
+            }
+
+            
 
             $this->load->view('post_login/footer');
 

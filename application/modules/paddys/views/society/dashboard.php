@@ -12,8 +12,8 @@
         <div class="col-lg-12 container contant-wraper">
     
             <h3>
-              <!--  <a href="<?php //echo site_url("paddys/add_new/f_society_add");?>" class="btn btn-primary" style="width: 100px;">Add</a> -->
-                <a href="<?php echo site_url("paddys/add_new/f_society_upload");?>" class="btn btn-primary" style="width: 100px;">Upload</a>
+              <a href="<?php echo site_url("paddys/add_new/f_society_update");?>" class="btn btn-primary" style="width: 100px;">Update</a>
+                <!-- <a href="<?php //echo site_url("paddys/add_new/f_society_upload");?>" class="btn btn-primary" style="width: 100px;">Upload</a> -->
                 <a href="<?php echo site_url("paddys/add_new/f_societydetail");?>" class="btn btn-primary" style="width: 100px;">Society Detail</a>
                 <span class="confirm-div" style="float:right; color:green;"></span>
                 <div class="input-group" style="margin-left:75%;">

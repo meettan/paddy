@@ -191,5 +191,69 @@ class Cron extends MX_Controller {
        
     }
 
+    public function farmer_update(){
+
+        $date = date('Y-m-d',strtotime("-1 days"));
+        $url = 'https://procurement.wbfood.in/api/Statusupd/Framerregdtls';/*Farmer*/
+        $j=0;
+        
+        $date1 = date("d/m/Y", strtotime($date));
+        
+        $data = array('authcode' => 'ahtr*125#','dt_from' => $date1);
+
+        $options = array(
+            'http' => array(
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
+                'content' => http_build_query($data)
+            )
+        );
+      
+        $context = stream_context_create($options);
+        $result  = file_get_contents($url, false, $context);
+
+        $data   = json_decode($result);
+
+        foreach ($data as $value) {
+
+                    $data = array(
+                        "kms_id"           =>  $this->session->userdata['loggedin']['kms_id'],
+                        "branch_id"        =>  $value->districtcode,
+                        "dist"             =>  $value->districtcode,
+                        "block"            =>  $value->blockcode,
+                        'soc_id'           =>  $value->proccentreid,
+                        'reg_dt'           =>  date("Y-m-d", strtotime($value->regdt)),
+                        'reg_no'           =>  $value->regno,
+                        'farm_name'        =>  $value->name,
+                        'father_name'      =>  $value->father_mother_spouse_name,
+                        'relation'         =>  $value->relation_with_farmer,
+                        'caste'            =>  $value->Caste,
+                        'address'          =>  $value->address,
+                        'epic_no'          =>  $value->epic_no,
+                        'villagecode'      =>  $value->villagecode,
+                        'account_no'       =>  $value->bank_accno,
+                        'ifsc_code'        =>  $value->bank_ifsc,
+                        'land_holding'     =>  $value->land_area_hectare,
+                        'land_description' =>  $value->land_desc,
+                        'farmer_type'      =>  $value->krishakbandhu,
+                        "created_by"       =>  $this->session->userdata['loggedin']['user_name'],
+                        "created_dt"       =>  date('Y-m-d')
+                                                  
+                     );
+
+                    $query = $this->db->get_where('temp_farmer_reg', array('reg_no ='=> $value->regno));
+            
+                        if ($query->num_rows() == 0)
+                            {   
+                               $id = $this->Paddy->f_insert('temp_farmer_reg', $data);  
+                                if(isset($id)){
+                                    $j++;
+                                }  
+                           }
+
+            }
+
+    }
+
    
 }    
