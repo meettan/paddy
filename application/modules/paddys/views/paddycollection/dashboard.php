@@ -32,11 +32,11 @@
                         <th width="25px">Sl. No</th>
                         <th>Society</th>
                         <th>File Number</th>
-                        <th>Bank</th>
+                    <!--     <th>Bank</th> -->
                         <th>Procurement Dt</th>        
                         <th>Quantity</th>
                         <th width="50px">Amount</th>
-                        <th>Uploaded By</th>
+                      <!--   <th>Uploaded By</th> -->
                         <th>Option</th>
                         <th>Forward </th>
                         <th>Forwarded By</th>
@@ -58,11 +58,11 @@
                           <td ><?php echo ++$count; ?></td>
                           <td ><?php echo $padl_dtl->soc_name; ?></td>
                           <td ><?php echo $padl_dtl->forward_bulk_trans_id; ?></td>
-                          <td><?php echo $padl_dtl->bank_name; ?></td>
+                      <!--     <td><?php //echo $padl_dtl->bank_name; ?></td> -->
                           <td ><?php echo date('d/m/Y',strtotime($padl_dtl->trans_dt)); ?></td>
                           <td ><?php echo $padl_dtl->tot_qty; ?></td>
                           <td ><?php echo $padl_dtl->tot_amt; ?></td>
-                          <td ><?php echo $padl_dtl->created_by; ?></td>
+                 <!--          <td ><?php //echo $padl_dtl->created_by; ?></td> -->
                           <td style="text-align: ;">
                           <a href="<?php echo base_url()?>index.php/paddys/transactions/f_cheque_add?soc_id=<?=$padl_dtl->soc_id;?>/<?=$padl_dtl->trans_dt;?>/<?=$padl_dtl->bulk_trans_id;?>/<?=$padl_dtl->chq_status;?>" data-toggle="tooltip"
                                     data-placement="bottom"  title="Edit">
@@ -130,11 +130,11 @@
                        
                         <th>Society</th>
                         <th>File Number</th>
-                        <th>Bank</th>
+                      <!--   <th>Bank</th> -->
                         <th>Procurement Dt</th> 
                         <th>Quantity</th>
                         <th width="50px">Amount</th>
-                        <th>Uploaded By</th>
+                      <!--   <th>Uploaded By</th> -->
                         <th>Option</th>
                         <th>Forward</th>
                         <th>Forwarded By</th>

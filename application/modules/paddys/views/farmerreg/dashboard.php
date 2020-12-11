@@ -13,8 +13,8 @@
         <div class="col-lg-12 container contant-wraper">    
             <h3>
                <!--  <small><a href="<?php //echo site_url("paddys/add_new/f_farmreg_add");?>" class="btn btn-primary" style="width: 100px;">Add</a></small> -->
-                <small><a href="<?php echo site_url("paddys/add_new/f_farmreg_update");?>" class="btn btn-primary" style="width: 100px;">Update</a></small>
-                <small><a href="<?php echo site_url("paddys/add_new/f_farmreg_upload");?>" class="btn btn-primary" style="width: 100px;">Upload Data</a></small>
+              <!--   <small><a href="<?php //echo site_url("paddys/add_new/f_farmreg_update");?>" class="btn btn-primary" style="width: 100px;">Update</a></small> -->
+              <!--   <small><a href="<?php //echo site_url("paddys/add_new/f_farmreg_upload");?>" class="btn btn-primary" style="width: 100px;">Upload Data</a></small> -->
                 <small><a href="<?php echo site_url("paddys/add_new/f_farmersearch");?>" class="btn btn-primary" style="width: 100px;">Get Farmer</a></small>
                 <span class="confirm-div" style="float:right; color:green;"></span>
                 

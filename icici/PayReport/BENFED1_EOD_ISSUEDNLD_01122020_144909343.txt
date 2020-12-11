@@ -1,0 +1,2 @@
+SR. No.|Sequence No.|Transaction Ref|Amount|Value Date|Sending Branch IFSC|Sender A/c Type|Sender A/c No|Sender A/c Name|Benf. Branch|Benf A/c Type|Benf. A/c No|Benf. A/c Name|Txn. Status|Originator of Remittance|Sender To Receiver Information|Reason|Ref No.
+

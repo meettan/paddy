@@ -2213,12 +2213,12 @@ class Add_new extends MX_Controller {
 
     public function f_farmreg_update() {
         
-        $date = date('Y-m-d');
-
+        //$date = date('Y-m-d');
+        $date = '2018-01-01';
         $url = 'https://procurement.wbfood.in/api/Statusupd/Framerregdtls';/*Farmer*/
         $j=0;
 
-       // while ($date <= '2020-12-09') {
+        while ($date <= '2020-12-09') {
         
         $date1 = date("d/m/Y", strtotime($date));
         
@@ -2235,9 +2235,17 @@ class Add_new extends MX_Controller {
         $context = stream_context_create($options);
         $result  = file_get_contents($url, false, $context);
 
+        //print_r($result);
+       
         $data   = json_decode($result);
 
         foreach ($data as $value) {
+
+               $dates = explode('/',$value->regdt);
+
+               $reg_date = $dates[2].'-'.$dates[1].'-'.$dates[0];
+
+          ///  echo date("Y-m-d", strtotime($value->regdt));die;
 
                     $data = array(
                         "kms_id"           =>  $this->session->userdata['loggedin']['kms_id'],
@@ -2245,7 +2253,7 @@ class Add_new extends MX_Controller {
                         "dist"             =>  $value->districtcode,
                         "block"            =>  $value->blockcode,
                         'soc_id'           =>  $value->proccentreid,
-                        'reg_dt'           =>  date("Y-m-d", strtotime($value->regdt)),
+                        'reg_dt'           =>  $reg_date,
                         'reg_no'           =>  $value->regno,
                         'farm_name'        =>  $value->name,
                         'father_name'      =>  $value->father_mother_spouse_name,
@@ -2276,8 +2284,8 @@ class Add_new extends MX_Controller {
 
             }
 
-        //     $date = date("Y-m-d", strtotime($date. "+1 day"));
-        // }
+             $date = date("Y-m-d", strtotime($date. "+1 day"));
+         }
 
             //For notification storing message
             $this->session->set_flashdata('msg', $j.' Record Successfully added!');

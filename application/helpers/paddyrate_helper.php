@@ -121,6 +121,17 @@
     return  $paddy->district_name;
  
   }
+  function get_district_short_code($id){
+
+    $ci =& get_instance();
+    $ci->load->database();
+    $sql="SELECT dist_sort_code FROM md_district WHERE district_code ='".$id."' ";
+      
+    $paddy  =   $ci->db->query($sql)->row();
+
+    return  $paddy->dist_sort_code;
+ 
+  }
 
   function get_mill_name($id){
 
@@ -155,6 +166,44 @@
     $paddy  =   $ci->db->query($sql)->row();
 
     return  $paddy->soc_name;
+    }
+ 
+  }
+
+  function get_society_branch_id($id){
+
+    if($id == ""){
+
+       return  "0";
+
+    }else{
+
+    $ci =& get_instance();
+    $ci->load->database();
+    $sql="SELECT branch_id FROM md_society WHERE society_code ='".$id."' ";
+      
+    $paddy  =   $ci->db->query($sql)->row();
+
+    return  $paddy->branch_id;
+    }
+ 
+  }
+
+  function get_society_block_id($id){
+
+    if($id == ""){
+
+       return  "0";
+
+    }else{
+
+    $ci =& get_instance();
+    $ci->load->database();
+    $sql="SELECT block FROM md_society WHERE society_code ='".$id."' ";
+      
+    $paddy  =   $ci->db->query($sql)->row();
+
+    return  $paddy->block;
     }
  
   }

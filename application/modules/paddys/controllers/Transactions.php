@@ -588,6 +588,137 @@ class Transactions extends MX_Controller {
 
     }
 
+    //***** Code For Food Api Insertion Data of Procurement  *****  11/12/2020//    
+
+    public function f_procurement_add(){
+
+           $kms_yerr_data = $this->db->query('SELECT * FROM `md_kms_year` 
+                                        where sl_no = (select max(sl_no) from md_kms_year)')->row();
+
+             $kms_year  = $kms_yerr_data->kms_yr;
+             $kms_id    = $kms_yerr_data->sl_no;
+         
+            $url = 'https://procurement.wbfood.in/api/Statusupd/Procurementdtls';/*Procurement*/
+            $dates = '2020-11-23';
+
+            while ($dates <= '2020-12-11') {
+
+            $date1 = date("d/m/Y", strtotime($dates));
+    
+            $data_auth = array('authcode' => 'ahtr*125#','dt_from' => $date1);
+
+            $options = array(
+                'http' => array(
+                    'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                    'method' => 'POST',
+                    'content' => http_build_query($data_auth)
+                )
+            );
+  
+
+            $context = stream_context_create($options);
+            $result  = file_get_contents($url, false, $context);
+            $datas   = json_decode($result);
+            $trans_type     = "N";
+
+            $district_code   = get_society_branch_id($datas['0']->proccentreid);  
+
+             foreach ($datas as $value);
+
+                $trans_id = $this->Paddy->f_get_particulars("td_collections",array("ifnull(MAX(trans_id),1) trans_id"),array('kms_id' => $kms_id), 1);
+
+                $ftrans_id = $this->Paddy->f_get_particulars("td_collections",array("ifnull(MAX(trans_id),1) trans_id"),array('kms_id' => $kms_id), 1);
+              
+                $trans_id = $trans_id->trans_id;
+
+                $for_trans_id = $ftrans_id->trans_id;
+                
+                    
+                   foreach ($datas as $value) {
+
+                    $raw_date = substr($value->dtofprocurement,0,10);
+
+                    $dates = explode('/',$raw_date);
+
+                    $trans_dt = $dates[2].'-'.$dates[1].'-'.$dates[0];
+
+                    $dist_sort_code  = get_district_short_code($district_code) ;
+                        
+                    $data[] = array(
+
+                        "kms_id"              =>  $kms_id,
+
+                        "camp_no"             =>  "1",
+
+                        "branch_id"           =>  $district_code,
+
+                        "block_id"            =>  get_society_block_id($value->proccentreid),
+
+                        "soc_id"              =>  $value->proccentreid,
+
+                        "mill_id"             =>  '',
+
+                        "muster_roll_no"      =>  "1",
+ 
+                        "trans_dt"            =>  $trans_dt,
+
+                        "trans_id"            =>  $trans_id++,
+
+                        'forward_trans_id'    =>  $district_code.str_pad($for_trans_id++,8,"0",STR_PAD_LEFT),
+
+                        "bulk_trans_id"       => "",
+
+                        'forward_bulk_trans_id' =>  "",
+
+                        "bank_sl_no"          => "",
+
+                        "trans_type"          =>  "N",
+
+                        "reg_no"              =>  $value->regno,
+
+                        "farmer_name"         =>  $value->name,
+
+                        "quantity"            =>  ($value->qty_kg)/100,
+
+                        "amount"              =>  $value->amt,
+
+                        "cheque_no"           =>  "",
+
+                        "cheque_date"         =>  "",
+
+                        "ifsc_code"           =>  $value->bank_ifsc,
+
+                        "acc_no"              =>  $value->bank_accno,
+
+                        "certificate_1"       =>  "Y",
+
+                        "certificate_2"       =>  "Y",
+
+                        "certificate_4"       =>  "Y",
+
+                        "created_dt"          =>  date('Y-m-d h:i:s')
+
+                     );
+                                    
+                }  
+                    
+                $data = array_values($data);
+
+            
+                $this->Paddy->f_insert_multiple('td_collections', $data);
+
+                 $dates = date("Y-m-d", strtotime($date. "+1 day"));
+
+            }
+           
+            //For notification storing message
+            $this->session->set_flashdata('msg', 'Successfully added!');
+
+            redirect('paddys/transactions/f_paddycollection');
+
+    }
+    
+
    public function f_return_cheque() {
        
 
