@@ -418,7 +418,7 @@ class Transactions extends MX_Controller {
 
             $bulk_trns_id = $this->Paddy->f_get_particulars("td_collections",array("MAX(bulk_trans_id) bulk_trans_id"),array('branch_id' => $this->session->userdata['loggedin']['branch_id'],'kms_id' => $kms_id), 1);
               
-            $bulk_trns_id =$bulk_trns_id->bulk_trans_id+1;
+            $bulk_trns_id = $bulk_trns_id->bulk_trans_id+1;
          
            //For Excel Upload
             $csvMimes = array('text/x-comma-separated-values',
@@ -1125,8 +1125,134 @@ class Transactions extends MX_Controller {
        
         echo json_encode($row);
     }
-    
+    /// Code Developed After Integration of Food Api on 14/12/2020   ///
     public function f_cheque_add() {
+
+        if($_SERVER['REQUEST_METHOD'] == "POST") {
+              
+            $editdata = explode ("/",$this->input->post('editdata'));
+            $soc_id = $editdata["0"];
+            $trans_dt = $editdata["1"];
+            $bulk_trans_id = $editdata["2"];
+            $chq_status    = $editdata["3"];
+
+            //$trans_type = $this->Paddy->get_transaction_type($soc_id,$trans_dt,$bulk_trans_id,$chq_status);
+
+            $reg_no   = $this->input->post('reg_no');     
+            $edittran_dt = $this->input->post('trans_dt');
+            $quantity = $this->input->post('quantity');
+            $count       = count($this->input->post('quantity'));
+            $amount = $this->input->post('amount');
+            $cheque_no=$this->input->post('cheque_no');
+            $cheque_date=$this->input->post('cheque_date');
+            $ifsc_code=$this->input->post('ifsc_code');
+            $acc_no=$this->input->post('acc_no');
+
+            $kms_year       = $this->session->userdata['loggedin']['kms_yr'];
+            $kms_id         = $this->session->userdata['loggedin']['kms_id'];
+
+            $dist_sort_code = $this->session->userdata['loggedin']['dist_sort_code'];
+
+            $bulk_trns_id = $this->Paddy->f_get_particulars("td_collections",array("MAX(bulk_trans_id) bulk_trans_id"),array('branch_id' => $this->session->userdata['loggedin']['branch_id'],'kms_id' => $kms_id), 1);
+              
+            $bulk_trns_id = $bulk_trns_id->bulk_trans_id+1;
+         
+           $i=0;
+              
+          // foreach($cheque_no as $cheque){
+           for($i=0; $i<$count; $i++){
+            
+                $data_array = array(
+
+                "mill_id"                => $this->input->post('mill_id'),
+                "bank_sl_no"             => $this->input->post('bank_sl_no'),
+                "bulk_trans_id"          => $bulk_trns_id,
+                "forward_bulk_trans_id"  => $dist_sort_code.'_'.substr($kms_year,2).'_'.$bulk_trns_id
+           
+                );
+
+             
+            $where = array(
+
+                "soc_id" => $soc_id,
+
+                "trans_dt" => $trans_dt
+
+            );
+
+                    $this->Paddy->f_edit('td_collections', $data_array, $where);
+
+
+                 
+            }   
+           
+            //For notification storing message
+            $this->session->set_flashdata('msg', 'Successfully added!');
+
+            redirect('paddys/transactions/f_paddycollection');
+        }
+        else {
+
+            $data=explode ("/", $this->input->get('soc_id'));
+            $soc_id = $data["0"];
+            $trans_dt = $data["1"];
+            $bulk_trans_id = $data["2"];
+            $chq_status = $data["3"];
+
+
+            $select     =   array(
+
+                  "t.*", "s.soc_name soc_name", "b.block_name block_name"
+            );
+
+            $where      =   array(
+
+                "t.soc_id = s.sl_no"    => NULL,
+
+                "t.block_id = b.blockcode"    => NULL,
+                
+               // "t.bank_sl_no = c.bank_id"    => NULL,
+
+                "t.soc_id"        =>$soc_id,
+
+                "t.bulk_trans_id" =>$bulk_trans_id,
+
+                "t.trans_dt"      =>$trans_dt,
+
+                "t.chq_status" =>$chq_status
+ 
+            );
+         
+   
+           $paddycollection['farmer_dtls'] =   $this->Paddy->f_get_particulars('td_collections t,md_society s,md_block b',$select,$where, 0);
+       
+           $wheres      =   array(
+            "branch_id" => $this->session->userdata['loggedin']['branch_id']
+             );
+
+            $whereb     =   array(
+
+                "status" => "1"
+            );
+    
+            $paddycollection['banks']  =   $this->Paddy->f_get_particulars("md_paddy_bank",NULL,$whereb, 0);
+
+            $paddycollection['mills'] = $this->Paddy->f_get_particulars("md_mill", NULL,array("branch_id" => $this->session->userdata['loggedin']['branch_id']), 0);
+
+            //Block List
+            $paddycollection['blocks']  =   $this->Paddy->f_get_particulars("md_block",NULL,$wheres, 0);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("paddycollection/add_cheque_data", $paddycollection);
+
+            $this->load->view('post_login/footer');
+
+        }
+        
+    }
+
+    public function f_cheque_add_bkup() {
 
         if($_SERVER['REQUEST_METHOD'] == "POST") {
               
@@ -1632,7 +1758,6 @@ class Transactions extends MX_Controller {
                 window.location.href='f_reissuchq';
                 </script>";
         }
-     
 
    
     }
@@ -1642,9 +1767,7 @@ class Transactions extends MX_Controller {
         $soc_id = $data["0"];
         $trans_dt = $data["1"];
        
-    
         $this->Paddy->f_forwardho_paddycollection($trans_dt,$soc_id);
-       
     
                 echo "<script>
                     alert('Procurement data forwarded Head office successfully');
@@ -1654,7 +1777,6 @@ class Transactions extends MX_Controller {
     }
 
     public function get_farmer_details(){
-
         
         $soc_id = $this->input->get("soc_id");
         $branch_id = $this->session->userdata['loggedin']['branch_id'];
@@ -2431,9 +2553,9 @@ class Transactions extends MX_Controller {
 
         }
 
-               
          
     }
+
     public function f_procurementreissue_Excel(){
    
        $branch_id = $this->uri->segment(4);

@@ -29,32 +29,15 @@
                     <?php if(isset($farme->soc_name)){ echo $farme->soc_name; }?>  
 
                     </div>
-                    <label for="block" class="col-sm-1 col-form-label">Mill:</label>
+                      <label for="block" class="col-sm-1 col-form-label">Mill:</label>
 
-                      <div class="col-sm-2">
-
-                            <select name="mill_id" class="form-control" required>
-
-                            <option value="">Select</option>
-
-                           <?php
-
-                             foreach($mills as $mill){
-
-                            ?>
-                         <option value="<?php echo $mill->sl_no;?>" <?php if(isset($farme->mill_id) && $farme->mill_id == $mill->sl_no){ echo "selected"; }?> ><?php echo $mill->mill_name;?></option>
-                           <?php
-
-                                 }
-
-                                    ?>     
-
-                                    </select>
+                        <div class="col-sm-2">
+                    <?php echo get_mill_name($farme->mill_id);?>  
 
                     </div>
                     <label for="soc_name" class="col-sm-1 col-form-label">Procurement Date:</label>
                     <div class="col-sm-2">
-                    <input type="date" name="trans_dt" id="trans_dt" class="form-control" value="<?php if(isset($farme->trans_dt)){echo $farme->trans_dt;}?>" readonly />
+                    <input type="date" name="trans_dt" id="trans_dt" class="form-control" value="<?php if(isset($farme->trans_dt)){echo $farme->trans_dt;}?>"  />
                     
                     </div>
 
@@ -71,22 +54,8 @@
                   <?php } ?>
 
                 <div class="col-sm-2"><b>Bank Name :</b> </div>
-                <div class="col-sm-3">           
-                    <select name="bank_sl_no" id="bank_sl_no" class="form-control" required>
-                    <option value="">Select</option>    
-                    <?php
+                <div class="col-sm-3"><?php if(isset($farme->bank_name)){ echo $farme->bank_name; }?> </div>
 
-                             foreach($banks as $bank){
-
-                            ?>
-                         <option value="<?php echo $bank->sl_no;?>" <?php if(isset($farme->bank_sl_no) && $farme->bank_sl_no == $bank->sl_no){ echo "selected"; }?> > <?php echo $bank->bank_name; ?></option>
-                           <?php
-
-                                 }
-
-                                    ?>  
-                  </select>
-                </div>
                 <div class="col-sm-2"><b>Transaction :</b><?php if($farme->trans_type=="N"){ echo "NEFT"; }else{ echo "Cheque"; }?>  </div>
                 </div>            
 
@@ -98,7 +67,7 @@
                     <?php }else{ ?>
                   <th>Cheque No</th><th>Cheque Date</th>
                    <?php } ?>
-                 </tr></thead><tbody id="farme"> 
+                  <th>Delete</th></tr></thead><tbody id="farme"> 
          
             <tbody> 
             <?php 
@@ -106,21 +75,21 @@
                 $paddy_qty = 0;
                 $amount = 0;
             foreach($farmer_dtls as $farmer_dtl) { ?>
-            <tr <?php //if(get_farmer_name($farmer_dtl->reg_no) == "Not Found"){
-             // echo 'style="background-color: red;"';}
-              ?> ><td><?=++$count;?></td>
-              <td><?=$farmer_dtl->farmer_name?></td>
+            <tr <?php if(get_farmer_name($farmer_dtl->reg_no) == "Not Found"){
+              echo 'style="background-color: red;"';
+            } ?> ><td><?=++$count;?></td>
+              <td><?=get_farmer_name($farmer_dtl->reg_no)?></td>
               <td><?=$farmer_dtl->reg_no?><input type="hidden" value="<?=$farmer_dtl->reg_no?>" name="reg_no[]"></td>
               <td><?=$farmer_dtl->forward_trans_id?></td>
               <td>
-              <input type="text" name="quantity[]" value="<?=$farmer_dtl->quantity?>" readonly class="form-control quantity">
+                  <input type="text" name="quantity[]" value="<?=$farmer_dtl->quantity?>" class="form-control quantity">
                 <?php $paddy_qty += $farmer_dtl->quantity;?> <span class="qerror"></span></td>
               <td><input type="text" name="amount[]" value="<?=$farmer_dtl->amount?>" class="form-control amount" readonly> <?php $amount += $farmer_dtl->amount;?></td>
 
    <?php if($farme->trans_type=="N"){ ?>
 
-   <td><input type="text" name="ifsc_code[]" value="<?=$farmer_dtl->ifsc_code?>" class="form-control ifsc_code" readonly><span class="error"></span></td>
-    <td><input type="text" class="form-control acc_no" name="acc_no[]" value="<?=$farmer_dtl->acc_no?>" readonly><span class="cd_error"></span></td>
+   <td><input type="text" name="ifsc_code[]" value="<?=$farmer_dtl->ifsc_code?>" class="form-control ifsc_code"><span class="error"></span></td>
+              <td><input type="text" class="form-control acc_no" name="acc_no[]" value="<?=$farmer_dtl->acc_no?>"><span class="cd_error"></span></td>
 
     <?php  }else{    ?>               
 
@@ -129,14 +98,18 @@
 
     <?php } ?> 
               
-             </tr>
+              <td>
+                  <?php if($farmer_dtl->status == 0 && $farmer_dtl->chq_status == 'U' ) { ?>
+               <button type="button" class="delete" id="<?=$farmer_dtl->soc_id;?>/<?=$farmer_dtl->trans_dt;?>/<?=$farmer_dtl->bulk_trans_id;?>/<?=$farmer_dtl->trans_id;?>/<?=$farmer_dtl->chq_status;?>" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-times fa-2x" style="color: red"></i></button>
+                <?php  } ?> 
+              </td></tr>
             
             <?php } ?>
-             <tr><td colspan="4" style=
+             <tr><td colspan="3" style=
               "text-align:center">Total Procured Paddy</td><td id="total"><?=$paddy_qty;?></td>
               <td id="totals"><?=$amount;?></td>
-              <td colspan="2"></td>
-            
+              <td colspan="3"></td>
+              <td ></td>
             </tr>
             </tbody>
             </table>
@@ -154,7 +127,7 @@
         <div class="form-group row">
           <div class="col-sm-6"></div>
           <div class="col-sm-5">
-                <?php if($farmer_dtl->status == 0 && $farmer_dtl->chq_status == 'U' && $farmer_dtl->bank_sl_no != '0') { ?>
+                <?php if($farmer_dtl->status == 0 && $farmer_dtl->chq_status == 'U') { ?>
                  <a href="<?php echo site_url("paddys/bankintegration/f_paddycol_forward");?>?soc_id=<?=$farme->soc_id;?>&trans_dt=<?=$farme->trans_dt;?>&forward_bulk_trans_id=<?=base64_encode($farme->forward_bulk_trans_id);?>&bulk_trans_id=<?=$farme->bulk_trans_id;?>"><button class="btn btn-primary" id="">Forward</button></a>
                  <?php  } ?> 
             </div>

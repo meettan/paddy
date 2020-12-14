@@ -195,7 +195,7 @@ class Cron extends MX_Controller {
     public function read_icici_reversefile(){
 
              $newest_file = null;
-             $path        = $_SERVER['DOCUMENT_ROOT'].'/AxisInvoice/h2hReversefeedIn/';
+             $path        = $_SERVER['DOCUMENT_ROOT'].'/paddy/icici/PayReport/';
              $files       = scandir($path,1);
              $newest_file = $files[0];
               
@@ -203,10 +203,15 @@ class Cron extends MX_Controller {
 
                     $var_array_parent = explode("\n",$handle);
 
+                     unset($var_array_parent[0]);
+                      
+
                     foreach($var_array_parent as $value)
                     {
 
-                    $var_array = explode("^",$value);
+                       
+
+                    $var_array = explode("|",$value);
               
 
                    if ( ! isset($var_array[11])) {
@@ -233,24 +238,24 @@ class Cron extends MX_Controller {
                     }
 
                     $data = array(
-                                'bank_id'             => '4',
-                                'forward_trans_id'    => substr($var_array[0], 0, -1),
-                                'book_no'             => substr($var_array[0],-1),
-                                'corporate_code'      => $var_array[1],
-                                'payment_run_date'    => $var_array[2],
-                                'product_code'        => $var_array[3],
-                                'utr_no'              => $var_array[4],
-                                'status_code'         => $var_array[6],
-                                'status_description'  => $var_array[7],
-                                'batch_no'            => $var_array[8],
-                                'reg_no'              => $var_array[9],
-                                'value_date'          => $var_array[10],
-                                'bank_ref_no'         => $var_array[11],
-                                'amount'              => $var_array[12],
-                                'dr_ac_no'            => $var_array[13],
-                                'dr_ifsc_code'        => $var_array[14],
-                                'dr_cr_flag'          => $var_array[15],
-                                'cr_acc_no'           => $var_array[16],
+                                'bank_id'             => '3',
+                                'forward_trans_id'    => substr($var_array[1], 0, -1),
+                                'book_no'             => substr($var_array[1],-1),
+                                'corporate_code'      => '',
+                                'payment_run_date'    => $var_array[4],
+                                'product_code'        => "ICICI",
+                                'utr_no'              => $var_array[2],
+                                'status_code'         => $var_array[13],
+                                'status_description'  => $var_array[16],
+                                'batch_no'            => '',
+                                'reg_no'              => '',
+                                'value_date'          => $var_array[4],
+                                'bank_ref_no'         => '',
+                                'amount'              => $var_array[3],
+                                'dr_ac_no'            => $var_array[7],
+                                'dr_ifsc_code'        => $var_array[5],
+                                'dr_cr_flag'          => "C",
+                                'cr_acc_no'           => $var_array[11],
                                 'file_no'             => $var_array[17]
                                 );
 
@@ -304,8 +309,6 @@ class Cron extends MX_Controller {
       
         $context = stream_context_create($options);
         $result  = file_get_contents($url, false, $context);
-
-       
 
         $data   = json_decode($result);
 
@@ -363,7 +366,9 @@ class Cron extends MX_Controller {
              $kms_id    = $kms_yerr_data->sl_no;
          
             $url = 'https://procurement.wbfood.in/api/Statusupd/Procurementdtls';/*Procurement*/
-            $date = '2020-11-23';
+            $date = date('Y-m-d');
+
+     //   while ($date <= '2020-12-10') {
 
             $date1 = date("d/m/Y", strtotime($date));
     
@@ -376,18 +381,16 @@ class Cron extends MX_Controller {
                     'content' => http_build_query($data_auth)
                 )
             );
-  
 
             $context = stream_context_create($options);
             $result  = file_get_contents($url, false, $context);
             $datas   = json_decode($result);
+
             $trans_type     = "N";
 
             $district_code   = get_society_branch_id($datas['0']->proccentreid);  
 
              foreach ($datas as $value);
-
-      
 
                 $trans_id = $this->Paddy->f_get_particulars("temp_td_collection",array("ifnull(MAX(trans_id),1) trans_id"),array('kms_id' => $kms_id), 1);
 
@@ -397,7 +400,6 @@ class Cron extends MX_Controller {
 
                 $for_trans_id = $ftrans_id->trans_id;
                 
-                    
                    foreach ($datas as $value) {
 
                     $raw_date = substr($value->dtofprocurement,0,10);
@@ -468,8 +470,12 @@ class Cron extends MX_Controller {
                     
                 $data = array_values($data);
 
-            
-                $this->Paddy->f_insert_multiple('temp_td_collection', $data);
+                $this->Paddy->f_insert_multiple('td_collections', $data);
+
+
+        //         $date = date("Y-m-d", strtotime($date. "+1 day"));
+
+        // }
            
             //For notification storing message
             $this->session->set_flashdata('msg', 'Successfully added!');

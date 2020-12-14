@@ -3,7 +3,7 @@
 
     <div class="col-md-12 container form-wraper" style="height:1600px;" id="print_emp">
         
-    <div style="width: 100%; height: 842px; padding-top:130px;">
+    <div style="width: 100%; height: 842px; padding-top:142px;">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tbody>
 		<tr>
@@ -15,7 +15,7 @@
       <td valign="top"><p style="margin: 0; padding: 0; line-height: 18px;">Date: <strong><?php echo date('d/m/Y',strtotime($workorder_dtls->trans_dt)); ?></strong></p></td>
     </tr>
     <tr>
-      <td width="30%" valign="top" style="padding-top: 25px;"><p style="margin: 0; padding: 0; line-height: 20px;">To	<br>
+      <td width="30%" valign="top" style="padding-top: 22px;"><p style="margin: 0; padding: 0; line-height: 20px;">To	<br>
 								   	
 The Chairman/Secretary/Manager,<br>
 
@@ -53,7 +53,7 @@ The Chairman/Secretary/Manager,<br>
 		</tr>
 		</tr>
 		<tr>
-		<td style="text-align: left; padding: 59px 10px 5px 10px; font-family: arial; font-size: 15px; "><table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<td style="text-align: left; padding: 35px 10px 5px 10px; font-family: arial; font-size: 15px; "><table width="100%" border="0" cellspacing="0" cellpadding="0">
 		  <tbody>
 		    <tr>
 		      <td width="80%" valign="bottom"><p style="margin: 0; padding: 0; line-height: 20px; font-size: 15px;">
@@ -97,7 +97,7 @@ Date: </p>		        </td>
 	  </td>
 		</tr>
 		<tr>
-		  <td style="text-align: left	; padding: 59px 10px 10px 10px; font-family: arial; font-size: 15px;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  <td style="text-align: left	; padding: 35px 10px 10px 10px; font-family: arial; font-size: 15px;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
 		    <tbody>
 		      <tr>
 		        <td width="80%" valign="top" style="padding-bottom: 25px;"><p style="margin: 0; padding: 0; line-height: 20px; font-size: 15px;">&nbsp;</p></td>

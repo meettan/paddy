@@ -113,8 +113,9 @@
                         <div class="dropdown-content">
                         <?php if($this->session->userdata['loggedin']['user_type']=="U" OR $this->session->userdata['loggedin']['user_type']=="M" OR $this->session->userdata['loggedin']['user_type']=="A" && $this->session->userdata['loggedin']['ho_flag'] =="N"){ ?>
                             <a href="<?php echo site_url('paddys/transactions/f_workorder'); ?>">Work Order</a>
-                      
+                      <?php if($this->session->userdata['loggedin']['branch_id'] == '333'){ ?>
                             <a href="<?php echo site_url('paddys/transactions/f_paddycollection'); ?>">Paddy Procurement</a>
+                        <?php } ?>
                           <!-- <a href="<?php echo site_url('paddys/trans_neft/f_paddy_neft_coll'); ?>">Paddy Procurement(NEFT)</a> -->
                             <?php } ?>
 

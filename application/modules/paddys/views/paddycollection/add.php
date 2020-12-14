@@ -79,7 +79,7 @@
                     
                     </div>
 					
-					<div class="col-sm-2">
+					    <div class="col-sm-2">
                     <label for="soc_name" class="col-form-label">Procurement Date:</label>
                     
                   <input type="date" name="trans_dt" id="trans_dt" class="form-control" value="<?php echo date('Y-m-d');?>" required/>

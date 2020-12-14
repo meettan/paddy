@@ -43,6 +43,8 @@ class Bankintegration extends MX_Controller {
 
         $paddy_forwad  = $this->Paddy->coll_forward($soc_id,$trans_dt,$bulk_trans_id);
 
+
+
         $bank_id       = $this->Paddy->bank_detail_for_forward($soc_id,$trans_dt,$bulk_trans_id);
 
         $bank_data     = $this->Paddy->f_get_particulars("md_paddy_bank", NULL,array("bank_id" => $bank_id), 1);
@@ -108,36 +110,17 @@ class Bankintegration extends MX_Controller {
                  }
         }
 
-        foreach($reg_qty as $reqty ) {
+       
 
-                $query = $this->db->get_where('td_farmer_reg', array('reg_no' => $reqty->reg_no))->num_rows();
-                  
-                 if($query == "0"){
-                    $regvalid = $regvalid+1;
-                 }else{
-                    $regvalid = $regvalid+0;
-                 }
-                 if($reqty->quantity > "90"){
-                    $qtyvalid = $qtyvalid+1;
-                 }else{
-                    $qtyvalid = $qtyvalid+0;
-                 }
-        }
+        if($qtyvalid == '0'){
 
+                            if($valid=='0'){  
 
-           if($regvalid =='0'){
+                                    $this->Paddy->f_forward_paddycollection($trans_dt,$bulk_trans_id,$soc_id,$this->session->userdata['loggedin']['user_name'],date('Y-m-d h:i:s'));
 
+                                    $this->Paddy->f_insert_multiple('td_collections_forward', $dataf);
 
-                        if($qtyvalid == '0'){
-
-
-                            if($valid=='0'){
-
-                                     $this->Paddy->f_forward_paddycollection($trans_dt,$bulk_trans_id,$soc_id,$this->session->userdata['loggedin']['user_name'],date('Y-m-d h:i:s'));
-
-                                     $this->Paddy->f_insert_multiple('td_collections_forward', $dataf);
-
-                                     $this->Paddy->f_insert('td_received', $data_array);
+                                    $this->Paddy->f_insert('td_received', $data_array);
 
                                     if($bank_id == '3'){                                    //ICICI BANK
 
@@ -205,14 +188,16 @@ class Bankintegration extends MX_Controller {
                                         
                                         $filename = 'TWBSCOMFL_'.$datetimes.'_'.$forward_bulk_trans_id.'.txt';
                                         
-                                
-                                        if (write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)
+                                      if (write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)
+                                    
                                         {
                                            echo 'Unable to write the file';
+                                        
 
                                         } else {
 
-                                            echo 'File written!';                           
+                                            echo 'File written!';    
+
                                         }
 
                                     }
@@ -236,15 +221,6 @@ class Bankintegration extends MX_Controller {
                                       </script>";
 
                     }
-
-            }else{
-
-                 echo "<script>
-                 alert('Procurement Data Not forwarded  Problem In Farmer Name');
-                 window.location.href='".base_url()."index.php/paddys/transactions/f_paddycollection';
-                 </script>";
-                }
-     
 
    
     }
