@@ -14,7 +14,7 @@
 
             <h3>
 
-             <small><a href="<?php echo site_url("paddys/transactions/f_received_add");?>" class="btn btn-primary" style="width: 100px;">Add</a></small> 
+         <!--     <small><a href="<?php //echo site_url("paddys/transactions/f_received_add");?>" class="btn btn-primary" style="width: 100px;">Add</a></small>  -->
                 <span class="confirm-div" style="float:right; color:green;"></span>
                 <div class="input-group" style="margin-left:75%;">
                     <span class="input-group-addon"><i class="fa fa-search"></i></span>
@@ -70,13 +70,13 @@
                                 <i class="fa fa-edit fa-2x" style="color: #007bff"></i>
                             </a>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                   <button type="button" class="delete"
-                                        id="<?php echo $preceive_dtl->trans_no; ?>"
+                                  <!--  <button type="button" class="delete"
+                                        id="<?php //echo $preceive_dtl->trans_no; ?>"
                                         data-toggle="tooltip" data-placement="bottom" title="Delete">
 
                                         <i class="fa fa-trash-o fa-2x" style="color: #bd2130"></i>
 
-                                    </button>
+                                    </button> -->
                                       
                             </td>
                                 <?php          

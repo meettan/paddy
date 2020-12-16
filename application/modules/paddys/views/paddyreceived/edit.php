@@ -1,6 +1,6 @@
 <div class="wraper">      
 
-<div class="col-md-6 container form-wraper">
+<div class="col-md-7 container form-wraper">
 
     <form method="POST" 
         id="form"
@@ -32,6 +32,25 @@
 
             </div>
 
+             <label for="block" class="col-sm-2 col-form-label">File No:</label>
+
+            <div class="col-sm-4">
+
+              <select name="file_name" id="file_name" class="form-control" required>
+
+                    <option value="">Select</option>  
+
+                    <?php foreach($file_dtls as $file){ ?>  
+
+                    <option value="">Select First</option>    
+
+                    <?php }?>
+
+              </select>
+
+            </div>
+
+
         </div>
 
         <div class="form-group row">
@@ -41,7 +60,7 @@
             <div class="col-sm-10">
 
                 <select type="text"
-                    class="form-control required sch_cd"
+                    class="form-control required " disabled
                     name="soc_name"  id="soc_name" >
 
                     <option value="">Select</option>    
@@ -59,8 +78,8 @@
 
             <div class="col-sm-10">
 
-                <select type="text"
-                    class="form-control required sch_cd" name="mill_name"  id="mill_name">
+                <select type="text" readonly
+                    class="form-control" name="mill_name"  id="mill_name" disabled>
 
                     <option value="">Select</option>    
 
@@ -79,7 +98,7 @@
             <div class="col-sm-10">
 
                 <input type="date"
-                        class="form-control " required
+                        class="form-control " readonly
                         name="trans_dt" id="trans_dt"
                         value="<?php echo $paddyreceived_dtls->trans_dt ;?>" />
 
@@ -96,7 +115,7 @@
                 <input type="text"
                         class="form-control"
                         name="paddy_qty"
-                        id="paddy_qty" required
+                        id="paddy_qty" readonly
                         min="0"
                         value="<?php echo $paddyreceived_dtls->paddy_qty ;?>"
                     />

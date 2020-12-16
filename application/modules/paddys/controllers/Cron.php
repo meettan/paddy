@@ -259,7 +259,7 @@ class Cron extends MX_Controller {
                                 'file_no'             => $var_array[17]
                                 );
 
-                        if ( isset($var_array[11])) {
+                        if ( isset($var_array[2])) {
 
                         $this->db->insert('td_reverse_feed',$data);
 
@@ -307,8 +307,9 @@ class Cron extends MX_Controller {
             )
         );
       
-        $context = stream_context_create($options);
-        $result  = file_get_contents($url, false, $context);
+        $context  = stream_context_create($options);
+        $result   = file_get_contents($url, false, $context);
+
 
         $data   = json_decode($result);
 
@@ -357,7 +358,7 @@ class Cron extends MX_Controller {
 
     }
 
-     public function procurement_add(){
+    public function procurement_add(){
 
          $kms_yerr_data = $this->db->query('SELECT * FROM `md_kms_year` 
                                         where sl_no = (select max(sl_no) from md_kms_year)')->row();
@@ -366,9 +367,9 @@ class Cron extends MX_Controller {
              $kms_id    = $kms_yerr_data->sl_no;
          
             $url = 'https://procurement.wbfood.in/api/Statusupd/Procurementdtls';/*Procurement*/
-            $date = date('Y-m-d');
+            //$date = date('Y-m-d');
 
-     //   while ($date <= '2020-12-10') {
+            $date = '2020-12-09';
 
             $date1 = date("d/m/Y", strtotime($date));
     
@@ -384,23 +385,36 @@ class Cron extends MX_Controller {
 
             $context = stream_context_create($options);
             $result  = file_get_contents($url, false, $context);
+
+           //  $filename = 'text_10_12.txt';
+           // if ( ! write_file(FCPATH .'downloads/'.$filename,$result)) {
+
+           //                  echo 'Unable to write the file';
+
+           //             } else {
+
+           //         echo 'File written!';  
+                                          
+           //       }
+
+           //     die();
+         
             $datas   = json_decode($result);
-
+            
             $trans_type     = "N";
+           
 
-            $district_code   = get_society_branch_id($datas['0']->proccentreid);  
+                $trans_id = $this->Paddy->f_get_particulars("td_collections",array("ifnull(MAX(trans_id),0) trans_id"),array('kms_id' => $kms_id), 1);
 
-             foreach ($datas as $value);
-
-                $trans_id = $this->Paddy->f_get_particulars("temp_td_collection",array("ifnull(MAX(trans_id),1) trans_id"),array('kms_id' => $kms_id), 1);
-
-                $ftrans_id = $this->Paddy->f_get_particulars("temp_td_collection",array("ifnull(MAX(trans_id),1) trans_id"),array('kms_id' => $kms_id), 1);
+                $ftrans_id = $this->Paddy->f_get_particulars("td_collections",array("ifnull(MAX(trans_id),0) trans_id"),array('kms_id' => $kms_id), 1);
               
-                $trans_id = $trans_id->trans_id;
+                $trans_id = $trans_id->trans_id + 1;
 
-                $for_trans_id = $ftrans_id->trans_id;
+                $for_trans_id = $ftrans_id->trans_id + 1;
                 
                    foreach ($datas as $value) {
+
+                    $district_code   = get_society_branch_id($value->proccentreid);  
 
                     $raw_date = substr($value->dtofprocurement,0,10);
 
@@ -409,8 +423,12 @@ class Cron extends MX_Controller {
                     $trans_dt = $dates[2].'-'.$dates[1].'-'.$dates[0];
 
                     $dist_sort_code  = get_district_short_code($district_code) ;
+
+                $count = $this->db->get_where('td_collections', array('soc_id' => $value->proccentreid,'reg_no' => $value->regno,'trans_dt' => $trans_dt))->num_rows();
+
+                if( $count == 0 ){
                         
-                    $data[] = array(
+                    $data = array(
 
                         "kms_id"              =>  $kms_id,
 
@@ -456,31 +474,103 @@ class Cron extends MX_Controller {
 
                         "acc_no"              =>  $value->bank_accno,
 
-                        "certificate_1"       =>  "Y",
+                        "certificate_1"       =>  "N",
 
-                        "certificate_2"       =>  "Y",
+                        "certificate_2"       =>  "N",
 
-                        "certificate_4"       =>  "Y",
+                        "certificate_4"       =>  "N",
 
                         "created_dt"          =>  date('Y-m-d h:i:s')
 
                      );
-                                    
+                        
+                    $this->Paddy->f_insert('td_collections', $data);  
+
+                   }                 
                 }  
-                    
-                $data = array_values($data);
-
-                $this->Paddy->f_insert_multiple('td_collections', $data);
-
-
-        //         $date = date("Y-m-d", strtotime($date. "+1 day"));
-
-        // }
            
             //For notification storing message
             $this->session->set_flashdata('msg', 'Successfully added!');
 
             redirect('paddys/transactions/f_paddycollection');
+
+    }
+
+    public function paddy_despatch(){
+
+         $kms_yerr_data = $this->db->query('SELECT * FROM `md_kms_year` 
+                                        where sl_no = (select max(sl_no) from md_kms_year)')->row();
+
+            $kms_year  = $kms_yerr_data->kms_yr;
+            $kms_id    = $kms_yerr_data->sl_no;
+         
+            $url = 'https://procurement.wbfood.in/api/Statusupd/Dispatcheddtls'; /*Dispatch*/
+            //$date = date('Y-m-d');
+
+            $date  = '2020-11-23';
+
+            $date1 = date("d/m/Y", strtotime($date));
+    
+            $data_auth = array('authcode' => 'ahtr*125#','dt_from' => $date1);
+
+            $options = array(
+                'http' => array(
+                    'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                    'method' => 'POST',
+                    'content' => http_build_query($data_auth)
+                )
+            );
+
+            $context = stream_context_create($options);
+            $result  = file_get_contents($url, false, $context);
+         
+            $datas   = json_decode($result);
+                
+                   foreach ($datas as $value) {
+
+                    $district_code   = get_society_branch_id($value->proccentreid);  
+
+                    $dt_despatch = substr($value->dt_despatch,0,10);
+
+                    $dates = explode('/',$dt_despatch);
+
+                    $trans_dt = $dates[2].'-'.$dates[1].'-'.$dates[0];
+
+                $count = $this->db->get_where('td_received', array('soc_id' => $value->proccentreid,'mill_id' => $value->ricemillcode,'trans_dt' => $trans_dt))->num_rows();
+
+                if( $count == 0 ){
+                        
+                    $data = array(
+
+                        "trans_dt"           =>  $trans_dt,
+
+                        "kms_year"           =>  $kms_id,
+
+                        "branch_id"          =>  $district_code,
+
+                        "dist"               =>  $district_code,
+
+                        "soc_id"             =>  $value->proccentreid,
+
+                        "mill_id"            =>  $value->ricemillcode,
+
+                        "paddy_qty"          =>  $value->despqty/100,
+
+                        "created_by"         =>  'API DATA',
+ 
+                        "created_dt"         =>  date('Y-m-d h:i:s')
+
+                     );
+                        
+                    $this->Paddy->f_insert('td_received', $data);  
+
+                   }                 
+                }  
+           
+            //For notification storing message
+            $this->session->set_flashdata('msg', 'Successfully added!');
+
+            redirect('paddys/transactions/f_received');
 
     }
 

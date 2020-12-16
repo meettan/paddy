@@ -29,29 +29,7 @@
                     <?php if(isset($farme->soc_name)){ echo $farme->soc_name; }?>  
 
                     </div>
-                    <label for="block" class="col-sm-1 col-form-label">Mill:</label>
-
-                      <div class="col-sm-2">
-
-                            <select name="mill_id" class="form-control" required>
-
-                            <option value="">Select</option>
-
-                           <?php
-
-                             foreach($mills as $mill){
-
-                            ?>
-                         <option value="<?php echo $mill->sl_no;?>" <?php if(isset($farme->mill_id) && $farme->mill_id == $mill->sl_no){ echo "selected"; }?> ><?php echo $mill->mill_name;?></option>
-                           <?php
-
-                                 }
-
-                                    ?>     
-
-                                    </select>
-
-                    </div>
+                   
                     <label for="soc_name" class="col-sm-1 col-form-label">Procurement Date:</label>
                     <div class="col-sm-2">
                     <input type="date" name="trans_dt" id="trans_dt" class="form-control" value="<?php if(isset($farme->trans_dt)){echo $farme->trans_dt;}?>" readonly />
@@ -79,7 +57,7 @@
                              foreach($banks as $bank){
 
                             ?>
-                         <option value="<?php echo $bank->sl_no;?>" <?php if(isset($farme->bank_sl_no) && $farme->bank_sl_no == $bank->sl_no){ echo "selected"; }?> > <?php echo $bank->bank_name; ?></option>
+                         <option value="<?php echo $bank->sl_no;?>" <?php if(isset($farme->bank_sl_no) && $farme->bank_sl_no == $bank->sl_no){ echo "selected"; } ?>> <?php echo $bank->bank_name; ?></option>
                            <?php
 
                                  }
@@ -88,7 +66,9 @@
                   </select>
                 </div>
                 <div class="col-sm-2"><b>Transaction :</b><?php if($farme->trans_type=="N"){ echo "NEFT"; }else{ echo "Cheque"; }?>  </div>
-                </div>            
+                </div>    
+
+                   
 
             <table class="table table-bordered table-hover" id="farmers">
             <thead><tr><th>Sl. No.</th><th>Name</th><th>Registration No.</th><th>Transaction Code.</th><th>Quantity(Quintal)</th><th>Amount</th>
@@ -98,6 +78,7 @@
                     <?php }else{ ?>
                   <th>Cheque No</th><th>Cheque Date</th>
                    <?php } ?>
+                   <th>Delete</th>
                  </tr></thead><tbody id="farme"> 
          
             <tbody> 
@@ -128,7 +109,11 @@
               <td><input type="date" class="form-control cheque_date" name="cheque_date[]" value="<?=$farmer_dtl->cheque_date?>"><span class="cd_error"></span></td>
 
     <?php } ?> 
-              
+               <td>
+                  <?php if($farmer_dtl->status == 0 && $farmer_dtl->chq_status == 'U' ) { ?>
+               <button type="button" class="delete" id="<?=$farmer_dtl->soc_id;?>/<?=$farmer_dtl->trans_dt;?>/<?=$farmer_dtl->trans_id;?>/<?=$farmer_dtl->bulk_trans_id;?>/<?=$farmer_dtl->chq_status;?>" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-times fa-2x" style="color: red"></i></button>
+                <?php  } ?> 
+              </td>
              </tr>
             
             <?php } ?>
@@ -140,6 +125,27 @@
             </tr>
             </tbody>
             </table>
+
+            <div class="form-group row">
+                  <div class="col-sm-12">
+                  <input type="checkbox" id="certificate_1" name="certificate_1" value="Y" <?php if(isset($farme->certificate_1) && $farme->certificate_1 == 'Y'){ echo "checked"; } ?> required> Certified that the paddy procurement details shown above are correct and at par with
+                  the Muster Roll prepared and uploaded in system.
+                 </div>
+                </div> 
+
+                 <div class="form-group row">
+                   <div class="col-sm-12">
+                  <input type="checkbox" id="certificate_2" name="certificate_2" value="Y" <?php if(isset($farme->certificate_2) && $farme->certificate_2 == 'Y'){ echo "checked"; } ?> required> The paddy shown to be procurred is dispatched by the Society to the Rice Mill and the 
+                   Rice Mill has only accepted by the said quantity of paddy.
+                 </div>
+                 </div> 
+
+               
+                 <div class="form-group row">
+                   <div class="col-sm-12">
+                   <input type="checkbox" id="certificate_4" name="certificate_4" value="Y" <?php if(isset($farme->certificate_4) && $farme->certificate_4 == 'Y'){ echo "checked"; } ?> required> The payment of MSP be given to the farmers.
+                   </div> 
+                 </div> 
             <div class="form-group row">
 
             <div class="col-sm-6">
@@ -257,7 +263,7 @@
 
             if(result) {
 
-                window.location = "<?php echo site_url('paddys/transactions/f_pad_sig_delete?soc_id="+id+"');?>";
+                window.location = "<?php echo site_url('paddys/transactions/f_proc_sig_delete?soc_id="+id+"');?>";
 
             }
             

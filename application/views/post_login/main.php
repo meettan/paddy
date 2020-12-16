@@ -113,9 +113,9 @@
                         <div class="dropdown-content">
                         <?php if($this->session->userdata['loggedin']['user_type']=="U" OR $this->session->userdata['loggedin']['user_type']=="M" OR $this->session->userdata['loggedin']['user_type']=="A" && $this->session->userdata['loggedin']['ho_flag'] =="N"){ ?>
                             <a href="<?php echo site_url('paddys/transactions/f_workorder'); ?>">Work Order</a>
-                      <?php if($this->session->userdata['loggedin']['branch_id'] == '333'){ ?>
+                     
                             <a href="<?php echo site_url('paddys/transactions/f_paddycollection'); ?>">Paddy Procurement</a>
-                        <?php } ?>
+                     
                           <!-- <a href="<?php echo site_url('paddys/trans_neft/f_paddy_neft_coll'); ?>">Paddy Procurement(NEFT)</a> -->
                             <?php } ?>
 
@@ -126,9 +126,9 @@
                        <!--  <a href="<?php echo site_url('paddys/transactions/f_paddycollection_dwn'); ?>">Download Procurement</a> -->
                       <!--   <a href="<?php echo site_url('paddys/transactions/f_return_cheque'); ?>">Return Cheque</a> -->
                       <a href="<?php echo site_url('paddys/transactions/f_reissuchq'); ?>">Reissue Cheque</a>
-                      <a href="<?php echo site_url('paddys/transactions/failneft'); ?>">Reissue NEFT</a>
+                     <!--  <a href="<?php //echo site_url('paddys/transactions/failneft'); ?>">Reissue NEFT</a> -->
  
-                            <?php }   ?>
+                        <?php }   ?>
                                  
                     <?php if($this->session->userdata['loggedin']['ho_flag']=="Y" && $this->session->userdata['loggedin']['user_type']=="A" OR $this->session->userdata['loggedin']['user_type']=="M") { ?>
 			
@@ -172,7 +172,7 @@
 
                             <?php } ?>
                            <?php if($this->session->userdata['loggedin']['user_type']=="U" OR $this->session->userdata['loggedin']['user_type']=="M" OR $this->session->userdata['loggedin']['user_type']=="A" && $this->session->userdata['loggedin']['ho_flag'] =="N"){ ?>
-                            <a href="<?php echo site_url('paddys/transactions/f_received'); ?>">Paddy Received by Rice Mill</a>
+                            <a href="<?php echo site_url('paddys/transactions/f_received'); ?>">Dispatch Paddy to Rice Mill</a>
 
                             <a href="<?php echo site_url('paddys/transactions/f_offered');?>">CMR offered</a>
 

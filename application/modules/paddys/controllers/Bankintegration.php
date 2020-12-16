@@ -120,7 +120,7 @@ class Bankintegration extends MX_Controller {
 
                                     $this->Paddy->f_insert_multiple('td_collections_forward', $dataf);
 
-                                    $this->Paddy->f_insert('td_received', $data_array);
+                                   // $this->Paddy->f_insert('td_received', $data_array);
 
                                     if($bank_id == '3'){                                    //ICICI BANK
 

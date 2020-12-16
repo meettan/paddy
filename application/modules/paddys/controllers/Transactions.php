@@ -1164,7 +1164,9 @@ class Transactions extends MX_Controller {
             
                 $data_array = array(
 
-                "mill_id"                => $this->input->post('mill_id'),
+                "certificate_1"          => $this->input->post('certificate_1'),
+                "certificate_2"          => $this->input->post('certificate_2'),
+                "certificate_4"          => $this->input->post('certificate_4'),
                 "bank_sl_no"             => $this->input->post('bank_sl_no'),
                 "bulk_trans_id"          => $bulk_trns_id,
                 "forward_bulk_trans_id"  => $dist_sort_code.'_'.substr($kms_year,2).'_'.$bulk_trns_id
@@ -1328,11 +1330,11 @@ class Transactions extends MX_Controller {
         }
         else {
 
-            $data=explode ("/", $this->input->get('soc_id'));
-            $soc_id = $data["0"];
-            $trans_dt = $data["1"];
+            $data          = explode ("/", $this->input->get('soc_id'));
+            $soc_id        = $data["0"];
+            $trans_dt      = $data["1"];
             $bulk_trans_id = $data["2"];
-            $chq_status = $data["3"];
+            $chq_status    = $data["3"];
 
 
             $select     =   array(
@@ -1516,6 +1518,32 @@ class Transactions extends MX_Controller {
             "trans_dt"      => $trans_dt,
 
             "bulk_trans_id" => $bulk_trans_id,
+
+            "trans_id"      => $trans_id
+
+        );
+
+       $data = $this->Paddy->f_delete("td_collections", $where);
+
+       redirect('paddys/transactions/f_cheque_add?soc_id='.$soc_id.'/'.$trans_dt.'/'.$bulk_trans_id.'/'.$status);
+
+    }
+   //  Developed on 16/12/2020 after Food Api integration to delete Single Value // 
+     public function f_proc_sig_delete(){
+
+        $data     = explode("/", $this->input->get('soc_id'));
+        $soc_id   = $data["0"];
+        $trans_dt = $data["1"];
+        $trans_id = $data["2"];
+        $bulk_trans_id = $data["3"];
+        $status   = $data["4"];
+
+       
+        $where      =   array(
+
+            "soc_id"        => $soc_id,
+
+            "trans_dt"      => $trans_dt,
 
             "trans_id"      => $trans_id
 
@@ -3055,17 +3083,9 @@ class Transactions extends MX_Controller {
 
             $data_array = array(
 
-                "trans_dt"      =>  $this->input->post('trans_dt'),
+                "file_no"      =>  $this->input->post('file_name')
 
-                "soc_id"        =>  $this->input->post('soc_name'),
-
-               "mill_id"       =>  $this->input->post('mill_name'),
-
-                "paddy_qty"     =>  $this->input->post('paddy_qty'),
-
-                "modified_by"   =>  $this->session->userdata['loggedin']['user_name'],
-
-                "modified_dt"   =>  date('Y-m-d h:i:s')
+               //  "soc_id"        =>  $this->input->post('soc_name'),
 
             );
 
@@ -3107,6 +3127,14 @@ class Transactions extends MX_Controller {
             );
 
             $paddyreceived['paddyreceived_dtls']=   $this->Paddy->f_get_particulars("td_received t, md_society m", $select, $where, 1);
+
+            $kms_id    = $this->session->userdata['loggedin']['kms_id'];
+            $branch_id = $this->session->userdata['loggedin']['branch_id'];
+
+            $paddyreceived['file_dtls'] =   $this->Paddy->get_file($kms_id,$branch_id);
+
+            echo $this->db->last_query();
+            die();
             
             $this->load->view('post_login/main');
 

@@ -64,37 +64,53 @@
                           <td ><?php echo $padl_dtl->tot_amt; ?></td>
                  <!--          <td ><?php //echo $padl_dtl->created_by; ?></td> -->
                           <td style="text-align: ;">
+                    <?php $data = $this->db->get_where('td_work_order', array('soc_id' => $padl_dtl->soc_id,'kms_year' =>$this->session->userdata['loggedin']['kms_id']))->num_rows();
+                            if($data != '0'){
+                            ?>
                           <a href="<?php echo base_url()?>index.php/paddys/transactions/f_cheque_add?soc_id=<?=$padl_dtl->soc_id;?>/<?=$padl_dtl->trans_dt;?>/<?=$padl_dtl->bulk_trans_id;?>/<?=$padl_dtl->chq_status;?>" data-toggle="tooltip"
-                                    data-placement="bottom"  title="Edit">
-                                    <i class="fa fa-edit fa-2x" style="color: #007bff"></i>
-                                </a>
+                              data-placement="bottom"  title="Edit">
+                              <i class="fa fa-edit fa-2x" style="color: #007bff"></i></a>
+                            <?php } ?>
                           </td>
-                          <td style="color:blue"> <b>
+                          <td > <b>
                             <?php if($padl_dtl->status == 0 && $padl_dtl->chq_status == 'U') { 
                           
                                      echo "Data Uploaded"; ?> 
                               
                                 <?php }elseif($padl_dtl->status == 1 && $padl_dtl->chq_status == 'U'){
 
-                                  echo "Forwarded";
+                                  echo '<span style="color:#b20000">Forwarded</span>';
                                   
                                 }elseif($padl_dtl->status == 1 && $padl_dtl->chq_status == 'C'){
 
                                   echo "Cleared";
 
-                                }elseif($padl_dtl->status == 1 && $padl_dtl->chq_status == 'R'){
+                                }elseif($padl_dtl->status == 1 && $padl_dtl->chq_status == 'S'){
 
-                                  echo "Returned";
+                                  echo '<span style="color:#185c27">SUCCESS</span>';
+
+                                }elseif($padl_dtl->status == 1 && $padl_dtl->chq_status == 'P'){
+
+                                  echo '<span style="color:#185c27">PROCESSED</span>';
+
+                                }elseif($padl_dtl->status == 1 && $padl_dtl->chq_status == 'A'){
+
+                                  echo '<span style="color:#185c27">PAID</span>';
+
+                                }
+                                elseif($padl_dtl->status == 1 && $padl_dtl->chq_status == 'R'){
+
+                                  echo '<span style="color:#f11421">Returned</span>';
 
                                 }elseif($padl_dtl->status == 0 && $padl_dtl->chq_status == 'R'){
 
-                                  echo "Returned";
+                                  echo '<span style="color:#f11421">Returned</span>';
 
                                 }elseif($padl_dtl->status == 1 && $padl_dtl->chq_status == 'I'){
 
                                   echo "Cheque Returned";
                                 }elseif($padl_dtl->status == 0 && $padl_dtl->chq_status == 'C'){
-                                    echo "Cleared";
+                                    echo '<span style="color:#185c27"></span>';
                                 } 
                                  ?>  
                                  </b>  
