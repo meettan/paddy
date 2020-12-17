@@ -195,9 +195,12 @@ class Cron extends MX_Controller {
     public function read_icici_reversefile(){
 
              $newest_file = null;
-             $path        = $_SERVER['DOCUMENT_ROOT'].'/paddy/icici/PayReport/';
+             $path        = $_SERVER['DOCUMENT_ROOT'].'/icici/PayReport/';
+
              $files       = scandir($path,1);
-             $newest_file = $files[0];
+            
+             $newest_file = $files[1];
+    
               
              $handle      = file_get_contents($path.$newest_file);
 
@@ -369,7 +372,7 @@ class Cron extends MX_Controller {
             $url = 'https://procurement.wbfood.in/api/Statusupd/Procurementdtls';/*Procurement*/
             //$date = date('Y-m-d');
 
-            $date = '2020-12-09';
+            $date = '2020-12-07';
 
             $date1 = date("d/m/Y", strtotime($date));
     
@@ -386,18 +389,18 @@ class Cron extends MX_Controller {
             $context = stream_context_create($options);
             $result  = file_get_contents($url, false, $context);
 
-           //  $filename = 'text_10_12.txt';
-           // if ( ! write_file(FCPATH .'downloads/'.$filename,$result)) {
+            // $filename = 'text_07_12.txt';
+            // if ( ! write_file(FCPATH .'downloads/'.$filename,$result)) {
 
-           //                  echo 'Unable to write the file';
+            //                 echo 'Unable to write the file';
 
-           //             } else {
+            //            } else {
 
-           //         echo 'File written!';  
+            //         echo 'File written!';  
                                           
-           //       }
+            //       }
 
-           //     die();
+            //     die();
          
             $datas   = json_decode($result);
             
@@ -505,9 +508,9 @@ class Cron extends MX_Controller {
             $kms_id    = $kms_yerr_data->sl_no;
          
             $url = 'https://procurement.wbfood.in/api/Statusupd/Dispatcheddtls'; /*Dispatch*/
-            //$date = date('Y-m-d');
+            $date = date('Y-m-d');
 
-            $date  = '2020-11-23';
+            //$date  = '2020-11-23';
 
             $date1 = date("d/m/Y", strtotime($date));
     
@@ -532,35 +535,41 @@ class Cron extends MX_Controller {
 
                     $dt_despatch = substr($value->dt_despatch,0,10);
 
+                    $api_time    = substr($value->dt_despatch,11,9);
+
                     $dates = explode('/',$dt_despatch);
 
                     $trans_dt = $dates[2].'-'.$dates[1].'-'.$dates[0];
 
-                $count = $this->db->get_where('td_received', array('soc_id' => $value->proccentreid,'mill_id' => $value->ricemillcode,'trans_dt' => $trans_dt))->num_rows();
+                    $api_date_time = $trans_dt.' '.$api_time;
+
+                $count = $this->db->get_where('td_received', array('soc_id' => $value->proccentreid,'mill_id' => $value->ricemillcode,'api_date' => $api_date_time))->num_rows();
 
                 if( $count == 0 ){
                         
-                    $data = array(
+                        $data = array(
 
-                        "trans_dt"           =>  $trans_dt,
+                            "trans_dt"           =>  $trans_dt,
 
-                        "kms_year"           =>  $kms_id,
+                            "api_date"           =>  $api_date_time,
 
-                        "branch_id"          =>  $district_code,
+                            "kms_year"           =>  $kms_id,
 
-                        "dist"               =>  $district_code,
+                            "branch_id"          =>  $district_code,
 
-                        "soc_id"             =>  $value->proccentreid,
+                            "dist"               =>  $district_code,
 
-                        "mill_id"            =>  $value->ricemillcode,
+                            "soc_id"             =>  $value->proccentreid,
 
-                        "paddy_qty"          =>  $value->despqty/100,
+                            "mill_id"            =>  $value->ricemillcode,
 
-                        "created_by"         =>  'API DATA',
- 
-                        "created_dt"         =>  date('Y-m-d h:i:s')
+                            "paddy_qty"          =>  $value->despqty/100,
 
-                     );
+                            "created_by"         =>  'API DATA',
+     
+                            "created_dt"         =>  date('Y-m-d h:i:s')
+
+                         );
                         
                     $this->Paddy->f_insert('td_received', $data);  
 

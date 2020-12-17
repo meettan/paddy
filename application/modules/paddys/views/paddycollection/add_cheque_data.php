@@ -15,12 +15,18 @@
 
                 <input type="hidden" value="<?php echo $_GET["soc_id"]?>" name="editdata">
 
+
+
                     <label for="block" class="col-sm-1 col-form-label">Block:</label>
 
                     <div class="col-sm-2">
-                      <?php  foreach($farmer_dtls as $farme);
+                      <?php 
+
+                      foreach($farmer_dtls as $farme);
                       
-                      if(isset($farme->block_name)){ echo $farme->block_name; }?>  
+                      if(isset($farme->block_name)){ echo $farme->block_name; }?>
+
+
                     </div>
 
                     <label for="soc_name" class="col-sm-1 col-form-label">Society Name:</label>
@@ -45,9 +51,11 @@
                   <?php }else{ ?>
 
                 <div class="col-sm-2"><b>Bulk Transaction Id : </b></div>
-                <div class="col-sm-2"><?php if(isset($farme->bulk_trans_id)){ echo $farme->bulk_trans_id; }?> </div>
-                  <?php } ?>
+                <div class="col-sm-2"><?php if(isset($farme->bulk_trans_id)){ echo $farme->bulk_trans_id; }?>
 
+                 </div>
+                  <?php } ?>
+ <input type="hidden" value="<?php if(isset($farme->bulk_trans_id)){ echo $farme->bulk_trans_id; }?>" name="bulk_trans_id">
                 <div class="col-sm-2"><b>Bank Name :</b> </div>
                 <div class="col-sm-3">           
                     <select name="bank_sl_no" id="bank_sl_no" class="form-control" required>
@@ -73,12 +81,12 @@
             <table class="table table-bordered table-hover" id="farmers">
             <thead><tr><th>Sl. No.</th><th>Name</th><th>Registration No.</th><th>Transaction Code.</th><th>Quantity(Quintal)</th><th>Amount</th>
                 <?php if($farme->trans_type=="N"){ ?>
-                  <th>IFSC Code</th><th>Account </th>
+                  <th>IFS Code</th><th>Account </th>
              
                     <?php }else{ ?>
                   <th>Cheque No</th><th>Cheque Date</th>
                    <?php } ?>
-                   <th>Delete</th>
+                   <!-- <th>Delete</th> -->
                  </tr></thead><tbody id="farme"> 
          
             <tbody> 
@@ -92,7 +100,7 @@
               ?> ><td><?=++$count;?></td>
               <td><?=$farmer_dtl->farmer_name?></td>
               <td><?=$farmer_dtl->reg_no?><input type="hidden" value="<?=$farmer_dtl->reg_no?>" name="reg_no[]"></td>
-              <td><?=$farmer_dtl->forward_trans_id?></td>
+              <td><?=$farmer_dtl->forward_trans_id?><input type="hidden" value="<?=$farmer_dtl->forward_trans_id?>" name="forward_trans_id[]"></td>
               <td>
               <input type="text" name="quantity[]" value="<?=$farmer_dtl->quantity?>" readonly class="form-control quantity">
                 <?php $paddy_qty += $farmer_dtl->quantity;?> <span class="qerror"></span></td>
@@ -100,8 +108,8 @@
 
    <?php if($farme->trans_type=="N"){ ?>
 
-   <td><input type="text" name="ifsc_code[]" value="<?=$farmer_dtl->ifsc_code?>" class="form-control ifsc_code" readonly><span class="error"></span></td>
-    <td><input type="text" class="form-control acc_no" name="acc_no[]" value="<?=$farmer_dtl->acc_no?>" readonly><span class="cd_error"></span></td>
+   <td><input type="text" name="ifsc_code[]" value="<?=$farmer_dtl->ifsc_code?>" class="form-control ifsc_code" ><span class="error"></span></td>
+    <td><input type="text" class="form-control acc_no" name="acc_no[]" value="<?=$farmer_dtl->acc_no?>" ><span class="cd_error"></span></td>
 
     <?php  }else{    ?>               
 
@@ -109,11 +117,11 @@
               <td><input type="date" class="form-control cheque_date" name="cheque_date[]" value="<?=$farmer_dtl->cheque_date?>"><span class="cd_error"></span></td>
 
     <?php } ?> 
-               <td>
-                  <?php if($farmer_dtl->status == 0 && $farmer_dtl->chq_status == 'U' ) { ?>
+             <!--   <td>
+                  <?php //if($farmer_dtl->status == 0 && $farmer_dtl->chq_status == 'U' ) { ?>
                <button type="button" class="delete" id="<?=$farmer_dtl->soc_id;?>/<?=$farmer_dtl->trans_dt;?>/<?=$farmer_dtl->trans_id;?>/<?=$farmer_dtl->bulk_trans_id;?>/<?=$farmer_dtl->chq_status;?>" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-times fa-2x" style="color: red"></i></button>
-                <?php  } ?> 
-              </td>
+                <?php  //} ?> 
+              </td> -->
              </tr>
             
             <?php } ?>

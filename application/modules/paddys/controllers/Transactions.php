@@ -1138,24 +1138,34 @@ class Transactions extends MX_Controller {
 
             //$trans_type = $this->Paddy->get_transaction_type($soc_id,$trans_dt,$bulk_trans_id,$chq_status);
 
-            $reg_no   = $this->input->post('reg_no');     
-            $edittran_dt = $this->input->post('trans_dt');
-            $quantity = $this->input->post('quantity');
-            $count       = count($this->input->post('quantity'));
-            $amount = $this->input->post('amount');
-            $cheque_no=$this->input->post('cheque_no');
-            $cheque_date=$this->input->post('cheque_date');
-            $ifsc_code=$this->input->post('ifsc_code');
-            $acc_no=$this->input->post('acc_no');
+            $reg_no           = $this->input->post('reg_no'); 
+            $forward_trans_id = $this->input->post('forward_trans_id'); 
+            $edittran_dt      = $this->input->post('trans_dt');
+            $quantity         = $this->input->post('quantity');
+            $count            = count($this->input->post('quantity'));
+            $amount           = $this->input->post('amount');
+            $cheque_no        =$this->input->post('cheque_no');
+            $cheque_date      =$this->input->post('cheque_date');
+            $ifsc_code        =$this->input->post('ifsc_code');
+            $acc_no           =$this->input->post('acc_no');
 
-            $kms_year       = $this->session->userdata['loggedin']['kms_yr'];
-            $kms_id         = $this->session->userdata['loggedin']['kms_id'];
+            $kms_year         = $this->session->userdata['loggedin']['kms_yr'];
+            $kms_id           = $this->session->userdata['loggedin']['kms_id'];
+            $dist_sort_code   = $this->session->userdata['loggedin']['dist_sort_code'];
 
-            $dist_sort_code = $this->session->userdata['loggedin']['dist_sort_code'];
+            if($this->input->post('bulk_trans_id') == 0 ){
 
             $bulk_trns_id = $this->Paddy->f_get_particulars("td_collections",array("MAX(bulk_trans_id) bulk_trans_id"),array('branch_id' => $this->session->userdata['loggedin']['branch_id'],'kms_id' => $kms_id), 1);
               
             $bulk_trns_id = $bulk_trns_id->bulk_trans_id+1;
+
+            }else{
+
+            $bulk_trns_id = $this->input->post('bulk_trans_id');
+
+            }
+
+            
          
            $i=0;
               
@@ -1168,22 +1178,27 @@ class Transactions extends MX_Controller {
                 "certificate_2"          => $this->input->post('certificate_2'),
                 "certificate_4"          => $this->input->post('certificate_4'),
                 "bank_sl_no"             => $this->input->post('bank_sl_no'),
+                "ifsc_code"              =>  $ifsc_code[$i],
+                "acc_no"                 =>  $acc_no[$i],
                 "bulk_trans_id"          => $bulk_trns_id,
                 "forward_bulk_trans_id"  => $dist_sort_code.'_'.substr($kms_year,2).'_'.$bulk_trns_id
            
                 );
 
              
-            $where = array(
+                $where = array(
 
-                "soc_id" => $soc_id,
+                    "reg_no"           => $reg_no[$i],
 
-                "trans_dt" => $trans_dt
+                    "forward_trans_id" => $forward_trans_id[$i],
 
-            );
+                    "soc_id"           => $soc_id,
 
-                    $this->Paddy->f_edit('td_collections', $data_array, $where);
+                    "trans_dt"         => $trans_dt
 
+                );
+
+                $this->Paddy->f_edit('td_collections', $data_array, $where);
 
                  
             }   
@@ -3132,9 +3147,6 @@ class Transactions extends MX_Controller {
             $branch_id = $this->session->userdata['loggedin']['branch_id'];
 
             $paddyreceived['file_dtls'] =   $this->Paddy->get_file($kms_id,$branch_id);
-
-            echo $this->db->last_query();
-            die();
             
             $this->load->view('post_login/main');
 

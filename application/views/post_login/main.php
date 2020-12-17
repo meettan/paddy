@@ -125,26 +125,26 @@
              
                        <!--  <a href="<?php echo site_url('paddys/transactions/f_paddycollection_dwn'); ?>">Download Procurement</a> -->
                       <!--   <a href="<?php echo site_url('paddys/transactions/f_return_cheque'); ?>">Return Cheque</a> -->
-                      <a href="<?php echo site_url('paddys/transactions/f_reissuchq'); ?>">Reissue Cheque</a>
+                     <!--  <a href="<?php //echo site_url('paddys/transactions/f_reissuchq'); ?>">Reissue Cheque</a> -->
                      <!--  <a href="<?php //echo site_url('paddys/transactions/failneft'); ?>">Reissue NEFT</a> -->
  
                         <?php }   ?>
                                  
                     <?php if($this->session->userdata['loggedin']['ho_flag']=="Y" && $this->session->userdata['loggedin']['user_type']=="A" OR $this->session->userdata['loggedin']['user_type']=="M") { ?>
 			
-                        <a href="<?php echo site_url('paddys/transactions/f_paddycollection_dwn'); ?>">Download Procurement</a>
-                        <a href="<?php echo site_url('paddys/transactions/f_paddycollreissue_dwn'); ?>">Download Cheque Reissue</a>
-
+                       <!--  <a href="<?php //echo site_url('paddys/transactions/f_paddycollection_dwn'); ?>">Download Procurement</a> -->
+                      <!--   <a href="<?php //echo site_url('paddys/transactions/f_paddycollreissue_dwn'); ?>">Download Cheque Reissue</a>
+ --><!-- 
                         <div class="sub-dropdown">
                                <a class="sub-dropbtn">Cheque Reconciliation<i class="fa fa-angle-right" style="float: right;"></i></a> 
                                <div class="sub-dropdown-content">
-                                 <a href="<?php echo site_url('paddys/transactions/f_yescheque');?>">Yes Bank</a>
-                                 <a href="<?php echo site_url('paddys/transactions/f_bandhancheque');?>">Bandhan Bank</a>
+                                 <a href="<?php //echo site_url('paddys/transactions/f_yescheque');?>">Yes Bank</a>
+                                 <a href="<?php //echo site_url('paddys/transactions/f_bandhancheque');?>">Bandhan Bank</a>
                                 </div>
                         </div>
-
-                        <a href="<?php echo site_url('paddys/transactions/f_neft_reconcil'); ?>">NEFT Reconciliation</a>
-                        <a href="<?php echo site_url('paddys/transactions/f_singlecheque'); ?>">Cheque Detail</a>
+ -->
+                       <!--  <a href="<?php //echo site_url('paddys/transactions/f_neft_reconcil'); ?>">NEFT Reconciliation</a> -->
+                      <!--   <a href="<?php //echo site_url('paddys/transactions/f_singlecheque'); ?>">Cheque Detail</a> -->
                            <?php 
                         
                         if($this->session->userdata['loggedin']['ho_flag'] =="Y"){

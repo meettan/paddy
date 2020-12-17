@@ -109,9 +109,11 @@
                                 }elseif($padl_dtl->status == 1 && $padl_dtl->chq_status == 'I'){
 
                                   echo "Cheque Returned";
-                                }elseif($padl_dtl->status == 0 && $padl_dtl->chq_status == 'C'){
-                                    echo '<span style="color:#185c27"></span>';
-                                } 
+                                }elseif($padl_dtl->status == 0 && $padl_dtl->chq_status == 'L'){
+                                    echo '<span style="color:#185c27">Awaiting Liquidation</span>';
+                                }else{
+                                    echo '<span style="color:#185c27">Unknown</span>';
+                                }  
                                  ?>  
                                  </b>  
                                 </td>

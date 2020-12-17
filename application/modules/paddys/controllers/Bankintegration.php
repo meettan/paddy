@@ -161,7 +161,6 @@ class Bankintegration extends MX_Controller {
 
                                         $data = '';
                                         $trn_type = '';
-
                                     
 
                                         foreach($farmer_data as $row){
@@ -200,8 +199,51 @@ class Bankintegration extends MX_Controller {
 
                                         }
 
-                                    }
+                                    }elseif( $bank_id == '5' ){   //Hdfc Bank                                          
+
+                                        $data = '';
+                                        $trn_type = '';
+
                                     
+
+                                        foreach($farmer_data as $row){
+                                                
+                                                    if(substr($row->fifsc,0,3) == 'HDF'){
+
+                                                        $trn_type = "I";
+                                                            
+                                                    }else{
+                                                            $trn_type = "N";
+                                                    
+                                                    }
+                                        
+                                          
+                                        $data .= $trn_type.','.$row->reg_no.','.$row->faccount.','.$row->amount.','.$row->farm_name.',,,,,,,,,'.$row->forward_trans_id.',,,,,,,,,'.date('d/m/Y').',,'.$row->fifsc.',,,benfedpaddy1920@gmail.com'."\r\n";
+
+                                        }
+
+                                        $data = rtrim($data);
+                                    
+                                        $datetime = strtotime(date('Y-m-d'));
+                                        
+                                        $datetimes = date('dm',$datetime);
+
+                                        $serial_no = str_pad($bulk_trans_id,3,"0",STR_PAD_LEFT);
+                                        
+                                        $filename = 'WBSCMFL'.'_'.'908RBI'.'_'.'908RBI'.$datetimes.'.'.$serial_no;
+                                        
+                                      if (write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)
+                                    
+                                        {
+                                           echo 'Unable to write the file';
+
+                                        } else {
+
+                                            echo 'File written!';  
+                                           
+                                        }
+
+                                    }
 
                                     echo "<script> alert('Procurement data forwarded successfully');
                                      window.location.href='".base_url()."index.php/paddys/transactions/f_paddycollection';
