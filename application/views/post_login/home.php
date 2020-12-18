@@ -48,7 +48,7 @@
         <h3>Total Paddy Procurement</h3>
         </div>
     </div>
-
+     <?php if($this->session->userdata['loggedin']['kms_id'] == '2'){  ?>
     <div class="col-sm-4">
         <div class="daseSmBox">
             <div class="subBox">
@@ -64,7 +64,22 @@
         <h3>Total No. of Cheques Issued</h3>
         </div>
     </div>
+   <?php }else{  ?>
+     <div class="col-sm-4">
+        <div class="daseSmBox">
+            <div class="subBox">
+                <div class="icon2"><img src="<?php echo base_url('assets/images/box_b.png'); ?>"></div>
+                <div class="value"><?php
 
+                                     echo $tot_paddy_dispatch->paddy_qty; 
+                                    ?> <strong>Qnt</strong>
+                </div>
+            </div>
+        <h3>Total Paddy Dispatch</h3>
+        </div>
+    </div>
+
+   <?php } ?>
     <div class="col-sm-4">
         <div class="daseSmBox">
             <div class="subBox">
@@ -74,7 +89,7 @@
                                      echo $tot_paddy_procurement_ho->amount; 
                                           }else{echo $tot_paddy_procurement->amount; }?></div>
             </div>
-        <h3>Total Cheque Amount Rs.</h3>
+        <h3>Total Procured Amount Rs.</h3>
         </div>
     </div>
 			
@@ -88,7 +103,7 @@
                                      echo $tot_cheque_cleared_ho->tot_clr_cheque; 
                                           }else{echo $tot_cheque_cleared->tot_clr_cheque; }?></div>
             </div>
-        <h3>Total Amount of cheque cleared</h3>
+        <h3>Total Paid Amount Rs.</h3>
         </div>
     </div>
 			

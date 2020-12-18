@@ -1531,15 +1531,26 @@ class Paddy extends CI_Model {
 
    }
 
-    public function get_file($kms_id,$branch_id){
+    public function get_file($kms_id,$branch_id,$soc_id){
         
         $sql="SELECT distinct forward_bulk_trans_id FROM `td_collections` where kms_id = '$kms_id' 
         and branch_id  = '$branch_id'
+        and soc_id     = '$soc_id'
         and bulk_trans_id !='' ";
 
         $data  = $this->db->query($sql)->result();
 
         return $data;
+
+   }
+
+    public function get_soc_id_by_trans_no($trans_no){
+        
+        $sql   = "SELECT soc_id FROM `td_received` where trans_no = '$trans_no' ";
+
+        $data  = $this->db->query($sql)->row();
+
+        return $data->soc_id;
 
    }
 

@@ -42,7 +42,7 @@
 
                     <?php foreach($file_dtls as $file){ ?>  
 
-                    <option value="">Select First</option>    
+                    <option value="<?php if(isset($file->forward_bulk_trans_id)){ echo $file->forward_bulk_trans_id; }?>" <?php if($paddyreceived_dtls->file_no == $file->forward_bulk_trans_id){echo "selected"; }?>><?php if(isset($file->forward_bulk_trans_id)){ echo $file->forward_bulk_trans_id; }  ?></option>    
 
                     <?php }?>
 

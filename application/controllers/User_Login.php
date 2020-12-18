@@ -242,8 +242,32 @@
 				
 				$dash_data["tot_paddy_procurement"]= $this->Login_Process->f_get_tot_paddy_procurement($kms_id,$branch_id);
 				$dash_data["tot_paddy_procurement_ho"]= $this->Login_Process->f_get_tot_paddy_procurement_ho($kms_id);
-				$dash_data["tot_cheque_cleared"]= $this->Login_Process->f_get_tot_cheque_cleared($kms_id,$branch_id);
+				if($this->session->userdata['loggedin']['ho_flag'] =="N"){
+
+                   $where    =   array("kms_year"    => $kms_id,"branch_id" =>$branch_id);
+
+				}else{
+
+					$where   =   array("kms_year"    => $kms_id);
+				}
+
+				$dash_data["tot_paddy_dispatch"]= $this->Login_Process->f_tot_paddy_dispatch($where);
+
+				if($kms_id == '2'){  
+                  $dash_data["tot_cheque_cleared"]= $this->Login_Process->f_get_tot_cheque_cleared($kms_id,$branch_id);
+				}else{
+
+					$dash_data["tot_cheque_cleared"]= $this->Login_Process->f_get_tot_amount_cleared($kms_id,$branch_id);
+				}
+
+				if($kms_id == '2'){  
+
 				$dash_data["tot_cheque_cleared_ho"]= $this->Login_Process->f_get_tot_cheque_cleared_ho($kms_id);
+
+			    }else{
+
+				$dash_data["tot_cheque_cleared_ho"]= $this->Login_Process->f_get_tot_amount_cleared_ho($kms_id);
+				}
 				$dash_data["tot_cmr_offered"]= $this->Login_Process->f_get_tot_cmr_offered($kms_id,$branch_id);
 				$dash_data["tot_cmr_offered_ho"]= $this->Login_Process->f_get_tot_cmr_offered_ho($kms_id,$branch_id);
 				$dash_data["tot_cmr_delivery"]= $this->Login_Process->f_get_tot_cmr_delivery($kms_id,$branch_id);

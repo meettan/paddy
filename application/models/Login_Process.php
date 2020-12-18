@@ -120,11 +120,22 @@
 			$data=$this->db->get('td_collections');
             return $data->row();
 		}
+
+		
 		public function f_get_tot_paddy_procurement_ho($kms_id){
 		
 			$this->db->select('ifnull(SUM(quantity), 0) tot_quantity,count(cheque_no) cheque_no,ifnull(SUM(amount), 0) amount');
 			$this->db->where('kms_id',$kms_id);
 			$data=$this->db->get('td_collections');
+            return $data->row();
+		}
+		public function f_tot_paddy_dispatch($where=NULL){
+
+            $this->db->select('ifnull(SUM(paddy_qty), 0) paddy_qty');
+			if(isset($where)) {
+            $this->db->where($where);
+            }	
+			$data=$this->db->get('td_received');
             return $data->row();
 		}
 		public function f_get_tot_cheque_cleared($kms_id,$branch_id){
@@ -137,11 +148,30 @@
             return $data->row();
 
 		}
+		public function f_get_tot_amount_cleared($kms_id,$branch_id){
+
+            $this->db->select('ifnull(SUM(amount), 0) tot_clr_cheque');
+			$this->db->where('kms_id',$kms_id);
+			$this->db->where('chq_status',"S");
+			$this->db->where('branch_id',$branch_id);
+			$data = $this->db->get('td_collections');
+            return $data->row();
+
+		}
 		public function f_get_tot_cheque_cleared_ho($kms_id){
 
             $this->db->select('ifnull(SUM(amount), 0) tot_clr_cheque');
 			$this->db->where('kms_id',$kms_id);
 			$this->db->where('chq_status',"C");
+			$data = $this->db->get('td_collections');
+            return $data->row();
+
+		}
+		public function f_get_tot_amount_cleared_ho($kms_id){
+
+            $this->db->select('ifnull(SUM(amount), 0) tot_clr_cheque');
+			$this->db->where('kms_id',$kms_id);
+			$this->db->where('chq_status',"S");
 			$data = $this->db->get('td_collections');
             return $data->row();
 

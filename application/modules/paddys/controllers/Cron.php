@@ -292,6 +292,111 @@ class Cron extends MX_Controller {
        
     }
 
+     //   Code for hdfc reverse file read and store in download folder 18/12/2020  //
+    public function read_hdfc_reversefile(){
+
+             $newest_file = null;
+
+             $path        = $_SERVER['DOCUMENT_ROOT'].'/paddy/Hdfc/reversefeed/';
+
+             $files       = scandir($path,1);
+            
+             $newest_file = $files[0];
+    
+              
+             $handle      = file_get_contents($path.$newest_file);
+
+                    $var_array_parent = explode("\n",$handle);
+
+                    // unset($var_array_parent[0]);
+                      
+
+                    foreach($var_array_parent as $value)
+                    {
+
+
+                    $var_array = explode(",",$value);
+
+                   if ( ! isset($var_array[11])) {
+
+                            $var_array[0]  = null;
+                            $var_array[1]  = null;
+                            $var_array[2]  = null;
+                            $var_array[3]  = null;
+                            $var_array[4]  = null;
+                            $var_array[5]  = null;
+                            $var_array[6]  = null;
+                            $var_array[7]  = null;
+                            $var_array[8]  = null;
+                            $var_array[9]  = null;
+                            $var_array[10] = null;
+                            $var_array[11] = null;
+                            $var_array[12] = null;
+                            $var_array[13] = null;
+                            $var_array[14] = null;
+                            $var_array[15] = null;
+                            $var_array[16] = null;
+                            $var_array[17] = null;
+                            $var_array[18] = null;
+                          
+                    }
+
+
+                      $datess = explode('/',$var_array[5]);
+
+                    $pay_date = $datess[2].'-'.$datess[1].'-'.$datess[0];
+                    $data = array(
+                                'bank_id'             => '5',
+                                'forward_trans_id'    => substr($var_array[6], 0, -1),
+                                'book_no'             => substr($var_array[6],-1),
+                                'corporate_code'      => '',
+                                'payment_run_date'    => $pay_date,
+                                'product_code'        => "HDFC",
+                                'utr_no'              => '',
+                                'status_code'         => '',
+                                'status_description'  => '',
+                                'batch_no'            => '',
+                                'reg_no'              => $var_array[1],
+                                'value_date'          => $pay_date,
+                                'bank_ref_no'         => '',
+                                'amount'              => $var_array[3],
+                                'dr_ac_no'            => $var_array[9],
+                                'dr_ifsc_code'        => $var_array[13],
+                                'dr_cr_flag'          => "C",
+                                'cr_acc_no'           => $var_array[10],
+                                'file_no'             => ""
+                                );
+
+                        if ( isset($var_array[2])) {
+
+                        $this->db->insert('td_reverse_feed',$data);
+
+                        }
+
+                    }
+
+
+            $filePath = $path.$newest_file;
+  
+            /* Store the path of destination file */
+            $destinationFilePath = 'downloads/HDFC/'.$newest_file;
+              
+            /* Move File from images to copyImages folder */
+
+            if(strlen($newest_file) > 4){
+
+                copy($filePath, $destinationFilePath);
+
+                unlink($filePath);
+
+            }else{
+
+                echo "File Does Not Exit";
+
+            }
+       
+    }
+
     public function farmer_update(){
 
         $date = date('Y-m-d',strtotime("-1 days"));
@@ -361,6 +466,123 @@ class Cron extends MX_Controller {
 
     }
 
+ //   Society update using Food Api  10/12/2020 //
+
+    public function f_society_update() {
+
+
+        
+
+        $url = 'https://procurement.wbfood.in/api/Statusupd/Proccentre'; /*Society*/
+        
+        
+        $data = array('authcode' => 'ahtr*125#');
+        $options = array(
+            'http' => array(
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
+                'content' => http_build_query($data)
+            )
+        );
+
+      
+        $context = stream_context_create($options);
+        $result  = file_get_contents($url, false, $context);
+
+        $data   = json_decode($result);
+
+         $j=0;
+
+        foreach ($data as $value) {
+
+                      $data = array(
+                            'sl_no'        =>  $value->pc_code,
+                            'dist'         =>  $value->DistCode,
+                            'block'        =>  $value->BlockCode,
+                            'branch_id'    =>  $value->DistCode,
+                            'society_code' =>  $value->pc_code,
+                            'soc_name'     =>  $value->CentreName,
+                            'pan_no'       =>  $value->CentrePan,
+                            'inchargename' =>  $value->CentreInCharge,
+                            'ph_no'        =>  $value->mobileno,
+                            'agreementno'  =>  $value->AgreementNo,
+                            'created_by'   =>  "API DATA",
+                            'created_dt'   =>  date('Y-m-d')
+                                                  
+                     );
+
+                    $query = $this->db->get_where('md_society', array('sl_no ='=> $value->pc_code));
+        
+                        if ($query->num_rows() == 0)
+                            {   
+                                 $this->Paddy->f_insert('md_society', $data); 
+                                   
+                                        $j++;
+                                     
+                            }
+
+            }
+
+            $this->session->set_flashdata('msg', $j.' Records successfully added!');
+
+            redirect('paddys/add_new/f_society');
+
+
+    }
+
+      //   Mill update using Food Api  10/12/2020 //
+    public function f_mill_update() {
+
+        $url = 'https://procurement.wbfood.in/api/Statusupd/RiceMill'; /*Mill*/
+        
+        
+        $data = array('authcode' => 'ahtr*125#');
+        $options = array(
+            'http' => array(
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
+                'content' => http_build_query($data)
+            )
+        );
+
+      
+        $context = stream_context_create($options);
+        $result  = file_get_contents($url, false, $context);
+
+        $data   = json_decode($result);
+
+         $j=0;
+
+        foreach ($data as $value) {
+
+                       $data = array(
+                                'sl_no'        =>  $value->r_mill_cd,
+                                'dist'         =>  $value->DistrictCode,
+                                'block'        =>  '0'.$value->BlockCode,
+                                'mill_code'    =>  $value->r_mill_cd,
+                                'mill_name'    =>  $value->RiceMillerName,
+                                'branch_id'    =>  $value->DistrictCode
+                                   );
+
+                    $query = $this->db->get_where('md_mill', array('mill_code ='=> $value->r_mill_cd));
+        
+                        if ($query->num_rows() == 0)
+                            {   
+                                 $this->Paddy->f_insert('md_mill', $data); 
+                                   
+                                        $j++;
+                                     
+                            }
+
+            }
+
+            $this->session->set_flashdata('msg', $j.' Records successfully added!');
+
+            redirect('paddys/add_new/f_mill');
+
+
+    }
+
     public function procurement_add(){
 
          $kms_yerr_data = $this->db->query('SELECT * FROM `md_kms_year` 
@@ -370,9 +592,9 @@ class Cron extends MX_Controller {
              $kms_id    = $kms_yerr_data->sl_no;
          
             $url = 'https://procurement.wbfood.in/api/Statusupd/Procurementdtls';/*Procurement*/
-            //$date = date('Y-m-d');
+            $date = date('Y-m-d');
 
-            $date = '2020-12-07';
+            //$date = '2020-12-17';
 
             $date1 = date("d/m/Y", strtotime($date));
     

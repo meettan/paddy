@@ -3091,7 +3091,6 @@ class Transactions extends MX_Controller {
 
     //Delivered Paddy Quantity to the Rice Mill Edit in td_received
     public function f_received_edit() {
-
         
 
         if($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -3125,7 +3124,7 @@ class Transactions extends MX_Controller {
             //Received Details
             $select     =   array(
 
-                "t.trans_dt", "t.trans_no", "t.dist",
+                "t.trans_dt", "t.trans_no", "t.dist", "t.file_no",
 
                 "t.mill_id", "t.paddy_qty",
     
@@ -3141,12 +3140,15 @@ class Transactions extends MX_Controller {
 
             );
 
-            $paddyreceived['paddyreceived_dtls']=   $this->Paddy->f_get_particulars("td_received t, md_society m", $select, $where, 1);
+            $paddyreceived['paddyreceived_dtls']=  $this->Paddy->f_get_particulars("td_received t, md_society m", $select, $where, 1);
 
             $kms_id    = $this->session->userdata['loggedin']['kms_id'];
             $branch_id = $this->session->userdata['loggedin']['branch_id'];
 
-            $paddyreceived['file_dtls'] =   $this->Paddy->get_file($kms_id,$branch_id);
+            $soc_id                     =   $this->Paddy->get_soc_id_by_trans_no($this->input->get('trans_no'));
+            
+
+            $paddyreceived['file_dtls'] =   $this->Paddy->get_file($kms_id,$branch_id,$soc_id);
             
             $this->load->view('post_login/main');
 

@@ -218,7 +218,7 @@ class Bankintegration extends MX_Controller {
                                                     }
                                         
                                           
-                                        $data .= $trn_type.','.$row->reg_no.','.$row->faccount.','.$row->amount.','.$row->farm_name.',,,,,,,,,'.$row->forward_trans_id.',,,,,,,,,'.date('d/m/Y').',,'.$row->fifsc.',,,benfedpaddy1920@gmail.com'."\r\n";
+                                        $data .= $trn_type.','.$row->reg_no.','.$row->faccount.','.$row->amount.','.$row->farm_name.',,,,,,,,,'.$row->forward_trans_id.$row->book_no.',,,,,,,,,'.date('d/m/Y').',,'.$row->fifsc.',,,benfedpaddy1920@gmail.com'."\r\n";
 
                                         }
 
