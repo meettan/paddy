@@ -1125,6 +1125,8 @@ class Transactions extends MX_Controller {
        
         echo json_encode($row);
     }
+
+
     /// Code Developed After Integration of Food Api on 14/12/2020   ///
     public function f_cheque_add() {
 
@@ -1268,6 +1270,26 @@ class Transactions extends MX_Controller {
         }
         
     }
+
+    //********** Start Code For Farmer Payment Detail    21/12/2020    ///
+
+     public function f_farmer_payment(){
+
+     
+
+                $forward_trans_id  = $this->input->post("forward_trans_id");
+
+                $kms_id            = $this->session->userdata['loggedin']['kms_id'];
+ 
+         
+        
+        $datas= $this->Paddy->get_payment_detail($kms_id,$forward_trans_id);
+       
+       echo json_encode($datas);
+
+    } 
+
+    //********** End Code For Farmer Payment Detail    21/12/2020    ///
 
     public function f_cheque_add_bkup() {
 

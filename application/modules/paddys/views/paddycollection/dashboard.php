@@ -111,7 +111,10 @@
                                   echo "Cheque Returned";
                                 }elseif($padl_dtl->status == 0 && $padl_dtl->chq_status == 'L'){
                                     echo '<span style="color:#185c27">Awaiting Liquidation</span>';
-                                }else{
+                                }elseif($padl_dtl->status == 0 && $padl_dtl->chq_status == 'Z'){
+                                    echo '<span style="color:#185c27">Authorization Pending</span>';
+                                }
+                                else{
                                     echo '<span style="color:#185c27">Unknown</span>';
                                 }  
                                  ?>  

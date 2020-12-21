@@ -101,6 +101,12 @@ class Cron extends MX_Controller {
 
     public function read_axis_reversefile(){
 
+        $kms_yerr_data = $this->db->query('SELECT * FROM `md_kms_year` 
+                                        where sl_no = (select max(sl_no) from md_kms_year)')->row();
+
+             $kms_year  = $kms_yerr_data->kms_yr;
+             $kms_id    = $kms_yerr_data->sl_no;
+
              $newest_file = null;
              $path        = $_SERVER['DOCUMENT_ROOT'].'/AxisInvoice/h2hReversefeedIn/';
              $files       = scandir($path,1);
@@ -140,6 +146,7 @@ class Cron extends MX_Controller {
                     }
 
                     $data = array(
+                                'kms_id'              => $kms_id,
                                 'bank_id'             => '4',
                                 'forward_trans_id'    => substr($var_array[0], 0, -1),
                                 'book_no'             => substr($var_array[0],-1),
@@ -158,7 +165,8 @@ class Cron extends MX_Controller {
                                 'dr_ifsc_code'        => $var_array[14],
                                 'dr_cr_flag'          => $var_array[15],
                                 'cr_acc_no'           => $var_array[16],
-                                'file_no'             => $var_array[17]
+                                'file_no'             => $var_array[17],
+                                'created_dt'          => date("Y-m-d h:i:s")
                                 );
 
                         if ( isset($var_array[11])) {
@@ -193,6 +201,12 @@ class Cron extends MX_Controller {
 
     //   Code for icici reverse file read and store in download folder   11/12/2020  //
     public function read_icici_reversefile(){
+
+           $kms_yerr_data = $this->db->query('SELECT * FROM `md_kms_year` 
+                                        where sl_no = (select max(sl_no) from md_kms_year)')->row();
+
+             $kms_year  = $kms_yerr_data->kms_yr;
+             $kms_id    = $kms_yerr_data->sl_no;
 
              $newest_file = null;
              $path        = $_SERVER['DOCUMENT_ROOT'].'/icici/PayReport/';
@@ -240,26 +254,30 @@ class Cron extends MX_Controller {
                           
                     }
 
+                    $timestamp = strtotime(str_replace('/', '-', $var_array[4]));
+
                     $data = array(
+                                'kms_id'              => $kms_id,
                                 'bank_id'             => '3',
                                 'forward_trans_id'    => substr($var_array[1], 0, -1),
                                 'book_no'             => substr($var_array[1],-1),
                                 'corporate_code'      => '',
-                                'payment_run_date'    => $var_array[4],
+                                'payment_run_date'    => date('Y-m-d',$timestamp),
                                 'product_code'        => "ICICI",
-                                'utr_no'              => $var_array[2],
+                                'utr_no'              => '',
                                 'status_code'         => $var_array[13],
-                                'status_description'  => $var_array[16],
+                                'status_description'  => $var_array[15].' '.$var_array[16],
                                 'batch_no'            => '',
                                 'reg_no'              => '',
-                                'value_date'          => $var_array[4],
-                                'bank_ref_no'         => '',
+                                'value_date'          => date('Y-m-d',$timestamp),
+                                'bank_ref_no'         => $var_array[2],
                                 'amount'              => $var_array[3],
                                 'dr_ac_no'            => $var_array[7],
                                 'dr_ifsc_code'        => $var_array[5],
                                 'dr_cr_flag'          => "C",
                                 'cr_acc_no'           => $var_array[11],
-                                'file_no'             => $var_array[17]
+                                'file_no'             => $var_array[17],
+                                'created_dt'          => date("Y-m-d h:i:s")
                                 );
 
                         if ( isset($var_array[2])) {
@@ -364,7 +382,8 @@ class Cron extends MX_Controller {
                                 'dr_ifsc_code'        => $var_array[13],
                                 'dr_cr_flag'          => "C",
                                 'cr_acc_no'           => $var_array[10],
-                                'file_no'             => ""
+                                'file_no'             => "",
+                                'created_dt'          => date("Y-m-d h:i:s")
                                 );
 
                         if ( isset($var_array[2])) {

@@ -150,9 +150,11 @@
 		}
 		public function f_get_tot_amount_cleared($kms_id,$branch_id){
 
+			$cond = array('S','P','A');
+
             $this->db->select('ifnull(SUM(amount), 0) tot_clr_cheque');
 			$this->db->where('kms_id',$kms_id);
-			$this->db->where('chq_status',"S");
+			$this->db->where_in('chq_status',$cond);
 			$this->db->where('branch_id',$branch_id);
 			$data = $this->db->get('td_collections');
             return $data->row();
@@ -169,9 +171,10 @@
 		}
 		public function f_get_tot_amount_cleared_ho($kms_id){
 
+			$cond = array('S','P','A');
             $this->db->select('ifnull(SUM(amount), 0) tot_clr_cheque');
 			$this->db->where('kms_id',$kms_id);
-			$this->db->where('chq_status',"S");
+			$this->db->where_in('chq_status',$cond);
 			$data = $this->db->get('td_collections');
             return $data->row();
 

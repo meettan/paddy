@@ -15,8 +15,6 @@
 
                 <input type="hidden" value="<?php echo $_GET["soc_id"]?>" name="editdata">
 
-
-
                     <label for="block" class="col-sm-1 col-form-label">Block:</label>
 
                     <div class="col-sm-2">
@@ -76,8 +74,6 @@
                 <div class="col-sm-2"><b>Transaction :</b><?php if($farme->trans_type=="N"){ echo "NEFT"; }else{ echo "Cheque"; }?>  </div>
                 </div>    
 
-                   
-
             <table class="table table-bordered table-hover" id="farmers">
             <thead><tr><th>Sl. No.</th><th>Name</th><th>Registration No.</th><th>Transaction Code.</th><th>Quantity(Quintal)</th><th>Amount</th>
                 <?php if($farme->trans_type=="N"){ ?>
@@ -86,7 +82,9 @@
                     <?php }else{ ?>
                   <th>Cheque No</th><th>Cheque Date</th>
                    <?php } ?>
-                   <!-- <th>Delete</th> -->
+                   
+                   <th>Status</th>
+              
                  </tr></thead><tbody id="farme"> 
          
             <tbody> 
@@ -117,6 +115,7 @@
               <td><input type="date" class="form-control cheque_date" name="cheque_date[]" value="<?=$farmer_dtl->cheque_date?>"><span class="cd_error"></span></td>
 
     <?php } ?> 
+    <td> <button type="button" class="payment_detail btn btn-info" data-toggle="modal" data-target="#myModal"  value="<?=$farmer_dtl->forward_trans_id?>">View </button></td>
              <!--   <td>
                   <?php //if($farmer_dtl->status == 0 && $farmer_dtl->chq_status == 'U' ) { ?>
                <button type="button" class="delete" id="<?=$farmer_dtl->soc_id;?>/<?=$farmer_dtl->trans_dt;?>/<?=$farmer_dtl->trans_id;?>/<?=$farmer_dtl->bulk_trans_id;?>/<?=$farmer_dtl->chq_status;?>" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-times fa-2x" style="color: red"></i></button>
@@ -175,6 +174,29 @@
         </div>
 
         </div>
+
+        <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Payment Status</h4>
+        </div>
+        <div class="modal-body">
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
  
     </div>
 
@@ -235,8 +257,44 @@
 
     });
 
+  $(document).ready(function(){
+
+        var i = 0;
+
+        $('.payment_detail').click(function(){
+
+            $.post( 
+
+                '<?php echo site_url("paddys/transactions/f_farmer_payment");?>',
+
+                { 
+
+                    forward_trans_id: $(this).val()
+
+                }
+
+            ).done(function(data){
+
+                var string = '<table  class="table"><tr><th>Bank</th><th>Value Date</th><th>Utr No</th><th>Bank Ref No</th><th>Cr A/C No</th><th>Amount</th><th>Status Code</th><th>Status Description</th></tr>';
+
+                $.each(JSON.parse(data), function( index, value ) {
+
+                    string += '<tr><td>' + value.bank_name + '</td><td>' + value.value_date + '</td><td>' + value.utr_no + '</td><td>' + value.bank_ref_no + '</td><td>' + value.cr_acc_no + '</td><td>' + value.amount + '</td><td>' + value.status_code + '</td><td>' + value.status_description + '</td></tr>'
+
+                });
+
+              //   var string +='</table>';
+
+                $('.modal-body').html(string);
+
+            });
+
+        });
+
+    });
        
-  </script>
+</script>
+
 <script>
 
     $(document).ready(function(){
@@ -341,17 +399,13 @@ $(document).on("change", ".quantity", function() {
 });
 
 // $(document).on("change", ".amount", function() {
-  
- 
-   
 
 
 // });
 
-$(".quantity").keyup(function(){
+  $(".quantity").keyup(function(){
 
                 var qty = $(this).closest('tr').find(".quantity").val();
-                
 
                 var max_limit="90";
                
@@ -362,19 +416,15 @@ $(".quantity").keyup(function(){
                     $('#submit').attr('type', 'buttom');
                 }
                 else{
-
-
                 
-                    var price='<?php echo get_paddy_price($this->session->userdata['loggedin']['kms_id']);?>';
-
-                       ;
+                    var price='<?php echo get_paddy_price($this->session->userdata['loggedin']['kms_id']);?>';;
                     $(this).closest('tr').find(".amount").val(Math.round((parseFloat(qty*price)).toFixed(2))).css("color", "black");
-                  $(this).parents('tr').find(".qerror").html("");
+                    $(this).parents('tr').find(".qerror").html("");
                     $('[id^=check]').attr("disabled", false);
                     $('#submit').attr('type', 'submit');
                     }
 
-                });
+  });
 
     $(".cheque_no").change(function(){
 
