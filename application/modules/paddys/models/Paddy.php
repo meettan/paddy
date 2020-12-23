@@ -658,48 +658,7 @@ class Paddy extends CI_Model {
     
         return $this->db->query($sql)->result();
     }
-    
-    /*public function f_get_collection($brn_cd,$kms_yr){
-       
-       $sql = "select a.soc_name soc_name,
-                      b.soc_id soc_id,
-                      b.trans_dt trans_dt,
-                      b.bulk_trans_id bulk_trans_id,
-                      b.forward_bulk_trans_id forward_bulk_trans_id,  
-                      sum(b.quantity)tot_qty,
-                      sum(b.amount)tot_amt,
-                      b.status status,
-                      b.created_by created_by,
-                      b.forwarded_by forwarded_by,
-                      b.chq_status chq_status,
-                      b.bank_sl_no bank_sl_no,
-                      c.bank_id bank_id,
-                      c.bank_name bank_name
-                from   md_society a ,td_collections b,md_paddy_bank c
-                where  a.sl_no      = b.soc_id
-                and    b.bank_sl_no = c.sl_no
-                and    b.branch_id  = $brn_cd
-                and    b.book_no    = '0'
-                and    b.kms_id     = $kms_yr
-               
-                group by a.soc_name,
-                         b.soc_id,
-                         b.bulk_trans_id,
-                         b.forward_bulk_trans_id,
-                         b.trans_dt,
-                         b.status,
-                         b.created_by,
-                         b.forwarded_by,
-                         b.chq_status,
-                         b.bank_sl_no
-                order by b.trans_dt,b.bulk_trans_id
-                ";
-        
-        $data = $this->db->query($sql);
-       
-        return $data->result();
 
-    }*/
 
     public function f_get_collection($brn_cd,$kms_yr){
        
@@ -728,6 +687,40 @@ class Paddy extends CI_Model {
                          b.chq_status
                 order by b.trans_dt,b.bulk_trans_id
                 ";
+        
+        $data = $this->db->query($sql);
+       
+        return $data->result();
+
+    }
+
+     public function getneft($brn_cd,$kms_yr){
+       
+       $sql = "select a.soc_name soc_name,
+                      b.soc_id soc_id,
+                      b.trans_dt trans_dt,
+                      b.bulk_trans_id,
+                      b.forward_bulk_trans_id forward_bulk_trans_id,  
+                      sum(b.quantity)tot_qty,
+                      sum(b.amount)tot_amt,
+                      b.status status,
+                      b.forwarded_by forwarded_by,
+                      b.chq_status chq_status
+                from   md_society a ,td_collections b
+                where  a.sl_no      = b.soc_id
+                and    b.branch_id  = $brn_cd
+                and    b.book_no    = '0'
+                and    b.status     = '1'
+                and    b.kms_id     = $kms_yr
+                group by a.soc_name,
+                         b.soc_id,
+                         b.bulk_trans_id,
+                         b.forward_bulk_trans_id,
+                         b.trans_dt,
+                         b.status,
+                         b.forwarded_by,
+                         b.chq_status
+                order by b.trans_dt,b.bulk_trans_id";
         
         $data = $this->db->query($sql);
        

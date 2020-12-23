@@ -145,7 +145,9 @@ class Cron extends MX_Controller {
                           
                     }
 
-                    $data = array(
+                         if ( isset($var_array[11])) {
+
+                    $data[] = array(
                                 'kms_id'              => $kms_id,
                                 'bank_id'             => '4',
                                 'forward_trans_id'    => substr($var_array[0], 0, -1),
@@ -166,22 +168,25 @@ class Cron extends MX_Controller {
                                 'dr_cr_flag'          => $var_array[15],
                                 'cr_acc_no'           => $var_array[16],
                                 'file_no'             => $var_array[17],
+                                'update_flag'         => 'N',
                                 'created_dt'          => date("Y-m-d h:i:s")
                                 );
 
-                        if ( isset($var_array[11])) {
+                   
 
-                        $this->db->insert('td_reverse_feed',$data);
+                        //$this->db->insert('td_reverse_feed',$data);
 
                         }
 
                     }
 
+                    $this->db->insert_batch('td_reverse_feed', $data);
+
 
             $filePath = $path.$newest_file;
   
             /* Store the path of destination file */
-            $destinationFilePath = 'downloads/'.$newest_file;
+            $destinationFilePath = $_SERVER['DOCUMENT_ROOT'].'/downloads/'.$newest_file;
               
             /* Move File from images to copyImages folder */
 
@@ -211,27 +216,22 @@ class Cron extends MX_Controller {
              $newest_file = null;
              $path        = $_SERVER['DOCUMENT_ROOT'].'/icici/PayReport/';
 
-             $files       = scandir($path,1);
-            
+             $files       = scandir($path,1); 
              $newest_file = $files[1];
-    
-              
              $handle      = file_get_contents($path.$newest_file);
 
                     $var_array_parent = explode("\n",$handle);
 
                      unset($var_array_parent[0]);
-                      
 
                     foreach($var_array_parent as $value)
                     {
 
                        
-
                     $var_array = explode("|",$value);
               
 
-                   if ( ! isset($var_array[11])) {
+                   if ( ! isset($var_array[2])) {
 
                             $var_array[0]  = null;
                             $var_array[1]  = null;
@@ -251,12 +251,18 @@ class Cron extends MX_Controller {
                             $var_array[15] = null;
                             $var_array[16] = null;
                             $var_array[17] = null;
+                            $var_array[18] = null;
+                            $var_array[19] = null;
+                            $var_array[20] = null;
+                            $var_array[21] = null;
                           
                     }
 
                     $timestamp = strtotime(str_replace('/', '-', $var_array[4]));
 
-                    $data = array(
+                       if( isset($var_array[2])) {
+
+                    $data[] = array(
                                 'kms_id'              => $kms_id,
                                 'bank_id'             => '3',
                                 'forward_trans_id'    => substr($var_array[1], 0, -1),
@@ -277,36 +283,58 @@ class Cron extends MX_Controller {
                                 'dr_cr_flag'          => "C",
                                 'cr_acc_no'           => $var_array[11],
                                 'file_no'             => $var_array[17],
+                                'update_flag'         => 'N',
                                 'created_dt'          => date("Y-m-d h:i:s")
                                 );
 
-                        if ( isset($var_array[2])) {
 
-                        $this->db->insert('td_reverse_feed',$data);
-
-                        }
+                    // $bata[] = array(
+                    //             'kms_id'              => $kms_id,
+                    //             'bank_id'             => '3',
+                    //             'forward_trans_id'    => substr($var_array[1], 0, -1),
+                    //             'book_no'             => substr($var_array[1],-1),
+                               
+                    //             'update_flah'         => 'N',
+                    //             );
+                         }
 
                     }
+
+                     $this->db->insert_batch('td_reverse_feed', $data);
+
+                    // $this->db->update();
 
 
             $filePath = $path.$newest_file;
   
             /* Store the path of destination file */
-            $destinationFilePath = 'downloads/icici'.$newest_file;
+            $destinationFilePath = $_SERVER['DOCUMENT_ROOT'].'/downloads/icici/'.$newest_file;
               
             /* Move File from images to copyImages folder */
 
-            if(strlen($newest_file) > 4){
+            // if(strlen($newest_file) > 4){
 
                 copy($filePath, $destinationFilePath);
 
                 unlink($filePath);
 
-            }else{
+            // }else{
 
-                echo "File Does Not Exit";
+            //     echo "File Does Not Exit";
 
-            }
+            // }
+       
+    }
+
+
+    public function update_neft_status(){
+
+
+        $sql = "UPDATE `td_reverse_feed` SET `update_flag` = 'Y' where update_flag = 'N' ";
+
+        $this->db->query($sql);
+
+
        
     }
 
@@ -488,10 +516,7 @@ class Cron extends MX_Controller {
  //   Society update using Food Api  10/12/2020 //
 
     public function f_society_update() {
-
-
         
-
         $url = 'https://procurement.wbfood.in/api/Statusupd/Proccentre'; /*Society*/
         
         
@@ -613,7 +638,7 @@ class Cron extends MX_Controller {
             $url = 'https://procurement.wbfood.in/api/Statusupd/Procurementdtls';/*Procurement*/
             $date = date('Y-m-d');
 
-            //$date = '2020-12-17';
+            //$date = '2020-12-23';
 
             $date1 = date("d/m/Y", strtotime($date));
     
@@ -644,7 +669,7 @@ class Cron extends MX_Controller {
             //     die();
          
             $datas   = json_decode($result);
-            
+
             $trans_type     = "N";
            
 
@@ -704,7 +729,7 @@ class Cron extends MX_Controller {
 
                         "reg_no"              =>  $value->regno,
 
-                        "farmer_name"         =>  $value->name,
+                        "farmer_name"         =>  $value->NAME,
 
                         "quantity"            =>  ($value->qty_kg)/100,
 
@@ -734,9 +759,9 @@ class Cron extends MX_Controller {
                 }  
            
             //For notification storing message
-            $this->session->set_flashdata('msg', 'Successfully added!');
+          //  $this->session->set_flashdata('msg', 'Successfully added!');
 
-            redirect('paddys/transactions/f_paddycollection');
+           // redirect('paddys/transactions/f_paddycollection');
 
     }
 

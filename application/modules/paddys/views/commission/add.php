@@ -434,7 +434,7 @@
                         string +='<tr><td colspan="7">Total</td><td> <input type="text" class="form-control" id="tot_rice" value="'+price_sum+'" readonly></td> <td></td></tr></tbody></table>';
 
                     $('#bill_dtls').html(string);
-                    $('#paid_amt').val(price_sum);
+                    $('#paid_amt').val((price_sum.toFixed()));
 
 
                 

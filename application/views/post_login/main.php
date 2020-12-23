@@ -132,9 +132,10 @@
                                  
                     <?php if($this->session->userdata['loggedin']['ho_flag']=="Y" && $this->session->userdata['loggedin']['user_type']=="A" OR $this->session->userdata['loggedin']['user_type']=="M") { ?>
 			
-                       <!--  <a href="<?php //echo site_url('paddys/transactions/f_paddycollection_dwn'); ?>">Download Procurement</a> -->
-                      <!--   <a href="<?php //echo site_url('paddys/transactions/f_paddycollreissue_dwn'); ?>">Download Cheque Reissue</a>
- --><!-- 
+                       <a href="<?php echo site_url('paddys/transactions/f_paddycollection_dwn'); ?>">Download Procurement</a> 
+                       <a href="<?php echo site_url('paddys/transactions/f_paddycollreissue_dwn'); ?>">Download Cheque Reissue</a>
+                       <a href="<?php echo site_url('paddys/transactions/f_neft_status'); ?>">NEFT Status </a>
+                          <!-- 
                         <div class="sub-dropdown">
                                <a class="sub-dropbtn">Cheque Reconciliation<i class="fa fa-angle-right" style="float: right;"></i></a> 
                                <div class="sub-dropdown-content">

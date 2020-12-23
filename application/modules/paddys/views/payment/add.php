@@ -606,10 +606,10 @@
                     }
                      
                 });
-                        string +='<tr><td colspan="7">Payable Amt</td><td> <input type="text" class="form-control" id="tot_rice" value="'+price_sum+'" readonly></td> <td></td></tr></tbody></table>';
+                        string +='<tr><td colspan="7">Payable Amt</td><td> <input type="text" class="form-control" id="tot_rice" value="'+price_sum.toFixed()+'" readonly></td> <td></td></tr></tbody></table>';
 
                     $('#bill_dtls').html(string);
-                    $('.payble_amount').val(price_sum);
+                    $('.payble_amount').val(  (price_sum.toFixed()) );
                    // $('#allocated_amt').html(price_sancation);
                 
             });
