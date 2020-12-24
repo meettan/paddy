@@ -4149,6 +4149,10 @@ class Transactions extends MX_Controller {
 
         if($_SERVER['REQUEST_METHOD'] == "POST") {
 
+        $row = $this->db->get_where('td_wqsc', array('wqsc_no =' => $this->input->post('wqsc_no'),'soc_name =' => $this->input->post('soc_name'),'mill_id =' => $this->input->post('mill_name')))->num_rows();
+
+        if($row == 0){
+     
             $data_array = array(           
 
                 "kms_id"          =>  $this->session->userdata['loggedin']['kms_id'],
@@ -4200,10 +4204,8 @@ class Transactions extends MX_Controller {
              for($i= 0 ;$i< $count ;$i++)
              {
 
-               
                     $paddy_qty =  ((100*$this->input->post('quantity')[$i])/$rate);
-            
-
+        
 
             $data = array(           
 
@@ -4243,6 +4245,15 @@ class Transactions extends MX_Controller {
             $this->session->set_flashdata('msg', 'Successfully added!');
 
             redirect('paddys/transactions/f_wqsc');
+
+           }else{
+
+                 //For notification storing message
+                $this->session->set_flashdata('msg', 'WQSC/CS No Already Exist!');
+
+                redirect('paddys/transactions/f_wqsc');
+
+           }
 
         }
         else {
@@ -4429,7 +4440,7 @@ class Transactions extends MX_Controller {
 
             "t.branch_id" => $this->session->userdata['loggedin']['branch_id'],            
 
-            "t.do_number" => $this->input->get('do_number')
+            "t.do_number" => $this->input->post('do_number')
             
         );
 

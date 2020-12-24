@@ -1554,7 +1554,7 @@ class Paddy extends CI_Model {
             WHERE t.bank_id = b.bank_id
             AND t.forward_trans_id = '$forward_trans_id'
             AND t.kms_id = '$kms_id'
-            order by t.created_dt
+            order by t.value_date
             ";
 
         $data  = $this->db->query($sql)->result();

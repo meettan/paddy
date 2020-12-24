@@ -474,7 +474,7 @@ $(document).ready(function(){
 
                 //Progressive Paddy Procurement
                 $('select[name^="goodown_dist"] option:selected').attr("selected",null);
-                $.get('<?php echo site_url("paddys/transactions/total_cmr_delivery"); ?>',
+                $.post('<?php echo site_url("paddys/transactions/total_cmr_delivery"); ?>',
 
                     {
                         do_number:$(this).val()
