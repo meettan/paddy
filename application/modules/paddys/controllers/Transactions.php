@@ -3024,9 +3024,9 @@ class Transactions extends MX_Controller {
 
             $data_array = array(
 
-                "file_no"      =>  $this->input->post('file_name')
+                //"file_no"      =>  $this->input->post('file_name')
 
-               //  "soc_id"        =>  $this->input->post('soc_name'),
+                 "paddy_qty"        =>  $this->input->post('paddy_qty')
 
             );
 

@@ -32,23 +32,23 @@
 
             </div>
 
-             <label for="block" class="col-sm-2 col-form-label">File No:</label>
-
+          <!--    <label for="block" class="col-sm-2 col-form-label">File No:</label> -->
+<!-- 
             <div class="col-sm-4">
 
               <select name="file_name" id="file_name" class="form-control" required>
 
                     <option value="">Select</option>  
 
-                    <?php foreach($file_dtls as $file){ ?>  
+                    <?php //foreach($file_dtls as $file){ ?>  
 
-                    <option value="<?php if(isset($file->forward_bulk_trans_id)){ echo $file->forward_bulk_trans_id; }?>" <?php if($paddyreceived_dtls->file_no == $file->forward_bulk_trans_id){echo "selected"; }?>><?php if(isset($file->forward_bulk_trans_id)){ echo $file->forward_bulk_trans_id; }  ?></option>    
+                    <option value="<?php //if(isset($file->forward_bulk_trans_id)){ echo $file->forward_bulk_trans_id; }?>" <?php //if($paddyreceived_dtls->file_no == $file->forward_bulk_trans_id){echo "selected"; }?>><?php //if(isset($file->forward_bulk_trans_id)){ echo $file->forward_bulk_trans_id; }  ?></option>    
 
-                    <?php }?>
+                    <?php //}?>
 
               </select>
 
-            </div>
+            </div> -->
 
 
         </div>
@@ -115,7 +115,7 @@
                 <input type="text"
                         class="form-control"
                         name="paddy_qty"
-                        id="paddy_qty" readonly
+                        id="paddy_qty" 
                         min="0"
                         value="<?php echo $paddyreceived_dtls->paddy_qty ;?>"
                     />
