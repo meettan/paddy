@@ -341,9 +341,15 @@ class Cron extends MX_Controller {
      //   Code for hdfc reverse file read and store in download folder 18/12/2020  //
     public function read_hdfc_reversefile(){
 
+             $kms_yerr_data = $this->db->query('SELECT * FROM `md_kms_year` 
+                                        where sl_no = (select max(sl_no) from md_kms_year)')->row();
+
+             $kms_year  = $kms_yerr_data->kms_yr;
+             $kms_id    = $kms_yerr_data->sl_no;
+
              $newest_file = null;
 
-             $path        = $_SERVER['DOCUMENT_ROOT'].'/paddy/Hdfc/reversefeed/';
+             $path        = $_SERVER['DOCUMENT_ROOT'].'/hdfc/hdfcreverse/rev1/';
 
              $files       = scandir($path,1);
             
@@ -387,29 +393,39 @@ class Cron extends MX_Controller {
                           
                     }
 
+                    if($var_array[11] == 'E'){
+
+                         $status  = 'SUCCESS';
+
+                    }else{
+
+                         $status  = 'REJECTED';
+                    }
+                           
 
                       $datess = explode('/',$var_array[5]);
 
                     $pay_date = $datess[2].'-'.$datess[1].'-'.$datess[0];
                     $data = array(
+                                'kms_id'              => $kms_id,
                                 'bank_id'             => '5',
                                 'forward_trans_id'    => substr($var_array[6], 0, -1),
                                 'book_no'             => substr($var_array[6],-1),
                                 'corporate_code'      => '',
                                 'payment_run_date'    => $pay_date,
                                 'product_code'        => "HDFC",
-                                'utr_no'              => '',
-                                'status_code'         => '',
-                                'status_description'  => '',
+                                'utr_no'              => $var_array[10],
+                                'status_code'         => $status,
+                                'status_description'  => $var_array[12],
                                 'batch_no'            => '',
                                 'reg_no'              => $var_array[1],
                                 'value_date'          => $pay_date,
-                                'bank_ref_no'         => '',
+                                'bank_ref_no'         => $var_array[10],
                                 'amount'              => $var_array[3],
-                                'dr_ac_no'            => $var_array[9],
+                                'dr_ac_no'            => "",
                                 'dr_ifsc_code'        => $var_array[13],
                                 'dr_cr_flag'          => "C",
-                                'cr_acc_no'           => $var_array[10],
+                                'cr_acc_no'           => $var_array[9],
                                 'file_no'             => "",
                                 'created_dt'          => date("Y-m-d h:i:s")
                                 );
@@ -426,7 +442,7 @@ class Cron extends MX_Controller {
             $filePath = $path.$newest_file;
   
             /* Store the path of destination file */
-            $destinationFilePath = 'downloads/HDFC/'.$newest_file;
+            $destinationFilePath = $_SERVER['DOCUMENT_ROOT'].'/downloads/HDFC/'.$newest_file;
               
             /* Move File from images to copyImages folder */
 
