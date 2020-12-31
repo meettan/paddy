@@ -41,13 +41,43 @@
                     </div>
 
                 </div> 
+
                 <div class="form-group row">
 
-                          <label for="dist" class="col-sm-4 col-form-label">Mill Name:</label>
+                    <label for="dist" class="col-sm-4 col-form-label">District Name: sadf</label>
+
+                    <div class="col-sm-8">
+
+                        <select name="dis_id" class="form-control" id="dis_id">
+
+                            <option value="">Select(If Mill is in another District)</option>
+
+                            <?php
+
+                                foreach($dists as $dist){
+
+                            ?>
+
+                                <option value="<?php echo $dist->district_code;?>"><?php echo $dist->district_name;?></option>
+
+                            <?php
+
+                                }
+
+                            ?>     
+
+                        </select>
+
+                    </div>
+
+                </div> 
+                <div class="form-group row">
+
+                          <label for="mill_id" class="col-sm-4 col-form-label">Mill Name:</label>
 
                            <div class="col-sm-8">
 
-                            <select name="mill_id" class="form-control required">
+                            <select name="mill_id" class="form-control"  id="mill_id" required>
 
                             <option value="">Select</option>
 
@@ -61,9 +91,9 @@
 
                                  }
 
-                                    ?>     
+                              ?>     
 
-                                    </select>
+                            </select>
 
                       </div>
 
@@ -126,6 +156,41 @@
 
    // $("#form").validate();
 
+    $(document).ready(function(){
+
+        $('#dis_id').change(function(){
+
+            //For District wise Block
+            $('#mill_id').html('');
+            $.get( 
+
+                '<?php echo site_url("add_new/mills");?>',
+
+                { 
+
+                    dist: $(this).val()
+
+                }
+
+            ).done(function(data){
+
+                var string = '<option value="">Select</option>';
+
+                $.each(JSON.parse(data), function( index, value ) {
+
+                    string += '<option value="' + value.sl_no + '">' + value.mill_name + '</option>'
+
+                });
+
+                $('#mill_id').html(string);
+
+            });
+
+        });
+
+    });
+
+
 </script>
 
 <script>
@@ -142,13 +207,9 @@ $("#soc_id").change(function(e){
         type: "post",
         dataType: 'json',
         success: function(data){
-           
-       
-            var target=data.target;
-           
+
+                var target=data.target;
           //$('#reg_no').val(target);
-      
-       
         }
       });
    });

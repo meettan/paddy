@@ -1908,6 +1908,8 @@ class Add_new extends MX_Controller {
             
             //Block List
             $society_mill['society'] = $this->Paddy->f_get_particulars("md_society", NULL,array("branch_id" => $this->session->userdata['loggedin']['branch_id']), 0);
+
+            $society_mill['dists']  =   $this->Paddy->f_get_particulars("md_district",NULL,NULL, 0);
      
             // Mill List
             $society_mill['mills'] = $this->Paddy->f_get_particulars("md_mill", NULL,array("branch_id" => $this->session->userdata['loggedin']['branch_id']), 0);

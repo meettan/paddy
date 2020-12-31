@@ -70,13 +70,13 @@
                                 <i class="fa fa-edit fa-2x" style="color: #007bff"></i>
                             </a>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  <!--  <button type="button" class="delete"
-                                        id="<?php //echo $preceive_dtl->trans_no; ?>"
+                                   <button type="button" class="delete"
+                                        id="<?php echo $preceive_dtl->trans_no; ?>"
                                         data-toggle="tooltip" data-placement="bottom" title="Delete">
 
                                         <i class="fa fa-trash-o fa-2x" style="color: #bd2130"></i>
 
-                                    </button> -->
+                                    </button>
                                       
                             </td>
                                 <?php          

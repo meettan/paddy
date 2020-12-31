@@ -209,6 +209,10 @@
 
   //  $( ".sch_cd" ).select2();
 
+  $('.modal').on('hide.bs.modal', function (e) {
+    $("element.style").css("padding-right","0");
+});
+
 </script>
 
 <script>

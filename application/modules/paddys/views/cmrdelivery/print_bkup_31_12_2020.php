@@ -77,29 +77,29 @@
     <div style="border-radius: 0; border-bottom: #333 solid 2px; padding:0 5px; display: inline-block; width: 150px;">Benfed</div> 
           , CMR agency state as follows:</div>
 
-      <div style="line-height: 21px; font-size:14px; margin: 0 0 17px 0;"> 1) That a quantity of 
+            <div style="line-height: 21px; font-size:14px; margin: 0 0 15px 0; padding: 0 0 17px 0; border-bottom: #6f6c6c solid 1px;"> 1) That a quantity of 
          
     <div style="border-radius: 0; border-bottom: #333 solid 2px; padding:0 5px; display: inline-block; width: 150px;"><?php echo ($cmrdelivery_dtls->progressive_paddy_received )*0.1; ?></div>
        MT of common variety of paddy have been purchased by </div>
 
-       <div style="line-height: 21px; font-size:14px; margin: 0 0 22px 0;  ">
+       <div style="line-height: 21px; font-size:14px; margin: 0 0 20px 0; padding: 0 0 22px 0; border-bottom: #6f6c6c solid 1px;">
          <label style="display: block; padding-bottom: ;"> the CMR agency through PACS(<?php echo $cmrdelivery_dtls->soc_name;?>) from the farmers at MSP by making </label>
-          <label style="display: block; padding-bottom: 10px;"> payment to the farmers through <?php if($cmrdelivery_dtls->trans_dt >= "2020-04-01"){ echo "NEFT"; }else{ echo "A/C payee cheques"; }?>  during the KMS <?Php echo $this->session->userdata['loggedin']['kms_yr'];?></label>
+          <label style="display: block; padding-bottom: 10px;"> payment to the farmers through <?php if($cmrdelivery_dtls->trans_dt >= "2020-04-01"){ echo "NEFT"; }else{ echo "A/C payee cheques"; }?>  during the KMS <?Php echo $this->session->userdata['loggedin']['kms_yr'];?> upto </label>
           <div style="line-height: 21px; font-size:14px; margin: 0 0 15px 0; padding: 0 0 0 0;"> 
-       
+        <div style="border-radius: 0; border-bottom: #333 solid 2px; padding:0 5px; display: inline-block; width: 150px;"><?php echo date('d/m/Y',strtotime($cmrdelivery_dtls->trans_dt)); ?></div>
           and delivered 
           
         <div style="border-radius: 0; border-bottom: #333 solid 2px; padding:0 5px; display: inline-block; width: 150px;"><?php echo ($cmrdelivery_dtls->progressive_paddy_received)*0.1; ?></div>
           MT paddy to
          
-        <div style="border-radius: 0; border-bottom: #333 solid 2px; padding:0 5px; display: inline-block; width: 380px;"><?php echo $cmrdelivery_dtls->mill_name;?></div>
+        <div style="border-radius: 0; border-bottom: #333 solid 2px; padding:0 5px; display: inline-block; width: 280px;"><?php echo $cmrdelivery_dtls->mill_name;?></div>
           ,</div>
      <div style="line-height: 21px; font-size:14px; margin:0; padding: 0 0 0 0;">   upto  
     <div style="border-radius: 0; border-bottom: #333 solid 2px; padding:0 5px; display: inline-block; width: 150px;"><?php echo date('d/m/Y',strtotime($cmrdelivery_dtls->trans_dt)); ?></div>
           for custom milling of paddy.</div></div>
 
 
-           <div style="line-height: 21px; font-size:14px; padding: 0 0 22px 0;">
+           <div style="line-height: 21px; font-size:14px; margin: 0 0 20px 0; padding: 0 0 22px 0; border-bottom: #6f6c6c solid 1px;">
       <label style="display: block; padding-bottom: 10px;">2) That the aforesaid rice mill has milled 
           <div style="border-radius: 0; border-bottom: #333 solid 2px; padding:0 5px; display: inline-block; width: 150px;"><?php echo ($cmrdelivery_dtls->milled)*0.1; ?></div>
           MT paddy(cumulative) out of <div style="border-radius: 0; border-bottom: #333 solid 2px; padding:0 5px; display: inline-block; width: 150px;"><?php echo ($cmrdelivery_dtls->progressive_paddy_received)*0.1; ?></div></label> 
@@ -119,15 +119,15 @@ MT has already been delivered and
 MT is left 
           to be delivered.</div>
 
-        <div style="line-height: 21px; font-size:14px; margin: 0 0 2px 0; padding: 0 0 19px 0;">3) That the rice mill is maintaining books of accounts related to custom milling of paddy on 
+        <div style="line-height: 21px; font-size:14px; margin: 0 0 17px 0; padding: 0 0 19px 0; border-bottom: #6f6c6c solid 1px;">3) That the rice mill is maintaining books of accounts related to custom milling of paddy on 
           behalf of agency properly.</div>
 
 
-             <div style="line-height: 21px; font-size:14px; margin: 0 0 2px 0; padding: 0 0 19px 0;">4) That the aforesaid quantum of CMR i.e. 
+             <div style="line-height: 21px; font-size:14px; margin: 0 0 17px 0; padding: 0 0 19px 0; border-bottom: #6f6c6c solid 1px;">4) That the aforesaid quantum of CMR i.e. 
           <div style="border-radius: 0; border-bottom: #333 solid 2px; padding:0 5px; display: inline-block; width: 150px;"><?php echo round(((($cmrdelivery_dtls->cmr_offered_now)-($tot_delivery->tot_delivery))*0.1),4); ?></div>
 MT is ready for delivery. </div>
 
-       <p style="line-height: 21px; font-size:14px; margin: 0 0 2px 0; padding: 0 0 19px 0;">5) That copies of Muster Roll and M.S.P. certificate are enclosed. </p>
+       <p style="line-height: 21px; font-size:14px; margin: 0 0 17px 0; padding: 0 0 19px 0; border-bottom: #6f6c6c solid 1px;">5) That copies of Muster Roll and M.S.P. certificate are enclosed. </p>
         
         <p style="line-height: 21px; font-size:14px; margin: 0 0 22px 0; padding: 0;">  <em>You are requested to issue delivery order to enable the agency for delivery of aforesaid <br>
         quantity of CMR to State/FCI A/C.</em></p>
@@ -143,7 +143,7 @@ MT is ready for delivery. </div>
                 <td style="padding: 3px 5px; font-size: 14px; font-weight: 600;">Due CMR</td>
               </tr>
               <tr>
-                <td style="padding: 3px 5px; font-size: 13px;"><?php echo $cmrdelivery_dtls->mill_name;?> </td>
+                <td style="padding: 3px 5px; font-size: 13px;">Benfed </td>
                 <td><?php echo ($cmrdelivery_dtls->progressive_paddy_received)*0.1; ?> MT</td>
                 <td><?php  $datas=0;
                        $where      =   array(
@@ -161,11 +161,10 @@ MT is ready for delivery. </div>
           </table>
              </div>
           <p style="line-height: 21px; font-size:18px; margin: 0 0 15px 0; padding:0; text-transform: uppercase; text-align: center">&nbsp;</p>
-        <p style="line-height: 21px; font-size:14px; margin: 0 0 15px 0; padding: 0;float: right;">
-          <strong>Yours faithfully,</strong><br>
+        <p style="line-height: 21px; font-size:14px; margin: 0 0 15px 0; padding: 0;"><strong>Yours faithfully,</strong><br>
           <strong>Authorised Officer of </strong><br>
         <!--   <img src="images/signeture.jpg" width="208" height="39" alt=""/> --><br>
-          <strong>BENFED.</strong></p></td>
+          <strong>CMR agency.</strong></p></td>
     </tr>
     <tr>
       <td align="left" valign="top">&nbsp;</td>
