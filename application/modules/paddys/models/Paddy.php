@@ -763,7 +763,7 @@ class Paddy extends CI_Model {
 
     }
 
-     public function f_failneft($brn_cd,$kms_yr){
+    public function f_failneft($brn_cd,$kms_yr){
        
        $sql = "select b.soc_id soc_id,
                       b.trans_dt trans_dt,
@@ -795,33 +795,33 @@ class Paddy extends CI_Model {
         return $data->result();
 
     }
-    public function f_failneft_bkup($brn_cd,$kms_yr){
+
+    public function f_failnefts($brn_cd,$kms_yr){
        
-       $sql = "select a.soc_name soc_name,
-                      b.soc_id soc_id,
+       $sql = "select b.soc_id soc_id,
                       b.trans_dt trans_dt,
                       b.bulk_trans_id bulk_trans_id, 
                       sum(b.quantity)tot_qty,
                       sum(b.amount)tot_amt,
-                      b.status status,b.dwn_flag dwn_flag,
+                      b.status status,b.chq_status chq_status,b.forwarded_by forwarded_by,
                       b.bank_sl_no bank_sl_no,
                       c.bank_id bank_id
-                from   md_society a ,td_collections b,md_paddy_bank c
-                where  a.sl_no = b.soc_id
-                and    b.bank_sl_no = c.sl_no
+                from   td_collections b,md_paddy_bank c
+              
+                where  b.bank_sl_no = c.sl_no
                 and    b.branch_id = '$brn_cd'
                 and    b.kms_id = '$kms_yr'
                 and    b.chq_status = 'R'
-                and    b.book_no != '0'
+                /*and    b.book_no    = '0'*/
                 and    b.trans_type = 'N'
-                group by a.soc_name,
-                         b.soc_id,
+                group by b.soc_id,
                          b.bulk_trans_id,
                          b.trans_dt,
-                         b.dwn_flag,
                          b.status,
+                         b.chq_status,
+                         b.forwarded_by,
                          b.bank_sl_no
-                order by b.trans_dt,b.bulk_trans_id
+                order by b.trans_dt
                 ";
         
         $data = $this->db->query($sql);
@@ -829,6 +829,8 @@ class Paddy extends CI_Model {
         return $data->result();
 
     }
+    
+    
     public function f_newcheque_issue($brn_cd,$kms_yr){
        
        $sql = "select issue_dt,bank_id
@@ -1215,12 +1217,22 @@ class Paddy extends CI_Model {
         $sql="UPDATE `td_collections` SET `status` = '1',forwarded_by ='$forwarded_by',forwarded_dt ='$forwarded_dt' WHERE trans_dt = '$trans_dt' AND `bulk_trans_id` = $bulk_trans_id AND `soc_id` = $soc_id";
         $this->db->query($sql);
     }
+    public function f_forward_return_paddycollection($trans_dt,$bulk_trans_id,$soc_id,$forwarded_by,$forwarded_dt){
+
+        $sql="UPDATE `td_collections` SET `status` = '1',chq_status ='U',forwarded_by ='$forwarded_by',forwarded_dt ='$forwarded_dt' WHERE trans_dt = '$trans_dt' AND `bulk_trans_id` = $bulk_trans_id AND `soc_id` = $soc_id";
+        $this->db->query($sql);
+    }
     public function f_forward_reissue_paddycollection($trans_dt,$bulk_trans_id,$soc_id){
 
         $sql="UPDATE `td_collections` SET `status` = '1' WHERE trans_dt = '$trans_dt' AND `bulk_trans_id` = $bulk_trans_id AND `soc_id` = $soc_id";
         $this->db->query($sql);
     }
     public function f_forward_neft($trans_dt,$bulk_trans_id,$soc_id){
+
+        $sql="UPDATE `td_collections` SET `status` = '1',`chq_status` = 'U' WHERE trans_dt = '$trans_dt' AND `bulk_trans_id` = $bulk_trans_id AND `soc_id` = $soc_id";
+        $this->db->query($sql);
+    }
+    public function f_forward_nefts($trans_dt,$bulk_trans_id,$soc_id){
 
         $sql="UPDATE `td_collections` SET `status` = '1',`chq_status` = 'U' WHERE trans_dt = '$trans_dt' AND `bulk_trans_id` = $bulk_trans_id AND `soc_id` = $soc_id";
         $this->db->query($sql);

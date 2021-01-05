@@ -116,7 +116,7 @@
                      
                             <a href="<?php echo site_url('paddys/transactions/f_paddycollection'); ?>">Paddy Procurement</a>
                      
-                          <!-- <a href="<?php echo site_url('paddys/trans_neft/f_paddy_neft_coll'); ?>">Paddy Procurement(NEFT)</a> -->
+                         <!--   <a href="<?php //echo site_url('paddys/trans_neft/f_paddy_neft_coll'); ?>">Paddy Procurement(NEFT)</a> --> 
                             <?php } ?>
 
                             <?php 
@@ -125,11 +125,14 @@
              
                        <!--  <a href="<?php echo site_url('paddys/transactions/f_paddycollection_dwn'); ?>">Download Procurement</a> -->
                       <!--   <a href="<?php echo site_url('paddys/transactions/f_return_cheque'); ?>">Return Cheque</a> -->
-                     <a href="<?php echo site_url('paddys/transactions/f_reissuchq'); ?>">Reissue Cheque</a> 
+                   <!-- <a href="<?php //echo site_url('paddys/transactions/f_reissuchq'); ?>">Reissue Cheque</a> --> 
                    <?php   if( $this->session->userdata['loggedin']['kms_id'] == 2 ) {   ?>
                        <a href="<?php echo site_url('paddys/transactions/failneft'); ?>">Reissue NEFT</a>
- 
-                        <?php }  } ?>
+                     
+                        <?php }else{ ?> 
+
+                          <a href="<?php echo site_url('paddys/transactions/failnefts'); ?>">Reissue NEFT</a> 
+                  <?php  } } ?>
                                  
                     <?php if($this->session->userdata['loggedin']['ho_flag']=="Y" && $this->session->userdata['loggedin']['user_type']=="A" OR $this->session->userdata['loggedin']['user_type']=="M") { ?>
 			

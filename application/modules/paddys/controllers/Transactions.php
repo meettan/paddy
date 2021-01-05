@@ -5209,8 +5209,22 @@ class Transactions extends MX_Controller {
         $this->load->view('post_login/footer');
         
     }
+    // Developed on 05/01/2021  By Lokesh kumar Jha //
+    public function failnefts() {
 
-     public function reissue_neft() {
+        $paddycollection['paddycollection_dtls']   = $this->Paddy->f_failnefts($this->session->userdata['loggedin']['branch_id'],$this->session->userdata['loggedin']['kms_id']); 
+        
+        $this->load->view('post_login/main');
+
+        $this->load->view("reissue_neft/dashboards", $paddycollection);
+        
+        $this->load->view('search/search');
+
+        $this->load->view('post_login/footer');
+        
+    }
+
+    public function reissue_neft() {
 
         if($_SERVER['REQUEST_METHOD'] == "POST") {
               
@@ -5225,8 +5239,6 @@ class Transactions extends MX_Controller {
             $ifsc_code   = $this->input->post('ifsc_code');
             $acc_no      = $this->input->post('acc_no');
 
-
-            
                    
               $bulk_s_id = $this->Paddy->f_get_particulars("td_collections",array("MAX(bulk_trans_id) bulk_trans_id"),array('branch_id' => $this->session->userdata['loggedin']['branch_id'],'kms_id' => $this->session->userdata['loggedin']['kms_id']), 1);
 
@@ -5312,6 +5324,114 @@ class Transactions extends MX_Controller {
         }
         
     }
+     public function reissue_nefts() {
+
+        if($_SERVER['REQUEST_METHOD'] == "POST") {
+              
+            $editdata        = explode ("/",$this->input->post('editdata'));
+            $soc_id          = $editdata["0"];
+            $trans_dt        = $editdata["1"];
+            $bulk_trans_id   = $editdata["2"];
+
+
+            $reg_no      = $this->input->post('reg_no');
+            $trans_dt    = $this->input->post('trans_dt');
+            $count       = count($this->input->post('reg_no'));
+            $ifsc_code   = $this->input->post('ifsc_code');
+            $acc_no      = $this->input->post('acc_no');
+
+                   
+              $bulk_s_id = $this->Paddy->f_get_particulars("td_collections",array("MAX(bulk_trans_id) bulk_trans_id"),array('branch_id' => $this->session->userdata['loggedin']['branch_id'],'kms_id' => $this->session->userdata['loggedin']['kms_id']), 1);
+
+               $bulk_trs_id = ($bulk_s_id->bulk_trans_id) + 1; 
+
+              $forward_bulk_trans_id     = $this->input->post('forward_bulk_trans_id');
+
+               $for_temp_id               = explode("_",$forward_bulk_trans_id);
+
+               $new_forward_bulk_trans_id = $for_temp_id[0].'_'.$for_temp_id[1].'_'.$bulk_trs_id;
+     
+
+            $i=0;  
+           for($i=0; $i<$count; $i++){
+           
+
+                $data_arrays = array(
+             
+                "bulk_trans_id"         =>  $bulk_trs_id,
+                "forward_bulk_trans_id" =>  $new_forward_bulk_trans_id,
+                "chq_status"            =>  "R",
+                "ifsc_code"             =>  $ifsc_code[$i],
+                "acc_no"                =>  $acc_no[$i],
+                "dwn_flag"              =>  "0",
+                "status"                =>  "0",
+                "book_no"               =>  "book_no"+1
+                );
+             
+            $where = array(
+
+                "reg_no"     => $reg_no[$i],
+                "soc_id"     => $soc_id,
+                "trans_dt"   => $trans_dt,
+                "chq_status" => 'R'
+
+            );
+
+                $this->Paddy->f_edit('td_collections',$data_arrays, $where);
+
+                
+            }   
+           
+           $this->session->set_flashdata('msg', 'Successfully added!');
+           redirect('paddys/transactions/failnefts');
+        }
+        else {
+
+            $data=explode ("/", $this->input->get('soc_id'));
+            $soc_id        = $data["0"];
+            $trans_dt      = $data["1"];
+            $bulk_trans_id = $data["2"];
+
+            $select     =   array(
+
+                  "t.*", "s.soc_name soc_name", "b.block_name block_name"
+            );
+
+            $where      =   array(
+
+                "t.soc_id = s.sl_no"    => NULL,
+
+                "t.block_id = b.blockcode"    => NULL,
+
+                "t.soc_id"        =>$soc_id,
+
+                "t.bulk_trans_id" =>$bulk_trans_id,
+
+                "t.trans_dt"      =>$trans_dt,
+
+                "t.chq_status"    =>'R',
+
+            );
+         
+   
+           $paddycollection['farmer_dtls'] =   $this->Paddy->f_get_particulars('td_collections t,md_society s,md_block b',$select,$where, 0);
+       
+           $wheres      =   array(
+            "branch_id" => $this->session->userdata['loggedin']['branch_id']
+             );
+
+            //Block List
+            $paddycollection['blocks']  =   $this->Paddy->f_get_particulars("md_block",NULL,$wheres, 0);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reissue_neft/add_neft_datas", $paddycollection);
+
+            $this->load->view('post_login/footer');
+
+        }
+        
+    }
     public function f_neft_forward() {
 
         $data=explode ("/", $this->input->get('soc_id'));
@@ -5352,6 +5472,53 @@ class Transactions extends MX_Controller {
                echo "<script>
                 alert('Procurement data Not forwarded Some Problem In File Uploading');
                 window.location.href='failneft';
+                </script>";
+        }
+     
+
+   
+    }
+
+    public function f_neft_forwards() {
+
+        $data=explode ("/", $this->input->get('soc_id'));
+        $soc_id = $data["0"];
+        $trans_dt = $data["1"];
+        $bulk_trans_id = $data["2"];
+        $valid=0;
+        $data  = $this->Paddy->f_ifsccode($trans_dt,$bulk_trans_id,$soc_id);
+        $datas = $this->Paddy->f_transcheck($trans_dt,$bulk_trans_id,$soc_id);
+       foreach( $data as $value ) {
+                  
+                 if(strlen($value->ifsc_code)=="11"){
+                    $valid = $valid+0;
+                 }else{
+                    $valid = $valid+1;
+                 }
+        }
+
+        if($datas == '0'){
+
+
+           if($valid=='0' ){
+            $this->Paddy->f_forward_nefts($trans_dt,$bulk_trans_id,$soc_id);
+            echo "<script>
+                alert('Procurement data forwarded successfully');
+                window.location.href='failnefts';
+                </script>";
+
+           }else{
+
+            echo "<script>
+                alert('Procurement data Not forwarded Some Problem In IFSC CODE');
+                window.location.href='failnefts';
+                </script>";
+             }
+
+        }else{
+               echo "<script>
+                alert('Procurement data Not forwarded Some Problem In File Uploading');
+                window.location.href='failnefts';
                 </script>";
         }
      
