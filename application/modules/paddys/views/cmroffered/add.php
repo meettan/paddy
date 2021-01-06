@@ -167,8 +167,8 @@
 
                     <input type="text"
                         class="form-control"
-                        name="res_cmr"
-                        id="res_cmr" readonly />
+                        name="res_cmr" 
+                        id="res_cmr"  />
 
                 </div>      
 
@@ -282,77 +282,18 @@
 
         $('#milled').keyup(function(){
 
-                var milled=  parseFloat($('#milled').val());
+            var milled=  parseFloat($('#milled').val());
 
-                var tot_pdy_delivrd=parseFloat($('#tot_pdy_delivrd').val());
+            var tot_pdy_delivrd=parseFloat($('#tot_pdy_delivrd').val());
 
-                console.log(milled,tot_pdy_delivrd);
+            if(milled  > tot_pdy_delivrd ){
 
-                if(milled  > tot_pdy_delivrd ){
+                alert("Milled Quantity Cannot Cross Paddy Received");
+                $('#submit').attr('type', 'button');
+                $('#milled').focus(); 
+            }
 
-                    alert("Milled Quantity Cannot Cross Paddy Received");
-                    $('#submit').attr('type', 'button');
-                    $('#milled').focus(); 
-                }
-
-                })
-
-
-        var i = 0;
-
-        $('#dist').change(function(){
-
-            //For District wise Block
-            $.get( 
-
-                '<?php echo site_url("paddy/blocks");?>',
-
-                { 
-
-                    dist: $(this).val()
-
-                }
-
-            ).done(function(data){
-
-                var string = '<option value="">Select</option>';
-
-                $.each(JSON.parse(data), function( index, value ) {
-
-                    string += '<option value="' + value.sl_no + '">' + value.block_name + '</option>'
-
-                });
-
-                $('#block').html(string);
-
-            });
-            
-            //For District wise Mill
-            $.get( 
-
-                '<?php echo site_url("paddy/mills");?>',
-
-                { 
-
-                    dist: $(this).val()
-
-                }
-
-                ).done(function(data){
-
-                var string = '<option value="">Select</option>';
-
-                $.each(JSON.parse(data), function( index, value ) {
-
-                    string += '<option value="' + value.sl_no + '">' + value.mill_name + '</option>'
-
-                });
-
-                $('#mill_name').html(string);
-
-            });
-
-        });
+        })
 
     });
 
@@ -443,8 +384,6 @@
 
                 var tot_rcvd = tot_rcvd.toFixed(3);
 
-                console.log(received,wr_order,tot_rcvd);
-
                 $('#tot_pdy_delivrd').val(tot_rcvd);
 
                  var userDate = (data.receved).trans_dt;
@@ -498,6 +437,43 @@
 
         });
 
+        $('#progressive_res_paddy').keyup(function(){
+            
+            //Progressive Paddy Procurement
+            $.get('<?php echo site_url("paddys/transactions/f_ricetype"); ?>',
+
+                {
+
+                    type: $('#rice_type').val()
+
+                }
+            )
+            .done(function(data){
+
+                var prog_rslt_rice = (($('#tot_pdy_delivrd').val() * parseInt(data)) / 100);
+
+                var prog_rslt_rice = prog_rslt_rice.toFixed(5);
+
+                var progressive_res_paddy = $('#progressive_res_paddy').val();
+                
+                 console.log(parseFloat(progressive_res_paddy),parseFloat(prog_rslt_rice));
+
+               if(parseFloat(progressive_res_paddy)  > parseFloat(prog_rslt_rice)){
+
+                alert("Progressive Resultant Rice cannot be greater than Rate of Rice type");
+                $('#progressive_res_paddy').val(prog_rslt_rice);
+                $('#submit').attr('type', 'button');
+
+                }else{
+    
+                    $('#submit').attr('type', 'submit');
+
+                }
+                
+            });
+
+        });
+
         $('#milled').keyup(function(){
             
             //Progressive Paddy Procurement
@@ -513,7 +489,7 @@
                 
                 var resultant_cmr = (($('#milled').val() * parseInt(data)) / 100);
 
-                var resultant_cmr = parseFloat(resultant_cmr).toFixed('3')
+                var resultant_cmr = parseFloat(resultant_cmr).toFixed('5')
    
             $('#res_cmr').val(resultant_cmr);
             
@@ -527,35 +503,6 @@
             });
 
         });
-
-
-        $('.offer_type').change(function(){
-            
-            let total = parseFloat($('#tot_cmr_offered').val());
-
-            $("#tot_cmr_offered").val('');
-  
-            $('.offer_type').each(function(){
-                
-                total += + parseFloat(($(this).val())? $(this).val() : 0 );
-             //   console.log(total);
-            });
-
-            if(total <= $('#res_cmr').val()){
-
-              $("#tot_cmr_offered").val(total);
-
-                $('#submit').attr('type', 'submit');
-
-            }
-            else{
-
-                $('#submit').attr('type', 'button');
-
-            }
-
-        });
-
     });
 
   </script>
@@ -649,17 +596,17 @@
 
 	            total=gum-(sum + rum);
 
-                total = parseFloat(total).toFixed(3);
+                total = parseFloat(total).toFixed(5);
 
                 var prog_cmr_off = (sum + rum);
 
-                prog_cmr_off = parseFloat(prog_cmr_off).toFixed(3);
+                prog_cmr_off = parseFloat(prog_cmr_off).toFixed(5);
 
 	            $('#total_progressive_cmr_offered').val(prog_cmr_off);
 	            $('#cmr_yet_to_offered').val(total);
 	           
-	        }
-	       else{  
+	        }else{  
+
 	        $('#total_progressive_cmr_offered').val("0.00");    
 	       }
 	       
@@ -701,22 +648,13 @@
         });
       });
 
-      $("#trans_dt").change(function(){
+    $("#trans_dt").change(function(){
 
-          var trans_dt = $('#trans_dt').val();
-
-
-         
- var d = new Date();
-
- var month = d.getMonth()+1;
- var day = d.getDate();
-
- var output = d.getFullYear() + '-' +
-    (month<10 ? '0' : '') + month + '-' +
-    (day<10 ? '0' : '') + day;
-
-    console.log(trans_dt,output);
+        var trans_dt = $('#trans_dt').val();         
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        var output = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
 
           if(new Date(output) < new Date(trans_dt))
           {
@@ -726,33 +664,25 @@
           }else{
              $('#submit').attr('type', 'submit');
           }
-})
+    })
 
- $('#form').submit(function(event){
+    $('#form').submit(function(event){
            
-                var trans_dt = $('#trans_dt').val();
-         
-var d = new Date();
+        var trans_dt = $('#trans_dt').val();
+        var d = new Date();
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        var output = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
 
- var month = d.getMonth()+1;
- var day = d.getDate();
+                if(new Date(output) < new Date(trans_dt)){
 
- var output = d.getFullYear() + '-' +
-    (month<10 ? '0' : '') + month + '-' +
-    (day<10 ? '0' : '') + day;
+                    alert("Transaction  Date Can Not Be Greater Than Current Date");
+                    event.preventDefault();
 
-                    if(new Date(output) < new Date(trans_dt)){
-
-                      alert("Transaction  Date Can Not Be Greater Than Current Date");
-                      event.preventDefault();
-                    }
-                     else 
-                        {
-                    //  alert("Transaction Date Can Not Be Less Than order Date");
+                    }else {
 
                        $('#submit').attr('type', 'submit');
-                       
-                      }
-            });
+                    }
+    });
 
 </script>

@@ -26,7 +26,9 @@
                         <th width="50px">Amount</th>
                         <th>Option</th> 
                         <th>Status</th>  
-                          <th>Forwarded By</th> 
+                        <th>Forwarded By</th> 
+                        <th>Updated By</th> 
+                        <th>Updated Dt</th> 
                     </tr>
                 </thead>
                 <tbody> 
@@ -75,6 +77,8 @@
                                        
                      </td>
                       <td><?php echo $padl_dtl->forwarded_by; ?></td>
+                      <td><?php echo $padl_dtl->modified_by; ?></td>
+                      <td><?php echo $padl_dtl->modified_dt; ?></td>
                   <!--    <td> 
                       <?php if($padl_dtl->status == 0) { ?> 
                      <a href="<?php //echo site_url("paddys/transactions/f_neft_forwards");?>?soc_id=<?=$padl_dtl->soc_id;?>/<?=$padl_dtl->trans_dt;?>/<?=$padl_dtl->bulk_trans_id;?>"><button class="btn btn-primary" id="">Forward</button></a></td>
@@ -113,6 +117,8 @@
                         <th>Option</th>
                         <th>Status</th>  
                         <th>Forwarded By</th> 
+                        <th>Updated By</th> 
+                        <th>Updated Dt</th> 
                     </tr>
                 
                 </tfoot>

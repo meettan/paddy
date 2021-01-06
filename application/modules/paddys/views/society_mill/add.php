@@ -44,7 +44,7 @@
 
                 <div class="form-group row">
 
-                    <label for="dist" class="col-sm-4 col-form-label">District Name: sadf</label>
+                    <label for="dist" class="col-sm-4 col-form-label">District Name:</label>
 
                     <div class="col-sm-8">
 

@@ -675,7 +675,7 @@ class Paddy extends CI_Model {
                 from   md_society a ,td_collections b
                 where  a.sl_no      = b.soc_id
                 and    b.branch_id  = $brn_cd
-                and    b.book_no    = '0'
+               
                 and    b.kms_id     = $kms_yr
                 group by a.soc_name,
                          b.soc_id,
@@ -800,7 +800,9 @@ class Paddy extends CI_Model {
        
        $sql = "select b.soc_id soc_id,
                       b.trans_dt trans_dt,
-                      b.bulk_trans_id bulk_trans_id, 
+                      b.bulk_trans_id bulk_trans_id,
+                      b.modified_by modified_by,
+                      b.modified_dt modified_dt, 
                       sum(b.quantity)tot_qty,
                       sum(b.amount)tot_amt,
                       b.status status,b.chq_status chq_status,b.forwarded_by forwarded_by,
@@ -816,6 +818,8 @@ class Paddy extends CI_Model {
                 and    b.trans_type = 'N'
                 group by b.soc_id,
                          b.bulk_trans_id,
+                         b.modified_by,
+                         b.modified_dt,
                          b.trans_dt,
                          b.status,
                          b.chq_status,

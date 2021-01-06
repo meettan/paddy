@@ -3146,49 +3146,43 @@ class Transactions extends MX_Controller {
     //New CMR offere Add for a particular Mill in the table td_cmr_offered
     public function f_offered_add() {
 
-        if($_SERVER['REQUEST_METHOD'] == "POST") {
-            
-            //Previous resultant cmr        
-            
+        if($_SERVER['REQUEST_METHOD'] == "POST") {     
             
             $data_array = array(
 
-                "trans_dt"      =>  $this->input->post('trans_dt'),                
+                "trans_dt"             =>  $this->input->post('trans_dt'),                
 
-                "kms_year"      =>  $this->session->userdata['loggedin']['kms_id'],
+                "kms_year"             =>  $this->session->userdata['loggedin']['kms_id'],
 
-                "branch_id"     =>  $this->session->userdata['loggedin']['branch_id'],
+                "branch_id"            =>  $this->session->userdata['loggedin']['branch_id'],
 
-                "block_id"      =>  $this->input->post('block'),
+                "block_id"             =>  $this->input->post('block'),
 
-                "soc_id"        =>  $this->input->post('soc_name'),
+                "soc_id"               =>  $this->input->post('soc_name'),
 
-                "mill_id"       =>  $this->input->post('mill_name'),
+                "mill_id"              =>  $this->input->post('mill_name'),
 
                 "progressive_paddy_received"  =>  $this->input->post('progressive_paddy_received'),
 
-                "rice_type"     =>  $this->input->post('rice_type'),
+                "rice_type"            =>  $this->input->post('rice_type'),
 
                 "progressive_res_paddy"       =>  $this->input->post('progressive_res_paddy'),
 
-                "milled"        => $this->input->post('milled'),
+                "milled"               => $this->input->post('milled'),
 
-                "resultant_cmr" =>  $this->input->post('res_cmr'),
+                "resultant_cmr"        =>  $this->input->post('res_cmr'),
 
-                "cmr_offered_now" => $this->input->post('cmr_offered_now'),
+                "cmr_offered_now"      => $this->input->post('cmr_offered_now'),
 
                 "total_progres_cmr_offered" => $this->input->post('total_progressive_cmr_offered'),
 
-                "cmr_yet_to_offered" => $this->input->post('cmr_yet_to_offered'),
+                "cmr_yet_to_offered"   => $this->input->post('cmr_yet_to_offered'),
 
-                "created_by"    =>  $this->session->userdata['loggedin']['user_name'],
+                "created_by"           =>  $this->session->userdata['loggedin']['user_name'],
 
-                "created_dt"    =>  date('Y-m-d h:i:s')
+                "created_dt"           =>  date('Y-m-d h:i:s')
 
             );
-            
-
-           
 
             $this->Paddy->f_insert('td_cmr_offered', $data_array);
 
@@ -3254,10 +3248,6 @@ class Transactions extends MX_Controller {
         echo json_encode($data);
 
       }
-
-     
-
-
 
     //CMR offered edit for a particular Mill in the table td_cmr_offered
     public function f_offered_edit() {
@@ -5365,7 +5355,9 @@ class Transactions extends MX_Controller {
                 "acc_no"                =>  $acc_no[$i],
                 "dwn_flag"              =>  "0",
                 "status"                =>  "0",
-                "book_no"               =>  "book_no"+1
+                "book_no"               =>  "book_no"+1,
+                "modified_by"           =>   $this->session->userdata['loggedin']['user_name'],
+                "modified_dt"           =>   date('Y-m-d')
                 );
              
             $where = array(

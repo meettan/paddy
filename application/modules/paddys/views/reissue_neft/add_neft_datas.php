@@ -114,7 +114,7 @@
           <div class="col-sm-6"></div>
           <div class="col-sm-5">
                 <?php if($farmer_dtl->chq_status == "R" ) { ?>
-                 <a href="<?php echo site_url("paddys/bankintegration/f_paddycol_forward");?>?soc_id=<?=$farme->soc_id;?>&trans_dt=<?=$farme->trans_dt;?>&forward_bulk_trans_id=<?=base64_encode($farme->forward_bulk_trans_id);?>&bulk_trans_id=<?=$farme->bulk_trans_id;?>"><button class="btn btn-primary" id="">Forward</button></a>
+                 <a href="<?php echo site_url("paddys/bankintegration/f_paddycol_return_forward");?>?soc_id=<?=$farme->soc_id;?>&trans_dt=<?=$farme->trans_dt;?>&forward_bulk_trans_id=<?=base64_encode($farme->forward_bulk_trans_id);?>&bulk_trans_id=<?=$farme->bulk_trans_id;?>"><button class="btn btn-primary" id="">Forward</button></a>
                  <?php  } ?> 
             </div>
         </div>

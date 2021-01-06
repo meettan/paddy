@@ -864,6 +864,90 @@ class Cron extends MX_Controller {
             redirect('paddys/transactions/f_received');
 
     }
+//****  Code is written for test of datainsertion in table and missing data from insertion  06/01/2021  ******///
+    public function paddy_despatch_temp(){
+
+         $kms_yerr_data = $this->db->query('SELECT * FROM `md_kms_year` 
+                                        where sl_no = (select max(sl_no) from md_kms_year)')->row();
+
+            $kms_year  = $kms_yerr_data->kms_yr;
+            $kms_id    = $kms_yerr_data->sl_no;
+         
+            $url = 'https://procurement.wbfood.in/api/Statusupd/Dispatcheddtls'; /*Dispatch*/
+            $date = date('Y-m-d');
+
+            //$date  = '2020-11-23';
+
+            $date1 = date("d/m/Y", strtotime($date));
+    
+            $data_auth = array('authcode' => 'ahtr*125#','dt_from' => $date1);
+
+            $options = array(
+                'http' => array(
+                    'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                    'method' => 'POST',
+                    'content' => http_build_query($data_auth)
+                )
+            );
+
+            $context = stream_context_create($options);
+            $result  = file_get_contents($url, false, $context);
+         
+            $datas   = json_decode($result);
+                
+                   foreach ($datas as $value) {
+
+                    $district_code   = get_society_branch_id($value->proccentreid);  
+
+                    $dt_despatch = substr($value->dt_despatch,0,10);
+
+                    $api_time    = substr($value->dt_despatch,11,9);
+
+                    $dates = explode('/',$dt_despatch);
+
+                    $trans_dt = $dates[2].'-'.$dates[1].'-'.$dates[0];
+
+                    $api_date_time = $trans_dt.' '.$api_time;
+
+                $count = $this->db->get_where('td_received', array('soc_id' => $value->proccentreid,'mill_id' => $value->ricemillcode,'api_date' => $api_date_time))->num_rows();
+
+                if( $count == 0 ){
+                        
+                        $data = array(
+
+                            "trans_dt"           =>  $trans_dt,
+
+                            "api_date"           =>  $api_date_time,
+
+                            "kms_year"           =>  $kms_id,
+
+                            "branch_id"          =>  $district_code,
+
+                            "dist"               =>  $district_code,
+
+                            "soc_id"             =>  $value->proccentreid,
+
+                            "mill_id"            =>  $value->ricemillcode,
+
+                            "paddy_qty"          =>  $value->despqty/100,
+
+                            "created_by"         =>  'API DATA',
+     
+                            "created_dt"         =>  date('Y-m-d h:i:s')
+
+                         );
+                        
+                    $this->Paddy->f_insert('td_received_temp', $data);  
+
+                   }                 
+                }  
+           
+            //For notification storing message
+           // $this->session->set_flashdata('msg', 'Successfully added!');
+
+           // redirect('paddys/transactions/f_received');
+
+    }
 
    
 }    
