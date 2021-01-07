@@ -1,6 +1,5 @@
 <div class="wraper">      
-<div class="col-md-3 container"> </div>
-<div class="col-md-6 container form-wraper">
+<div class="col-md-8 container form-wraper" style="margin:0 auto;float:none">
 
     <form method="POST" 
         id="form"

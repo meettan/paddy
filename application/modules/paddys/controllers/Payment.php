@@ -918,6 +918,9 @@ class Payment extends MX_Controller {
 
         $sancs   =   $this->Paddy->f_get_particulars("td_fund_requisition a,td_wqsc b,td_wqsc_dtls c",$select,$where, 1);
 
+        echo $this->db->last_query();
+        die();
+
         echo json_encode($sancs);
 
     }

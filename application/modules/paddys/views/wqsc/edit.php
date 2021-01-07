@@ -471,7 +471,7 @@
        
             
             //Progressive Paddy Procurement
-            $.get('<?php echo site_url("paddys/transactions/total_cmr_delivery"); ?>',
+            $.post('<?php echo site_url("paddys/transactions/total_cmr_delivery"); ?>',
             
                 {
                     soc_id:  '<?php echo $wqsc_dtls->soc_name ?>',

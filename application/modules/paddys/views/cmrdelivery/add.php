@@ -1,6 +1,6 @@
 <div class="wraper">      
-<div class="col-md-3"></div>
-    <div class="col-md-6 container form-wraper">
+<div class="col-md-2"></div>
+    <div class="col-md-8 container form-wraper">
 
         <form method="POST" 
             id="form" onsubmit="return ValidationEvent()"
@@ -537,7 +537,7 @@ $(document).ready(function(){
                 $('#state_pool').val(temp.sp);
                 $('#central_pool').val(temp.cp);
                 $('#fci').val(temp.fci);
-                $('#cmr_yet_to_be_delivery_as_do_number').val("0");
+                $('#cmr_yet_to_be_delivery_as_do_number').val("0.00000");
                 $('#inter_dist').val(temp.inter_dist);
                 $('#rm_gd_dist').val(temp.rm_gd_dist);
 
@@ -593,7 +593,7 @@ $(document).ready(function(){
 
                     var tum = parseFloat($('#pro_cmr_delivery').val());
 
-                    $('#cmr_yet_to_be_delivery_as_do_number').val((jum-tum).toFixed(2));
+                    $('#cmr_yet_to_be_delivery_as_do_number').val((jum-tum).toFixed(5));
                 });
                     
                 });

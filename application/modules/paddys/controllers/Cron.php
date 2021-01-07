@@ -654,7 +654,7 @@ class Cron extends MX_Controller {
             $url = 'https://procurement.wbfood.in/api/Statusupd/Procurementdtls';/*Procurement*/
             $date = date('Y-m-d');
 
-            //$date = '2020-12-23';
+            //$date = '2021-01-05';
 
             $date1 = date("d/m/Y", strtotime($date));
     
@@ -670,19 +670,6 @@ class Cron extends MX_Controller {
 
             $context = stream_context_create($options);
             $result  = file_get_contents($url, false, $context);
-
-            // $filename = 'text_07_12.txt';
-            // if ( ! write_file(FCPATH .'downloads/'.$filename,$result)) {
-
-            //                 echo 'Unable to write the file';
-
-            //            } else {
-
-            //         echo 'File written!';  
-                                          
-            //       }
-
-            //     die();
          
             $datas   = json_decode($result);
 
@@ -709,7 +696,7 @@ class Cron extends MX_Controller {
 
                     $dist_sort_code  = get_district_short_code($district_code) ;
 
-                $count = $this->db->get_where('td_collections', array('soc_id' => $value->proccentreid,'reg_no' => $value->regno,'trans_dt' => $trans_dt))->num_rows();
+                $count = $this->db->get_where('td_collections', array('reg_no' => $value->regno,'trans_dt' => $trans_dt))->num_rows();
 
                 if( $count == 0 ){
                         

@@ -4569,7 +4569,7 @@ class Transactions extends MX_Controller {
 
     }
     
-        public function get_sig_cheque(){
+    public function get_sig_cheque(){
 
             $kms_id     = $this->session->userdata['loggedin']['kms_id'];
 
@@ -4578,17 +4578,15 @@ class Transactions extends MX_Controller {
             $cheque_dtls  =  $this->Paddy->get_cheque($cheque_no,$kms_id);
 
           echo json_encode($cheque_dtls);
-       }
+    }
 
     //*************** Start Screen For Reissue Cheque  ***************//
 
-      public function f_reissuchq() {
+    public function f_reissuchq() {
         
 
         $branch_id  = $this->session->userdata['loggedin']['branch_id'];
         $kms_id     = $this->session->userdata['loggedin']['kms_id'];
-
-   
 
         //$chqissue['newchq_dtls']    =   $this->Paddy->f_newcheque_issue($branch_id,$kms_id);      
          $paddycollection['paddycollection_dtls']   = $this->Paddy->f_get_reissuecollection($this->session->userdata['loggedin']['branch_id'],$this->session->userdata['loggedin']['kms_id']);   

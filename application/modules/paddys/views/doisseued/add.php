@@ -129,10 +129,7 @@
 
                  <div class="col-sm-4">
 
-                <input type="text"
-                    class="form-control"
-                    name="do_number"
-                    id="do_number"/>   
+                <input type="text" class="form-control" name="do_number" id="do_number" required/>   
 
                         </div>
 
@@ -224,7 +221,7 @@
                         class="form-control "
                         name="progressive_do_issue" id="progressive_do_issue"  readonly/>   
 
-                            </div>
+                    </div>
       
               </div>   
 
@@ -236,7 +233,7 @@
 
                     <input type="text"
                         class="form-control offer_type"
-                        name="sp"
+                        name="sp" value="0.000"
                         id="sp"/>   
 
                 </div>
@@ -247,7 +244,7 @@
 
                     <input type="text"
                         class="form-control offer_type"
-                        name="cp"
+                        name="cp" value="0.000"
                         id="cp"/>
 
                 </div>   
@@ -258,7 +255,7 @@
 
                     <input type="text"
                         class="form-control offer_type"
-                        name="fci"
+                        name="fci" value="0.000"
                         id="fci"
                     />
 
@@ -396,16 +393,10 @@
                     var do_supplied     = parseFloat($('#tot_do_issue').val());
 
                     var tot_cmr         = parseFloat($('#tot_cmr_offered').val());
-                    
-                    //var sum =  rum + gum;
-
-                   // $('#progressive_do_issue').val(sum);
 
                      $('#progressive_do_issue').val(do_prev + do_supplied);
 
-                    //$('#do_yet_to_be_issued').val((tum-sum).toFixed(2));
-
-                   $('#do_yet_to_be_issued').val((tot_cmr-(do_prev + do_supplied)).toFixed(2));
+                   $('#do_yet_to_be_issued').val((tot_cmr-(do_prev + do_supplied)).toFixed(5));
 
 
                     if((do_prev + do_supplied)  > tot_cmr){
@@ -450,8 +441,6 @@
                 
                 let temp = JSON.parse(data);
                 $('#tot_cmr_offered').val(temp.tot);
-                //$('#tot_do_issue').val(temp.tot);
-                //$('#progressive_do_issue').val(temp.tot);
 
                   $('#do_yet_to_be_issued').val(("0"));
 
@@ -521,16 +510,20 @@
 
         $('.offer_type').change(function(){
             
-            let total = 0;
+            var total = parseFloat("0.00");
   
             $('.offer_type').each(function(){
                 
-                total += +$(this).val();
+                total +=  parseFloat($(this).val());
                 
             });
-            var tot_do_issue =parseFloat($('#tot_do_issue').val());
+            var tot_do_issue = parseFloat($('#tot_do_issue').val());
+
+            console.log(total);
         
-            if(total != tot_do_issue ){
+            if(parseFloat(total) > parseFloat(tot_do_issue) ){
+
+                 alert("Pool Calculation is Worng!");
 
                $('#submit').attr('type', 'button');
 
