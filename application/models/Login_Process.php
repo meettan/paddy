@@ -47,6 +47,7 @@
 		public function f_get_branch_list(){
 			$this->db->select('*');
 			$this->db->from('md_branch');
+			$this->db->order_by("branch_name", "asc");
 			$data=$this->db->get();
 			return $data->result();
 		}
