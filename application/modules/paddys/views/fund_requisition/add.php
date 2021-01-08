@@ -746,8 +746,6 @@
 
             var  val    = $(this).val();
 
-           
-
                 if(val == 3 || val == 4 || val == 5){
 
 
@@ -773,70 +771,6 @@
 
                     var tot_distance = $('#soc_mill_dis').val();
 
-                    // if(tot_distance <= 25){
-
-                    //      $('.rate_per_qtls:eq('+indexNo+')').val(rate_1);
-
-                    //      var tot_amt = parseFloat(rate_1 * tot_pady);
-
-                    //      $('.amounts:eq('+indexNo+')').val(tot_amt.toFixed(2));
-
-                    //       $('.tds_amount:eq('+indexNo+')').val(tds.toFixed(2));
-                    //       $('.cgst:eq('+indexNo+')').val(cgst.toFixed(2));
-                    //       $('.sgst:eq('+indexNo+')').val(cgst.toFixed(2));
-
-                    //       var payable_amt = parseFloat(tot_amt+tds+cgst+cgst);
-
-                    //       $('.paybel:eq('+indexNo+')').val(payable_amt.toFixed(2));
-                    //       $('.payble_amount').val(sumValuesOf('paybel').toFixed());
-
-                    // }else if(tot_distance <= 50){
-                    //         distance_1 = 25;
-                    //     var payment_1  = parseFloat(tot_pady*rate_1);
-                    //         distance_2 = tot_distance - distance_1;
-                    //         console.log(distance_2);
-                    //     var payment_2  = parseFloat(distance_2*rate_2*tot_pady);
-                           
-                    //         $('.rate_per_qtls:eq('+indexNo+')').val(rate_1+','+rate_2);
-
-                    //         $('.amounts:eq('+indexNo+')').val((payment_1 + payment_2).toFixed(2));
-
-                    //         tot_amt = payment_1 + payment_2;
-
-                    //       $('.tds_amount:eq('+indexNo+')').val(tds.toFixed(2));
-                    //       $('.cgst:eq('+indexNo+')').val(cgst.toFixed(2));
-                    //       $('.sgst:eq('+indexNo+')').val(cgst.toFixed(2));
-
-                    //       var payable_amt = parseFloat(tot_amt+tds+cgst+cgst);
-                          
-                    //       $('.paybel:eq('+indexNo+')').val(payable_amt.toFixed(2));
-                    //       $('.payble_amount').val(sumValuesOf('paybel').toFixed());
-
-                    // }else if(tot_distance > 50){
-
-                    //         distance_1 = 25;
-                    //     var payment_1  = parseFloat(tot_pady*rate_1);
-                    //         distance_2 = 25;
-                    //     var payment_2  = parseFloat(distance_2*rate_2*tot_pady);
-                    //         distance_3 = tot_distance -50;
-                    //     var payment_3  = parseFloat(distance_3*rate_3*tot_pady);   
-
-                    //         $('.rate_per_qtls:eq('+indexNo+')').val(rate_1+','+rate_2+','+rate_3);
-
-                    //         $('.amounts:eq('+indexNo+')').val((payment_1 + payment_2 + payment_3).toFixed(2));  
-
-                    //            tot_amt = payment_1 + payment_2;
-
-                    //        $('.tds_amount:eq('+indexNo+')').val(tds.toFixed(2));
-                    //        $('.cgst:eq('+indexNo+')').val(cgst.toFixed(2));
-                    //        $('.sgst:eq('+indexNo+')').val(cgst.toFixed(2));
-
-                    //        var payable_amt = parseFloat(tot_amt+tds+cgst+cgst);
-                          
-                    //        $('.paybel:eq('+indexNo+')').val(payable_amt.toFixed(2));
-                    //        $('.payble_amount').val(sumValuesOf('paybel').toFixed());           
-
-                    //     }
 
                       if(val == 3){
 
@@ -1005,6 +939,55 @@
 
         });
 
+    //  ***  Code START For Tds calculation On Inter District Charges  Developed On 08/01/2021   ****  ///
+
+        $('#intro1').on('change', '.amounts', function(){
+
+            let indexNo = $('.amounts').index(this);
+            var amount  = $(this).val();
+         
+            $('.tds_amount:eq('+indexNo+')').val("");
+            $('.cgst:eq('+indexNo+')').val("");
+            $('.sgst:eq('+indexNo+')').val("");
+            $('.claim_amt:eq('+indexNo+')').val("");
+            $('.paybel:eq('+indexNo+')').val("");
+            $('.payble_amount').val(sumValuesOf('paybel').toFixed());      
+
+            var  val    =  $('.particulars:eq('+indexNo+')').val();
+
+            if(val == 6){
+
+                 $.get('<?php echo site_url("paddy/billMasterDetails"); ?>',{
+                 //   riceType: $('#rice_type').val(),
+                    sl_no: val
+
+                }).done(function(data){
+
+                    let values      = JSON.parse(data);
+                    var tds         = values.tds;
+                
+                    var payable_amt = 0.00;
+                    var cgst        = 0.00;
+    
+                        tds = ((tds*amount)/100).toFixed(2);
+
+                        $('.tds_amount:eq('+indexNo+')').val(tds);
+                        $('.cgst:eq('+indexNo+')').val(cgst.toFixed(2));
+                        $('.sgst:eq('+indexNo+')').val(cgst.toFixed(2));
+
+                        var payable_amt = parseFloat(amount-tds);
+
+                        $('.paybel:eq('+indexNo+')').val(payable_amt.toFixed(2));
+                        $('.payble_amount').val(sumValuesOf('paybel').toFixed());
+
+                });
+
+            }
+
+        });
+
+    //  ***  Code END  For Tds calculation On Inter District Charges Developed On 08/01/2021   ****  ///
+
         $('.less_butta').change(function(){
 
             $('.payble_amount').val((sumValuesOf('paybel') - $(this).val()).toFixed());
@@ -1065,8 +1048,8 @@
             $(this).closest('tr').find(".paybel").val(total.toFixed());
 
         });
-          $('.cgst').change(function(){
 
+          $('.cgst').change(function(){
 
              var amount = 0;
              var cgst   = 0;
