@@ -29,7 +29,7 @@ class Transactions extends MX_Controller {
     }
     /*********************For Work Order Screen******************/
     
-    #Work Order List from the table td_work_order
+    //  ****  Start Code Fror Work Order List from the table td_work_order    **** ///
     public function f_workorder() {                                                                                                           
 
         $select     =   array(
@@ -50,7 +50,6 @@ class Transactions extends MX_Controller {
             "t.kms_year"=>$this->session->userdata['loggedin']['kms_id']
 
         );
-        //$workorder['workorder_dtls']= $this->Paddy->f_get_particulars("td_work_order t, md_society m", $select, $where, 1);
      
         $workorder['work_orders'] = $this->Paddy->f_get_particulars("td_work_order t, md_society s,md_mill m",$select,$where, 0);
         
@@ -63,6 +62,12 @@ class Transactions extends MX_Controller {
         $this->load->view('post_login/footer');
         
     }
+
+    //  ****  End Code Fror Work Order List from the table td_work_order    **** ///
+
+
+    //  ****  Ajax Code To Get Society  **** ///
+
     public function f_get_society(){
 
          $block_id=$this->input->post("block_id");
@@ -79,6 +84,9 @@ class Transactions extends MX_Controller {
                 
         echo json_encode($data);
     }
+
+    //  ****  Ajax Code To Get connected mill society  **** ///
+
     public function f_connected_mill_society(){
 
         $soc_id = $this->input->post("soc_id");
@@ -95,6 +103,10 @@ class Transactions extends MX_Controller {
 
        echo json_encode($data);
     }
+
+
+    //  ****  Ajax Code To Get mill target  **** //
+
     public function f_get_mill_target(){
 
         $soc_id = $this->input->post("soc_id");
@@ -111,7 +123,9 @@ class Transactions extends MX_Controller {
 
 
     }
+
     //New Workorder Add in the table td_work_order
+
     public function f_workorder_add() {
 
 
@@ -176,6 +190,7 @@ class Transactions extends MX_Controller {
     }
 
     //Societies for a block selected by user 
+
     public function f_socmills() {
 
         $data   =   $this->Paddy->f_get_particulars("md_mill m, md_soc_mill s", array("m.mill_name"), array("m.sl_no = s.mill_id" => null, "s.soc_id" => $this->input->get('soc_id')), 0);
@@ -184,6 +199,7 @@ class Transactions extends MX_Controller {
 
     }
     // Get mill connected to mill
+
     public function f_soc_mills() {
 
         $soc_id = $this->input->post("soc_id");        
@@ -195,25 +211,14 @@ class Transactions extends MX_Controller {
     }
 
     //Workorder edit in the table td_work_order
+
     public function f_workorder_edit() {
 
         if($_SERVER['REQUEST_METHOD'] == "POST") {
 
             $data_array = array(
 
-                // "block"      =>  $this->input->post('block'),
-
-                // "branch_id"    =>  $this->session->userdata['loggedin']['branch_id'],
-
                 "trans_dt"      =>  $this->input->post('trans_dt'),
-
-                // "kms_year"      =>  $this->session->userdata['loggedin']['kms_id'],
-
-                // "soc_id"        =>  $this->input->post('soc_name'),
-
-                // "mill_id"        =>  $this->input->post('mill_id'),
-
-                // "paddy_qty"     =>  $this->input->post('paddy_qty'),
 
                 "modified_by"   =>  $this->session->userdata['loggedin']['user_name'],
 
@@ -241,7 +246,6 @@ class Transactions extends MX_Controller {
         }
         else {
          
-            //$workorder['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
             $where  =   array(
 
                 "branch_id"  => $this->session->userdata['loggedin']['branch_id'],
@@ -274,6 +278,8 @@ class Transactions extends MX_Controller {
         
     }
 
+
+    //  *** Code For Approve Work order ***  /// 
     public function f_workorder_approved() {
 
 
@@ -306,6 +312,9 @@ class Transactions extends MX_Controller {
             redirect('paddys/transactions/f_workorder');
         
     }
+
+    //  *** Code For Workorder print ***  ///
+
     public function f_workorder_print() {
 
         if($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -320,8 +329,6 @@ class Transactions extends MX_Controller {
                 "t.*","s.soc_name soc_name","m.mill_name mill_name","p.per_qui_rate per_qui_rate"
     
             );
-
-            //$workorder['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
             $where  =   array(
 
                 "t.soc_id = s.sl_no"    => NULL,
@@ -336,8 +343,6 @@ class Transactions extends MX_Controller {
      
                 "t.order_no"     =>  $_GET["order_no"]
             );
-                 
-           // $workorder['mill_dtls'] = $this->Paddy->f_get_particulars("md_mill", NULL,NULL, 0);
 
             $workorder['workorder_dtls']= $this->Paddy->f_get_particulars("td_work_order t,md_society s,md_mill m,md_paddy_rate p", $select, $where, 1);
 
@@ -351,13 +356,13 @@ class Transactions extends MX_Controller {
                 $this->load->view("workorder/print_data", $workorder);
             }
 
-            
-
             $this->load->view('post_login/footer');
 
            }
         
     }
+
+    //  *** Code For Workorder Delete ***  ///
     
     public function f_workorder_delete() {
 
@@ -378,9 +383,7 @@ class Transactions extends MX_Controller {
     }
 
     /*********************For Paddy Collection Screen********************/
-    #List of Procurement of Paddy, Society wise from table td_collections
-   
-    
+    #List of Procurement of Paddy, Society wise from table td_collections    
     public function f_paddycollection() {
 
         $paddycollection['paddycollection_dtls']   = $this->Paddy->f_get_collection($this->session->userdata['loggedin']['branch_id'],$this->session->userdata['loggedin']['kms_id']);        
@@ -394,6 +397,9 @@ class Transactions extends MX_Controller {
         $this->load->view('post_login/footer');
         
     }
+
+    //  *** Code For Paddy coll upload ***  ///
+
     public function f_paddycollupload(){
 
 	if($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -485,8 +491,6 @@ class Transactions extends MX_Controller {
                 
                     
                     while(($line = fgetcsv($csvFile)) !== FALSE){
-
-                       // $trans_id = $trans_id++;
                         
                     $data[] = array(
 
@@ -588,6 +592,8 @@ class Transactions extends MX_Controller {
 
     }
     
+
+    /// **** Code For Return Cheque List    ****   ///
    public function f_return_cheque() {
        
 
@@ -602,6 +608,8 @@ class Transactions extends MX_Controller {
         $this->load->view('post_login/footer');
         
     }
+
+
     public function f_returnchequeho() {
        
 
@@ -634,12 +642,12 @@ class Transactions extends MX_Controller {
 
     public function f_paddycoll_chec_forwarded(){
 
-    $paddycollection['paddycollection_dtls'] = $this->Paddy->f_forwarded_coll_checker($this->session->userdata['loggedin']['branch_id'],$this->session->userdata['loggedin']['kms_id']);  
+    $paddycoll['paddycollection_dtls'] = $this->Paddy->f_forwarded_coll_checker($this->session->userdata['loggedin']['branch_id'],$this->session->userdata['loggedin']['kms_id']);  
 
         
         $this->load->view('post_login/main');
 
-        $this->load->view("paddycollection/dashboard_checker_fwd", $paddycollection);
+        $this->load->view("paddycollection/dashboard_checker_fwd", $paddycoll);
         
         $this->load->view('search/search');
 
@@ -659,16 +667,16 @@ class Transactions extends MX_Controller {
 
             $trans_type  = $this->input->post('trans_type');   
 
-             if($this->session->userdata['loggedin']['ho_flag'] == "Y" ) {  
+            if($this->session->userdata['loggedin']['ho_flag'] == "Y" ) {  
 
-            $paddycollection['paddycollection_dtls'] = $this->Paddy->f_get_collection_dwn($kms_id,$bnk_id,$trans_type);
+            $paddycoll['paddycollection_dtls'] = $this->Paddy->f_get_collection_dwn($kms_id,$bnk_id,$trans_type);
             }else{
 
-            $paddycollection['paddycollection_dtls']   = $this->Paddy->f_get_coll_branch_dwn($kms_id,$bnk_id,$branch_id);
+            $paddycoll['paddycollection_dtls'] = $this->Paddy->f_get_coll_branch_dwn($kms_id,$bnk_id,$branch_id);
             }
          
             $this->load->view('post_login/main');
-            $this->load->view("paddycollection/dashboard_ho",$paddycollection);
+            $this->load->view("paddycollection/dashboard_ho",$paddycoll);
             $this->load->view('post_login/footer');
 
         }else{
@@ -682,6 +690,8 @@ class Transactions extends MX_Controller {
         }
 
     }
+
+    ///  *****  Get NEFT STATUS     **********  ///
 
     public function f_neft_status(){
 
@@ -729,12 +739,10 @@ class Transactions extends MX_Controller {
 
             $trans_type  = $this->input->post('trans_type');   
 
-            $paddycollection['paddycollection_dtls'] = $this->Paddy->f_get_collreissue_dwn($kms_id,$bnk_id,$trans_type);
-            
-          
+            $paddycoll['paddycollection_dtls'] = $this->Paddy->f_get_collreissue_dwn($kms_id,$bnk_id,$trans_type);
 
             $this->load->view('post_login/main');
-            $this->load->view("paddycollection/dashbreissue_ho",$paddycollection);
+            $this->load->view("paddycollection/dashbreissue_ho",$paddycoll);
             $this->load->view('post_login/footer');
 
         }else{
@@ -778,22 +786,9 @@ class Transactions extends MX_Controller {
         }
 
     }
-    // public function f_paddycollamountcheque(){
-
-    //     $paddycollection['paddycollection_dtls']   = $this->Paddy->f_get_collection_dwn($this->session->userdata['loggedin']['kms_id']);        
-        
-    //     $this->load->view('post_login/main');
-
-    //     $this->load->view("paddycollection/dashboard_ho", $paddycollection);
-        
-    //     $this->load->view('search/search');
-
-    //     $this->load->view('post_login/footer');
-
-
-    // }
 
     //For Farmer Details Modal
+
     public function f_getFarmerDetails(){
 
         $data['farmer_dtls'] =   $this->Paddy->f_get_particulars('td_collections', NULL, array('soc_id' => $this->input->get('soc_id')), 0);
@@ -969,17 +964,6 @@ class Transactions extends MX_Controller {
 
         $paddy_procured = $this->Paddy->f_get_farmer_paddy_procured($reg_no[$i],$this->session->userdata['loggedin']['kms_id']);
             
-            // print_r($cheque_no[$i]);
-            // die();
-            
-        //   if( count($cheque_no[$i]) > 1 )  {
-                
-         //   $record = $this->db->get_where('td_collections', array('reg_no =' => $reg_no[$i],'cheque_no =' => $cheque_no[$i],'kms_id =' =>$kms_id))->num_rows();
-            
-            // }else{
-                
-            //     $record = 0 ;
-            // }
             
               $tot=$paddy_procured+((is_numeric($quantity[$i]))? ($quantity[$i]) : NULL);
           
@@ -1004,12 +988,7 @@ class Transactions extends MX_Controller {
 
                 "branch_id" => $this->session->userdata['loggedin']['branch_id']
             );
-            // $wheres      =   array(
-
-            //     "dist_id" => $this->session->userdata['loggedin']['branch_id']
-            // );
-
-
+       
             //Block List
             $paddycollection['blocks']  =   $this->Paddy->f_get_particulars("md_block",NULL,$where, 0);
             $paddycollection['banks']  =   $this->Paddy->f_get_particulars("md_paddy_bank",NULL,NULL, 0);
@@ -1055,7 +1034,6 @@ class Transactions extends MX_Controller {
             $cheque_date      =$this->input->post('cheque_date');
             $ifsc_code        =$this->input->post('ifsc_code');
             $acc_no           =$this->input->post('acc_no');
-
             $kms_year         = $this->session->userdata['loggedin']['kms_yr'];
             $kms_id           = $this->session->userdata['loggedin']['kms_id'];
             $dist_sort_code   = $this->session->userdata['loggedin']['dist_sort_code'];
@@ -1321,6 +1299,8 @@ class Transactions extends MX_Controller {
         }
         
     }
+
+
     public function f_return_cheque_edit() {
 
         if($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -1443,6 +1423,9 @@ class Transactions extends MX_Controller {
             redirect('paddys/transactions/f_paddycollection');
 
     }
+
+    //  ***** Procurement Data  Delete      ******  //////////////
+
     public function f_pad_sig_delete(){
 
         $data = explode("/", $this->input->get('soc_id'));
@@ -1470,7 +1453,9 @@ class Transactions extends MX_Controller {
        redirect('paddys/transactions/f_cheque_add?soc_id='.$soc_id.'/'.$trans_dt.'/'.$bulk_trans_id.'/'.$status);
 
     }
+
    //  Developed on 16/12/2020 after Food Api integration to delete Single Value // 
+
      public function f_proc_sig_delete(){
 
         $data     = explode("/", $this->input->get('soc_id'));
@@ -1645,6 +1630,7 @@ class Transactions extends MX_Controller {
             $this->load->view('post_login/footer');
     
     }
+
     public function f_masterroll_print() {
 
         $data=explode ("/", $this->input->get('soc_id'));
@@ -1695,7 +1681,7 @@ class Transactions extends MX_Controller {
         $data  = $this->Paddy->f_ifsccode($trans_dt,$bulk_trans_id,$soc_id);
 
         $datas = $this->Paddy->f_transcheck($trans_dt,$bulk_trans_id,$soc_id);
-       foreach( $data as $value ) {
+        foreach( $data as $value ) {
                   
                  if(strlen($value->ifsc_code)=="11"){
                     $valid = $valid+0;
@@ -1745,6 +1731,9 @@ class Transactions extends MX_Controller {
                     </script>";
        
     }
+
+
+    ///  ******* Code For getting Detail    ******   ///////
 
     public function get_farmer_details(){
         
@@ -2015,6 +2004,9 @@ class Transactions extends MX_Controller {
 
     }
 
+
+    ///  ****  Code For Getting Paddy Procurement Excell Sheet   ****   ////
+
     public function f_paddy_procurement_Excel(){
 
        $soc_id = $this->uri->segment(4);
@@ -2028,7 +2020,6 @@ class Transactions extends MX_Controller {
       $trans_type = $this->Paddy->get_transaction_type($soc_id,$trans_dt,$bulk_trans_id,$chq_status);
 
       if($trans_type == "C"){
-
             
             
             $employee_data =  $this->Paddy->f_farmer_detail_cheque($soc_id,$trans_dt,$bulk_trans_id);
@@ -2383,9 +2374,7 @@ class Transactions extends MX_Controller {
                 $object->getActiveSheet()->setCellValueByColumnAndRow(11, $excel_row, $payaccount);
                 $object->getActiveSheet()->setCellValueByColumnAndRow(12, $excel_row, $row->farm_name);
                 $object->getActiveSheet()->setCellValueByColumnAndRow(13, $excel_row, $regNo);
-                /*$object->getActiveSheet()->setCellValueByColumnAndRow(14, $excel_row, $row->reg_no);
-                $object->getActiveSheet()->setCellValueByColumnAndRow(16, $excel_row, $row->dist_code);
-                $object->getActiveSheet()->setCellValueByColumnAndRow(15, $excel_row, $row->bulk_id);*/
+              
 
 
                 $excel_row++;
@@ -2526,6 +2515,9 @@ class Transactions extends MX_Controller {
          
     }
 
+
+     ///  ****  Code For Getting Paddy Procurement Reissue Payment Excell Sheet   ****   ////
+
     public function f_procurementreissue_Excel(){
    
        $branch_id = $this->uri->segment(4);
@@ -2535,9 +2527,6 @@ class Transactions extends MX_Controller {
        $object->setActiveSheetIndex(0);  
 
             $employee_data =  $this->Paddy->f_farmer_reissue_cheque($branch_id,$bank_id);
-
-            // $bank_data     =  $this->Paddy->f_farmer_bank_detail($soc_id,$trans_dt,$bulk_trans_id);
-            // $debit_bank_data = $this->Paddy->f_debit_bank_detail($bank_data->branch_id,$bank_data->bank_id);
             
             $update        =  $this->Paddy->f_farmerreissue_dwn_flag($branch_id,$bank_id);
 
@@ -2784,8 +2773,6 @@ class Transactions extends MX_Controller {
 
             }
 
-
-        
          
     }
 
@@ -2800,6 +2787,7 @@ class Transactions extends MX_Controller {
     }
 
     //Sum of Total No Of Farmers Worked for a Particular Society from table td_collections
+
     public function f_totfarmer(){
 
         $where      =   array(
@@ -2817,6 +2805,7 @@ class Transactions extends MX_Controller {
     }
 
     //Progressive Paddy Procurement of a Particular Society
+
     public function f_progressive(){
 
         $where      =   array(
@@ -2834,6 +2823,7 @@ class Transactions extends MX_Controller {
     }
 
     //Paddy Quantity, Which are Already Delivered to the Rice Millars
+
     public function f_alreadyDelivered(){
 
         $where      =   array(
@@ -2872,6 +2862,7 @@ class Transactions extends MX_Controller {
     }
 
     //Progressive Work Order for a particular Society
+
     public function f_totorder(){
 
         $where      =   array(
@@ -2887,6 +2878,8 @@ class Transactions extends MX_Controller {
         echo $data->sum;
 
     }
+
+    ///  ***** Getting total Workorder  ***** ///
 
     public function f_totorder_soc_mill(){
 
@@ -3144,6 +3137,7 @@ class Transactions extends MX_Controller {
     }
 
     //New CMR offere Add for a particular Mill in the table td_cmr_offered
+
     public function f_offered_add() {
 
         if($_SERVER['REQUEST_METHOD'] == "POST") {     
@@ -3212,7 +3206,8 @@ class Transactions extends MX_Controller {
         
     }
 
-    // Function 
+    //Ajax Code For getting added offer 
+
     public function f_added_offered(){
 
     	$soc_id = $_GET["soc_id"];
@@ -3250,20 +3245,14 @@ class Transactions extends MX_Controller {
       }
 
     //CMR offered edit for a particular Mill in the table td_cmr_offered
+
     public function f_offered_edit() {
 
         if($_SERVER['REQUEST_METHOD'] == "POST") {
 
             $data_array = array(
 
-                
                 "trans_dt"      =>  $this->input->post('trans_dt'),                
-
-                // "milled"        => $this->input->post('milled'),
-
-                // "rice_type"     =>  $this->input->post('rice_type'),
-
-                // "resultant_cmr" =>  $this->input->post('res_cmr'),
 
                 "modified_by"   =>  $this->session->userdata['loggedin']['user_name'],
 
@@ -3320,6 +3309,7 @@ class Transactions extends MX_Controller {
     }
 
     //from a Particular Society from table td_received
+
     public function f_delivered(){
 
         $where      =   array(
@@ -3341,8 +3331,8 @@ class Transactions extends MX_Controller {
 
     }
 
-    //Rice Type: Par Boiled, Raw Rice
-    //Retrive Rice Type md_parameters 
+    //Rice Type: Par Boiled, Raw Rice  //Retrive Rice Type md_parameters 
+
     public function f_ricetype(){
 
         $where      =   array(
@@ -3375,6 +3365,7 @@ class Transactions extends MX_Controller {
         redirect("paddys/transactions/f_offered");
 
     }
+
     /*********************For CMR DO Isseue Screen********************/
     #Mill isseus there milled paddy to the DO
    
@@ -3506,7 +3497,8 @@ class Transactions extends MX_Controller {
         
     }
 
-    //Edit CMR quantity isseued by DO for a particular Mill in the table td_do_isseued    
+    //Edit CMR quantity isseued by DO for a particular Mill in the table td_do_isseued   
+
     public function f_doisseued_edit() {
 
         if($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -3514,8 +3506,6 @@ class Transactions extends MX_Controller {
             $data_array = array(
                 
                 "trans_dt"      =>  $this->input->post('trans_dt'),                
-
-                // "kms_year"      =>  $this->kms_year,
 
                 "dist"          =>  $this->input->post('dist'),
 
@@ -3580,6 +3570,7 @@ class Transactions extends MX_Controller {
     }
 
     //Total CMR Offered from a particular mill from table td_cmr_offered
+
     public function f_totoffer(){
 
         $select     =   array(
@@ -3610,6 +3601,7 @@ class Transactions extends MX_Controller {
 
     
     //Total DO Issued from a particular mill from table td_cmr_offered
+
     public function f_added_doissue(){
 
         $select     =   array(
@@ -3802,12 +3794,6 @@ class Transactions extends MX_Controller {
 
             $trans_no   =   $this->input->get('trans_no');
 
-            //$kms_id     = $this->session->userdata['loggedin']['kms_id'];
-
-            //$soc_id    = $this->input->post('soc_name');
-
-            //$mill_id      = $this->input->post('mill_id');
-
            $cmrdelivery['dist']   =  $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
             //CMR delivery Details
@@ -3830,10 +3816,6 @@ class Transactions extends MX_Controller {
             );
 
             $cmrdelivery['cmrdelivery_dtls']=   $this->Paddy->f_get_particulars("td_cmr_offered t, md_society m,md_mill s", $select, $where, 1);
-            
-            //var_dump($cmrdelivery['cmrdelivery_dtls']);
-
-            //var_dump($cmrdelivery['cmrdelivery_dtls']->soc_name);die;
 
             $select =   array(
                 "count(*)delivery"
@@ -3979,8 +3961,6 @@ class Transactions extends MX_Controller {
         echo json_encode($data);
 
     }
-
-    
     
     //Total CMR isseued from a particular mill from table td_do_isseued
     public function f_totisseued(){
@@ -4097,8 +4077,6 @@ class Transactions extends MX_Controller {
 
     public function f_mills(){
 
-
-
         $where      =   array(
 
             "block" => $this->input->post('block'),
@@ -4112,7 +4090,6 @@ class Transactions extends MX_Controller {
     public function rice_rate(){
 
           $type = $this->input->get('rice_type');
-
        
 
          if($type == "P"){
@@ -4269,6 +4246,8 @@ class Transactions extends MX_Controller {
         
     }
 
+    // *******  Code For wqsc Edit Section    **** //// 
+
     public function wqsc_edit() {
 
         if($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -4290,11 +4269,6 @@ class Transactions extends MX_Controller {
 
             $this->Paddy->f_edit('td_wqsc', $data_array, $where);
 
-            // $whered = array(
-            
-            // "wqsc_no"    =>  $this->input->post('wqsc_no')
-            
-            //   );
 
             //  $this->Paddy->f_delete('td_wqsc', $whered);
              $count = count($this->input->post('sub_wqsc'));
@@ -4357,9 +4331,7 @@ class Transactions extends MX_Controller {
             );
 
             $wheredl    =   array(
-    
-              //  "t.soc_id = m.sl_no"    => NULL,
-                
+
                 "wqsc_no"  => $this->input->get('wqsc_no'),
                 "trans_id" => $this->input->get('trans_no')
 
@@ -4386,13 +4358,13 @@ class Transactions extends MX_Controller {
         
     }
 
-    public function f_wqsc_delete(){
+    ///  ***  Code for deleting wqsc   *** ///// 
 
+    public function f_wqsc_delete(){
 
         $where = array(
             
             "id"    =>  $this->input->get('sl_no')
-            
         );
 
         $wheres = array(
@@ -4403,7 +4375,6 @@ class Transactions extends MX_Controller {
 
         $this->Paddy->f_delete('td_wqsc', $where);
         $this->Paddy->f_delete('td_wqsc_dtls',$wheres);
-       
 
         $this->session->set_flashdata('msg', 'Successfully Deleted!');
 
@@ -4411,6 +4382,9 @@ class Transactions extends MX_Controller {
 
 
     }
+
+
+    //// **** Code For total cmr Delivery   ***** //////
 
     public function total_cmr_delivery(){
 
@@ -4448,8 +4422,6 @@ class Transactions extends MX_Controller {
 
         $yescheque['cheque_status']     =   $this->Paddy->f_get_total_cheque_uploaded($kms_id);
 
-        
-
         $this->load->view('post_login/main');
 
         $this->load->view("cheque_reconcil/dashboard",$yescheque);
@@ -4460,7 +4432,7 @@ class Transactions extends MX_Controller {
         
     }
 
-      public function f_cheque_upload() {
+    public function f_cheque_upload() {
 
         if($_SERVER['REQUEST_METHOD'] == "POST") {
 
@@ -4498,13 +4470,10 @@ class Transactions extends MX_Controller {
                         'kms_id'            =>  $this->session->userdata['loggedin']['kms_id'],
                         "created_by"        =>  $this->session->userdata['loggedin']['user_name'],
                         "created_dt"        =>  date('Y-m-d')
-                                );
-
-
-                      //$query = $this->db->get_where('td_reconciliation_yes', array('reference_no ='=> $line[3]));
+                        );
                      
             
-                            if(/*$query->num_rows() == 0  &&*/ strlen($line[3]) <= "6" && $line[3] != "0")
+                     if(/*$query->num_rows() == 0  &&*/ strlen($line[3]) <= "6" && $line[3] != "0")
                                 {   
                                    $id=$this->Paddy->f_insert('td_reconciliation_yes', $data);
 
@@ -4588,8 +4557,7 @@ class Transactions extends MX_Controller {
         $branch_id  = $this->session->userdata['loggedin']['branch_id'];
         $kms_id     = $this->session->userdata['loggedin']['kms_id'];
 
-        //$chqissue['newchq_dtls']    =   $this->Paddy->f_newcheque_issue($branch_id,$kms_id);      
-         $paddycollection['paddycollection_dtls']   = $this->Paddy->f_get_reissuecollection($this->session->userdata['loggedin']['branch_id'],$this->session->userdata['loggedin']['kms_id']);   
+        $paddycollection['paddycollection_dtls']   = $this->Paddy->f_get_reissuecollection($this->session->userdata['loggedin']['branch_id'],$this->session->userdata['loggedin']['kms_id']);   
 
         $this->load->view('post_login/main');
 
@@ -4685,8 +4653,6 @@ class Transactions extends MX_Controller {
 
                 "reg_no"       =>  $this->input->post('reg_no')
               );
-
-              //  $this->Paddy->f_insert('td_reissue_chq', $data_array);
 
                 $this->Paddy->f_edit('td_collections', $data_arrays, $where);
                
