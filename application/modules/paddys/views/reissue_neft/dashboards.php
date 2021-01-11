@@ -61,7 +61,7 @@
                                  ?> -->
                             </td>
                             <td ><?php echo date('d/m/Y',strtotime($padl_dtl->trans_dt)); ?></td>
-                            <td ><?php echo $padl_dtl->tot_qty; ?>/</td>
+                            <td ><?php echo $padl_dtl->tot_qty; ?></td>
                             <td ><?php echo $padl_dtl->tot_amt; ?></td>
                             <td style="text-align: ;">
                      
