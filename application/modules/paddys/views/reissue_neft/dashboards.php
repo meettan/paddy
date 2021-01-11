@@ -20,15 +20,15 @@
                     <tr>
                         <th width="25px">Sl. No</th>
                         <th>Society</th>
-                        <th>Bank</th>
+                        <th>File Name</th>
                         <th>Procurement Dt</th>        
                         <th>Quantity</th>
                         <th width="50px">Amount</th>
                         <th>Option</th> 
                         <th>Status</th>  
                         <th>Forwarded By</th> 
-                        <th>Updated By</th> 
-                        <th>Updated Dt</th> 
+                        <th>Updated By/Dt</th> 
+                        <th>Forward</th>
                     </tr>
                 </thead>
                 <tbody> 
@@ -37,14 +37,15 @@
                    if(isset($paddycollection_dtls)){
 
                    $count=0;
-                   foreach($paddycollection_dtls as $padl_dtl)
-                        {
+                   foreach($paddycollection_dtls as $padl_dtl){
+
                        ?>
                         <tr>
 
                           <td ><?php echo ++$count; ?></td>
                             <td ><?php echo get_society_name($padl_dtl->soc_id); ?></td>
-                            <td ><?php  if($padl_dtl->bank_id == 1){
+                            <td ><?php echo $padl_dtl->forward_bulk_trans_id; ?> 
+                            <!-- <?php  if($padl_dtl->bank_id == 1){
                                                echo "Yes Bank"; 
                                          }elseif($padl_dtl->bank_id == 2){
                                                echo "Bandhan Bank";  
@@ -57,10 +58,10 @@
                                          else {
                                             echo "Hdfc Bank";  
                                          } 
-                                 ?>
+                                 ?> -->
                             </td>
                             <td ><?php echo date('d/m/Y',strtotime($padl_dtl->trans_dt)); ?></td>
-                            <td ><?php echo $padl_dtl->tot_qty; ?></td>
+                            <td ><?php echo $padl_dtl->tot_qty; ?>/</td>
                             <td ><?php echo $padl_dtl->tot_amt; ?></td>
                             <td style="text-align: ;">
                      
@@ -77,8 +78,12 @@
                                        
                      </td>
                       <td><?php echo $padl_dtl->forwarded_by; ?></td>
-                      <td><?php echo $padl_dtl->modified_by; ?></td>
-                      <td><?php echo $padl_dtl->modified_dt; ?></td>
+                      <td><?php echo $padl_dtl->modified_by; ?><?php if(isset($padl_dtl->modified_dt)){echo '/'.$padl_dtl->modified_dt; } ?></td>
+                      <td> 
+                       <?php if($padl_dtl->chq_status == "R" &&  $padl_dtl->modified_by != NULL ) { ?>
+                 <a href="<?php echo site_url("paddys/bankintegration/f_paddycol_return_forward");?>?soc_id=<?=$padl_dtl->soc_id;?>&trans_dt=<?=$padl_dtl->trans_dt;?>&forward_bulk_trans_id=<?=base64_encode($padl_dtl->forward_bulk_trans_id);?>&bulk_trans_id=<?=$padl_dtl->bulk_trans_id;?>"><button class="btn btn-primary" id="">Forward</button></a>
+                 <?php  } ?> 
+             </td>
                   <!--    <td> 
                       <?php if($padl_dtl->status == 0) { ?> 
                      <a href="<?php //echo site_url("paddys/transactions/f_neft_forwards");?>?soc_id=<?=$padl_dtl->soc_id;?>/<?=$padl_dtl->trans_dt;?>/<?=$padl_dtl->bulk_trans_id;?>"><button class="btn btn-primary" id="">Forward</button></a></td>
@@ -110,7 +115,7 @@
                     
                     <th width="25px">Sl. No.</th>
                         <th>Society</th>
-                        <th>Bank</th>
+                        <th>File Name</th>
                         <th>Procurement Dt</th> 
                         <th>Quantity</th>
                         <th width="50px">Amount</th>

@@ -801,6 +801,7 @@ class Paddy extends CI_Model {
        $sql = "select b.soc_id soc_id,
                       b.trans_dt trans_dt,
                       b.bulk_trans_id bulk_trans_id,
+                      b.forward_bulk_trans_id forward_bulk_trans_id,
                       b.modified_by modified_by,
                       b.modified_dt modified_dt, 
                       sum(b.quantity)tot_qty,
@@ -818,6 +819,7 @@ class Paddy extends CI_Model {
                 and    b.trans_type = 'N'
                 group by b.soc_id,
                          b.bulk_trans_id,
+                         b.forward_bulk_trans_id,
                          b.modified_by,
                          b.modified_dt,
                          b.trans_dt,

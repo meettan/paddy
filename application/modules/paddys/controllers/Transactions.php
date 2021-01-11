@@ -1021,6 +1021,7 @@ class Transactions extends MX_Controller {
             $trans_dt = $editdata["1"];
             $bulk_trans_id = $editdata["2"];
             $chq_status    = $editdata["3"];
+            $hdfc_sl_no    = '';
 
             //$trans_type = $this->Paddy->get_transaction_type($soc_id,$trans_dt,$bulk_trans_id,$chq_status);
 
@@ -1030,10 +1031,10 @@ class Transactions extends MX_Controller {
             $quantity         = $this->input->post('quantity');
             $count            = count($this->input->post('quantity'));
             $amount           = $this->input->post('amount');
-            $cheque_no        =$this->input->post('cheque_no');
-            $cheque_date      =$this->input->post('cheque_date');
-            $ifsc_code        =$this->input->post('ifsc_code');
-            $acc_no           =$this->input->post('acc_no');
+            $cheque_no        = $this->input->post('cheque_no');
+            $cheque_date      = $this->input->post('cheque_date');
+            $ifsc_code        = $this->input->post('ifsc_code');
+            $acc_no           = $this->input->post('acc_no');
             $kms_year         = $this->session->userdata['loggedin']['kms_yr'];
             $kms_id           = $this->session->userdata['loggedin']['kms_id'];
             $dist_sort_code   = $this->session->userdata['loggedin']['dist_sort_code'];
@@ -1050,7 +1051,24 @@ class Transactions extends MX_Controller {
 
             }
 
-            
+            if( $this->input->post('bank_sl_no') == '5'){
+
+            $hdfc_sl_no = $this->Paddy->f_get_particulars("td_collections",array("ifnull(MAX(hdfc_sl_no),0) hdfc_sl_no"),array('trans_dt' => $trans_dt), 1);
+
+            $hdfc_sl_no = $hdfc_sl_no->hdfc_sl_no+1;
+
+        
+            }
+
+            if($hdfc_sl_no > 0){
+
+                $hdfc_sl = $hdfc_sl_no;
+
+            }else{
+
+                $hdfc_sl = NULL;
+                   
+            }
          
            $i=0;
               
@@ -1063,10 +1081,11 @@ class Transactions extends MX_Controller {
                 "certificate_2"          => $this->input->post('certificate_2'),
                 "certificate_4"          => $this->input->post('certificate_4'),
                 "bank_sl_no"             => $this->input->post('bank_sl_no'),
-                "ifsc_code"              =>  $ifsc_code[$i],
-                "acc_no"                 =>  $acc_no[$i],
+                "ifsc_code"              => $ifsc_code[$i],
+                "acc_no"                 => $acc_no[$i],
                 "bulk_trans_id"          => $bulk_trns_id,
-                "forward_bulk_trans_id"  => $dist_sort_code.'_'.substr($kms_year,2).'_'.$bulk_trns_id
+                "forward_bulk_trans_id"  => $dist_sort_code.'_'.substr($kms_year,2).'_'.$bulk_trns_id,
+                "hdfc_sl_no"             => $hdfc_sl
            
                 );
 
@@ -1084,7 +1103,6 @@ class Transactions extends MX_Controller {
                 );
 
                 $this->Paddy->f_edit('td_collections', $data_array, $where);
-
                  
             }   
            
@@ -1186,16 +1204,17 @@ class Transactions extends MX_Controller {
 
             $trans_type = $this->Paddy->get_transaction_type($soc_id,$trans_dt,$bulk_trans_id,$chq_status);
 
-            $reg_no   = $this->input->post('reg_no');     
+            $reg_no      = $this->input->post('reg_no');     
             $edittran_dt = $this->input->post('trans_dt');
-            $quantity = $this->input->post('quantity');
+            $quantity    = $this->input->post('quantity');
             $count       = count($this->input->post('quantity'));
-            $amount = $this->input->post('amount');
-            $cheque_no=$this->input->post('cheque_no');
-            $cheque_date=$this->input->post('cheque_date');
-            $ifsc_code=$this->input->post('ifsc_code');
-            $acc_no=$this->input->post('acc_no');
-           $i=0;
+            $amount      = $this->input->post('amount');
+            $cheque_no   = $this->input->post('cheque_no');
+            $cheque_date = $this->input->post('cheque_date');
+            $ifsc_code   = $this->input->post('ifsc_code');
+            $acc_no      = $this->input->post('acc_no');
+            
+            $i=0;
               
           // foreach($cheque_no as $cheque){
            for($i=0; $i<$count; $i++){

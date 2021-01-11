@@ -47,6 +47,14 @@ class Bankintegration extends MX_Controller {
 
         $bank_id       = $this->Paddy->bank_detail_for_forward($soc_id,$trans_dt,$bulk_trans_id);
 
+        if( $bank_id == '5'){
+
+        $hdfc_sl_no = $this->Paddy->f_get_particulars("td_collections",array("MAX(hdfc_sl_no) hdfc_sl_no"),array('trans_dt' => $trans_dt), 1);
+
+         $hdfc_sl = $hdfc_sl_no->hdfc_sl_no;
+
+        }
+
         $bank_data     = $this->Paddy->f_get_particulars("md_paddy_bank", NULL,array("bank_id" => $bank_id), 1);
 
         $farmer_data   =  $this->Paddy->f_collection_details_icici($soc_id,$trans_dt,$forward_bulk_trans_id);
@@ -187,7 +195,7 @@ class Bankintegration extends MX_Controller {
                                         
                                         $filename = 'TWBSCOMFL_'.$datetimes.'_'.$forward_bulk_trans_id.'.txt';
                                         
-                                      if (write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)
+                                      if ( ! write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)
                                     
                                         {
                                            echo 'Unable to write the file';
@@ -224,15 +232,15 @@ class Bankintegration extends MX_Controller {
 
                                         $data = rtrim($data);
                                     
-                                        $datetime = strtotime(date('Y-m-d'));
+                                        $datetime = strtotime($trans_dt);
                                         
                                         $datetimes = date('dm',$datetime);
 
-                                        $serial_no = str_pad($bulk_trans_id,3,"0",STR_PAD_LEFT);
+                                        $serial_no = str_pad($hdfc_sl,3,"0",STR_PAD_LEFT);
                                         
-                                        $filename = 'WBSCMFL'.'_'.'908RBI'.'_'.'908RBI'.$datetimes.'.'.$serial_no;
-                                        
-                                      if (write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)
+                                       $filename = 'WBSCMFL'.'_'.'908RBI'.'_'.'908RBI'.$datetimes.'.'.$serial_no;
+
+                                      if (! write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)
                                     
                                         {
                                            echo 'Unable to write the file';
@@ -279,7 +287,6 @@ class Bankintegration extends MX_Controller {
         $paddy_data    = $this->Paddy->coll_received($soc_id,$trans_dt,$bulk_trans_id);
 
         $paddy_forwad  = $this->Paddy->coll_forward($soc_id,$trans_dt,$bulk_trans_id);
-
 
 
         $bank_id       = $this->Paddy->bank_detail_for_forward($soc_id,$trans_dt,$bulk_trans_id);
@@ -346,8 +353,6 @@ class Bankintegration extends MX_Controller {
                     $valid = $valid+1;
                  }
         }
-
-       
 
         if($qtyvalid == '0'){
 
@@ -424,7 +429,7 @@ class Bankintegration extends MX_Controller {
                                         
                                         $filename = 'TWBSCOMFL_'.$datetimes.'_'.$forward_bulk_trans_id.'.txt';
                                         
-                                      if (write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)
+                                      if ( ! write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)
                                     
                                         {
                                            echo 'Unable to write the file';
@@ -469,7 +474,7 @@ class Bankintegration extends MX_Controller {
                                         
                                         $filename = 'WBSCMFL'.'_'.'908RBI'.'_'.'908RBI'.$datetimes.'.'.$serial_no;
                                         
-                                      if (write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)
+                                      if ( ! write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)
                                     
                                         {
                                            echo 'Unable to write the file';
