@@ -244,8 +244,10 @@
                          ?>
                             <a href="<?php echo site_url('report/socProc'); ?>">Societywise Procurement</a>
                             <a href="<?php echo site_url('report/millProc'); ?>">Millwise Procurement</a>
-                            <a href="<?php echo site_url('report/neftRet'); ?>">Returned NEFT</a>
-                        <?php } ?>
+                            <?php   if( $this->session->userdata['loggedin']['kms_id'] == 2 ) {   ?>
+                                <a href="<?php echo site_url('report/neftRet'); ?>">Returned NEFT</a>
+                            
+                        <?php } } ?>
 
                          <?php   if($this->session->userdata['loggedin']['ho_flag'] == "Y" ) {  
                          ?>
@@ -255,10 +257,12 @@
                             <a href="<?php echo site_url('report/farmerpay'); ?>">Farmer Payment(Districtwise)</a>
                             <a href="<?php echo site_url('report/reselling'); ?>">Paddy Repeat Selling</a>
                             <a href="<?php echo site_url('report/farmerpaytot'); ?>">Farmer Payment</a>
-                            <a href="<?php echo site_url('report/gap_offer_delivery'); ?>">GAP IN OFFER & DELIVERY</a>
+                            <a href="<?php echo site_url('report/gap_offer_delivery'); ?>">Gap In Offer & Delivery</a>
                             <!-- <a href="<?php echo site_url('report/returncheque'); ?>">Return Cheque</a> -->
                         <?php } ?>
-                         <a href="<?php echo site_url('report/chequestatus'); ?>">Cheque Status</a>
+                        <?php   if( $this->session->userdata['loggedin']['kms_id'] == 2 ) {   ?>
+                            <a href="<?php echo site_url('report/chequestatus'); ?>">Cheque Status</a>
+                        <?php } ?>
                            <a href="<?php echo site_url('report/neftstatus'); ?>">Neft Status</a>
                          <a href="<?php echo site_url('report/offer_cmrrep'); ?>">Offer For Delivery Of Cmr</a>
                             <!-- <a href="<?php echo site_url('paddy/datewiseprocurement/report'); ?>">Date Wise Procurement</a>

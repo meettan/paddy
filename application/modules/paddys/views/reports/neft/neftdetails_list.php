@@ -111,7 +111,7 @@ tr:hover {background-color: #f5f5f5;}
                                 
                               <!--   <th>Cheque amount</th> -->
                                 <th>Status</th>
-                                <th>Neft No</th>
+                                <th>Neft/UTR No</th>
                                 <th>Payment Date</th>
 
                             </tr>
@@ -137,7 +137,14 @@ tr:hover {background-color: #f5f5f5;}
                                      <td><?php echo $i++; ?></td>
                                      <td><?php echo date('d/m/Y',strtotime($neft->trans_dt)); ?></td>
                                      <td><?php echo $neft->reg_no; ?></td>
-                                     <td><?php echo get_farmer_name($neft->reg_no);?></td>
+                                     <td><?php if($neft->farmer_name){
+                                                    echo $neft->farmer_name;
+                                                }else{
+                                                    echo get_farmer_name($neft->reg_no);
+                                                }
+                                          ?>
+                                     </td>
+
                                      <td><?php echo $neft->quantity;  
                                                    $qty += $neft->quantity;
 
@@ -150,8 +157,12 @@ tr:hover {background-color: #f5f5f5;}
                                   
                                      <td><?php if($neft->dwn_flag == '1' && $neft->chq_status == 'U'){
                                       echo "SEND TO BANK";
-                                     }elseif($neft->dwn_flag == '0' && $neft->chq_status == 'U'){ echo "AT HEAD OFFICE"; }
-                                     elseif($neft->dwn_flag == '1' && $neft->chq_status == 'C'){ echo "CLEARED"; }
+                                     }elseif($neft->dwn_flag == '0' && $neft->chq_status == 'U'){ echo "Forwarded"; }
+                                     elseif($neft->dwn_flag == '1' && $neft->chq_status == 'C'){ echo "Cleared"; }
+                                     elseif($neft->dwn_flag == '0' && $neft->chq_status == 'S'){ echo "Success"; }
+                                     elseif($neft->dwn_flag == '0' && $neft->chq_status == 'P'){ echo "Processed"; }
+                                     elseif($neft->dwn_flag == '0' && $neft->chq_status == 'A'){ echo "Paid"; }
+                                     elseif($neft->dwn_flag == '0' && $neft->chq_status == 'L'){ echo "Awaiting Liquidation"; }
                                      else{ echo "RETURENED" ;}
                                       ?> </td>
                                      <td><?php echo $neft->cheque_no; ?> </td>

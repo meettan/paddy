@@ -501,27 +501,27 @@ class Paddyrep extends CI_Model{
 
     public function f_get_neft_detail($brn,$bnk,$frmdt,$todt,$soc_id){
 
-        $cmr = $this->db->query("select a.trans_dt trans_dt,
-                                    a.reg_no reg_no,
-                                    a.bank_sl_no bank_sl_no,
-                                    a.quantity quantity,
-                                    a.amount amount,
-                                    a.cheque_date cheque_date,
-                                    a.cheque_no cheque_no,
-                                    a.chq_status chq_status,
-                                    a.dwn_flag dwn_flag,
-                                    a.chq_clg_dt,
-                                    b.soc_name soc_name
-                               from   td_collections a,
-                                      md_society b
-                                 where  a.soc_id = b.society_code
-                                 and    a.branch_id   = $brn
-                                 and    a.bank_sl_no  = $bnk
-                                 and    a.soc_id      = $soc_id
-                                 and    a.trans_type  = 'N'
-                                 and    a.trans_dt between '$frmdt' and '$todt'
-                                 order by a.trans_dt");
-
+            $cmr = $this->db->query("select a.trans_dt trans_dt,
+                                        a.reg_no reg_no,
+                                        a.bank_sl_no bank_sl_no,
+                                        a.quantity quantity,
+                                        a.amount amount,
+                                        a.cheque_date cheque_date,
+                                        a.cheque_no cheque_no,
+                                        a.chq_status chq_status,
+                                        a.dwn_flag dwn_flag,
+                                        a.chq_clg_dt,
+                                        a.farmer_name farmer_name,
+                                        b.soc_name soc_name
+                                from   td_collections a,
+                                        md_society b
+                                    where  a.soc_id = b.society_code
+                                    and    a.branch_id   = $brn
+                                    and    a.bank_sl_no  = $bnk
+                                    and    a.soc_id      = $soc_id
+                                    and    a.trans_type  = 'N'
+                                    and    a.trans_dt between '$frmdt' and '$todt'
+                                    order by a.trans_dt");
         return $cmr->result();
 
     }

@@ -61,7 +61,7 @@
             <table class="table table-bordered table-hover" id="farmers">
             <thead><tr><th>Sl. No.</th><th>Name</th><th>Registration No.</th><th>Quantity(Quintal)</th><th>Amount</th>
                 <?php if($farme->trans_type=="N"){ ?>
-                  <th>IFSC Code</th><th>Account </th>
+                  <th>IFSC Code</th><th>Account </th><th>Status </th>
              
              <?php }else{ ?>
                   <th>Cheque No</th><th>Cheque Date</th>
@@ -86,6 +86,8 @@
 
    <td><input type="text" name="ifsc_code[]" value="<?=$farmer_dtl->ifsc_code?>" class="form-control ifsc_code"><span class="error"></span></td>
               <td><input type="text" class="form-control acc_no" name="acc_no[]" value="<?=$farmer_dtl->acc_no?>"><span class="cd_error"></span></td>
+
+              <td> <button type="button" class="payment_detail btn btn-info" data-toggle="modal" data-target="#myModal"  value="<?=$farmer_dtl->forward_trans_id?>">View </button></td>
 
     <?php  }  ?>               
               
@@ -117,6 +119,28 @@
             </div>
         </div>
         </div>
+
+        <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Payment Status</h4>
+        </div>
+        <div class="modal-body">
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
       
 
 
@@ -130,6 +154,10 @@
    // $("#form").validate();
 
   //  $( ".sch_cd" ).select2();
+
+  $('.modal').on('hide.bs.modal', function (e) {
+    $("element.style").css("padding-right","0");
+});
 
 </script>
 
@@ -178,6 +206,42 @@
         })
 
     });
+
+    $(document).ready(function(){
+
+var i = 0;
+
+$('.payment_detail').click(function(){
+
+    $.post( 
+
+        '<?php echo site_url("paddys/transactions/f_farmer_payment");?>',
+
+        { 
+
+            forward_trans_id: $(this).val()
+
+        }
+
+    ).done(function(data){
+
+        var string = '<table  class="table"><tr><th>Bank</th><th>Value Date</th><th>Utr No</th><th>Bank Ref No</th><th>Cr A/C No</th><th>Amount</th><th>Status Code</th><th>Status Description</th></tr>';
+
+        $.each(JSON.parse(data), function( index, value ) {
+
+            string += '<tr><td>' + value.bank_name + '</td><td>' + value.value_date + '</td><td>' + value.utr_no + '</td><td>' + value.bank_ref_no + '</td><td>' + value.cr_acc_no + '</td><td>' + value.amount + '</td><td>' + value.status_code + '</td><td>' + value.status_description + '</td></tr>'
+
+        });
+
+      //   var string +='</table>';
+
+        $('.modal-body').html(string);
+
+    });
+
+});
+
+});
 
        
   </script>

@@ -73,6 +73,11 @@
       }else{
        
         $farmer = "Not Found";
+        /*$sql="SELECT Distinct farmer_name FROM td_collections WHERE reg_no ='".$reg_no."' ";
+
+        $paddy  =   $ci->db->query($sql)->row();
+
+        $farmer = $paddy->farmer_name;*/
       }
       return $farmer;
 

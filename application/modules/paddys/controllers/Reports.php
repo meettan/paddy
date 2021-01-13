@@ -265,8 +265,7 @@ class Reports extends MX_Controller {
 
     }
 
-     public function f_neftstatus(){
-
+    public function f_neftstatus(){  
 
         if($_SERVER['REQUEST_METHOD']=='POST'){
 
@@ -282,7 +281,7 @@ class Reports extends MX_Controller {
 
             $soc_id      = $this->input->post('soc_name');
            
-            $data['nefts']  =  $this->Paddyrep->f_get_neft_detail($branch_id,$bnk,$from_dt,$to_dt,$soc_id);
+            $data['nefts']  =  $this->Paddyrep->f_get_neft_detail($branch_id,$bnk,$from_dt,$to_dt,$soc_id,$kms_id);
 
             $data['socy']   =  $this->Paddyrep->f_get_soc_name_dtls($soc_id);
            
@@ -314,6 +313,8 @@ class Reports extends MX_Controller {
         }
 
     }
+
+
     public function f_chequestatus_excel(){
 
         	 $this->load->library('excel');

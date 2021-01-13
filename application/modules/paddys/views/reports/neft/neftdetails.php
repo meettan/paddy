@@ -175,7 +175,7 @@ tr:hover {background-color: #f5f5f5;}
 
                     <label for="f_payment_cheque" class="col-sm-2 col-form-label">Bank:</label>
                     <div class="col-sm-10">
-                   <select name="bnk" id="bnk" class="form-control" required>
+                        <select name="bnk" id="bnk" class="form-control" required>
                             <option value="">Select</option>  
                             <option value="1">Yes Bank</option>
                             <option value="2">Bandhan Bank</option>
@@ -183,9 +183,8 @@ tr:hover {background-color: #f5f5f5;}
                             <option value="4">Axis Bank</option> 
                             <option value="5">Hdfc Bank</option>       
                         </select>
-                </div>
+                    </div>
               </div>
-
 
                 <div class="form-group row">
 
