@@ -70,42 +70,7 @@
 
         </div>
 
-       <!-- <div class="col-md-5 container form-wraper" style="margin-left: 10px; width: 48%;">            
-
-            <div class="form-header">
-                
-                <h4>Allot Departments</h4>
-            
-            </div>
-
-            <table class="table table-bordered table-hover">
-
-                <tbody> 
-
-                    <tr>
-                        <td><input type="checkbox" name="depts[]" value="f" <?php// echo ($user_dtls->accounts == 1)? 'checked' : ''; ?> /> Accounts & Finance</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="depts[]" value="pr" <?php// echo ($user_dtls->payroll == 1)? 'checked' : ''; ?> /> Payroll</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="depts[]" value="pd" <?php //echo ($user_dtls->paddy == 1)? 'checked' : ''; ?> /> Paddy</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="depts[]" value="d" <?php //echo ($user_dtls->dm == 1)? 'checked' : ''; ?> /> Disaster Management</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="depts[]" value="s" <?php //echo ($user_dtls->sw == 1)? 'checked' : ''; ?> /> Social welfare</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" name="depts[]" value="st" <?php //echo ($user_dtls->st == 1)? 'checked' : ''; ?> /> Stationary</td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div> -->
+       
 
     </form>
 
