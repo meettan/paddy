@@ -74,6 +74,50 @@ class Reports extends MX_Controller {
             $this->load->view('post_login/footer');
         }
     }
+
+    public function f_distProcho(){                         
+
+        if($_SERVER['REQUEST_METHOD']=='POST'){
+
+            $kms_id     = $this->session->userdata['loggedin']['kms_id'];
+
+            //$branch_id  = $this->input->post('dist');
+
+            $from_dt    = $this->input->post('from_date');
+
+            $to_dt      = $this->input->post('to_date');
+
+            $distProc['procDtls']   =   $this->Paddyrep->f_get_dist_proc($from_dt,$to_dt);
+
+            $distProc['cmr']        =   $this->Paddyrep->f_get_cmr_dist($from_dt,$to_dt);
+
+            $distProc['offer']      =   $this->Paddyrep->f_get_offer_dist($from_dt,$to_dt);
+
+            $distProc['delv']       =   $this->Paddyrep->f_get_delv_dist($from_dt,$to_dt);
+
+            $distProc['remain']     =   $this->Paddyrep->f_get_remain_dist($from_dt,$to_dt);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/dist_proc/distProcDt.php", $distProc);
+
+            $this->load->view('post_login/footer');
+
+
+        }else{
+
+            $socProc['sys_date']   =   $_SESSION['sys_date'];
+
+            $socProc['dists']  =   $this->Paddy->f_get_particulars("md_district",NULL,NULL, 0);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/dist_proc/distProcDt.php", $socProc);
+
+            $this->load->view('post_login/footer');
+        }
+    }
+
     public function f_socProcho(){
 
         if($_SERVER['REQUEST_METHOD']=='POST'){

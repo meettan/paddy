@@ -134,10 +134,13 @@
                           <a href="<?php echo site_url('paddys/transactions/failnefts'); ?>">Reissue NEFT</a> 
                   <?php  } } ?>
                                  
-                    <?php if($this->session->userdata['loggedin']['ho_flag']=="Y" && $this->session->userdata['loggedin']['user_type']=="A" OR $this->session->userdata['loggedin']['user_type']=="M") { ?>
+                    <?php if($this->session->userdata['loggedin']['ho_flag']=="Y" && $this->session->userdata['loggedin']['user_type']=="A" /*OR $this->session->userdata['loggedin']['user_type']=="M"*/) { ?>
 			
-                       <a href="<?php echo site_url('paddys/transactions/f_paddycollection_dwn'); ?>">Download Procurement</a> 
-                       <a href="<?php echo site_url('paddys/transactions/f_paddycollreissue_dwn'); ?>">Download Cheque Reissue</a>
+                        <?php   if( $this->session->userdata['loggedin']['kms_id'] == 2 ) {   ?>     
+                            <a href="<?php echo site_url('paddys/transactions/f_paddycollection_dwn'); ?>">Download Procurement</a> 
+                            <a href="<?php echo site_url('paddys/transactions/f_paddycollreissue_dwn'); ?>">Download Cheque Reissue</a>
+                        <?php } ?>
+                        
                        <a href="<?php echo site_url('paddys/transactions/f_neft_status'); ?>">NEFT Status </a>
                           <!-- 
                         <div class="sub-dropdown">
@@ -251,6 +254,7 @@
 
                          <?php   if($this->session->userdata['loggedin']['ho_flag'] == "Y" ) {  
                          ?>
+                            <a href="<?php echo site_url('report/distProcho'); ?>">Districtwise Procurement</a>
                             <a href="<?php echo site_url('report/socProcho'); ?>">Societywise Procurement</a>
                             <a href="<?php echo site_url('report/millProcho'); ?>">Millwise Procurement</a>
                             <a href="<?php echo site_url('report/neftRet'); ?>">Returned NEFT</a>

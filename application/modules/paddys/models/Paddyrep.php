@@ -647,8 +647,74 @@ class Paddyrep extends CI_Model{
     return $neft->result();
 }
 
+//Districtwise procurement 
+    public function f_get_dist_proc($from_dt,$to_dt){
 
- 
+        $proc   =   $this->db->query("SELECT a.branch_id branch_id,
+                                            b.branch_name branch_name,
+                                            count(distinct a.soc_id)soc_no,
+                                            count(distinct a.reg_no)farm_no,
+                                            sum(a.quantity)qty,
+                                            sum(a.amount)amt 
+                                    from td_collections a,md_branch b
+                                    where a.branch_id = b.id
+                                    and   a.trans_dt between '$from_dt' and '$to_dt' 
+                                    group by a.branch_id 
+                                    order by a.branch_id");
+
+        return $proc->result();
+    }
+
+    public function f_get_cmr_dist($frmdt,$todt){            //Districtwise Resultant CMR
+
+        $cmr = $this->db->query("select branch_id,sum(resultant_cmr)resultant
+                                   from   td_cmr_offered
+                                   where  trans_dt between '$frmdt' and '$todt'  
+                                   group by branch_id
+                                   order by branch_id");
+        return $cmr->result();
+    }   
+
+    public function f_get_offer_dist($frmdt,$todt){      //Districtwise Rice Typewise offer       
+
+        $offer = $this->db->query("select branch_id,rice_type,sum(cmr_offered_now) offered
+                                   from   td_cmr_offered
+                                   where  trans_dt between '$frmdt' and '$todt'  
+                                   group by branch_id,rice_type
+                                   order by branch_id");
+        return $offer->result();
+    }
+
+    public function f_get_delv_dist($frmdt,$todt){     //Districtwise Rice Typewise Delivery
+
+        $offer = $this->db->query("select branch_id,cmr_type,sum(sp) sp,sum(cp) cp,sum(fci) fci
+                                   from   td_cmr_delivery
+                                   where  trans_dt between '$frmdt' and '$todt'
+                                   group by branch_id,cmr_type
+                                   order by branch_id");
+        return $offer->result();
+      }
+
+      public function f_get_remain_dist($frmdt,$todt){      //Districtwise remaining CMR to be delivered
+        
+        $remain = $this->db->query("select branch_id,sum(offer),sum(delv),sum(offer) - sum(delv)remain
+                                    from (
+                                            select branch_id,sum(cmr_offered_now)offer,0 delv
+                                            from   td_cmr_offered
+                                            where  trans_dt between '$frmdt' and '$todt'
+                                            group by branch_id
+                                            union
+                                            select branch_id,0 offer,sum(sp) + sum(cp) + sum(fci)delv
+                                            from   td_cmr_delivery
+                                            where  trans_dt between '$frmdt' and '$todt'
+                                            group by branch_id)a
+                                    group by branch_id
+                                    order by branch_id");
+                                    
+        return $remain->result();
+    }  
+
+
 
 }
 ?>
