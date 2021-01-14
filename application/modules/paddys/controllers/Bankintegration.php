@@ -390,11 +390,11 @@ class Bankintegration extends MX_Controller {
                                         if ( ! write_file(FCPATH .$bank_data->folder_path.$filename,$data)) {
 
 
-                                           echo 'Unable to write the file';
+                                          // echo 'Unable to write the file';
 
                                         } else {
 
-                                            echo 'File written!';  
+                                           // echo 'File written!';  
                                             
                                           
                                         }
@@ -432,12 +432,12 @@ class Bankintegration extends MX_Controller {
                                       if ( ! write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)
                                     
                                         {
-                                           echo 'Unable to write the file';
+                                           //echo 'Unable to write the file';
                                         
 
                                         } else {
 
-                                            echo 'File written!';    
+                                            //echo 'File written!';    
 
                                         }
 
@@ -477,11 +477,11 @@ class Bankintegration extends MX_Controller {
                                       if ( ! write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)
                                     
                                         {
-                                           echo 'Unable to write the file';
+                                          // echo 'Unable to write the file';
 
                                         } else {
 
-                                            echo 'File written!';  
+                                          //  echo 'File written!';  
                                            
                                         }
 
