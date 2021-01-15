@@ -1,9 +1,9 @@
 <?php
 
-    if($_SERVER['REQUEST_METHOD'] == 'GET') {
+   // if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 ?>        
-    <div class="wraper">      
+    <!-- <div class="wraper">      
  <div class="col-md-3 container"></div>
         <div class="col-md-6 container form-wraper">
     
@@ -56,13 +56,13 @@
 
         </div>
 
-    </div>        
+    </div>     -->    
 
     <?php
 
-    }
+  //  }
     
-    else if($_SERVER['REQUEST_METHOD'] == 'POST') { 
+   // else if($_SERVER['REQUEST_METHOD'] == 'POST') { 
         
     ?>
 
@@ -114,7 +114,7 @@
                                 <td><?php echo date('d/m/Y', strtotime($bill_dtl->trans_dt)); ?></td>
                                 <td><?php echo $bill_dtl->ho_bill_no; ?> </td>
 
-                                <td><?php echo $bill_dtl->qty*$bill_dtl->per_qui_rate; ?></td>
+                                <td><?php echo /*$bill_dtl->qty* */ $bill_dtl->paid_amt; ?></td>
                              
                                 <td>
                                 
@@ -168,6 +168,6 @@
         
     <?php
 
-    }
+   // }
 
     ?> 

@@ -239,7 +239,8 @@ tr:hover {background-color: #f5f5f5;}
 
   <p align="justify" >Amount Rounded off: <strong>&#2352; <?php
                                      setlocale(LC_MONETARY, 'en_IN');
-                                     $amount = money_format('%!i',round(($bill_dtls->paddy_qty)*$sun_rate)); echo $amount;
+                                     $amount = money_format('%!i',round(($bill_dtls->paddy_qty)*$sun_rate)); 
+                                     echo $amount;
 
   ?> </strong><br>
   Rupees in Words: <strong><?php echo getIndianCurrency(round(($bill_dtls->paddy_qty)*$sun_rate));?></strong></p>

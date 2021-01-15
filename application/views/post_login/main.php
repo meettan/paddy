@@ -195,7 +195,7 @@
 
                     </div>
 
-                    <?php   if($this->session->userdata['loggedin']['ho_flag'] == "Y" ) {  ?>
+                  
 
                     <div class="dropdown">
                         <div class="dropbtn">
@@ -203,7 +203,10 @@
                             <i class="fa fa-angle-down"></i>
                         </div>
                         <div class="dropdown-content">
+                              <?php   if($this->session->userdata['loggedin']['ho_flag'] == "Y" ) {  ?>
                             <a href="<?php echo site_url('payment/annexture2'); ?>">ANNEXURE II</a>
+
+                              <?php }else{ ?>
                             <a href="<?php echo site_url('payment/annexture3'); ?>">ANNEXURE III</a>
                             <a href="<?php echo site_url('payment/annexture4'); ?>">ANNEXURE IV</a>
                             <a href="<?php echo site_url('payment/annexture5'); ?>">ANNEXURE V</a>
@@ -213,10 +216,9 @@
                             <a href="<?php echo site_url('payment/annexture9'); ?>">ANNEXURE IX</a>
                             <a href="<?php echo site_url('payment/annexture10'); ?>">ANNEXURE X</a>
                             <a href="<?php echo site_url('payment/annexture11'); ?>">ANNEXURE XI</a>
+                        <?php } ?>
                         </div>
                     </div>
-
-                    <?php } ?>
 
                     <?php   if($this->session->userdata['loggedin']['ho_flag'] == "N" ) {  ?>
 
@@ -269,6 +271,28 @@
                         <?php } ?>
                            <a href="<?php echo site_url('report/neftstatus'); ?>">Neft Status</a>
                          <a href="<?php echo site_url('report/offer_cmrrep'); ?>">Offer For Delivery Of Cmr</a>
+
+                         <!--   <div class="sub-dropdown">
+                                <a class="sub-dropbtn">Annexture <i class="fa fa-angle-right" style="float: right;"></i></a>    
+                                <div class="sub-dropdown-content">
+                               
+                               <?php   if($this->session->userdata['loggedin']['ho_flag'] == "Y" ) {  ?>
+                               <a href="<?php echo site_url('payment/annexture2'); ?>">ANNEXURE II</a>
+
+                              <?php }else{ ?>
+                                <a href="<?php echo site_url('payment/annexture3'); ?>">ANNEXURE III</a>
+                                <a href="<?php echo site_url('payment/annexture4'); ?>">ANNEXURE IV</a>
+                                <a href="<?php echo site_url('payment/annexture5'); ?>">ANNEXURE V</a>
+                                <a href="<?php echo site_url('payment/annexture6'); ?>">ANNEXURE VI</a>
+                                <a href="<?php echo site_url('payment/annexture7'); ?>">ANNEXURE VII</a>
+                                <a href="<?php echo site_url('payment/annexture8'); ?>">ANNEXURE VIII</a>
+                                <a href="<?php echo site_url('payment/annexture9'); ?>">ANNEXURE IX</a>
+                                <a href="<?php echo site_url('payment/annexture10'); ?>">ANNEXURE X</a>
+                                <a href="<?php echo site_url('payment/annexture11'); ?>">ANNEXURE XI</a>
+                              <?php } ?>
+                               
+                                </div>
+                            </div> -->
                             <!-- <a href="<?php echo site_url('paddy/datewiseprocurement/report'); ?>">Date Wise Procurement</a>
                             <a href="<?php echo site_url('paddy/proctodelivery/report'); ?>">Procurement to Delivery</a>
                             <a href="<?php echo site_url('paddy/payment/report'); ?>">Payment</a> -->

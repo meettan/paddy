@@ -197,8 +197,9 @@ tr:hover {background-color: #f5f5f5;}
 
   <p align="justify" >Amount Rounded off: <strong> &#2352; <?php 
                     setlocale(LC_MONETARY, 'en_IN');
-                                     $amount = money_format('%!i',round($sum)); echo $amount; ?></strong><br>
-  Rupees in Words: <strong> <?php echo getIndianCurrency($amount);?></strong></p>
+                                     $amount = money_format('%!i',round($sum)); 
+                                     echo $amount; ?></strong><br>
+  Rupees in Words: <strong> <?php    echo getIndianCurrency(round($sum));?></strong></p>
   <p >Certified that the claimed amount has been the least transportation cost, based on distance covered   through the shortest route(s).</p>
   <h3 >Certified that </h3>
   <ul>

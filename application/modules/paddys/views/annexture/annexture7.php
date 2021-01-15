@@ -58,10 +58,10 @@ tr:hover {background-color: #f5f5f5;}
 
 <?php
 
-    if($_SERVER['REQUEST_METHOD'] == 'GET') {
+    //if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 ?>        
-    <div class="wraper">      
+   <!--  <div class="wraper">      
  <div class="col-md-3 container"></div>
         <div class="col-md-6 container form-wraper">
     
@@ -114,13 +114,13 @@ tr:hover {background-color: #f5f5f5;}
 
         </div>
 
-    </div>        
+    </div>   -->      
 
     <?php
 
-    }
+   // }
     
-    else if($_SERVER['REQUEST_METHOD'] == 'POST') { 
+   // else if($_SERVER['REQUEST_METHOD'] == 'POST') { 
         
     ?>
 
@@ -225,6 +225,6 @@ tr:hover {background-color: #f5f5f5;}
         
     <?php
 
-    }
+   // }
 
     ?> 

@@ -1,9 +1,9 @@
 <?php
 
-    if($_SERVER['REQUEST_METHOD'] == 'GET') {
+  //  if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 ?>        
-    <div class="wraper">      
+   <!--  <div class="wraper">      
  <div class="col-md-3 container"></div>
         <div class="col-md-6 container form-wraper">
     
@@ -56,13 +56,13 @@
 
         </div>
 
-    </div>        
+    </div>  -->       
 
     <?php
 
-    }
+  //  }
     
-    else if($_SERVER['REQUEST_METHOD'] == 'POST') { 
+  //  else if($_SERVER['REQUEST_METHOD'] == 'POST') { 
         
     ?>
 
@@ -100,7 +100,7 @@
                 <tbody> 
 
                     <?php 
-                    
+
                     if(isset($bill_dtls)) {
 
                         foreach($bill_dtls as $bill_dtl) {
@@ -169,6 +169,6 @@
         
     <?php
 
-    }
+  //  }
 
     ?> 

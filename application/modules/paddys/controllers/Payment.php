@@ -918,9 +918,6 @@ class Payment extends MX_Controller {
 
         $sancs   =   $this->Paddy->f_get_particulars("td_fund_requisition a,td_wqsc b,td_wqsc_dtls c",$select,$where, 1);
 
-        echo $this->db->last_query();
-        die();
-
         echo json_encode($sancs);
 
     }
@@ -1822,7 +1819,7 @@ class Payment extends MX_Controller {
     public function f_annexture3(){
 
 
-          if($_SERVER['REQUEST_METHOD'] == "POST") {
+         // if($_SERVER['REQUEST_METHOD'] == "POST") {
 
              $select = array(
                     "a.*","b.per_qui_rate",
@@ -1834,7 +1831,9 @@ class Payment extends MX_Controller {
 
                 "a.kms_id"           => $this->session->userdata['loggedin']['kms_id'],
 
-                "a.branch_id"        => $this->input->post('dist'),
+               // "a.branch_id"        => $this->input->post('dist'),
+
+                "a.branch_id"        => $this->session->userdata['loggedin']['branch_id'],
 
                 "a.approved_status"  => 'A',
 
@@ -1848,17 +1847,17 @@ class Payment extends MX_Controller {
             $this->load->view("annexture/annexture3",$data);
 
             $this->load->view('post_login/footer');
-         }else {
+        //  }else {
 
-            $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+        //     $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
-            $this->load->view('post_login/main');
+        //     $this->load->view('post_login/main');
 
-            $this->load->view("annexture/annexture3",$data);
+        //     $this->load->view("annexture/annexture3",$data);
 
-            $this->load->view('post_login/footer');
+        //     $this->load->view('post_login/footer');
 
-        }
+        // }
     }
 
     public function f_annexture3_print(){
@@ -1892,22 +1891,20 @@ class Payment extends MX_Controller {
     public function f_annexture5(){
 
 
-          if($_SERVER['REQUEST_METHOD'] == "POST") {
+          //if($_SERVER['REQUEST_METHOD'] == "POST") {
 
-            $select =array( "sum(rate) rate"
-
-            );
+            $select =array( "sum(rate) rate");
 
 
             $where  =   array(
 
                 "kms_id"     => $this->session->userdata['loggedin']['kms_id'],
 
-                "dist"       => $this->input->post('dist'),
+                "dist"       => $this->session->userdata['loggedin']['branch_id'],
 
                 "ho_status"  => 1,
             );
-             $wheres  =   array(
+            $wheres  =   array(
 
                 "kms_id"     => $this->session->userdata['loggedin']['kms_id']
             );
@@ -1921,17 +1918,17 @@ class Payment extends MX_Controller {
             $this->load->view("annexture/annexture5",$data);
 
             $this->load->view('post_login/footer');
-         }else {
+        //  }else {
 
-            $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+        //     $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
-            $this->load->view('post_login/main');
+        //     $this->load->view('post_login/main');
 
-            $this->load->view("annexture/annexture5",$data);
+        //     $this->load->view("annexture/annexture5",$data);
 
-            $this->load->view('post_login/footer');
+        //     $this->load->view('post_login/footer');
 
-        }
+        // }
     }
 
     public function f_annexture5_print(){
@@ -1963,14 +1960,14 @@ class Payment extends MX_Controller {
     public function f_annexture4(){
 
 
-          if($_SERVER['REQUEST_METHOD'] == "POST") {
+       //   if($_SERVER['REQUEST_METHOD'] == "POST") {
             
           
             $select = array("a.trans_dt","a.dist","a.kms_id","a.ho_bill_number","a.pmt_bill_no pmt_bill_no","b.per_unit","a.tot_paddy");    
              
             $where  =   array(
                 "a.kms_id"        => $this->session->userdata['loggedin']['kms_id'],
-                "a.dist"          => $this->input->post('dist'),
+                "a.dist"          => $this->session->userdata['loggedin']['branch_id'],
                 "a.ho_status"     => 1,
                 "b.account_type"  => "2",
                 "a.trans_dt      = b.trans_dt"  => NULL,
@@ -1987,17 +1984,17 @@ class Payment extends MX_Controller {
             $this->load->view("annexture/annexture4",$data);
 
             $this->load->view('post_login/footer');
-         }else {
+        //  }else {
 
-            $data['dist']     =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+        //     $data['dist']     =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
-            $this->load->view('post_login/main');
+        //     $this->load->view('post_login/main');
 
-            $this->load->view("annexture/annexture4",$data);
+        //     $this->load->view("annexture/annexture4",$data);
 
-            $this->load->view('post_login/footer');
+        //     $this->load->view('post_login/footer');
 
-        }
+        // }
     }
 
     public function f_annexture4_print(){
@@ -2035,14 +2032,14 @@ class Payment extends MX_Controller {
     public function f_annexture6(){
 
 
-          if($_SERVER['REQUEST_METHOD'] == "POST") {
+         /// if($_SERVER['REQUEST_METHOD'] == "POST") {
 
 
             $where  =   array(
 
                 "kms_id"   => $this->session->userdata['loggedin']['kms_id'],
 
-                "dist"       => $this->input->post('dist'),
+                "dist"     => $this->session->userdata['loggedin']['branch_id'],
 
                 "ho_status"  => 1,
             );
@@ -2062,17 +2059,17 @@ class Payment extends MX_Controller {
             $this->load->view("annexture/annexture6",$data);
 
             $this->load->view('post_login/footer');
-         }else {
+        //  }else {
 
-            $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+        //     $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
-            $this->load->view('post_login/main');
+        //     $this->load->view('post_login/main');
 
-            $this->load->view("annexture/annexture6",$data);
+        //     $this->load->view("annexture/annexture6",$data);
 
-            $this->load->view('post_login/footer');
+        //     $this->load->view('post_login/footer');
 
-        }
+        // }
     }
 
     public function f_annexture6_print(){
@@ -2117,14 +2114,13 @@ class Payment extends MX_Controller {
     public function f_annexture7(){
 
 
-          if($_SERVER['REQUEST_METHOD'] == "POST") {
-
+          //if($_SERVER['REQUEST_METHOD'] == "POST") {
 
             $where  =   array(
 
                 "kms_id"   => $this->session->userdata['loggedin']['kms_id'],
 
-                "dist"       => $this->input->post('dist'),
+                "dist"     => $this->session->userdata['loggedin']['branch_id'],
 
                 "ho_status"  => 1,
             );
@@ -2139,22 +2135,24 @@ class Payment extends MX_Controller {
 
             $data['rate']        =   $this->Paddy->f_get_particulars("md_transport_charges",NULL,$wheres,0);
 
-            $this->load->view('post_login/main');
 
-            $this->load->view("annexture/annexture7",$data);
-
-            $this->load->view('post_login/footer');
-         }else {
-
-            $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
             $this->load->view('post_login/main');
 
             $this->load->view("annexture/annexture7",$data);
 
             $this->load->view('post_login/footer');
+        //  }else {
 
-        }
+        //     $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+
+        //     $this->load->view('post_login/main');
+
+        //     $this->load->view("annexture/annexture7",$data);
+
+        //     $this->load->view('post_login/footer');
+
+        // }
     }
 
     public function f_annexture7_print(){
@@ -2178,6 +2176,14 @@ class Payment extends MX_Controller {
        
             $data['rate']       =   $this->Paddy->f_get_particulars("md_comm_params",NULL,NULL,0);
 
+            $wheress  =   array(
+
+                "sl_no"  => $data['bill_dtls']->mill_id
+
+            );
+         //   $data['distance']   =   $this->Paddy->f_get_particulars("md_soc_mill",NULL,$wheres,1);
+            $data['millname']   =   $this->Paddy->f_get_particulars("md_mill",NULL,$wheress,1);
+
             $this->load->view('post_login/main');
 
             $this->load->view("annexture/annexture7_print",$data);
@@ -2188,14 +2194,13 @@ class Payment extends MX_Controller {
     public function f_annexture8(){
 
 
-          if($_SERVER['REQUEST_METHOD'] == "POST") {
-
+       //   if($_SERVER['REQUEST_METHOD'] == "POST") {
 
             $where  =   array(
 
                 "kms_id"   => $this->session->userdata['loggedin']['kms_id'],
 
-                "dist"       => $this->input->post('dist'),
+                "dist"     => $this->session->userdata['loggedin']['branch_id'],
 
                 "ho_status"  => 1,
             );
@@ -2215,17 +2220,17 @@ class Payment extends MX_Controller {
             $this->load->view("annexture/annexture8",$data);
 
             $this->load->view('post_login/footer');
-         }else {
+        //  }else {
 
-            $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+        //     $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
-            $this->load->view('post_login/main');
+        //     $this->load->view('post_login/main');
 
-            $this->load->view("annexture/annexture8",$data);
+        //     $this->load->view("annexture/annexture8",$data);
 
-            $this->load->view('post_login/footer');
+        //     $this->load->view('post_login/footer');
 
-        }
+        // }
     }
 
     public function f_annexture8_print(){
@@ -2259,14 +2264,12 @@ class Payment extends MX_Controller {
     public function f_annexture9(){
 
 
-          if($_SERVER['REQUEST_METHOD'] == "POST") {
-
-
+       //   if($_SERVER['REQUEST_METHOD'] == "POST") {
             $where  =   array(
 
                 "kms_id"   => $this->session->userdata['loggedin']['kms_id'],
 
-                "dist"       => $this->input->post('dist'),
+                "dist"     => $this->session->userdata['loggedin']['branch_id'],
 
                 "ho_status"  => 1,
             );
@@ -2286,17 +2289,17 @@ class Payment extends MX_Controller {
             $this->load->view("annexture/annexture9",$data);
 
             $this->load->view('post_login/footer');
-         }else {
+        //  }else {
 
-            $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+        //     $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
-            $this->load->view('post_login/main');
+        //     $this->load->view('post_login/main');
 
-            $this->load->view("annexture/annexture9",$data);
+        //     $this->load->view("annexture/annexture9",$data);
 
-            $this->load->view('post_login/footer');
+        //     $this->load->view('post_login/footer');
 
-        }
+        // }
     }
 
     public function f_annexture9_print(){
@@ -2330,16 +2333,15 @@ class Payment extends MX_Controller {
     public function f_annexture10(){
 
 
-          if($_SERVER['REQUEST_METHOD'] == "POST") {
-
+        //  if($_SERVER['REQUEST_METHOD'] == "POST") {
 
             $where  =   array(
 
                 "kms_id"   => $this->session->userdata['loggedin']['kms_id'],
 
-                "dist"       => $this->input->post('dist'),
+                "dist"     => $this->session->userdata['loggedin']['branch_id'],
 
-                "ho_status"  => 1,
+                "ho_status" => 1,
             );
 
             $wheres  =   array(
@@ -2357,17 +2359,17 @@ class Payment extends MX_Controller {
             $this->load->view("annexture/annexture10",$data);
 
             $this->load->view('post_login/footer');
-         }else {
+        //  }else {
 
-            $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+        //     $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
-            $this->load->view('post_login/main');
+        //     $this->load->view('post_login/main');
 
-            $this->load->view("annexture/annexture10",$data);
+        //     $this->load->view("annexture/annexture10",$data);
 
-            $this->load->view('post_login/footer');
+        //     $this->load->view('post_login/footer');
 
-        }
+        // }
     }
 
     public function f_annexture10_print(){
@@ -2400,13 +2402,13 @@ class Payment extends MX_Controller {
     }
     public function f_annexture11(){
 
-          if($_SERVER['REQUEST_METHOD'] == "POST") {
+         // if($_SERVER['REQUEST_METHOD'] == "POST") {
 
             $where  =   array(
 
                 "kms_id"   => $this->session->userdata['loggedin']['kms_id'],
 
-                "dist"       => $this->input->post('dist'),
+                "dist"     => $this->session->userdata['loggedin']['branch_id'],
 
                 "ho_status"  => 1,
             );
@@ -2426,17 +2428,17 @@ class Payment extends MX_Controller {
             $this->load->view("annexture/annexture11",$data);
 
             $this->load->view('post_login/footer');
-         }else {
+        //  }else {
 
-            $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+        //     $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
-            $this->load->view('post_login/main');
+        //     $this->load->view('post_login/main');
 
-            $this->load->view("annexture/annexture11",$data);
+        //     $this->load->view("annexture/annexture11",$data);
 
-            $this->load->view('post_login/footer');
+        //     $this->load->view('post_login/footer');
 
-        }
+        // }
     }
 
     public function f_annexture11_print(){

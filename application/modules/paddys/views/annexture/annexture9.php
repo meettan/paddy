@@ -58,10 +58,10 @@ tr:hover {background-color: #f5f5f5;}
 
 <?php
 
-    if($_SERVER['REQUEST_METHOD'] == 'GET') {
+//    if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 ?>        
-    <div class="wraper">      
+   <!--  <div class="wraper">      
  <div class="col-md-3 container"></div>
         <div class="col-md-6 container form-wraper">
     
@@ -114,13 +114,13 @@ tr:hover {background-color: #f5f5f5;}
 
         </div>
 
-    </div>        
+    </div>     -->    
 
     <?php
 
-    }
+   // }
     
-    else if($_SERVER['REQUEST_METHOD'] == 'POST') { 
+   // else if($_SERVER['REQUEST_METHOD'] == 'POST') { 
         
     ?>
 
@@ -130,7 +130,7 @@ tr:hover {background-color: #f5f5f5;}
             
             <div class="col-lg-9 col-sm-12">
 
-                <h1><strong>Annexure VI</strong></h1>
+                <h1><strong>Annexure IX</strong></h1>
 
             </div>
 
@@ -148,8 +148,6 @@ tr:hover {background-color: #f5f5f5;}
                         <th>Payment No.</th>
                         <th>Date</th>
                         <th>Bill Number</th>
-                      
-                      
                         <th>Option</th>
 
                     </tr>
@@ -169,11 +167,8 @@ tr:hover {background-color: #f5f5f5;}
                             <tr>
 
                                 <td><?php echo $bill_dtl->pmt_bill_no; ?></td>
-                                
                                 <td><?php echo date('d-m-Y', strtotime($bill_dtl->trans_dt)); ?></td>
                                 <td><?php echo $bill_dtl->ho_bill_number; ?> </td>
-
-
                              
                                 <td>
                                 
@@ -212,7 +207,6 @@ tr:hover {background-color: #f5f5f5;}
                         <th>Payment No.</th>
                         <th>Date</th>
                         <th>Bill Number</th>
-                      
                         <th>Option</th>
 
                     </tr>
@@ -227,6 +221,6 @@ tr:hover {background-color: #f5f5f5;}
         
     <?php
 
-    }
+ //   }
 
     ?> 

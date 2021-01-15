@@ -64,13 +64,15 @@ tr:hover {background-color: #f5f5f5;}
                   <div class="wrapper_fixed">
                     <h2><img src="<?php echo base_url();?>benfed.png" alt=""/></h2>
                     <h3 style="text-align: center">  ANNEXURE-VII</h3>
-                    <p>Name of the Agency: </p>
-                     <h2>    CLAIM FOR COMMISSION</h2>
-                    <p>Name of the Miller:  <br>
+                    <p>Name of the Agency:<b>Benfed</b>  </p>
+                     <h2>CLAIM FOR COMMISSION</h2>
+                    <p>Name of the Miller:  <?php echo $millname->mill_name;    //print_r($bill_dtls);?>  <br>
                     Address: </p>
 
 
-                    <p>Claim towards Transport Charges for the KMS <strong>...... </strong></p>
+                    <p>Claim towards Transport Charges for the KMS <strong><?php echo $this->session->userdata['loggedin']['kms_yr'];?></strong></p>
+
+                   
                     
                     <div class="tableBottomBorder">
                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -121,9 +123,13 @@ tr:hover {background-color: #f5f5f5;}
                        <td>12</td>
                        <td>13</td>
                       </tr>
+                       <?php foreach($bill_dtls as $bill_dtl);{
+
+
+                        ?>
                       <tr>
-                        <td scope="row">&nbsp;</td>
-                        <td style="padding: 0;">&nbsp;</td>
+                        <td scope="row"></td>
+                        <td style="padding: 0;"><?//=$bill_dtl->memo_no?></td>
                         <td style="padding: 0;">&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
@@ -131,6 +137,7 @@ tr:hover {background-color: #f5f5f5;}
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                       </tr>
+                    <?php } ?>
                       <tr>
                         <td scope="row">&nbsp;</td>
                         <td style="padding: 0;">&nbsp;</td>
