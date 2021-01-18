@@ -860,7 +860,7 @@ class Cron extends MX_Controller {
             $kms_year  = $kms_yerr_data->kms_yr;
             $kms_id    = $kms_yerr_data->sl_no;*/
 
-            $delete = $this->Paddy->deletetemp_table();
+            //$delete = $this->Paddy->deletetemp_table();
          
             $url = 'https://procurement.wbfood.in/api/Statusupd/Dispatcheddtls'; /*Dispatch*/
             $date = date('Y-m-d');

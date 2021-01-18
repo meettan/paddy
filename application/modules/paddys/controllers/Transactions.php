@@ -5338,7 +5338,7 @@ class Transactions extends MX_Controller {
                 "acc_no"                =>  $acc_no[$i],
                 "dwn_flag"              =>  "0",
                 "status"                =>  "0",
-                "book_no"               =>  "book_no"+1,
+                "book_no"               =>  "book_no"+'1',
                 "modified_by"           =>   $this->session->userdata['loggedin']['user_name'],
                 "modified_dt"           =>   date('Y-m-d')
                 );
