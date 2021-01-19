@@ -39,19 +39,39 @@ class Bankintegration extends MX_Controller {
         $bulk_trans_id         = $this->input->get('bulk_trans_id');
         $valid                 = 0;
 
-        $paddy_data    = $this->Paddy->coll_received($soc_id,$trans_dt,$bulk_trans_id);
+        $paddy_data            = $this->Paddy->coll_received($soc_id,$trans_dt,$bulk_trans_id);
+        $paddy_forwad          = $this->Paddy->coll_forward($soc_id,$trans_dt,$bulk_trans_id);
 
-        $paddy_forwad  = $this->Paddy->coll_forward($soc_id,$trans_dt,$bulk_trans_id);
-
-
-
-        $bank_id       = $this->Paddy->bank_detail_for_forward($soc_id,$trans_dt,$bulk_trans_id);
+        $bank_id               = $this->Paddy->bank_detail_for_forward($soc_id,$trans_dt,$bulk_trans_id);
 
         if( $bank_id == '5'){
 
-        $hdfc_sl_no = $this->Paddy->f_get_particulars("td_collections",array("MAX(hdfc_sl_no) hdfc_sl_no"),array('trans_dt' => $trans_dt), 1);
+             $hdfc_sl_no = $this->Paddy->f_get_particulars("td_collections",array("ifnull(MAX(hdfc_sl_no),0) hdfc_sl_no"),array('trans_dt' => $trans_dt), 1);
 
-         $hdfc_sl = $hdfc_sl_no->hdfc_sl_no;
+            $hdfc_sl_no = $hdfc_sl_no->hdfc_sl_no+1;
+
+
+             $data_array = array(
+
+                    "hdfc_sl_no"  => $hdfc_sl_no
+           
+                );
+
+              $where = array(
+
+                    "bulk_trans_id"           => $bulk_trans_id,
+
+                    "forward_bulk_trans_id"   => $forward_bulk_trans_id,
+
+                    "soc_id"                  => $soc_id,
+
+                    "trans_dt"                => $trans_dt
+
+                );
+
+             $this->Paddy->f_edit('td_collections', $data_array, $where);
+
+          $hdfc_sl = $hdfc_sl_no;
 
         }
 
@@ -156,11 +176,11 @@ class Bankintegration extends MX_Controller {
                                         if ( ! write_file(FCPATH .$bank_data->folder_path.$filename,$data)) {
 
 
-                                           echo 'Unable to write the file';
+                                          // echo 'Unable to write the file';
 
                                         } else {
 
-                                            echo 'File written!';  
+                                          //  echo 'File written!';  
                                             
                                           
                                         }
@@ -198,12 +218,12 @@ class Bankintegration extends MX_Controller {
                                       if ( ! write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)
                                     
                                         {
-                                           echo 'Unable to write the file';
+                                         //  echo 'Unable to write the file';
                                         
 
                                         } else {
 
-                                            echo 'File written!';    
+                                          //  echo 'File written!';    
 
                                         }
 
@@ -243,11 +263,11 @@ class Bankintegration extends MX_Controller {
                                       if (! write_file(FCPATH .$bank_data->folder_path.$filename, $data) == FALSE)
                                     
                                         {
-                                           echo 'Unable to write the file';
+                                         //  echo 'Unable to write the file';
 
                                         } else {
 
-                                            echo 'File written!';  
+                                           // echo 'File written!';  
                                            
                                         }
 

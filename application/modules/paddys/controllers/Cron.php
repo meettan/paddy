@@ -919,7 +919,7 @@ class Cron extends MX_Controller {
 
                             "mill_id"            =>  $value->ricemillcode,
 
-                            "paddy_qty"          =>  $value->despqty,
+                            "paddy_qty"          =>  $value->despqty/100,
 
                             "created_by"         =>  'API DATA',
      

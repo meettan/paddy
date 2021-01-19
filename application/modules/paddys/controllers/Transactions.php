@@ -1021,7 +1021,7 @@ class Transactions extends MX_Controller {
             $trans_dt = $editdata["1"];
             $bulk_trans_id = $editdata["2"];
             $chq_status    = $editdata["3"];
-            $hdfc_sl_no    = '';
+           // $hdfc_sl_no    = '';
 
             //$trans_type = $this->Paddy->get_transaction_type($soc_id,$trans_dt,$bulk_trans_id,$chq_status);
 
@@ -1051,24 +1051,24 @@ class Transactions extends MX_Controller {
 
             }
 
-            if( $this->input->post('bank_sl_no') == '5'){
+            // if( $this->input->post('bank_sl_no') == '5'){
 
-            $hdfc_sl_no = $this->Paddy->f_get_particulars("td_collections",array("ifnull(MAX(hdfc_sl_no),0) hdfc_sl_no"),array('trans_dt' => $trans_dt), 1);
+            // $hdfc_sl_no = $this->Paddy->f_get_particulars("td_collections",array("ifnull(MAX(hdfc_sl_no),0) hdfc_sl_no"),array('trans_dt' => $trans_dt), 1);
 
-            $hdfc_sl_no = $hdfc_sl_no->hdfc_sl_no+1;
+            // $hdfc_sl_no = $hdfc_sl_no->hdfc_sl_no+1;
 
         
-            }
+            // }
 
-            if($hdfc_sl_no > 0){
+            // if($hdfc_sl_no > 0){
 
-                $hdfc_sl = $hdfc_sl_no;
+            //     $hdfc_sl = $hdfc_sl_no;
 
-            }else{
+            // }else{
 
-                $hdfc_sl = NULL;
+            //     $hdfc_sl = NULL;
                    
-            }
+            // }
          
            $i=0;
               
@@ -1084,8 +1084,7 @@ class Transactions extends MX_Controller {
                 "ifsc_code"              => $ifsc_code[$i],
                 "acc_no"                 => $acc_no[$i],
                 "bulk_trans_id"          => $bulk_trns_id,
-                "forward_bulk_trans_id"  => $dist_sort_code.'_'.substr($kms_year,2).'_'.$bulk_trns_id,
-                "hdfc_sl_no"             => $hdfc_sl
+                "forward_bulk_trans_id"  => $dist_sort_code.'_'.substr($kms_year,2).'_'.$bulk_trns_id
            
                 );
 
