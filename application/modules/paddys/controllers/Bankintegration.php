@@ -252,11 +252,16 @@ class Bankintegration extends MX_Controller {
 
                                         $data = rtrim($data);
                                     
-                                        $datetime = strtotime($trans_dt);
-                                        
+                                       // $datetime = strtotime($trans_dt);
+
+                                        $datetime = strtotime(date("Y-m-d"));
                                         $datetimes = date('dm',$datetime);
 
-                                        $serial_no = str_pad($hdfc_sl,3,"0",STR_PAD_LEFT);
+                                        $sl = time();
+                                        
+                                       // $serial_no = str_pad($hdfc_sl,3,"0",STR_PAD_LEFT);
+
+                                        $serial_no =  substr($sl,7);
                                         
                                        $filename = 'WBSCMFL'.'_'.'908RBI'.'_'.'908RBI'.$datetimes.'.'.$serial_no;
 
