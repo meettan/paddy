@@ -400,7 +400,7 @@
 
 
                     if((do_prev + do_supplied)  > tot_cmr){
-                        //console.log(sum);
+                        console.log(do_prev + do_supplied);
 
                         alert("Progressive Do Issue Cannot Be Greater Than Total Cmr Offered");
                         $('#progressive_do_issue').val("");
