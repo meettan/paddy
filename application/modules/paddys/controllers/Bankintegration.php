@@ -44,36 +44,36 @@ class Bankintegration extends MX_Controller {
 
         $bank_id               = $this->Paddy->bank_detail_for_forward($soc_id,$trans_dt,$bulk_trans_id);
 
-        if( $bank_id == '5'){
+        // if( $bank_id == '5'){
 
-             $hdfc_sl_no = $this->Paddy->f_get_particulars("td_collections",array("ifnull(MAX(hdfc_sl_no),0) hdfc_sl_no"),array('trans_dt' => $trans_dt), 1);
+        //      $hdfc_sl_no = $this->Paddy->f_get_particulars("td_collections",array("ifnull(MAX(hdfc_sl_no),0) hdfc_sl_no"),array('trans_dt' => $trans_dt), 1);
 
-            $hdfc_sl_no = $hdfc_sl_no->hdfc_sl_no+1;
+        //     $hdfc_sl_no = $hdfc_sl_no->hdfc_sl_no+1;
 
 
-             $data_array = array(
+        //      $data_array = array(
 
-                    "hdfc_sl_no"  => $hdfc_sl_no
+        //             "hdfc_sl_no"  => $hdfc_sl_no
            
-                );
+        //         );
 
-              $where = array(
+        //       $where = array(
 
-                    "bulk_trans_id"           => $bulk_trans_id,
+        //             "bulk_trans_id"           => $bulk_trans_id,
 
-                    "forward_bulk_trans_id"   => $forward_bulk_trans_id,
+        //             "forward_bulk_trans_id"   => $forward_bulk_trans_id,
 
-                    "soc_id"                  => $soc_id,
+        //             "soc_id"                  => $soc_id,
 
-                    "trans_dt"                => $trans_dt
+        //             "trans_dt"                => $trans_dt
 
-                );
+        //         );
 
-             $this->Paddy->f_edit('td_collections', $data_array, $where);
+        //      $this->Paddy->f_edit('td_collections', $data_array, $where);
 
-          $hdfc_sl = $hdfc_sl_no;
+        //   $hdfc_sl = $hdfc_sl_no;
 
-        }
+        // }
 
         $bank_data     = $this->Paddy->f_get_particulars("md_paddy_bank", NULL,array("bank_id" => $bank_id), 1);
 
