@@ -272,6 +272,12 @@
 				$dash_data["tot_cmr_offered_ho"]= $this->Login_Process->f_get_tot_cmr_offered_ho($kms_id,$branch_id);
 				$dash_data["tot_cmr_delivery"]= $this->Login_Process->f_get_tot_cmr_delivery($kms_id,$branch_id);
 				$dash_data["tot_cmr_delivery_ho"]= $this->Login_Process->f_get_tot_cmr_delivery_ho($kms_id);
+				$dash_data["tot_wqsc_upload"]= $this->Login_Process->f_get_tot_wqsc_upload($kms_id,$branch_id);
+				$dash_data["tot_wqsc_upload_ho"]= $this->Login_Process->f_get_tot_wqsc_ho($kms_id);
+				$dash_data["tot_mill_payment"]= $this->Login_Process->f_get_tot_mill_payment($kms_id,$branch_id);
+				$dash_data["tot_mill_payment_ho"]= $this->Login_Process->f_get_tot_mill_payment_ho($kms_id);
+				$dash_data["tot_socy_payment"]= $this->Login_Process->f_get_tot_socy_payment($kms_id,$branch_id);
+				$dash_data["tot_socy_payment_ho"]= $this->Login_Process->f_get_tot_socy_payment_ho($kms_id);
 				
 
 				$this->load->view('post_login/main');

@@ -63,7 +63,7 @@ The Chairman/Secretary/Manager,<br>
 		      <td valign="top"><p style="margin: 0; padding: 0; font-size: 15px; line-height: 20px;">District Manager <br>
 		       BENFED, <strong><?php if(isset($this->session->userdata['loggedin']['branch_name'])){ echo $this->session->userdata['loggedin']['branch_name'];}?></strong> Branch. <br>
 		      
-Date: </p>		        </td>
+Date: <strong><?php echo date('d/m/Y',strtotime($workorder_dtls->trans_dt)); ?></strong></p></td>
 		      </tr>
 			  <tr>
 		      <td width="80%" valign="top" style="padding-bottom: 5px;"><p style="margin: 0; padding: 0; line-height: 20px; font-size: 15px;">
