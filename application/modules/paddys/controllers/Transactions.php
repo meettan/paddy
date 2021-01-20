@@ -5326,7 +5326,10 @@ class Transactions extends MX_Controller {
 
             $i=0;  
            for($i=0; $i<$count; $i++){
-           
+
+
+              $book_no = $this->db->get_Where('td_collections', array('reg_no'=>$reg_no[$i],'soc_id'=>$soc_id,'trans_dt'=>$trans_dt))->row()->book_no;
+              
 
                 $data_arrays = array(
              
@@ -5337,10 +5340,11 @@ class Transactions extends MX_Controller {
                 "acc_no"                =>  $acc_no[$i],
                 "dwn_flag"              =>  "0",
                 "status"                =>  "0",
-                "book_no"               =>  "book_no"+'1',
-                "modified_by"           =>   $this->session->userdata['loggedin']['user_name'],
+                "book_no"               =>  $book_no + 1,
+                "modified_by"           =>  $this->session->userdata['loggedin']['user_name'],
                 "modified_dt"           =>   date('Y-m-d')
                 );
+
              
             $where = array(
 
