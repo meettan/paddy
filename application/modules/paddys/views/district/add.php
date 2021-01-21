@@ -9,7 +9,7 @@
                 <div class="form-header">
                 
                     <h4>District Entry</h4>
-                    <span class="confirm-div" style="float:right; color:green;"></span>
+                   <span class="confirm-div" style="float:right; color:green;"></span>
                 </div>
                 <div class="form-group row">
 
