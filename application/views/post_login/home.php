@@ -84,12 +84,12 @@
         <div class="daseSmBox">
             <div class="subBox">
                 <div class="icon3"><img src="<?php echo base_url('assets/images/box_c.png'); ?>"></div>
-                <div class="value"><?php if($this->session->userdata['loggedin']['ho_flag']=="Y")
+                <div class="value"><strong>&#8377; </strong><?php if($this->session->userdata['loggedin']['ho_flag']=="Y")
                                           {
                                      echo $tot_paddy_procurement_ho->amount; 
                                           }else{echo $tot_paddy_procurement->amount; }?></div>
             </div>
-        <h3>Total Procured Amount Rs.</h3>
+        <h3>Total Procured Amount</h3>
         </div>
     </div>
 			
@@ -98,12 +98,12 @@
         <div class="daseSmBox">
             <div class="subBox">
                 <div class="icon4"><img src="<?php echo base_url('assets/images/box_d.png'); ?>"></div>
-                <div class="value"><?php if($this->session->userdata['loggedin']['ho_flag']=="Y")
+                <div class="value"><strong>&#8377; </strong><?php if($this->session->userdata['loggedin']['ho_flag']=="Y")
                                           {
                                      echo $tot_cheque_cleared_ho->tot_clr_cheque; 
                                           }else{echo $tot_cheque_cleared->tot_clr_cheque; }?></div>
             </div>
-        <h3>Total Paid Amount Rs.</h3>
+        <h3>Total Paid Amount</h3>
         </div>
     </div>
 			
@@ -130,6 +130,48 @@
                                           }else{echo $tot_cmr_delivery->tot_delivery;} ?> <strong>Qnt</strong></div>
             </div>
         <h3>Total CMR Delivered</h3>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="daseSmBox">
+            <div class="subBox">
+                <div class="icon"><img src="<?php echo base_url('assets/images/box_b.png'); ?>"></div>
+                <div class="value"><?php if($this->session->userdata['loggedin']['ho_flag']=="Y")
+                                          {
+                                     echo $tot_wqsc_upload_ho->quantity; 
+                                          }else{
+                                         echo $tot_wqsc_upload->quantity; 
+                                       }
+                ?> <strong>Qnt</strong></div>
+            </div>
+        <h3>Total WQSC Uploaded</h3>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="daseSmBox">
+            <div class="subBox">
+                <div class="icon3"><img src="<?php echo base_url('assets/images/box_c.png'); ?>"></div>
+                <div class="value"><strong>&#8377; </strong><?php if($this->session->userdata['loggedin']['ho_flag']=="Y")
+                                          {
+                                     echo $tot_mill_payment_ho->payable_amt; 
+                                          }else{echo $tot_mill_payment->payable_amt; }?></div>
+            </div>
+        <h3>Total Mill Payment</h3>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="daseSmBox">
+            <div class="subBox">
+                <div class="icon5"><img src="<?php echo base_url('assets/images/box_e.png'); ?>"></div>
+                <div class="value"><strong>&#8377; </strong><?php if($this->session->userdata['loggedin']['ho_flag']=="Y")
+                                          {
+                                     echo $tot_socy_payment_ho->paid_amt; 
+                                          }else{echo $tot_socy_payment->paid_amt;} ?></div>
+            </div>
+        <h3>Total Society Payment</h3>
         </div>
     </div>
 

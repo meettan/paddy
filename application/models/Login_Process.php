@@ -210,6 +210,61 @@
 			$data=$this->db->get('td_cmr_delivery');
             return $data->row();
 		}
+
+		public function f_get_tot_wqsc_upload($kms_id,$branch_id){
+
+			$sql = "SELECT sum(b.quantity)quantity 
+					FROM   td_wqsc a,td_wqsc_dtls b 
+					where  a.id = b.trans_id
+					and    a.branch_id = $branch_id
+					and    a.kms_id = $kms_id";
+	
+			$data=$this->db->query($sql);
+            return $data->row();
+		}
+
+		public function f_get_tot_wqsc_ho($kms_id){
+
+			$sql = "SELECT sum(b.quantity)quantity 
+					FROM   td_wqsc a,td_wqsc_dtls b 
+					where  a.id = b.trans_id
+					and    a.kms_id = $kms_id";
+	
+			$data=$this->db->query($sql);
+            return $data->row();
+		}
+
+		public function f_get_tot_mill_payment($kms_id,$branch_id){
+		
+			$this->db->select('ifnull(SUM(payble_amt), 0) payable_amt');
+			$this->db->where('kms_id',$kms_id);
+			$this->db->where('dist',$branch_id);
+			$data=$this->db->get('td_payment_bill_dtls');
+            return $data->row();
+		}
+		public function f_get_tot_mill_payment_ho($kms_id){
+		
+			$this->db->select('ifnull(SUM(payble_amt), 0) payable_amt');
+			$this->db->where('kms_id',$kms_id);
+			$data=$this->db->get('td_payment_bill_dtls');
+            return $data->row();
+		}
+
+		public function f_get_tot_socy_payment($kms_id,$branch_id){
+		
+			$this->db->select('ifnull(SUM(paid_amt), 0) paid_amt');
+			$this->db->where('kms_id',$kms_id);
+			$this->db->where('branch_id',$branch_id);
+			$data=$this->db->get('td_society_commision');
+            return $data->row();
+		}
+		public function f_get_tot_socy_payment_ho($kms_id){
+		
+			$this->db->select('ifnull(SUM(paid_amt), 0) paid_amt');
+			$this->db->where('kms_id',$kms_id);
+			$data=$this->db->get('td_society_commision');
+            return $data->row();
+		}
 		
 		
 
