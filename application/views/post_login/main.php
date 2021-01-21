@@ -128,7 +128,7 @@
                    <!-- <a href="<?php //echo site_url('paddys/transactions/f_reissuchq'); ?>">Reissue Cheque</a> --> 
                    <?php   if( $this->session->userdata['loggedin']['kms_id'] == 2 ) {   ?>
                        <a href="<?php echo site_url('paddys/transactions/failneft'); ?>">Reissue NEFT</a>
-                     
+                      <a href="<?php  echo site_url('paddys/transactions/f_reissuchq'); ?>">Reissue Cheque</a> 
                         <?php }else{ ?> 
 
                           <a href="<?php echo site_url('paddys/transactions/failnefts'); ?>">Reissue NEFT</a> 
