@@ -860,7 +860,7 @@ class Cron extends MX_Controller {
             $kms_year  = $kms_yerr_data->kms_yr;
             $kms_id    = $kms_yerr_data->sl_no;*/
 
-            //$delete = $this->Paddy->deletetemp_table();
+           // $delete = $this->Paddy->deletetemp_table();
          
             $url = 'https://procurement.wbfood.in/api/Statusupd/Dispatcheddtls'; /*Dispatch*/
             $date = date('Y-m-d');
@@ -887,7 +887,7 @@ class Cron extends MX_Controller {
                 
                    foreach ($datas as $value) {
 
-                    $district_code   = get_society_branch_id($value->proccentreid);  
+                    //$district_code   = get_society_branch_id($value->proccentreid);  
 
                     $dt_despatch     = substr($value->dt_despatch,0,10);
 
@@ -911,9 +911,9 @@ class Cron extends MX_Controller {
 
                             "kms_year"           =>  3,
 
-                            "branch_id"          =>  $district_code,
+                            "branch_id"          =>  0,
 
-                            "dist"               =>  $district_code,
+                            "dist"               =>  0,
 
                             "soc_id"             =>  $value->proccentreid,
 
