@@ -75,7 +75,7 @@ class Reports extends MX_Controller {
         }
     }
 
-    public function f_distProcho(){                         
+    public function f_distProcho(){                 /**Districtwise Procurement Summary Report at HO */                   
 
         if($_SERVER['REQUEST_METHOD']=='POST'){
 
@@ -113,6 +113,43 @@ class Reports extends MX_Controller {
             $this->load->view('post_login/main');
 
             $this->load->view("reports/dist_proc/distProcDt.php", $socProc);
+
+            $this->load->view('post_login/footer');
+        }
+    }
+
+    public function f_distPayHo(){                               /**Districtwise Payment Summary Report at HO */            
+
+        if($_SERVER['REQUEST_METHOD']=='POST'){
+
+            $kms_id     = $this->session->userdata['loggedin']['kms_id'];
+
+            $from_dt    = $this->input->post('from_date');
+
+            $to_dt      = $this->input->post('to_date');
+
+            $distPay['pay']           =   $this->Paddyrep->f_get_dist_pay($from_dt,$to_dt);
+
+            $distPay['procDtls']      =   $this->Paddyrep->f_get_dist_proc($from_dt,$to_dt);
+
+            $distPay['pendingDtls']   =   $this->Paddyrep->f_get_pending_pay($from_dt,$to_dt);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/dist_pay/distPayDt.php", $distPay);
+
+            $this->load->view('post_login/footer');
+
+
+        }else{
+
+            $socProc['sys_date']   =   $_SESSION['sys_date'];
+
+            $socProc['dists']  =   $this->Paddy->f_get_particulars("md_district",NULL,NULL, 0);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/dist_pay/distPayDt.php", $socProc);
 
             $this->load->view('post_login/footer');
         }
@@ -488,8 +525,8 @@ class Reports extends MX_Controller {
         }
 
     }
-/**District Report on farmer payment */
-    public function f_farmerpay(){
+
+    public function f_farmerpay(){                      /**SocietyWise Report on farmer payment at HO */
 
         if($_SERVER['REQUEST_METHOD']=='POST'){
 
@@ -501,37 +538,66 @@ class Reports extends MX_Controller {
 
             $to_dt      = $this->input->post('to_date');
 
-            $socProc['socDtls']  =   $this->Paddyrep->f_get_soc_ho($branch_id);
+            if($kms_id == 2){
 
-            //$socProc['reg']      =   $this->Paddyrep->f_get_reg_farm_ho($branch_id,$from_dt,$to_dt);
+                $socProc['socDtls']  =   $this->Paddyrep->f_get_soc_ho($branch_id);
 
-            $socProc['collc']    =   $this->Paddyrep->f_get_collc_ho($branch_id,$from_dt,$to_dt);
+                $socProc['collc']    =   $this->Paddyrep->f_get_collc_ho($branch_id,$from_dt,$to_dt);
 
-            $socProc['coll']    =   $this->Paddyrep->f_getamt_clr($branch_id,$from_dt,$to_dt);
+                $socProc['coll']    =   $this->Paddyrep->f_getamt_clr($branch_id,$from_dt,$to_dt);
 
-            $socProc['reissues']  =   $this->Paddyrep->f_getamt_reissue($branch_id,$from_dt,$to_dt);
-
+                $socProc['reissues']  =   $this->Paddyrep->f_getamt_reissue($branch_id,$from_dt,$to_dt);
                        
-            $this->load->view('post_login/main');
+                $this->load->view('post_login/main');
 
-            $this->load->view("reports/farmer_payment/farpay_ho.php", $socProc);
+                $this->load->view("reports/farmer_payment/farpay_ho.php", $socProc);
 
-            $this->load->view('post_login/footer');
+                $this->load->view('post_login/footer');
+            }else{
+                $socProc['socDtls']  =   $this->Paddyrep->f_get_soc_ho($branch_id);
+
+                $socProc['collc']    =   $this->Paddyrep->f_get_collc_ho($branch_id,$from_dt,$to_dt);
+
+                $socProc['coll']    =   $this->Paddyrep->f_getamt_clr($branch_id,$from_dt,$to_dt);
+
+                $socProc['reissues']  =   $this->Paddyrep->f_getamt_reissue_new($branch_id,$from_dt,$to_dt,$kms_id);
+
+                //echo ($this->db->last_query());die;
+                       
+                $this->load->view('post_login/main');
+
+                $this->load->view("reports/farmer_payment/farpay_soc_ho.php", $socProc);
+
+                $this->load->view('post_login/footer');
+            }
 
 
         }else{
 
             $socProc['sys_date']   =   $_SESSION['sys_date'];
 
+            $kms_id     = $this->session->userdata['loggedin']['kms_id'];
+
             $socProc['dists']  =   $this->Paddy->f_get_particulars("md_district",NULL,NULL, 0);
 
-            $this->load->view('post_login/main');
+            if($kms_id == 2){
 
-            $this->load->view("reports/farmer_payment/farpay_ho.php", $socProc);
+                $this->load->view('post_login/main');
 
-            $this->load->view('post_login/footer');
+                $this->load->view("reports/farmer_payment/farpay_ho.php", $socProc);
+
+                $this->load->view('post_login/footer');
+            }else{
+                $this->load->view('post_login/main');
+
+                $this->load->view("reports/farmer_payment/farpay_soc_ho.php", $socProc);
+
+                $this->load->view('post_login/footer');
+            }
         }
     }
+
+
 /**Paddy repeat selling */
        public function f_reselling(){
 

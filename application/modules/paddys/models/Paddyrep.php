@@ -112,7 +112,7 @@ class Paddyrep extends CI_Model{
         $collc = $this->db->query("select soc_id,sum(amount) amount_clr
                                    from   td_collections
                                    where  branch_id = $brn  
-                                   and    chq_status = 'C'
+                                   and    chq_status in ('C','S')
                                    and    trans_dt between '$frmdt' and '$todt'
                                    group by soc_id
                                    order by soc_id");
@@ -153,6 +153,23 @@ class Paddyrep extends CI_Model{
                                      group by b.soc_id");
         return $collc->result();
     }
+
+/**Societywise re-issue cheque */
+public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
+
+      $collc = $this->db->query("SELECT soc_id,
+                                        count(reg_no)reissue_no,
+                                        sum(amount) amt_ressiue
+                                 FROM   td_collections
+                                 where  branch_id = $brn
+                                 and    Date(forwarded_dt) between '$frmdt' and '$todt'
+                                 and    CAST(book_no AS UNSIGNED) > 0
+                                 and    kms_id = $kms_id
+                                 and    status = '1'
+                                 group by soc_id");
+    return $collc->result();
+}
+
 /**Districtwise re-issue cheque */    
     public function f_getdisamt_reissue($frmdt,$todt){
 
@@ -695,26 +712,54 @@ class Paddyrep extends CI_Model{
         return $offer->result();
       }
 
-      public function f_get_remain_dist($frmdt,$todt){      //Districtwise remaining CMR to be delivered
-        
-        $remain = $this->db->query("select branch_id,sum(offer),sum(delv),sum(offer) - sum(delv)remain
-                                    from (
-                                            select branch_id,sum(cmr_offered_now)offer,0 delv
-                                            from   td_cmr_offered
-                                            where  trans_dt between '$frmdt' and '$todt'
-                                            group by branch_id
-                                            union
-                                            select branch_id,0 offer,sum(sp) + sum(cp) + sum(fci)delv
-                                            from   td_cmr_delivery
-                                            where  trans_dt between '$frmdt' and '$todt'
-                                            group by branch_id)a
-                                    group by branch_id
-                                    order by branch_id");
-                                    
+    public function f_get_remain_dist($frmdt,$todt){      //Districtwise remaining CMR to be delivered
+    
+    $remain = $this->db->query("select branch_id,sum(offer),sum(delv),sum(offer) - sum(delv)remain
+                                from (
+                                        select branch_id,sum(cmr_offered_now)offer,0 delv
+                                        from   td_cmr_offered
+                                        where  trans_dt between '$frmdt' and '$todt'
+                                        group by branch_id
+                                        union
+                                        select branch_id,0 offer,sum(sp) + sum(cp) + sum(fci)delv
+                                        from   td_cmr_delivery
+                                        where  trans_dt between '$frmdt' and '$todt'
+                                        group by branch_id)a
+                                group by branch_id
+                                order by branch_id");
+                                
         return $remain->result();
-    }  
+    }
+    
+    //Districtwise payment 
+    public function f_get_dist_pay($from_dt,$to_dt){
+        $pay   =   $this->db->query("SELECT branch_id,sum(amount)clr_amt 
+                                     FROM td_collections
+                                     where trans_dt between '$from_dt' and '$to_dt'
+                                     and   chq_status in ('C','S')
+                                     group by branch_id");
 
+        return $pay->result();
+    }
 
+    //Districtwise pending payment 
+    public function f_get_pending_pay($from_dt,$to_dt){
+        $pay   =   $this->db->query("select branch_id,sum(tot_amt) -sum(clr_amt) 'pending'
+                                     from (
+                                        SELECT branch_id,sum(amount)tot_amt,0 clr_amt
+                                        FROM td_collections
+                                        where trans_dt between '$from_dt' and '$to_dt'
+                                        group by branch_id
+                                        union
+                                        SELECT branch_id,0 tot_amt,sum(amount)clr_amt
+                                        FROM td_collections
+                                        where trans_dt between '$from_dt' and '$to_dt'
+                                        and   chq_status in ('C','S')
+                                        group by branch_id)a
+                                        group by branch_id");
+
+        return $pay->result();
+    }
 
 }
 ?>
