@@ -1588,6 +1588,32 @@ class Paddy extends CI_Model {
       $query = $this->db->query($sql);
    }
 
+   public function get_wqsc_dtls($brn,$kms){
+       $sql = "select a.id id,
+                      a.wqsc_no wqsc_no,
+                      b.mill_name mill_name,
+                      a.memo_no memo_no,
+                      a.memo_dt memo_dt,
+                      a.created_by created_by,
+                      sum(c.quantity)quantity
+               from td_wqsc a,md_mill b,td_wqsc_dtls c
+               where a.mill_id = b.sl_no
+               and   a.id = c.trans_id
+               and   a.branch_id = $brn
+               and   a.kms_id    = $kms
+               group by a.id,
+               a.wqsc_no,
+               b.mill_name,
+               a.memo_no,
+               a.memo_dt
+               ";
+
+       $query = $this->db->query($sql)->result();
+
+       return $query;
+       
+   }
+
 
 
 }

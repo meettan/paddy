@@ -93,9 +93,9 @@ class Reports extends MX_Controller {
 
             $distProc['offer']      =   $this->Paddyrep->f_get_offer_dist($from_dt,$to_dt);
 
-            $distProc['delv']       =   $this->Paddyrep->f_get_delv_dist($from_dt,$to_dt);
+            $distProc['delv']       =   $this->Paddyrep->f_get_delv_dist($from_dt,$to_dt,$kms_id);
 
-            $distProc['remain']     =   $this->Paddyrep->f_get_remain_dist($from_dt,$to_dt);
+            $distProc['remain']     =   $this->Paddyrep->f_get_remain_dist($from_dt,$to_dt,$kms_id);
 
             $this->load->view('post_login/main');
 
@@ -169,7 +169,7 @@ class Reports extends MX_Controller {
 
             $socProc['socDtls']    =   $this->Paddyrep->f_get_soc_ho($branch_id);
 
-            $socProc['reg']        =   $this->Paddyrep->f_get_reg_farm_ho($branch_id,$from_dt,$to_dt);
+            $socProc['reg']        =   $this->Paddyrep->f_get_reg_farm_ho($branch_id,$from_dt,$to_dt,$kms_id);
 
             $socProc['collc']      =   $this->Paddyrep->f_get_collc_ho($branch_id,$from_dt,$to_dt);
 
@@ -177,9 +177,9 @@ class Reports extends MX_Controller {
 
             $socProc['offer']      =   $this->Paddyrep->f_get_offer_ho($branch_id,$from_dt,$to_dt);
 
-            $socProc['delv']       =   $this->Paddyrep->f_get_delv_ho($branch_id,$from_dt,$to_dt);
+            $socProc['delv']       =   $this->Paddyrep->f_get_delv_ho($branch_id,$from_dt,$to_dt,$kms_id);
 
-            $socProc['remain']     =   $this->Paddyrep->f_get_remain_ho($branch_id,$from_dt,$to_dt);
+            $socProc['remain']     =   $this->Paddyrep->f_get_remain_ho($branch_id,$from_dt,$to_dt,$kms_id);
 
             $this->load->view('post_login/main');
 
@@ -277,11 +277,11 @@ class Reports extends MX_Controller {
 
             $millProc['offer']      =   $this->Paddyrep->f_get_mill_offer($branch_id,$from_dt,$to_dt);
             
-            $millProc['do']         =   $this->Paddyrep->f_get_mil_do($branch_id,$from_dt,$to_dt);
+            $millProc['do']         =   $this->Paddyrep->f_get_mil_do($branch_id,$from_dt,$to_dt,$kms_id);
 
-            $millProc['delv']       =   $this->Paddyrep->f_get_mill_delv($branch_id,$from_dt,$to_dt);
+            $millProc['delv']       =   $this->Paddyrep->f_get_mill_delv($branch_id,$from_dt,$to_dt,$kms_id);
 
-            $millProc['remain']     =   $this->Paddyrep->f_get_mill_remain($branch_id,$from_dt,$to_dt);
+            $millProc['remain']     =   $this->Paddyrep->f_get_mill_remain($branch_id,$from_dt,$to_dt,$kms_id);
 
          
             $this->load->view('post_login/main');

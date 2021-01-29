@@ -4064,7 +4064,7 @@ class Transactions extends MX_Controller {
     public function f_wqsc() {
         
         //District List
-        $wqsc['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+        /*$wqsc['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
        
         $select     =   array(
@@ -4078,9 +4078,11 @@ class Transactions extends MX_Controller {
             "t.branch_id"              => $this->session->userdata['loggedin']['branch_id'],
             "t.kms_id"                 => $this->session->userdata['loggedin']['kms_id']
 
-        );
+        );*/
 
-        $wqsc['wqsc_dtls']    =   $this->Paddy->f_get_particulars("td_wqsc t, md_mill md", $select, $where, 0);
+        $wqsc['wqsc_dtls']    =   $this->Paddy->get_wqsc_dtls($this->session->userdata['loggedin']['branch_id'],$this->session->userdata['loggedin']['kms_id']);
+       
+        //echo $this->db->last_query();die;
 
 
         $this->load->view('post_login/main');

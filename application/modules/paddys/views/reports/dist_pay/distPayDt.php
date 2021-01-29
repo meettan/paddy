@@ -87,6 +87,7 @@ tr:hover {background-color: #f5f5f5;}
 
                         <input type="date"
                                name="from_date"
+                               id="from_date"
                                class="form-control required"
                                value="<?php echo $sys_date;?>" />
 
@@ -102,6 +103,7 @@ tr:hover {background-color: #f5f5f5;}
 
                         <input type="date"
                                name="to_date"
+                               id="to_date"
                                class="form-control required"
                                value="<?php echo $sys_date;?>" />
 
@@ -262,6 +264,18 @@ tr:hover {background-color: #f5f5f5;}
                 $("#example").table2excel({
                     filename: "Societywise Paddy Procurement Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?>.xls"
                 });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $("#form").on('submit',function(){
+
+                if($("#from_date").val() > $("#to_date").val()){
+                    alert("From date must be less than to date!");
+                    return false;
+                }
             });
         });
     </script>

@@ -35,6 +35,7 @@
                         <th>Mill Name</th>
                         <th>Memo Number</th>
                         <th>Memo Date</th>
+                        <th>Quantity</th>
                         <th>Created By</th>
                        <!--  <th>Modified By</th> -->
                         <th>Option</th>
@@ -63,6 +64,7 @@
                                 <td><?php echo $wqsc_dtl->mill_name; ?></td>
                                 <td><?php echo $wqsc_dtl->memo_no; ?></td>
                                 <td> <?php echo $wqsc_dtl->memo_dt; ?></td>
+                                <td> <?php echo $wqsc_dtl->quantity; ?></td>
                                 <td><?php echo $wqsc_dtl->created_by; ?></td>
                                 <!-- <td> <?php //echo $wqsc_dtl->modified_by; ?></td> -->
                                 <td>
@@ -104,6 +106,7 @@
                         <th>Mill Name</th>
                         <th>Memo Number</th>
                         <th>Memo Date</th>
+                        <th>Quantity</th>
                         <th>Created By</th>
                       <!--   <th>Modified By</th> -->
                         <th>Option</th>

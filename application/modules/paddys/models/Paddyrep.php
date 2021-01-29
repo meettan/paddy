@@ -48,12 +48,12 @@ class Paddyrep extends CI_Model{
         return $reg->result();
     }
 
-    public function f_get_reg_farm_ho($brn,$frmdt,$todt){
+    public function f_get_reg_farm_ho($brn,$frmdt,$todt,$kms_id){
 
         $reg  = $this->db->query("select soc_id,count(reg_no) reg_farm
                                   from   td_farmer_reg
                                   where  branch_id = $brn
-                                
+                                  and    kms_id    = $kms_id  
                                   group by soc_id
                                   order by soc_id");
 
@@ -86,7 +86,7 @@ class Paddyrep extends CI_Model{
  * within a date range in given district*/    
     public function f_get_collc_ho($brn,$frmdt,$todt){
         $collc = $this->db->query("select soc_id,sum(quantity)quantity,count(reg_no) farm_ben,
-                                          max(camp_no)camp,sum(amount)amount
+                                          count(distinct trans_dt)camp,sum(amount)amount
                                    from   td_collections
                                    where  branch_id = $brn
                                    and    trans_dt between '$frmdt' and '$todt'
@@ -207,10 +207,9 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
    
      public function f_get_cmr_ho($brn,$frmdt,$todt){
 
-        $cmr = $this->db->query("select soc_id,sum(resultant_cmr)resultant
+        $cmr = $this->db->query("select soc_id,ifnull(sum(resultant_cmr),0)resultant
                                    from   td_cmr_offered
                                    where  branch_id = $brn
-                                  
                                    and    trans_dt between '$frmdt' and '$todt'
                                    group by soc_id
                                    order by soc_id");
@@ -242,7 +241,6 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
       $offer = $this->db->query("select soc_id,rice_type,sum(cmr_offered_now) offered
                                  from   td_cmr_offered
                                  where  branch_id = $brn
-                             
                                  and    trans_dt between '$frmdt' and '$todt'
                                  group by soc_id,rice_type
                                  order by soc_id");
@@ -269,13 +267,13 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
       return $offer->result();
     }
 
-    public function f_get_delv_ho($brn,$frmdt,$todt){
+    public function f_get_delv_ho($brn,$frmdt,$todt,$kms_id){
 
       $offer = $this->db->query("select soc_id,cmr_type,sum(sp) sp,sum(cp) cp,sum(fci) fci
                                  from   td_cmr_delivery
                                  where  branch_id = $brn
-                                
-                                 and    trans_dt between '$frmdt' and '$todt'
+                                 and    delivery_dt between '$frmdt' and '$todt'
+                                 and    kms_year = $kms_id
                                  group by soc_id,cmr_type
                                  order by soc_id");
       return $offer->result();
@@ -307,7 +305,7 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
       return $remain->result();
     }*/
     
-    public function f_get_remain($brn,$frmdt,$todt,$block_id){
+    public function f_get_remain($brn,$frmdt,$todt,$block_id,$kms_id){
         
         $remain = $this->db->query("select soc_id,sum(offer),sum(delv),sum(offer) - sum(delv)remain
                                     from (
@@ -320,7 +318,8 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
                                             union
                                             select soc_id,0 offer,sum(sp) + sum(cp) + sum(fci)delv
                                             from   td_cmr_delivery
-                                            where  trans_dt between '$frmdt' and '$todt'
+                                            where  delivery_dt between '$frmdt' and '$todt'
+                                            and    kms_year = $kms_id
                                             and    branch_id = $brn
                                             and    block = $block_id
                                             group by soc_id)a
@@ -331,21 +330,7 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
     }
     
     
-     /*public function f_get_remain_ho($brn,$frmdt,$todt){
-
-      $remain = $this->db->query("select a.soc_id soc_id,sum(a.cmr_offered_now) - sum(b.sp+b.cp+b.fci)remain
-                                 from   td_cmr_offered a,td_cmr_delivery b
-                                 where  a.soc_id = b.soc_id
-                                 and    a.branch_id = $brn
-                              
-                               
-                                 and    a.trans_dt between '$frmdt' and '$todt'
-                                 group by a.soc_id
-                                 order by a.soc_id");
-      return $remain->result();
-    }*/
-    
-    public function f_get_remain_ho($brn,$frmdt,$todt){
+    public function f_get_remain_ho($brn,$frmdt,$todt,$kms_id){
         
         $remain = $this->db->query("select soc_id,sum(offer),sum(delv),sum(offer) - sum(delv)remain
                                     from (
@@ -357,7 +342,8 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
                                             union
                                             select soc_id,0 offer,sum(sp) + sum(cp) + sum(fci)delv
                                             from   td_cmr_delivery
-                                            where  trans_dt between '$frmdt' and '$todt'
+                                            where  delivery_dt between '$frmdt' and '$todt'
+                                            and    kms_year = $kms_id
                                             and    branch_id = $brn
                                             group by soc_id)a
                                     group by soc_id
@@ -428,22 +414,24 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
       return $offer->result();
     }
 
-    public function f_get_mill_delv($brn,$frmdt,$todt){
+    public function f_get_mill_delv($brn,$frmdt,$todt,$kms_id){
 
       $offer = $this->db->query("select mill_id,cmr_type,sum(sp) sp,sum(cp) cp,sum(fci) fci
                                  from   td_cmr_delivery
                                  where  branch_id = $brn
-                                 and    trans_dt between '$frmdt' and '$todt'
+                                 and    delivery_dt between '$frmdt' and '$todt'
+                                 and    kms_year = $kms_id
                                  group by mill_id,cmr_type
                                  order by mill_id");
       return $offer->result();
     }
     
-    public function f_get_mil_do($brn,$frmdt,$todt){
+    public function f_get_mil_do($brn,$frmdt,$todt,$kms_id){
 
       $offer = $this->db->query("select mill_id,rice_type,sum(sp) sp,sum(cp) cp,sum(fci) fci
                                  from   td_do_isseued
                                  where  branch_id = $brn
+                                 and    kms_year  = $kms_id
                                  and    trans_dt between '$frmdt' and '$todt'
                                  group by mill_id,rice_type
                                  order by mill_id");
@@ -451,7 +439,7 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
     }
     
     
-    public function f_get_mill_remain($brn,$frmdt,$todt){
+    public function f_get_mill_remain($brn,$frmdt,$todt,$kms_id){
 
       /*$remain = $this->db->query("select a.mill_id mill_id,sum(a.cmr_offered_now) - sum(b.sp+b.cp+b.fci) remain
                                  from   td_cmr_offered a,td_cmr_delivery b
@@ -471,7 +459,8 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
                                             union
                                             select mill_id,0 offer,sum(sp) + sum(cp) + sum(fci)delv
                                             from   td_cmr_delivery
-                                            where  trans_dt between '$frmdt' and '$todt'
+                                            where  delivery_dt between '$frmdt' and '$todt'
+                                            and    kms_year = $kms_id
                                             and    branch_id = $brn
                                             group by mill_id)a
                                     group by mill_id
@@ -702,17 +691,18 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
         return $offer->result();
     }
 
-    public function f_get_delv_dist($frmdt,$todt){     //Districtwise Rice Typewise Delivery
+    public function f_get_delv_dist($frmdt,$todt,$kms_id){     //Districtwise Rice Typewise Delivery
 
         $offer = $this->db->query("select branch_id,cmr_type,sum(sp) sp,sum(cp) cp,sum(fci) fci
                                    from   td_cmr_delivery
-                                   where  trans_dt between '$frmdt' and '$todt'
+                                   where  delivery_dt between '$frmdt' and '$todt'
+                                   and    kms_year = $kms_id
                                    group by branch_id,cmr_type
                                    order by branch_id");
         return $offer->result();
       }
 
-    public function f_get_remain_dist($frmdt,$todt){      //Districtwise remaining CMR to be delivered
+    public function f_get_remain_dist($frmdt,$todt,$kms_id){      //Districtwise remaining CMR to be delivered
     
     $remain = $this->db->query("select branch_id,sum(offer),sum(delv),sum(offer) - sum(delv)remain
                                 from (
@@ -723,7 +713,8 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
                                         union
                                         select branch_id,0 offer,sum(sp) + sum(cp) + sum(fci)delv
                                         from   td_cmr_delivery
-                                        where  trans_dt between '$frmdt' and '$todt'
+                                        where  delivery_dt between '$frmdt' and '$todt'
+                                        and    kms_year = $kms_id
                                         group by branch_id)a
                                 group by branch_id
                                 order by branch_id");

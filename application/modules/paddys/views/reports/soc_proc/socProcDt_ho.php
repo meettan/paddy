@@ -87,6 +87,7 @@ tr:hover {background-color: #f5f5f5;}
 
                         <input type="date"
                                name="from_date"
+                               id="from_date"
                                class="form-control required"
                                value="<?php echo $sys_date;?>" />
 
@@ -102,6 +103,7 @@ tr:hover {background-color: #f5f5f5;}
 
                         <input type="date"
                                name="to_date"
+                               id="to_date"
                                class="form-control required"
                                value="<?php echo $sys_date;?>" />
 
@@ -115,7 +117,7 @@ tr:hover {background-color: #f5f5f5;}
               <div class="col-sm-10">
 
               <select name="dist" id="dist" class="form-control required">
-               <option value="">Select</option>  
+               <option value="0">Select</option>  
                       <?php foreach($dists as $dist)  { ?>  
                       <option value="<?php if(isset($dist->district_code)){echo $dist->district_code;}?>"><?php if(isset($dist->district_name)){echo $dist->district_name;}?></option> 
                  <?php } ?>   
@@ -489,6 +491,22 @@ tr:hover {background-color: #f5f5f5;}
                 $("#example").table2excel({
                     filename: "Societywise Paddy Procurement Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?>.xls"
                 });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $("#form").on('submit',function(){
+                if($("#from_date").val() > $("#to_date").val()){
+                    alert("From date must be less than to date!");
+                    return false;
+                }
+
+                if($("#dist").val()==0){
+                    alert("Please select a district!")
+                    return false
+                }
             });
         });
     </script>
