@@ -597,7 +597,7 @@ class Payment extends MX_Controller {
             );
 
             $payment['bill_dtls']  = $this->Paddy->f_get_particulars("td_fund_requisition a,td_wqsc b,md_district c,td_cmr_delivery d",$select,$where,1);           
-         
+        
                      
             $payment['charges']    = $this->Paddy->f_get_particulars("td_fund_requisition_dtls",NULL,$wheres, 0);
 

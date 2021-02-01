@@ -251,7 +251,7 @@
                     
                     <?php  $sum = 0;
                         $flag = false;
-                           unset($bill_master[4]);
+                           //unset($bill_master[4]);
                         foreach($charges as $c_list){
                     ?>
                         <tr>
