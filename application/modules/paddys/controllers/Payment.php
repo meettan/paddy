@@ -1859,7 +1859,7 @@ class Payment extends MX_Controller {
 
                 "a.branch_id"        => $this->session->userdata['loggedin']['branch_id'],
 
-                "a.approved_status"  => 'A',
+                // "a.approved_status"  => 'A',
 
                 "a.kms_id      = b.kms_yr"  => NULL
             );
@@ -1924,9 +1924,9 @@ class Payment extends MX_Controller {
 
                 "kms_id"     => $this->session->userdata['loggedin']['kms_id'],
 
-                "dist"       => $this->session->userdata['loggedin']['branch_id'],
+                "dist"       => $this->session->userdata['loggedin']['branch_id']
 
-                "ho_status"  => 1,
+                // "ho_status"  => 1,
             );
             $wheres  =   array(
 
@@ -1965,11 +1965,14 @@ class Payment extends MX_Controller {
             $where  =   array(
 
                 "a.pmt_bill_no"   => $this->input->get('pmt_bill_no'),
+                "a.kms_id"        => $this->session->userdata['loggedin']['kms_id'],
+                "a.dist"          => $this->session->userdata['loggedin']['branch_id'],
                 "a.wqsc      = b.wqsc_no"  => NULL,
 
             );
 
             $data['bill_dtls']       =   $this->Paddy->f_get_particulars("td_payment_bill a,td_wqsc b",$select,$where,1);
+
 
             $data['charges']         =   $this->Paddy->f_get_particulars("md_mandilabour_charge",NULL,NULL,0);
 
@@ -1992,7 +1995,7 @@ class Payment extends MX_Controller {
             $where  =   array(
                 "a.kms_id"        => $this->session->userdata['loggedin']['kms_id'],
                 "a.dist"          => $this->session->userdata['loggedin']['branch_id'],
-                "a.ho_status"     => 1,
+                // "a.ho_status"     => 1,
                 "b.account_type"  => "2",
                 "a.trans_dt      = b.trans_dt"  => NULL,
                 "a.pmt_bill_no   = b.pmt_bill_no"  => NULL,
@@ -2063,9 +2066,9 @@ class Payment extends MX_Controller {
 
                 "kms_id"   => $this->session->userdata['loggedin']['kms_id'],
 
-                "dist"     => $this->session->userdata['loggedin']['branch_id'],
+                "dist"     => $this->session->userdata['loggedin']['branch_id']
 
-                "ho_status"  => 1,
+                // "ho_status"  => 1,
             );
 
             $wheres  =   array(
@@ -2106,6 +2109,8 @@ class Payment extends MX_Controller {
             $where  =   array(
 
                 "a.pmt_bill_no"   => $this->input->get('pmt_bill_no'),
+                 "a.kms_id"       => $this->session->userdata['loggedin']['kms_id'],
+                "a.dist"          => $this->session->userdata['loggedin']['branch_id'],
                 "a.wqsc      = b.wqsc_no"  => NULL,
 
             );
@@ -2144,9 +2149,9 @@ class Payment extends MX_Controller {
 
                 "kms_id"   => $this->session->userdata['loggedin']['kms_id'],
 
-                "dist"     => $this->session->userdata['loggedin']['branch_id'],
+                "dist"     => $this->session->userdata['loggedin']['branch_id']
 
-                "ho_status"  => 1,
+                // "ho_status"  => 1,
             );
 
             $wheres  =   array(
@@ -2224,9 +2229,9 @@ class Payment extends MX_Controller {
 
                 "kms_id"   => $this->session->userdata['loggedin']['kms_id'],
 
-                "dist"     => $this->session->userdata['loggedin']['branch_id'],
+                "dist"     => $this->session->userdata['loggedin']['branch_id']
 
-                "ho_status"  => 1,
+                // "ho_status"  => 1,
             );
 
             $wheres  =   array(
@@ -2293,9 +2298,9 @@ class Payment extends MX_Controller {
 
                 "kms_id"   => $this->session->userdata['loggedin']['kms_id'],
 
-                "dist"     => $this->session->userdata['loggedin']['branch_id'],
+                "dist"     => $this->session->userdata['loggedin']['branch_id']
 
-                "ho_status"  => 1,
+                // "ho_status"  => 1,
             );
 
             $wheres  =   array(
@@ -2363,9 +2368,9 @@ class Payment extends MX_Controller {
 
                 "kms_id"   => $this->session->userdata['loggedin']['kms_id'],
 
-                "dist"     => $this->session->userdata['loggedin']['branch_id'],
+                "dist"     => $this->session->userdata['loggedin']['branch_id']
 
-                "ho_status" => 1,
+                // "ho_status" => 1,
             );
 
             $wheres  =   array(
@@ -2432,9 +2437,9 @@ class Payment extends MX_Controller {
 
                 "kms_id"   => $this->session->userdata['loggedin']['kms_id'],
 
-                "dist"     => $this->session->userdata['loggedin']['branch_id'],
+                "dist"     => $this->session->userdata['loggedin']['branch_id']
 
-                "ho_status"  => 1,
+                // "ho_status"  => 1,
             );
 
             $wheres  =   array(
