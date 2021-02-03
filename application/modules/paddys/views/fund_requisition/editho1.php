@@ -192,7 +192,6 @@
                         <input type="text" class="form-control" readonly="" name="goodown_dist" id="goodown_dist" value="<?php if(isset($bill_dtls->district_name)){ echo $bill_dtls->district_name ;} ?>">
 
                 </div>
-
                
             </div>
            

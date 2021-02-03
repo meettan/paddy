@@ -1,4 +1,4 @@
-    <div class="wraper">      
+<div class="wraper">      
         
         <div class="row">
             <div class="col-lg-9 col-sm-12">
@@ -30,7 +30,7 @@
                         <th>Payment No.</th>
                         <th>Date</th>
                         <th>Society Name</th>
-                        <th>Transfer</th>
+                       <!--  <th>Transfer</th> -->
                         <th>Option</th>
 
                     </tr>
@@ -52,18 +52,18 @@
                                 <td><?php echo $p_dtls->trans_cd; ?></td>
                                 <td><?php echo date('d-m-Y', strtotime($p_dtls->trans_dt)); ?></td>                              
                                 <td><?php echo $p_dtls->soc_name; ?> </td>
-                                <td>
+                              <!--   <td>
                                     <?php if($p_dtls->approved_status == 'U') { ?> 
                                    
-                                        <button class="btn btn-primary forward" id="<?php echo $p_dtls->trans_cd; ?>/<?php echo $p_dtls->branch_id;?>/<?php echo $p_dtls->kms_id;?>/<?php echo $p_dtls->branch_ref_no;?>">Forward</button>
+                                        <button class="btn btn-primary forward" id="<?php //echo $p_dtls->trans_cd; ?>/<?php //echo $p_dtls->branch_id;?>/<?php //echo $p_dtls->kms_id;?>/<?php //echo $p_dtls->branch_ref_no;?>">Forward</button>
                                       <?php 
                                   }else {
 
-                                      echo "Forwarded";
+                                     // echo "Forwarded";
                                   
                                     }
                                      ?>   
-                                    </td>
+                                </td> -->
                                 
                                 <td>
                                 
@@ -110,7 +110,7 @@
                         <th>Payment No.</th>
                         <th>Date</th>
                         <th>Society Name</th>
-                        <th>Transfer</th>
+                       <!--  <th>Transfer</th> -->
                         <th>Option</th>
 
                     </tr>

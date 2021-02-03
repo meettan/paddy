@@ -430,10 +430,9 @@
                   <?php } ?>
                   </select>
 
-
                          
                         </td>
-                        <td><input type="text" class="form-control ref_no" name="ref_no" required></td>
+                        <td><input type="text" class="form-control ref_no" name="ref_no" ></td>
                       
                        
                     </tr>

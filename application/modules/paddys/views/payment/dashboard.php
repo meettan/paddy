@@ -32,7 +32,7 @@
                         <th>Date</th>
                         <th>Society Name</th>
                         <th>Mill Name</th>
-                        <th>Transfer</th>
+                    <!--     <th>Transfer</th> -->
                         <th>Option</th>
 
 
@@ -58,21 +58,21 @@
                                 <td><?php echo $p_dtls->soc_name; ?> </td>
 
                                 <td><?php echo $p_dtls->mill_name?></td>
-                                 <td>
+                                <!--  <td>
 
 
-                                    <?php if($p_dtls->ho_status == 0) { ?> 
+                                    <?php //if($p_dtls->ho_status == 0) { ?> 
                                    
-                                        <button class="btn btn-primary forward" id="<?php echo $p_dtls->pmt_bill_no; ?>/<?php echo $p_dtls->dist; ?>/<?php echo $p_dtls->kms_id; ?>/<?php echo $p_dtls->ben_bill_no; ?>">Forward</button>
+                                        <button class="btn btn-primary forward" id="<?php //echo $p_dtls->pmt_bill_no; ?>/<?php //echo $p_dtls->dist; ?>/<?php //echo $p_dtls->kms_id; ?>/<?php //echo $p_dtls->ben_bill_no; ?>">Forward</button>
                                       <?php 
-                                  }else {
+                                  //}else {
 
-                                      echo "Forwarded";
+                                      //echo "Forwarded";
                                   
-                                    }
+                                 //   }
                                      ?>   
 
-                                    </td>
+                                    </td> -->
                                 <td>
                                 
                                     <a href="<?php echo base_url();?>index.php/payment/payment_edit?pmt_bill_no=<?php echo $p_dtls->pmt_bill_no; ?>/<?php echo $p_dtls->dist; ?>/<?php echo $p_dtls->kms_id; ?>" 
@@ -126,7 +126,7 @@
                         <th>Date</th>
                         <th>Society Name</th>
                         <th>Mill Name</th>
-                        <th>Transfer</th>
+                     <!--    <th>Transfer</th> -->
                         <th>Option</th>
 
                     </tr>

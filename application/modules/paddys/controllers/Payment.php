@@ -951,6 +951,8 @@ class Payment extends MX_Controller {
 
         if($_SERVER['REQUEST_METHOD'] == "POST") {
 
+        	$count = $this->db->get_where('td_society_commision', array('sanc_no =' => $this->input->post('sanc_nos')))->num_rows();
+           if( $count == 0 ){
             $trans_cd = 0;
 
             $max_trans_no = $this->Paddy->f_get_particulars("td_society_commision", array("MAX(trans_cd) trans_cd"), array('kms_id' => $this->session->userdata['loggedin']['kms_id'],'branch_id' => $this->session->userdata['loggedin']['branch_id']), 1);
@@ -1030,6 +1032,15 @@ class Payment extends MX_Controller {
             $this->session->set_flashdata('msg', 'Successfully added!');
 
             redirect('payment/commission');
+
+            }else{
+
+            	$this->session->set_flashdata('msg', 'Sorry! Payment Done For This Sanction Number');
+
+                redirect('payment/commission');
+
+
+            }
 
         }
         else {
@@ -1196,7 +1207,7 @@ class Payment extends MX_Controller {
             "branch_id"   => explode("/",$this->input->get('sl_no'))["1"],
             "kms_id"      => explode("/",$this->input->get('sl_no'))["2"]
         );
-
+        
         $this->Paddy->f_delete('td_society_commision',$where);
 
         $this->session->set_flashdata('msg', 'Successfully Deleted!');
@@ -1264,136 +1275,149 @@ class Payment extends MX_Controller {
 
         if($_SERVER['REQUEST_METHOD'] == "POST") {
 
-            $pmt_bill_no = 0;
+        	//$count = $this->db->get_where();
+           $count = $this->db->get_where('td_payment_bill', array('sanc_no =' => $this->input->post('sanc_nos')))->num_rows();
 
-            $max_trans_no = $this->Paddy->f_get_particulars("td_payment_bill",array("MAX(pmt_bill_no) pmt_bill_no"), array('kms_id' => $this->session->userdata['loggedin']['kms_id'],'dist' =>$this->session->userdata['loggedin']['branch_id']), 1);
+            if($count == 0){
 
-            if($max_trans_no){
+	            $pmt_bill_no = 0;
 
-                $pmt_bill_no = $max_trans_no->pmt_bill_no + 1;
+	            $max_trans_no = $this->Paddy->f_get_particulars("td_payment_bill",array("MAX(pmt_bill_no) pmt_bill_no"), array('kms_id' => $this->session->userdata['loggedin']['kms_id'],'dist' =>$this->session->userdata['loggedin']['branch_id']), 1);
 
-            }
-            else {
+	            if($max_trans_no){
 
-                $pmt_bill_no = 1;
+	                $pmt_bill_no = $max_trans_no->pmt_bill_no + 1;
 
-            }
-            if($this->input->post('benfed_bill_no') > 0){
+	            }
+	            else {
 
-                $data_array = array(
+	                $pmt_bill_no = 1;
 
-                    "pmt_bill_no"           =>  $pmt_bill_no,
-    
-                    "trans_dt"              =>  $this->input->post('trans_dt'),
-    
-                    "kms_id"                =>  $this->session->userdata['loggedin']['kms_id'],
-    
-                    "soc_id"                =>  $this->input->post('soc_name'),
+	            }
+	            if($this->input->post('benfed_bill_no') > 0){
 
-                    "mill_id"               =>  $this->input->post('mill_name'),
+	                $data_array = array(
 
-                    "wqsc"                  =>  $this->input->post('wqsc'),
+	                    "pmt_bill_no"           =>  $pmt_bill_no,
+	    
+	                    "trans_dt"              =>  $this->input->post('trans_dt'),
+	    
+	                    "kms_id"                =>  $this->session->userdata['loggedin']['kms_id'],
+	    
+	                    "soc_id"                =>  $this->input->post('soc_name'),
 
-                    "sanc_no"               =>  $this->input->post('sanc_nos'),
-    
-                    "dist"                  =>  $this->session->userdata['loggedin']['branch_id'],
+	                    "mill_id"               =>  $this->input->post('mill_name'),
 
-                    "block"                 =>  $this->input->post('block'),
+	                    "wqsc"                  =>  $this->input->post('wqsc'),
 
-                    "tot_paddy"             =>  $this->input->post('totPaddy'),
-                    
-                    "tot_cmr"               =>  $this->input->post('totCmr'),
-    
-                    "ben_bill_no"           =>  $this->input->post('benfed_bill_no'),
+	                    "sanc_no"               =>  $this->input->post('sanc_nos'),
+	    
+	                    "dist"                  =>  $this->session->userdata['loggedin']['branch_id'],
 
-                    "ben_bill_dt"           =>  $this->input->post('benfed_bill_date'),
-    
-                    "mill_bill_no"          =>  $this->input->post('mill_bill_no'),
-    
-                    "mill_bill_dt"          =>  $this->input->post('mill_bill_date'),
-    
-                    "paddy_qty"             =>  $this->input->post('qty_paddy'),
-    
-                    "paddy_cmr"             =>  $this->input->post('qty_cmr'),
-    
-                    "paddy_butta"           =>  $this->input->post('qty_butta'),
+	                    "block"                 =>  $this->input->post('block'),
 
-                    "gunny_cut"             =>  $this->input->post('gunny_cut'),
+	                    "tot_paddy"             =>  $this->input->post('totPaddy'),
+	                    
+	                    "tot_cmr"               =>  $this->input->post('totCmr'),
+	    
+	                    "ben_bill_no"           =>  $this->input->post('benfed_bill_no'),
 
-                    "rice_type"             =>  $this->input->post('rice_type'),
-                    
-                    "pool_type"             =>  $this->input->post('pool_type'),
+	                    "ben_bill_dt"           =>  $this->input->post('benfed_bill_date'),
+	    
+	                    "mill_bill_no"          =>  $this->input->post('mill_bill_no'),
+	    
+	                    "mill_bill_dt"          =>  $this->input->post('mill_bill_date'),
+	    
+	                    "paddy_qty"             =>  $this->input->post('qty_paddy'),
+	    
+	                    "paddy_cmr"             =>  $this->input->post('qty_cmr'),
+	    
+	                    "paddy_butta"           =>  $this->input->post('qty_butta'),
 
-                    "mandi_board"           =>  $this->input->post('mandi_board'),
+	                    "gunny_cut"             =>  $this->input->post('gunny_cut'),
 
-                    "mandi_board_addr"      =>  $this->input->post('mandi_board_addr'),
+	                    "rice_type"             =>  $this->input->post('rice_type'),
+	                    
+	                    "pool_type"             =>  $this->input->post('pool_type'),
 
-                    "transport_agency_name" =>  $this->input->post('transport_agency_name'),
+	                    "mandi_board"           =>  $this->input->post('mandi_board'),
 
-                    "transport_agency_addr" =>  $this->input->post('transport_agency_addr'),
+	                    "mandi_board_addr"      =>  $this->input->post('mandi_board_addr'),
 
-                    "pay_mode"              =>  $this->input->post('pay_mode'),
+	                    "transport_agency_name" =>  $this->input->post('transport_agency_name'),
 
-                    "bank_id"               =>  $this->input->post('bank_id'),
+	                    "transport_agency_addr" =>  $this->input->post('transport_agency_addr'),
 
-                    "ref_no"                =>  $this->input->post('ref_no'),
-    
-                    "created_by"            =>  $this->session->userdata['loggedin']['user_name'],
-    
-                    "created_dt"            =>  date('Y-m-d h:i:s')
-    
-                );
-                
-                
-                $this->Paddy->f_insert('td_payment_bill', $data_array);
+	                    "pay_mode"              =>  $this->input->post('pay_mode'),
 
-           
+	                    "bank_id"               =>  $this->input->post('bank_id'),
 
-            for($i = 0; $i < count($this->input->post('particulars')); $i++){
+	                    "ref_no"                =>  $this->input->post('ref_no'),
+	    
+	                    "created_by"            =>  $this->session->userdata['loggedin']['user_name'],
+	    
+	                    "created_dt"            =>  date('Y-m-d h:i:s')
+	    
+	                );
+	                
+	                
+	                $this->Paddy->f_insert('td_payment_bill', $data_array);
 
-                $data_array = array(
+	           
 
-                    "pmt_bill_no"           =>  $pmt_bill_no,
+	            for($i = 0; $i < count($this->input->post('particulars')); $i++){
 
-                    "kms_id"                =>  $this->session->userdata['loggedin']['kms_id'],
+	                $data_array = array(
 
-                    "dist"                  =>  $this->session->userdata['loggedin']['branch_id'],
-    
-                    "trans_dt"              =>  $this->input->post('trans_dt'),
-    
-                    "account_type"          =>  $this->input->post('particulars')[$i],
-    
-                    "per_unit"              =>  $this->input->post('rate_per_qtls')[$i],
+	                    "pmt_bill_no"           =>  $pmt_bill_no,
 
-                    "total_amt"             =>  $this->input->post('amounts')[$i],
-    
-                    "tds_amt"               =>  $this->input->post('tds_amount')[$i],
-    
-                    "cgst_amt"              =>  $this->input->post('cgst')[$i],
+	                    "kms_id"                =>  $this->session->userdata['loggedin']['kms_id'],
 
-                    "sgst_amt"              =>  $this->input->post('sgst')[$i],
+	                    "dist"                  =>  $this->session->userdata['loggedin']['branch_id'],
+	    
+	                    "trans_dt"              =>  $this->input->post('trans_dt'),
+	    
+	                    "account_type"          =>  $this->input->post('particulars')[$i],
+	    
+	                    "per_unit"              =>  $this->input->post('rate_per_qtls')[$i],
 
-                    "claim_amt"             =>  $this->input->post('claim_amt')[$i],
-    
-                    "payble_amt"            =>  $this->input->post('paybel')[$i]
-    
-                );
-                
-                
-                $this->Paddy->f_insert('td_payment_bill_dtls', $data_array);
+	                    "total_amt"             =>  $this->input->post('amounts')[$i],
+	    
+	                    "tds_amt"               =>  $this->input->post('tds_amount')[$i],
+	    
+	                    "cgst_amt"              =>  $this->input->post('cgst')[$i],
 
-            }
+	                    "sgst_amt"              =>  $this->input->post('sgst')[$i],
+
+	                    "claim_amt"             =>  $this->input->post('claim_amt')[$i],
+	    
+	                    "payble_amt"            =>  $this->input->post('paybel')[$i]
+	    
+	                );
+	                
+	                
+	                $this->Paddy->f_insert('td_payment_bill_dtls', $data_array);
+
+	            }
 
             //For notification storing message
             $this->session->set_flashdata('msg', 'Successfully added!');
             redirect('payment/payment');
 
-        }else{
-                //For notification storing message
-            $this->session->set_flashdata('msg', 'Please Check Branch Reference Number Properly');
-            redirect('payment/payment');
+	            }else{
+	                //For notification storing message
+	            $this->session->set_flashdata('msg', 'Please Check Branch Reference Number Properly');
+	            redirect('payment/payment');
 
-        }
+	             }
+	        }else{
+
+
+	        	$this->session->set_flashdata('msg', 'Sorry! Payment Done For This Sanction Number');
+	            redirect('payment/payment');
+
+
+	        }     
             
         }
         else {
