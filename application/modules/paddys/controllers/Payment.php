@@ -1827,8 +1827,8 @@ class Payment extends MX_Controller {
                 "a.pmt_bill_no"  => $data[0],
                 "a.dist"         => $data[1],
                 "a.kms_id"       => $data[2],
-                "a.account_type      = b.sl_no"  => NULL,
-                "b.kms_id"      => $data[2]
+                "a.account_type   = b.sl_no"  => NULL
+               // "b.kms_id"      => $data[2]
 
             );
             $datas['particulas']       =   $this->Paddy->f_get_particulars("td_payment_bill_dtls a,md_comm_params b",$selects,$where,0);
