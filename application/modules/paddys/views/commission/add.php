@@ -300,14 +300,14 @@
                        <option value="<?php if(isset($bank->sl_no)){ echo $bank->sl_no; }?>">
 
                        <?php if(isset($bank->bank_id) && $bank->bank_id=="1")
-                               { echo 'Yes Bank/'.$bank->branch;}
-                        elseif($bank->bank_id=="2"){ echo 'Bandhan Bank/'.$bank->branch;  }
+                               { echo 'Yes Bank';}
+                        elseif($bank->bank_id=="2"){ echo 'Bandhan Bank';  }
 
-                        elseif($bank->bank_id=="3"){ echo 'Icici Bank/'.$bank->branch;  }
+                        elseif($bank->bank_id=="3"){ echo 'Icici Bank';  }
 
-                        elseif($bank->bank_id=="4"){ echo 'Axis Bank/'.$bank->branch;  }
+                        elseif($bank->bank_id=="4"){ echo 'Axis Bank';  }
 
-                        else{ echo 'Hdfc Bank/'.$bank->branch;  } ?>
+                        else{ echo 'Hdfc Bank';  } ?>
                             
                         </option>    
 

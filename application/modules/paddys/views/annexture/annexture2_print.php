@@ -137,8 +137,8 @@ tr:hover {background-color: #f5f5f5;}
   </div>
   <h2 align="right" >STATE / CENTRAL POOL </h2>
   <p align="justify" >Amount Rounded off:<strong>&#2352;  <?php 
-                                            setlocale(LC_MONETARY, 'en_IN');
-                                     $amount = money_format('%!i',round($sum)); 
+                                         
+                                        $amount = moneyFormatIndia(round($sum)); 
                                       echo $amount; ?> </strong> </p>
     <p align="justify" >Rupees in Words:<strong> <?php echo getIndianCurrency(round($sum));?></strong> </p>
   <p>&nbsp;</p>

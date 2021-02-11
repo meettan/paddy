@@ -971,6 +971,8 @@ class Payment extends MX_Controller {
 
             }
 
+            $ho_bill_no = $this->session->userdata['loggedin']['dist_sort_code'].'/'.$this->session->userdata['loggedin']['kms_yr'].'/'.$this->input->post('branch_ref_no').'/'.$trans_cd;
+
                 $data_array = array(
 
                     "trans_dt"            =>  $this->input->post('trans_dt'),
@@ -1020,6 +1022,8 @@ class Payment extends MX_Controller {
                     "bank_id"             =>  $this->input->post('bank_id'),
                       
                     "ref_no"              =>  $this->input->post('ref_no'),
+
+                    'ho_bill_no'          =>  $ho_bill_no,
 
                     "remarks"             =>  $this->input->post('remarks'),
     
@@ -1297,7 +1301,11 @@ class Payment extends MX_Controller {
 	                $pmt_bill_no = 1;
 
 	            }
+
+           
 	            if($this->input->post('benfed_bill_no') > 0){
+
+                     $ho_bill_num = $this->session->userdata['loggedin']['dist_sort_code'].'/'.$this->session->userdata['loggedin']['kms_yr'].'/'.$this->input->post('benfed_bill_no').'/'.$pmt_bill_no;
 
 	                $data_array = array(
 
@@ -1356,6 +1364,8 @@ class Payment extends MX_Controller {
 	                    "bank_id"               =>  $this->input->post('bank_id'),
 
 	                    "ref_no"                =>  $this->input->post('ref_no'),
+
+                        "ho_bill_number"        =>  $ho_bill_num,
 	    
 	                    "created_by"            =>  $this->session->userdata['loggedin']['user_name'],
 	    

@@ -116,12 +116,14 @@ tr:hover {background-color: #f5f5f5;}
   <p align="justify">Amount Rounded off: <strong style="">&#2352;  <?php if(isset($bill_dtls->per_qui_rate)){ 
 
 
+    
+
+
     $amount = round($bill_dtls->per_qui_rate*$bill_dtls->tot_paddy);
-    setlocale(LC_MONETARY, 'en_IN');
-    $amount = money_format('%!i', $amount); echo $amount;
-
-
-                                                                                $sum = $bill_dtls->per_qui_rate*$bill_dtls->tot_paddy;
+                     
+     echo $amount = moneyFormatIndia( $amount );
+ 
+            $sum = $bill_dtls->per_qui_rate*$bill_dtls->tot_paddy;
   }?></strong></p>
   <p align="justify">Rupees in Words: <strong>  <?php echo getIndianCurrency(round($sum));?></strong></p>
   <p>&nbsp;</p>

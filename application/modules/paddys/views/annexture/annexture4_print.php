@@ -104,8 +104,8 @@ tr:hover {background-color: #f5f5f5;}
       <td>&nbsp;</td>
       <td style="text-align: right"><strong> Rounded of Total: </strong></td>
       <td><strong> <?php $amount = round($bill_dtls->per_unit*$bill_dtls->tot_paddy);
-    setlocale(LC_MONETARY, 'en_IN');
-    $amount = money_format('%!i', $amount); echo $amount;
+   
+    $amount = moneyFormatIndia($amount);   echo $amount;
 
       ?></strong></td>
     </tr>

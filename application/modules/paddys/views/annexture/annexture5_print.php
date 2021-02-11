@@ -238,8 +238,8 @@ tr:hover {background-color: #f5f5f5;}
     </div>
 
   <p align="justify" >Amount Rounded off: <strong>&#2352; <?php
-                                     setlocale(LC_MONETARY, 'en_IN');
-                                     $amount = money_format('%!i',round(($bill_dtls->paddy_qty)*$sun_rate)); 
+                                   
+                                     $amount = moneyFormatIndia(round(($bill_dtls->paddy_qty)*$sun_rate)); 
                                      echo $amount;
 
   ?> </strong><br>

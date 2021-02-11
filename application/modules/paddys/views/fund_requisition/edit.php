@@ -235,7 +235,7 @@
                         <th width="25%">Particulars</th>
                         <th>Rate/Qtls <br>Paddy</th>
                         <th>Total Amount <br> (Rs)</th>
-                        <th>TDS Amount <br>(Less) <br> @2.00%</th>
+                        <th>TDS Amount <br>(Less)</th>
                         <th>CGST <br> (Add) <br> @2.5%</th>
                         <th>SGST <br> (Add) <br> @2.5%</th>
                         <th>Claimed Amount(Rs)</th>
