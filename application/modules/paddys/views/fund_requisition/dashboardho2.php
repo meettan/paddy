@@ -20,29 +20,31 @@
                         <span class="confirm-div" style="float:left; color:green;"></span>
                         </h3>
                     </div>
-                    <div class="col-sm-4">
+                    <!--<div class="col-sm-4">
                          <h3>    
                         <div class="input-group" >
                             <span class="input-group-addon"><i class="fa fa-search"></i></span>
                             <input type="text" class="form-control" placeholder="Search..." id="search" style="z-index: 0;">
                         </div>
                         </h3>
-                    </div>
+                    </div>-->
 
                     
               </div>  
            
 
-            <table class="table table-bordered table-hover">
+              <table class="table table-bordered table-hover" id="myTable">
 
                 <thead>
 
                     <tr>
                         <th>Sl No.</th>
+                        <th style="display:none">Year</th>
+                        <th style="display:none">Month</th>
+                        <th>Date</th>
                         <th>District</th>
                         <th>Requisition No.</th>
                         <th>Wqsc/CS No.</th>
-                        <th>Date</th>
                         <th>Society Name</th>
                         <th>Mill Name</th>
                         <th>Status</th>
@@ -65,10 +67,12 @@
 
                             <tr>
                                 <td><?php echo ++$i; ?></td>
+                                <td style="display:none"><?php echo date('Y', strtotime($p_dtls->req_dt)); ?></th>
+                                <td style="display:none"><?php echo date('m', strtotime($p_dtls->req_dt)); ?></th>
+                                <td><?php echo date('d/m/Y', strtotime($p_dtls->req_dt)); ?></td>
                                 <td><?php echo get_district_name($p_dtls->branch_id); ?></td>
                                 <td><?php echo $p_dtls->req_no; ?></td>
                                 <td><?php echo $p_dtls->wqsc; ?></td>
-                                <td><?php echo date('d/m/Y', strtotime($p_dtls->req_dt)); ?></td>
                                 <td><?php echo $p_dtls->soc_name; ?> </td>
                                 <td><?php echo $p_dtls->mill_name?></td>
                                 <td><?php if($p_dtls->approve2 == "0") {
@@ -116,10 +120,12 @@
 
                     <tr>
                         <th>Sl No.</th>
+                        <th style="display:none">Year</th>
+                        <th style="display:none">Month</th>
+                        <th>Date</th>
                         <th>District</th>
                         <th>Requisition No.</th>
                         <th>Wqsc/CS No.</th>
-                        <th>Date</th>
                         <th>Society Name</th>
                         <th>Mill Name</th>
                         <th>Status</th>
@@ -134,6 +140,11 @@
         </div>
 
     </div>
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable();
+    } );
+</script>
 
 <script>
 

@@ -20,20 +20,20 @@
                         <span class="confirm-div" style="float:left; color:green;"></span>
                         </h3>
                     </div>
-                    <div class="col-sm-4">
+                    <!--<div class="col-sm-4">
                          <h3>    
                         <div class="input-group" >
                             <span class="input-group-addon"><i class="fa fa-search"></i></span>
                             <input type="text" class="form-control" placeholder="Search..." id="search" style="z-index: 0;">
                         </div>
                         </h3>
-                    </div>
+                    </div>-->
 
                     
               </div>  
            
 
-            <table class="table table-bordered table-hover">
+              <table class="table table-bordered table-hover" id="myTable">
 
                 <thead>
 
@@ -117,7 +117,7 @@
                 <tfoot>
 
                     <tr>
-                         <th>Sl No.</th>
+                        <th>Sl No.</th>
                         <th>District</th>
                         <th>Requisition No.</th>
                         <th>SANC No.</th>
@@ -135,6 +135,12 @@
         </div>
 
     </div>
+
+<script>
+    $(document).ready(function() {
+        $('#myTable').DataTable();
+    } );
+</script>
 
 <script>
 

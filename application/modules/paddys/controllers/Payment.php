@@ -59,7 +59,7 @@ class Payment extends MX_Controller {
                 "a.wqsc_no = d.id"  => NULL,
                 "a.kms_id"     => $this->session->userdata['loggedin']['kms_id'],
                 "d.kms_id"     => $this->session->userdata['loggedin']['kms_id'],
-                "a.ho_flag"   => "1"
+                "a.ho_flag = '1'order by a.req_dt"   => NULL
         );
 
         $data['payment_dtls']    =   $this->Paddy->f_get_particulars("td_fund_requisition a,md_society b,md_mill c,td_wqsc d",$select,$where, 0);
@@ -68,7 +68,7 @@ class Payment extends MX_Controller {
 
         $this->load->view("fund_requisition/dashboardho1", $data);
 
-        $this->load->view('search/search');
+        //$this->load->view('search/search');
 
         $this->load->view('post_login/footer');
 
@@ -91,7 +91,7 @@ class Payment extends MX_Controller {
                 "a.kms_id"          => $this->session->userdata['loggedin']['kms_id'],
                 "d.kms_id"          => $this->session->userdata['loggedin']['kms_id'],
                 "a.ho_flag"         => "1",
-                "a.approve1"        => "1"
+                "a.approve1         = '1' order by a.req_dt"   => NULL
         );
 
 
@@ -101,7 +101,7 @@ class Payment extends MX_Controller {
 
         $this->load->view("fund_requisition/dashboardho2", $data);
 
-        $this->load->view('search/search');
+        //$this->load->view('search/search');
 
         $this->load->view('post_login/footer');
 
@@ -125,7 +125,8 @@ class Payment extends MX_Controller {
                 "d.kms_id"             => $this->session->userdata['loggedin']['kms_id'],
                 "a.ho_flag"            => "1",
                 "a.approve1"           => "1",
-                "a.approve2"           => "1"
+                "a.approve2   ='1' order by a.req_dt"   => NULL
+               
         );
 
 
@@ -135,7 +136,7 @@ class Payment extends MX_Controller {
 
         $this->load->view("fund_requisition/dashboardho3", $data);
 
-        $this->load->view('search/search');
+        //$this->load->view('search/search');
 
         $this->load->view('post_login/footer');
 
@@ -160,7 +161,7 @@ class Payment extends MX_Controller {
                 "a.ho_flag"    => "1",
                 "a.approve1"   => "1",
                 "a.approve2"   => "1",
-                "a.approve3"   => "1"
+                "a.approve3    = '1' order by a.req_dt"   => NULL
             );
 
         $data['payment_dtls']    =   $this->Paddy->f_get_particulars("td_fund_requisition a,md_society b,md_mill c,td_wqsc d",$select,$where, 0);
@@ -169,7 +170,7 @@ class Payment extends MX_Controller {
 
         $this->load->view("fund_requisition/dash_fund_alloc", $data);
 
-        $this->load->view('search/search');
+        //$this->load->view('search/search');
 
         $this->load->view('post_login/footer');
 
