@@ -242,7 +242,7 @@ tr:hover {background-color: #f5f5f5;}
   <p align="justify" >Amount Rounded off: <strong>&#2352; <?php
                                    
                                      $amount = moneyFormatIndia(round(($bill_dtls->paddy_qty)*$sun_rate)); 
-                                     echo abs(round(($bill_dtls->paddy_qty)*$sun_rate) - $value);
+                                     echo round(abs(round(($bill_dtls->paddy_qty)*$sun_rate) - $value),2);
 
   ?> </strong><br>
   Rupees in Words: <strong><?php echo getIndianCurrency(round(($bill_dtls->paddy_qty)*$sun_rate));?></strong></p>

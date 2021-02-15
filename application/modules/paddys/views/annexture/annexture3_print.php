@@ -123,7 +123,7 @@ tr:hover {background-color: #f5f5f5;}
 
     $amount = round($bill_dtls->per_qui_rate*$bill_dtls->tot_paddy);
 
-    echo abs($amount - $value);
+    echo round(abs($amount - $value),2);
                      
     // echo $amount = moneyFormatIndia( $amount );
  
@@ -137,13 +137,13 @@ tr:hover {background-color: #f5f5f5;}
      <p>&nbsp;</p>
       <p>&nbsp;</p>
     <h3> Required Supporting Documents:</h3>
-    <p align="justify"><strong>1. Money Receipt from Rice Mill 2. MSP Certificate [Original] 3. Photocopy of Muster Roll,  4.</strong>Certificate on proff of Receipt of Paddy [Original]</p>
+    <p align="justify">1. Money Receipt from Rice Mill 2. MSP Certificate [Original] 3. Photocopy of Muster Roll,  4.Certificate on proff of Receipt of Paddy [Original]</p>
     
    
    
     <p>&nbsp;</p>
     <p>&nbsp;</p>
-    <p align="justify"><strong>N.B Claim Will Summarily be rejected for payment for want of above noted requisite documents</strong></p>
+    <p align="justify"><strong>N.B Claim will summarily be rejected for payment for want of above noted requisite documents.</strong></p>
  </div>
 
     
