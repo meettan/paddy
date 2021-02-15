@@ -256,7 +256,15 @@ tr:hover {background-color: #f5f5f5;}
   <ul>
   </ul>
   <p>&nbsp;</p>
-  <p><strong>Signature of the Claimant with seal</strong></p>
+  <p style="float: right;"><strong>Signature of the Claimant with seal</strong></p>
+  <p ><strong>Required Supporting Documents:</strong></p>
+  <p align="justify" >1. Work Order,</p>
+  <p align="justify" >2. Copy of Agreement,</p>
+  <p align="justify" >3. Notification,</p>
+  <p align="justify" >4. Voucher [original] and </p>
+  <p align="justify" >5. Money Receipt</p>
+
+  <p ><strong>N.B Claim will summarily be rejected for payment for want of above requisite documents</strong></p>
 </div>
                   
 
