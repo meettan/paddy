@@ -90,7 +90,7 @@
                         <th>Payment No.</th>
                         <th>Date</th>
                         <th>Bill Number</th>
-                        <th>Amount</th>
+                     <!--    <th>Amount</th> -->
                         <th>Option</th>
 
                     </tr>
@@ -114,7 +114,7 @@
                                 <td><?php echo date('d/m/Y', strtotime($bill_dtl->trans_dt)); ?></td>
                                 <td><?php echo $bill_dtl->ho_bill_number; ?> </td>
 
-                                <td><?php echo round($bill_dtl->tot_paddy*$bill_dtl->per_unit)?></td>
+                              <!--   <td><?php //echo round($bill_dtl->tot_paddy*$bill_dtl->per_unit)?></td> -->
                              
                                 <td>
                                 
@@ -153,7 +153,7 @@
                         <th>Payment No.</th>
                         <th>Date</th>
                        <th>Bill Number</th>
-                        <th>Amount</th>
+                      <!--   <th>Amount</th> -->
                       
                         <th>Option</th>
 

@@ -62,9 +62,9 @@ tr:hover {background-color: #f5f5f5;}
                     <div id="divToPrint">
     <div class="wrapper_fixed">
     <h2>  ANNEXURE-III </h2>
-  <p>Name of the Agency:<b>BENFED</b> </p>
+  <p>Name of the Agency: <b>BENFED</b> </p>
     <!--   SYNOPSIS OF BILL -->
-  <div class="billDateGroop"><div class="crmBill">CMR Bill No :<strong><?php if(isset($bill_dtls->ho_bill_no)){echo $bill_dtls->ho_bill_no;}?></strong></div>                                            <div class="dateTop">Date: <strong><?php echo date('d/m/Y', strtotime($bill_dtls->trans_dtp)); ?></strong>.</div></div>
+  <div class="billDateGroop"><div class="crmBill">CMR Bill No: <strong><?php if(isset($bill_dtls->ho_bill_no)){echo $bill_dtls->ho_bill_no;}?></strong></div>                                            <div class="dateTop">Date: <strong><?php echo date('d/m/Y', strtotime($bill_dtls->trans_dtp)); ?></strong>.</div></div>
   <br clear="all">
 
   <p>Claim towards MSP to F&S Deptt. through the <strong> HO </strong> for  the KMS  <strong><?php echo $this->session->userdata['loggedin']['kms_yr'];?></strong></p>
@@ -96,15 +96,18 @@ tr:hover {background-color: #f5f5f5;}
       </td>
       <td><?php if(isset($bill_dtls->tot_paddy)){echo $bill_dtls->tot_paddy;}?></td>
       <td><?php if(isset($bill_dtls->per_qui_rate)){echo $bill_dtls->per_qui_rate;}?></td>
-      <td><?php if(isset($bill_dtls->per_qui_rate)){echo round(($bill_dtls->per_qui_rate*$bill_dtls->tot_paddy),2);}?></td>
+      <!-- <td><?php //if(isset($bill_dtls->rate)){echo $bill_dtls->rate;}?></td> -->
+      <td><?php if(isset($bill_dtls->rate)){echo round(($bill_dtls->per_qui_rate*$bill_dtls->tot_paddy),2);}
+                                            $value = round(($bill_dtls->per_qui_rate*$bill_dtls->tot_paddy),2);
+      ?></td>
     </tr>
-   <!--  <tr>
+    <tr>
       <td scope="row">&nbsp;</td>
       <td>Raw Rice</td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
-    </tr> -->
+    </tr>
 
     
   </tbody>
@@ -113,15 +116,16 @@ tr:hover {background-color: #f5f5f5;}
     
   </div>
 
-  <p align="justify">Amount Rounded off: <strong style="">&#2352;  <?php if(isset($bill_dtls->per_qui_rate)){ 
+  <p align="justify">Amount Rounded off: <strong style="">&#2352;  <?php 
 
-
-    
-
+     
+  if(isset($bill_dtls->per_qui_rate)){ 
 
     $amount = round($bill_dtls->per_qui_rate*$bill_dtls->tot_paddy);
+
+    echo abs($amount - $value);
                      
-     echo $amount = moneyFormatIndia( $amount );
+    // echo $amount = moneyFormatIndia( $amount );
  
             $sum = $bill_dtls->per_qui_rate*$bill_dtls->tot_paddy;
   }?></strong></p>
@@ -129,7 +133,17 @@ tr:hover {background-color: #f5f5f5;}
   <p>&nbsp;</p>
 
   <p>&nbsp;</p>
-    <p><strong>Signature of the Claimant with seal</strong></p>
+    <p style="float: right;"><strong>Signature of the Claimant with seal</strong></p>
+     <p>&nbsp;</p>
+      <p>&nbsp;</p>
+    <h3> Required Supporting Documents:</h3>
+    <p align="justify"><strong>1. Money Receipt from Rice Mill 2. MSP Certificate [Original] 3. Photocopy of Muster Roll,  4.</strong>Certificate on proff of Receipt of Paddy [Original]</p>
+    
+   
+   
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p align="justify"><strong>N.B Claim Will Summarily be rejected for payment for want of above noted requisite documents</strong></p>
  </div>
 
     

@@ -64,14 +64,56 @@ tr:hover {background-color: #f5f5f5;}
                       <div class="wrapper_fixed">
                         <h3 style="text-align: center">  ANNEXURE-VI</h3>
   <p>Name of the Agency: <b>Benfed</b> </p>
-  <p>Name of the Miller:<?php echo $millname->mill_name;?>  </p>
+  <p>Name of the Miller: <strong><?php echo $millname->mill_name;?></strong> </p>
 
 
   <p>Claim towards Transport Charges for the KMS <strong><?php echo $this->session->userdata['loggedin']['kms_yr'];?></strong></p>
   
   <div class="">
   <table class="table tableCus" width="100%" border="0" cellspacing="0" cellpadding="0">
-  
+  <?php  
+         $rate1 = 0;
+         $rate2 = 0;
+         $rate3 = 0;
+         $rate4 = 0;
+         $sum   = 0;
+   foreach($rate as $rt){
+
+    if($rt->account_type == 3){
+      $rate1 = $rt->per_unit;
+    }elseif($rt->account_type == 4){
+
+       $rate2 = $rt->per_unit;
+    }elseif($rt->account_type == 5){
+
+      $rate3 = $rt->per_unit;
+    }else{
+
+      $rate4 = $rt->per_unit;
+    }
+
+  }
+
+
+
+   $tot_dis = $distance->distance;
+                   $distance3 =0;$distance2 =0;$distance1 =0;
+                      if($distance->distance > 50){
+                        $distance3 =  $tot_dis -50;
+                        $distance2 =  $tot_dis - $distance3 -25 ;
+                        $distance1 =  25;
+                      }else if($tot_dis <=50){
+                        $distance2 =  $tot_dis -25 ;
+                        $distance1 =  25;
+
+                      }else{
+                        $distance1 =25;
+                      }
+
+                $sum = 0;
+                $gum = 0;
+
+      ?>
   
   <thead>
     <tr>
@@ -125,23 +167,23 @@ tr:hover {background-color: #f5f5f5;}
     </thead>
     <tbody>
 
-      <tr><?php $distance->distance;
-                $sum = 0;
-
-      ?>
+      <tr>
       <td scope="col" class="sl55_1">1</td>
       <td scope="col" class="sl55_2">0-25 Kms</td>
-      <td scope="col" class="sl55_3"></td>
-      <td scope="col" class="sl55_4"><?php  echo $bill_dtls->paddy_qty;?></td>
-      <td scope="col" class="sl55_5"><?php echo $rate['3']->boiled_val?></td>
-      <td scope="col" class="sl55_1"><?php echo round(($rate['3']->boiled_val*$bill_dtls->paddy_qty),2);
-                                                $sum = round(($rate['3']->boiled_val*$bill_dtls->paddy_qty),2);
-
-      ?></td>
+      <td scope="col" class="sl55_3"><?=$distance1?></td>
+      <td scope="col" class="sl55_4"><?php echo $bill_dtls->paddy_qty;?></td>
+      <td scope="col" class="sl55_5"><?php echo $rate1;?></td>
+      <td scope="col" class="sl55_1"><?php if($rate1 > 0 && $distance1 > 0){
+                                                echo round($rate1*$bill_dtls->paddy_qty,2); 
+                                                $sum += $rate1*$bill_dtls->paddy_qty;
+                                                 }  ?></td>
       <td scope="col" class="sl55_2"></td>
-      <td scope="col" class="sl55_3"></td>
-      <td scope="col" class="sl55_4"></td>
-      <td scope="col" class="sl55_5"></td>
+      <td scope="col" class="sl55_3"><?php echo $bill_dtls->paddy_cmr;?></td>
+      <td scope="col" class="sl55_4"><?php echo $rate4;?></td>
+      <td scope="col" class="sl55_5"><?php if($rate4 > 0 ){
+                                                echo round($rate4*$bill_dtls->paddy_cmr,2); 
+                                                $gum += $rate4*$bill_dtls->paddy_cmr;
+                                                 }  ?></td>
       <td scope="col" class="sl55_1"></td>
      
     </tr>
@@ -149,15 +191,13 @@ tr:hover {background-color: #f5f5f5;}
      <tr>
       <td scope="col" class="sl55_1">2</td>
       <td scope="col" class="sl55_2"> >25-50 Kms</td>
-      <td scope="col" class="sl55_3"></td>
+      <td scope="col" class="sl55_3"><?=$distance2?></td>
       <td scope="col" class="sl55_4"><?php echo $bill_dtls->paddy_qty;?></td>
-      <td scope="col" class="sl55_5"><?php echo $rate['4']->boiled_val?></td>
-      <td scope="col" class="sl55_1"><?php if($distance->distance > 25){
-                                            echo round(($rate['4']->boiled_val*$bill_dtls->paddy_qty),2);
-                                            $sum += round(($rate['4']->boiled_val*$bill_dtls->paddy_qty),2);
-                                          }else{
-                                            echo "";
-                                          }?>                                     
+      <td scope="col" class="sl55_5"><?php echo $rate2;?></td>
+      <td scope="col" class="sl55_1"><?php if($rate2 > 0 && $distance2 > 0){
+                                                echo $rate2*$distance2*$bill_dtls->paddy_qty;
+                                                $sum += $rate2*$distance2*$bill_dtls->paddy_qty;
+                                                 }  ?>                              
       </td>
       <td scope="col" class="sl55_2"></td>
       <td scope="col" class="sl55_3"></td>
@@ -170,15 +210,13 @@ tr:hover {background-color: #f5f5f5;}
      <tr>
       <td scope="col" class="sl55_1">3</td>
       <td scope="col" class="sl55_2">>50-100 Kms</td>
-      <td scope="col" class="sl55_3"></td>
+      <td scope="col" class="sl55_3"><?=$distance3?></td>
       <td scope="col" class="sl55_4"><?php echo $bill_dtls->paddy_qty;?></td>
-      <td scope="col" class="sl55_5"><?php echo $rate['5']->boiled_val?></td>
-      <td scope="col" class="sl55_1"><?php  if($distance->distance > 50){
-                                            echo round(($rate['5']->boiled_val*$bill_dtls->paddy_qty),2);
-                                            $sum += round(($rate['5']->boiled_val*$bill_dtls->paddy_qty),2);
-                                          }else{
-                                             echo "";
-                                          }
+      <td scope="col" class="sl55_5"><?php echo $rate3;?></td>
+      <td scope="col" class="sl55_1"><?php  if($rate3 > 0 && $distance3 > 0){
+                                                echo $rate3*$distance3*$bill_dtls->paddy_qty; 
+                                                 $sum += $rate3*$distance3*$bill_dtls->paddy_qty; 
+                                                 }
                                           ?></td>
       <td scope="col" class="sl55_2"></td>
       <td scope="col" class="sl55_3"></td>
@@ -197,13 +235,13 @@ tr:hover {background-color: #f5f5f5;}
 
   <p align="justify" >Amount Rounded off: <strong> &#2352; <?php 
                    
-                                     $amount = moneyFormatIndia(round($sum)); 
+                                     $amount = moneyFormatIndia(round($sum+$gum)); 
                                      echo $amount; ?></strong><br>
-  Rupees in Words: <strong> <?php    echo getIndianCurrency(round($sum));?></strong></p>
+  Rupees in Words: <strong> <?php    echo getIndianCurrency(round($sum+$gum));?></strong></p>
   <p >Certified that the claimed amount has been the least transportation cost, based on distance covered   through the shortest route(s).</p>
   <h3 >Certified that </h3>
   <ul>
-    <li>The sum of Rupees <?php echo $amount; ?> claimed in the bill has not been drawn previously </li>
+    <li>The sum of <strong> &#2352; <?php echo $amount; ?> </strong> claimed in the bill has not been drawn previously </li>
     <li>The details as well as calculations as shown in the Bill have been checked with original documents and found correct </li>
     <li>Any amount found paid in excess at any subsequent date may be adjusted from future Claim. </li>
     <li>Proper noting have been kept to avoid double payment </li>

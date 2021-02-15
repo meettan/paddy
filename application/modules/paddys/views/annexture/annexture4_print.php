@@ -65,7 +65,7 @@ tr:hover {background-color: #f5f5f5;}
    <h2>  ANNEXURE-IV </h2>
    <p>Name of the Agency:<b> BENFED</b></p>
    <h2> CLAIM FOR MARKET FEE </h2>
-   <div class="billDateGroop"><div class="crmBill">CMR Bill No <strong><?php if(isset($bill_dtls->ho_bill_number)){echo $bill_dtls->ho_bill_number;}?></strong></div>                                            <div class="dateTop">Date: <strong><?php echo date('d/m/Y', strtotime($bill_dtls->trans_dt)); ?></strong>.</div></div>
+   <div class="billDateGroop"><div class="crmBill">CMR Bill No: <strong><?php if(isset($bill_dtls->ho_bill_number)){echo $bill_dtls->ho_bill_number;}?></strong></div>                                            <div class="dateTop">Date: <strong><?php echo date('d/m/Y', strtotime($bill_dtls->trans_dt)); ?></strong>.</div></div>
    <br clear="all">
 
    <p>Claim  towards Market Fee to F&S Deptt. through the <strong>HO</strong> for  the KMS <strong><?php echo $this->session->userdata['loggedin']['kms_yr'];?></strong></p>
@@ -88,7 +88,7 @@ tr:hover {background-color: #f5f5f5;}
       <td><strong><?php if(isset($bill_dtls->mandi_board)){echo $bill_dtls->mandi_board;}?><br><?php if(isset($bill_dtls->mandi_board_addr)){echo $bill_dtls->mandi_board_addr;}?></strong></td>
       <td><strong><?php if(isset($bill_dtls->per_qui_rate)){echo $bill_dtls->per_qui_rate;}?></strong></td>
       <td><strong><?php if(isset($bill_dtls->per_qui_rate)){echo $bill_dtls->per_unit;}?></strong></td>
-    <td><strong><?php if(isset($bill_dtls->per_qui_rate)){echo $bill_dtls->per_unit*$bill_dtls->tot_paddy;}?></strong></td>
+    <td><strong><?php if(isset($bill_dtls->per_qui_rate)){echo round($bill_dtls->per_unit*$bill_dtls->tot_paddy,2);}?></strong></td>
 
     </tr>
     <tr>
@@ -121,7 +121,7 @@ tr:hover {background-color: #f5f5f5;}
   <p align="justify" >    Rupees in Words: <strong> <?php echo getIndianCurrency(round($bill_dtls->per_unit*$bill_dtls->tot_paddy));?></strong></p>
   <h3 >Certified that </h3>
   <ul>
-    <li>The sum of Rupees <?php echo round($bill_dtls->per_unit*$bill_dtls->tot_paddy); ?> claimed in the bill has not been drawn previously </li>
+    <li>The sum of <strong>&#2352; <?php echo round($bill_dtls->per_unit*$bill_dtls->tot_paddy); ?> </strong>claimed in the bill has not been drawn previously </li>
     <li>The details as well as calculations as shown in the Bill have been checked with original documents and found correct </li>
     <li>Any amount found paid in excess at any subsequent date may be adjusted from future Claim. </li>
     <li>Proper noting have been kept to avoid double payment</li>

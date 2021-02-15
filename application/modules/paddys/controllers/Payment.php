@@ -1903,7 +1903,7 @@ class Payment extends MX_Controller {
             $data   = explode("/",$this->input->get('pmt_bill_no'));
             //Bill Details
             $select =  array(
-             "a.tot_paddy","b.per_qui_rate","c.ho_bill_no","c.trans_dt trans_dtp","c.qty","c.rice_type"
+             "a.tot_paddy","b.per_qui_rate","c.ho_bill_no","c.trans_dt trans_dtp","c.qty","c.rice_type","c.rate"
             );
 
             $where  =   array(
@@ -2117,19 +2117,23 @@ class Payment extends MX_Controller {
 
             //Bill Details
             $select =  array(
-              "a.paddy_qty","a.mandi_board","a.ben_bill_dt","a.ben_bill_no","b.memo_no","b.memo_dt","a.pool_type","a.soc_id","a.mill_id"
+              "a.paddy_qty","a.paddy_cmr","a.sanc_no","a.mandi_board","a.ben_bill_dt","a.ben_bill_no","b.memo_no","b.memo_dt","a.pool_type","a.soc_id","a.mill_id"
             );
+
+            $bill_no = explode("/",$this->input->get('pmt_bill_no'))[0];
+
 
             $where  =   array(
 
-                "a.pmt_bill_no"   => $this->input->get('pmt_bill_no'),
-                 "a.kms_id"       => $this->session->userdata['loggedin']['kms_id'],
+                "a.pmt_bill_no"   => $bill_no,
+                "a.kms_id"       => $this->session->userdata['loggedin']['kms_id'],
                 "a.dist"          => $this->session->userdata['loggedin']['branch_id'],
                 "a.wqsc      = b.wqsc_no"  => NULL,
 
             );
 
             $data['bill_dtls']       =   $this->Paddy->f_get_particulars("td_payment_bill a,td_wqsc b",$select,$where,1);
+
 
             $wheres  =   array(
 
@@ -2142,10 +2146,14 @@ class Payment extends MX_Controller {
                 "sl_no"  => $data['bill_dtls']->mill_id
 
             );
-            $data['distance']   =   $this->Paddy->f_get_particulars("md_soc_mill",NULL,$wheres,1);
-            $data['millname']   =   $this->Paddy->f_get_particulars("md_mill",NULL,$wheress,1);
+
+            $data['distance']  =   $this->Paddy->f_get_particulars("md_soc_mill",NULL,$wheres,1);
+
+            $data['millname']  =   $this->Paddy->f_get_particulars("md_mill",NULL,$wheress,1);
+
+            $data['rate']      =   $this->Paddy->get_transport_rate($bill_no,$this->session->userdata['loggedin']['kms_id'],$this->session->userdata['loggedin']['branch_id']);
        
-            $data['rate']       =   $this->Paddy->f_get_particulars("md_comm_params",NULL,NULL,0);
+           // $data['rate']       =   $this->Paddy->f_get_particulars("md_comm_params",NULL,NULL,0);
 
             $this->load->view('post_login/main');
 

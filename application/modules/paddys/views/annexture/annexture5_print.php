@@ -62,10 +62,10 @@ tr:hover {background-color: #f5f5f5;}
                     <div id="divToPrint">
     <h3 style="text-align: center">  ANNEXURE-V</h3>
 <div class="wrapper_fixed">
-  <p>Name of the Agency:<b>BENFED</b> </p>
+  <p>Name of the Agency: <b>BENFED</b> </p>
   <h3 style="text-align: center">    CLAIM FOR MANDI LABOUR CHARGES</h3>
-  <p>Name of the Mandi Board:  <?php echo $bill_dtls->mandi_board;?> </p>
-  <div class="billDateGroop"><div class="crmBill">Bill No <strong><?php echo $bill_dtls->ho_bill_number;?></strong></div>                                                    <div class="dateTop">Date: <strong><?php echo date('d/m/Y', strtotime($bill_dtls->ben_bill_dt)); ?>
+  <p>Name of the Mandi Board: <strong> <?php echo $bill_dtls->mandi_board;?> </strong></p>
+  <div class="billDateGroop"><div class="crmBill">Bill No: <strong><?php echo $bill_dtls->ho_bill_number;?></strong></div>                                                    <div class="dateTop">Date: <strong><?php echo date('d/m/Y', strtotime($bill_dtls->ben_bill_dt)); ?>
   </strong>.</div></div>
   <br clear="all">
 
@@ -224,9 +224,11 @@ tr:hover {background-color: #f5f5f5;}
               <td><strong>Total Amount</strong></td>
               <td><strong><?php echo $sun_rate;?></strong></td>
               <td>&nbsp;</td>
-              <td style="text-align:center"><?php echo $bill_dtls->paddy_qty;?></td>
+              <td style="text-align:center"><strong><?php echo $bill_dtls->paddy_qty;?></strong></td>
               <td>&nbsp;</td>
-              <td ><?php echo round(($bill_dtls->paddy_qty)*$sun_rate,2);?></td>
+              <td ><strong><?php echo round(($bill_dtls->paddy_qty)*$sun_rate,2);
+                                      $value = round(($bill_dtls->paddy_qty)*$sun_rate,2);
+              ?></strong></td>
             </tr>
 
     
@@ -240,13 +242,13 @@ tr:hover {background-color: #f5f5f5;}
   <p align="justify" >Amount Rounded off: <strong>&#2352; <?php
                                    
                                      $amount = moneyFormatIndia(round(($bill_dtls->paddy_qty)*$sun_rate)); 
-                                     echo $amount;
+                                     echo abs(round(($bill_dtls->paddy_qty)*$sun_rate) - $value);
 
   ?> </strong><br>
   Rupees in Words: <strong><?php echo getIndianCurrency(round(($bill_dtls->paddy_qty)*$sun_rate));?></strong></p>
   <h3 >Certified that </h3>
   <ul>
-    <li>The sum of Rupees <strong> <?php echo $amount; ?></strong> claimed in the bill has not been drawn previously </li>
+    <li>The sum of <strong>&#2352; <?php echo $amount; ?></strong> claimed in the bill has not been drawn previously </li>
     <li>The details as well as calculations as shown in the Bill have been checked with original documents and found correct </li>
     <li>Any amount found paid in excess at any subsequent date may be adjusted from future Claim. </li>
     <li>Proper noting have been kept to avoid double payment</li>

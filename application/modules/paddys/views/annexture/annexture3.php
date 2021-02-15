@@ -90,7 +90,7 @@
                         <th>Payment No.</th>
                         <th>Date</th>
                         <th>Bill Number</th>
-                        <th>Amount</th>
+                      <!--   <th>Amount</th> -->
                         <th>Option</th>
 
                     </tr>
@@ -114,7 +114,7 @@
                                 <td><?php echo date('d/m/Y', strtotime($bill_dtl->trans_dt)); ?></td>
                                 <td><?php echo $bill_dtl->ho_bill_no; ?> </td>
 
-                                <td><?php echo /*$bill_dtl->qty* */ $bill_dtl->paid_amt; ?></td>
+                                <!-- <td><?php //echo /*$bill_dtl->qty* */ $bill_dtl->paid_amt; ?></td> -->
                              
                                 <td>
                                 
@@ -154,7 +154,7 @@
                         <th>Date</th>
                         <th>Bill Number</th>
                         <th>Amount</th>
-                        <th>Option</th>
+                      <!--   <th>Option</th> -->
 
                     </tr>
                 

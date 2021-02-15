@@ -148,7 +148,7 @@ tr:hover {background-color: #f5f5f5;}
                         <th>Payment No.</th>
                         <th>Date</th>
                         <th>Bill Number</th>
-                        <th>Amount</th>
+                       <!--  <th>Amount</th> -->
                       
                         <th>Option</th>
 
@@ -173,7 +173,7 @@ tr:hover {background-color: #f5f5f5;}
                                 <td><?php echo date('d/m/Y', strtotime($bill_dtl->trans_dt)); ?></td>
                                 <td><?php echo $bill_dtl->ho_bill_number; ?> </td>
 
-                                <td><?php echo round(($bill_dtl->paddy_qty*$charges->rate),2);?></td>
+                               <!--  <td><?php //echo round(($bill_dtl->paddy_qty*$charges->rate),2);?></td> -->
                              
                                 <td>
                                 
@@ -211,7 +211,7 @@ tr:hover {background-color: #f5f5f5;}
                         <th>Payment No.</th>
                         <th>Date</th>
                         <th>Bill Number</th>
-                        <th>Amount</th>
+                      <!--   <th>Amount</th> -->
                         <th>Option</th>
 
                     </tr>

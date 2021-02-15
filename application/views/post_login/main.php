@@ -208,7 +208,7 @@
 
                               <?php }else{ ?>
                             <a href="<?php echo site_url('payment/annexture3'); ?>">ANNEXURE III</a>
-                            <a href="<?php echo site_url('payment/annexture4'); ?>">ANNEXURE IV</a>
+                            <!-- <a href="<?php echo site_url('payment/annexture4'); ?>">ANNEXURE IV</a> -->
                             <a href="<?php echo site_url('payment/annexture5'); ?>">ANNEXURE V</a>
                             <a href="<?php echo site_url('payment/annexture6'); ?>">ANNEXURE VI</a>
                             <a href="<?php echo site_url('payment/annexture7'); ?>">ANNEXURE VII</a>
