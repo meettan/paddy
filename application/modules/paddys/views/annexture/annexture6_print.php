@@ -169,8 +169,8 @@ tr:hover {background-color: #f5f5f5;}
 
       <tr>
       <td scope="col" class="sl55_1">1</td>
-      <td scope="col" class="sl55_2">0-25 Kms</td>
-      <td scope="col" class="sl55_3"><?=$distance1?></td>
+      <td scope="col" class="sl55_2">   <!--  0-25 Kms  -->  <?php echo $bill_dtls->transport_agency_name;?><br>At<br><?php echo $bill_dtls->transport_agency_addr;?></td>
+      <td scope="col" class="sl55_3">Within 25 KM</td>
       <td scope="col" class="sl55_4"><?php echo $bill_dtls->paddy_qty;?></td>
       <td scope="col" class="sl55_5"><?php echo $rate1;?></td>
       <td scope="col" class="sl55_1"><?php if($rate1 > 0 && $distance1 > 0){
@@ -184,46 +184,63 @@ tr:hover {background-color: #f5f5f5;}
                                                 echo round($rate4*$bill_dtls->paddy_cmr,2); 
                                                 $gum += $rate4*$bill_dtls->paddy_cmr;
                                                  }  ?></td>
-      <td scope="col" class="sl55_1"></td>
+      <td scope="col" class="sl55_1"><?php echo round($sum+$gum,2) ?></td>
      
     </tr>
 
      <tr>
       <td scope="col" class="sl55_1">2</td>
       <td scope="col" class="sl55_2"> >25-50 Kms</td>
-      <td scope="col" class="sl55_3"><?=$distance2?></td>
-      <td scope="col" class="sl55_4"><?php echo $bill_dtls->paddy_qty;?></td>
-      <td scope="col" class="sl55_5"><?php echo $rate2;?></td>
+      <td scope="col" class="sl55_3"><?php if($rate2 > 0 ) { echo $distance2; }?></td>
+      <td scope="col" class="sl55_4"><?php if($rate2 > 0 ) { echo $bill_dtls->paddy_qty; }?></td>
+      <td scope="col" class="sl55_5"><?php if($rate2 > 0 ) echo $rate2;?></td>
       <td scope="col" class="sl55_1"><?php if($rate2 > 0 && $distance2 > 0){
                                                 echo $rate2*$distance2*$bill_dtls->paddy_qty;
                                                 $sum += $rate2*$distance2*$bill_dtls->paddy_qty;
+                                              
                                                  }  ?>                              
       </td>
       <td scope="col" class="sl55_2"></td>
       <td scope="col" class="sl55_3"></td>
       <td scope="col" class="sl55_4"></td>
       <td scope="col" class="sl55_5"></td>
-      <td scope="col" class="sl55_1"></td>
+      <td scope="col" class="sl55_1"><?php if($rate2 > 0 && $distance2 > 0){
+                                                echo $rate2*$distance2*$bill_dtls->paddy_qty;
+                                                $sum += $rate2*$distance2*$bill_dtls->paddy_qty;
+                                             
+                                                 }  ?>  </td>
      
     </tr>
 
      <tr>
       <td scope="col" class="sl55_1">3</td>
       <td scope="col" class="sl55_2">>50-100 Kms</td>
-      <td scope="col" class="sl55_3"><?=$distance3?></td>
-      <td scope="col" class="sl55_4"><?php echo $bill_dtls->paddy_qty;?></td>
-      <td scope="col" class="sl55_5"><?php echo $rate3;?></td>
+      <td scope="col" class="sl55_3"><?php if($rate3 > 0 ) { echo $distance3; }?></td>
+      <td scope="col" class="sl55_4"><?php if($rate3 > 0 ) { echo $bill_dtls->paddy_qty; }?></td>
+      <td scope="col" class="sl55_5"><?php if($rate3 > 0 ) echo $rate3;?></td>
       <td scope="col" class="sl55_1"><?php  if($rate3 > 0 && $distance3 > 0){
                                                 echo $rate3*$distance3*$bill_dtls->paddy_qty; 
                                                  $sum += $rate3*$distance3*$bill_dtls->paddy_qty; 
+                                              
                                                  }
                                           ?></td>
       <td scope="col" class="sl55_2"></td>
       <td scope="col" class="sl55_3"></td>
       <td scope="col" class="sl55_4"></td>
       <td scope="col" class="sl55_5"></td>
-      <td scope="col" class="sl55_1"></td>
+      <td scope="col" class="sl55_1"><?php  if($rate3 > 0 && $distance3 > 0){
+                                                echo $rate3*$distance3*$bill_dtls->paddy_qty; 
+                                                 $sum += $rate3*$distance3*$bill_dtls->paddy_qty; 
+                                              
+                                                 }
+                                          ?></td>
      
+    </tr>
+    <tr>  <td colspan="10" style="text-align: center"><b>TOTAL</b></td>
+        
+          <td><b><?php echo round($sum+$gum,2); ?></b></td>
+          
+         
     </tr>
     </tbody>
 
@@ -235,13 +252,13 @@ tr:hover {background-color: #f5f5f5;}
 
   <p align="justify" >Amount Rounded off: <strong> &#2352; <?php 
                    
-                                     $amount = moneyFormatIndia(round($sum+$gum)); 
+                                     $amount =round(abs(round($sum+$gum)-($sum+$gum)),2); 
                                      echo $amount; ?></strong><br>
   Rupees in Words: <strong> <?php    echo getIndianCurrency(round($sum+$gum));?></strong></p>
   <p >Certified that the claimed amount has been the least transportation cost, based on distance covered   through the shortest route(s).</p>
   <h3 >Certified that </h3>
   <ul>
-    <li>The sum of <strong> &#2352; <?php echo $amount; ?> </strong> claimed in the bill has not been drawn previously </li>
+    <li>The sum of <strong> &#2352; <?php echo round($sum+$gum); ?> </strong> claimed in the bill has not been drawn previously </li>
     <li>The details as well as calculations as shown in the Bill have been checked with original documents and found correct </li>
     <li>Any amount found paid in excess at any subsequent date may be adjusted from future Claim. </li>
     <li>Proper noting have been kept to avoid double payment </li>
@@ -249,7 +266,13 @@ tr:hover {background-color: #f5f5f5;}
   <ul>
   </ul>
   <p>&nbsp;</p>
-  <p><strong>Signature of the Claimant with seal</strong></p>
+  <p style="float: right;"><strong>Signature of the Claimant with seal</strong></p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p ><strong>Required supporting Documents:</strong></p>
+        1.Work Order, 2. Copy of Agreement with transport agency,3.Certificate of Distance,by appropriate authority 4 relevant Notification  Voucher and 6. Money Receipt
+
+<p><strong>N.B</strong>  Claim will summarily be rejected for payment for want of above noted requisite documents.</p>
 </div>
     </div>
 

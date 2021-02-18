@@ -2117,7 +2117,7 @@ class Payment extends MX_Controller {
 
             //Bill Details
             $select =  array(
-              "a.paddy_qty","a.paddy_cmr","a.sanc_no","a.mandi_board","a.ben_bill_dt","a.ben_bill_no","b.memo_no","b.memo_dt","a.pool_type","a.soc_id","a.mill_id"
+              "a.paddy_qty","a.paddy_cmr","a.sanc_no","a.mandi_board","a.ben_bill_dt","a.ben_bill_no","a.transport_agency_name","a.transport_agency_addr","b.memo_no","b.memo_dt","a.pool_type","a.soc_id","a.mill_id"
             );
 
             $bill_no = explode("/",$this->input->get('pmt_bill_no'))[0];
@@ -2210,7 +2210,7 @@ class Payment extends MX_Controller {
 
             //Bill Details
             $select =  array(
-              "a.paddy_qty","a.mandi_board","a.ben_bill_dt","a.ben_bill_no","b.memo_no","b.memo_dt","a.pool_type","a.soc_id","a.mill_id"
+              "a.paddy_qty","a.mandi_board","a.ben_bill_dt","a.ben_bill_no","b.memo_no","b.memo_dt","a.pool_type","a.soc_id","a.mill_id","b.wqsc_no","b.goodown_name","b.goodown_dist"
             );
             $data  = explode("/",$this->input->get('pmt_bill_no'));
 
@@ -2223,9 +2223,22 @@ class Payment extends MX_Controller {
 
             );
 
-            $data['bill_dtls']       =   $this->Paddy->f_get_particulars("td_payment_bill a,td_wqsc b",$select,$where,1);
-       
-            $data['rate']       =   $this->Paddy->f_get_particulars("md_comm_params",NULL,NULL,0);
+            $data['bill_dtls']  =   $this->Paddy->f_get_particulars("td_payment_bill a,td_wqsc b",$select,$where,1);
+
+            $sel = array("per_unit","cgst_amt","sgst_amt");
+
+            $wheres  =   array(
+
+                "pmt_bill_no"   => $data['0'],
+                "dist"          => $data['1'],
+                "kms_id"        => $data['2'],
+                "account_type"  => '9'
+           
+            );
+
+            $data['rate']       =   $this->Paddy->f_get_particulars("td_payment_bill_dtls",$sel,$wheres,1);
+
+         //   $data['rate']       =   $this->Paddy->f_get_particulars("md_comm_params",NULL,NULL,0);
 
             $wheress  =   array(
 

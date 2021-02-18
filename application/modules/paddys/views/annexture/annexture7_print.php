@@ -65,127 +65,175 @@ tr:hover {background-color: #f5f5f5;}
                     <h2><img src="<?php echo base_url();?>benfed.png" alt=""/></h2>
                     <h3 style="text-align: center">  ANNEXURE-VII</h3>
                     <p>Name of the Agency:<b>Benfed</b>  </p>
-                     <h2>CLAIM FOR COMMISSION</h2>
-                    <p>Name of the Miller:  <?php echo $millname->mill_name;    //print_r($bill_dtls);?>  <br>
+                     <h2>CLAIM FOR MILLING CHARGE</h2>
+                    <p>Name of the Rice Mill:  <?php echo $millname->mill_name;    //print_r($bill_dtls);?>  <br>
                     Address: </p>
 
 
                     <p>Claim towards Transport Charges for the KMS <strong><?php echo $this->session->userdata['loggedin']['kms_yr'];?></strong></p>
 
-                   
                     
-                    <div class="tableBottomBorder">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tbody>
-                      <tr>
-                        <td>
+                    <div class="">
+                                       
                       <table class="table tableCus">
                      <thead>
                       <tr>
-                        <th scope="col" class="sl55_1">Sl No</th>
-                        <th scope="col" class="sl55_3"><strong>W.Q & S.C .</strong></th>
-                        <th scope="col" class="sl55_4"><strong>QUANTITY</strong></th>
-                        <th scope="col" class="sl55_5"><strong>Rate per Qtl</strong></th>
+                        <th rowspan="2">Challan No</th>
+                        <th colspan="4" ><strong>W.Q & S.C .</strong></th>
+                        <th colspan="2"><strong>QUANTITY</strong></th>
+                        <th ><strong></strong></th>
+                        <th rowspan="2"><strong>Rate per Qtl</strong></th>
                       
-                        <th scope="col" class="sl55_5"><strong> Amt claimed</strong><strong> </strong></th>
-                        <th scope="col" class="sl55_5"><strong>CGST</strong><strong> </strong><br>
+                        <th rowspan="2"><strong> Amt claimed</strong><strong> </strong></th>
+                        <th rowspan="2"><strong>CGST</strong><strong> </strong><br>
                         <strong>@2.5% </strong></th>
-                        <th scope="col" class="sl55_5"><strong>SGST</strong><strong> </strong><br>
+                        <th rowspan="2"><strong>SGST</strong><strong> </strong><br>
                         <strong>@2.5% </strong></th>
-                        <th scope="col" class="sl55_5"><strong>SGST</strong><strong> </strong><br>
-                        <strong>@2.5% </strong></th>
+                        <th rowspan="2"><strong>Total Amount Claimed [Rs]</strong>
+                       </th>
                       </tr>
-                      <tr>
-                        <td scope="row">1</td>
-                        <td style="padding: 0;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                          <tbody>
-                            <tr>
-                              <td class="sl4_1" style="border-top: none; border-left: none;">2</td>
-                              <td class="sl4_1" style="border-top: none;">3</td>
-                              <td class="sl4_1" style="border-top: none;">4</td>
-                              <td class="sl4_1" style="border-top: none; border-right: none;">5</td>
-                              </tr>
-                            </tbody>
-                          </table></td>
-                          <td style="padding: 0;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                          <tbody>
-                            <tr>
-                              <td class="sl4_1" style="border-top: none; border-left: none;">6</td>
-                              <td class="sl4_1" style="border-top: none;">7</td>
-                              <td class="sl4_1" style="border-top: none; border-right: none;">8</td>
-                            </tr>
-                          </tbody>
-                         </table></td>
-                        <td>9</td>
-                      
-                       <td>10</td>
-                       <td>11</td>
-                       <td>12</td>
-                       <td>13</td>
-                      </tr>
-                       <?php foreach($bill_dtls as $bill_dtl);{
+                       <tr>
+                         <th>No</th>
+                          <th >Date</th>
+                           <th >Issuing Authority</th>
+                           <th >Godown</th>
+                           <th>Bags[No]</th>
+                            <th >Qty</th> 
+                             <th >Muster Roll No</th>
+                            
 
-
-                        ?>
-                      <tr>
-                        <td scope="row"></td>
-                        <td style="padding: 0;"><?//=$bill_dtl->memo_no?></td>
-                        <td style="padding: 0;">&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                      </tr>
-                    <?php } ?>
-                      <tr>
-                        <td scope="row">&nbsp;</td>
-                        <td style="padding: 0;">&nbsp;</td>
-                        <td style="padding: 0;">&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
                       </tr>
                       <tr>
-                        <td scope="row">&nbsp;</td>
-                        <td style="padding: 0;">&nbsp;</td>
-                        <td style="padding: 0;">&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                      </tr>
-                      <tr>
-                        <td scope="row">&nbsp;</td>
-                        <td style="padding: 0;">&nbsp;</td>
-                        <td style="padding: 0;">&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
+                        <td>(1)</td>
+                        <td>(2)</td>
+                        <td>(3)</td>
+                        <td>(4)</td>
+                        <td>(5)</td>
+                        <td>(6)</td>
+                        <td>(7)</td>
+                        <td>(8)</td>
+                        <td>(9)</td>
+                        <td>(10)</td>
+                        <td>(11)</td>
+                        <td>(12)</td>
+                        <td>(13)</td>
                       </tr>
                     </thead>
-                    <tbody>
+
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td><?php if(isset($bill_dtls->wqsc_no)){ echo $bill_dtls->wqsc_no;}?></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td><?php if(isset($bill_dtls->goodown_name)){ echo $bill_dtls->goodown_name;}?></td>
+                        <td>&nbsp;</td>
+                        <td><?php if(isset($bill_dtls->paddy_qty)){ echo $bill_dtls->paddy_qty; $qty = $bill_dtls->paddy_qty;
+
+                        }?></td>
+                        <td>&nbsp;</td>
+                        <td><?php if(isset($rate->per_unit)){ echo $rate->per_unit;}?></td>
+                         <td><?php if(isset($rate->per_unit)){echo $clam = $qty*$rate->per_unit;} ?></td>
+                        <td><?php print_r($rate->cgst_amt); ?></td>
+                        <td><?php if(isset($rate->sgst_amt)){ echo $rate->sgst_amt;}?></td>
+                       
+                        <td><?php if(isset($clam)){ echo $clam+$rate->cgst_amt+$rate->sgst_amt;
+                                                        $total = $clam+$rate->cgst_amt+$rate->sgst_amt;
+
+
+                        }?></td>
+                      </tr>
+                         <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                         <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                         <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                         <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                         <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                    
+                 
 
                       
-                    </tbody>
-                  </table>
-                      </td>
-                      </tr>
+                 
+                 
+                  
                     </tbody>
                   </table>
                     </div>
 
-                    <p align="justify" >Amount Rounded off: <strong>................................................................................. </strong><br>
-                    Rupees in Words: <strong>...................................................................................... </strong></p>
+                    <p align="justify" >Amount Rounded off: <strong><?php echo round(abs(round($total) -$total),2)?> </strong><br>
+                    Rupees in Words: <strong><?php echo getIndianCurrency(round($total));?></strong></p>
                     <p >Certified that the claimed amount on account of GST has actually been paid and reported to the appropriate GST authority  </p>
                     <h3 >Certified that </h3>
                     <ul>
-                      <li>The sum of Rupees<strong> ......................</strong> claimed in the bill has not been drawn previously </li>
+                      <li>The sum of Rupees<strong> <?php echo getIndianCurrency(round($total));?></strong> claimed in the bill has not been drawn previously </li>
                       <li>The details as well as calculations as shown in the Bill have been checked with original documents and found correct </li>
                       <li>Any amount found paid in excess at any subsequent date may be adjusted from future Claim. </li>
                       <li>Proper noting have been kept to avoid double payment </li>
@@ -193,7 +241,12 @@ tr:hover {background-color: #f5f5f5;}
                     <ul>
                     </ul>
                     <p>&nbsp;</p>
-                    <p><strong>Signature of the Claimant with seal</strong></p>
+                    <p style="float: right;"><strong>Signature of the Claimant with seal</strong></p>
+                    <p>&nbsp;</p>
+                     <p ><strong>Required supporting Documents:</strong></p>
+        1.Work Order, 2. Copy of Agreement ,3.Miller's Bill, 4. System generated authenticated WQSC, 5. Original Analysis Report, 6. Authenticated Milling Certificate 7. Certificate of Non due Delivery of RCMR 8.Copy of GSTN no of miller
+
+<p><strong>N.B</strong>  Claim will summarily be rejected for payment for want of above noted requisite documents.</p>
                   </div>
         </div>
 
