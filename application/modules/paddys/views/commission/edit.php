@@ -92,7 +92,7 @@
                     </div>
 
 
-                    <label for="pool_type" class="col-sm-1 col-form-label">Branch ref. no:</label>
+                    <label for="pool_type" class="col-sm-1 col-form-label">Branch ref.no:</label>
 
                     <div class="col-sm-3">
 
@@ -194,19 +194,44 @@
 
                 </div>
 
+                <label for="pool_type" class="col-sm-1 col-form-label">Sanction no.:</label>
+
+                <div class="col-sm-3">
+
+                    <input type="text"
+                            class="form-control" readonly
+                            name="sanc_no"
+                            id="sanc_no"
+                            value="<?=$bill_dtl->sanc_no?>"
+                            /> 
+
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+
+                <label for="pool_type" class="col-sm-1 col-form-label">Received Paddy:</label>
+
+                <div class="col-sm-3">
+
+                    <input type="text"
+                            class="form-control" readonly
+                            name = "tot_rceived"
+                            id = "tot_rceived" /> 
+
+                </div>
+
             </div>
 
             <div id="bill_dtls">
                 
-                       
-                
-                  
             </div>
         
            <div class="form-group row">
 
                 
-                 <label for="totPaddy" class="col-sm-2 col-form-label">Amount :</label>
+                 <label for="totPaddy" class="col-sm-2 col-form-label">Amount(Rounded off):</label>
 
                 <div class="col-sm-4">
 
@@ -341,6 +366,23 @@
                 
             });
 
+            //
+            $.post('<?php echo site_url("paddys/payment/paddy_qty_on_sanc_new"); ?>',
+                    
+                    {
+                        sanc_no:   '<?php echo $bill_dtl->sanc_no; ?>'
+                
+                    }
+
+                )
+                .done(function(data){
+console.log(data);
+                    var datas = JSON.parse(data);
+
+                    $('#tot_rceived').val(datas.paddy_qty);
+                    
+                });
+
 
 
      
@@ -447,79 +489,5 @@
         });
 
     });
-
-</script>
-
-<script>
-
-    $('#mill_id').change(function(){
-
-            $.get( 
-
-                '<?php echo site_url("payment/get_aggrementno");?>',
-
-                { 
-
-                    mill_id : $(this).val(),
-                    soc_id: $('#soc_name').val()
-
-                }
-
-            ).done(function(data){
-
-                let values = JSON.parse(data);
-
-                $('#aggrement_no').val(values.reg_no);
-
-            });
-
-    });
-
-    $('#rice_type').change(function(){
-
-            $.get( 
-
-                '<?php echo site_url("payment/commision_rate");?>',
-
-                { 
-
-                    rice_type : $(this).val(),
-            
-                }
-
-            ).done(function(data){
-
-                let values = JSON.parse(data);
-
-                 $('#rate').val("");
-                $('#rate').val(values.rate);
-
-            });
-
-    });
-
-     $('#qty').change(function(){
-
-              var amount = 0;
-              var tds = 0;
-             var qty = $(this).val();
-             var rate = parseFloat($('#rate').val());
-
-             amount = parseFloat(qty*rate);
-       
-             tds =  parseFloat(((qty*rate)*5)/100).toFixed();
-
-              $('#tds_amt').val(tds);
-
-              $('#amount_claimed').val(amount.toFixed(2));
-
-               var round_amount= Math.round(amount);
-
-              $('#tot_amt').val(round_amount);
-
-              $('#paid_amt').val(round_amount-tds);
-
-          
-          })
 
 </script>

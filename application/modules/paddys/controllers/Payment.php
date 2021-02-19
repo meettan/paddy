@@ -925,6 +925,27 @@ class Payment extends MX_Controller {
 
     }
 
+    public function paddy_qty_on_sanc_new() {
+
+        $select   = array("sum(c.paddy_qty) paddy_qty","sum(c.quantity) totCmr");
+
+
+        $where = array(
+
+            "a.wqsc_no  = b.id"        => NULL,
+            "b.id       = c.trans_id"  => NULL,
+            "b.wqsc_date  = c.trans_dt"=> NULL,
+            "b.wqsc_no  = c.wqsc_no"   => NULL,
+            "a.sanc_no"                 => $this->input->post("sanc_no"),
+            "a.kms_id"                 => $this->session->userdata['loggedin']['kms_id']
+
+            );
+       $sancs   =   $this->Paddy->f_get_particulars("td_fund_requisition a,td_wqsc b,td_wqsc_dtls c",$select,$where, 1);
+
+        echo json_encode($sancs);
+
+    }
+
 
     public function f_commission(){
 

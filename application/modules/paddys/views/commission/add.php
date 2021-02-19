@@ -95,12 +95,12 @@
 
                 </div>
 
-                <label for="sanc_no" class="col-sm-1 col-form-label">Sanacation No:</label>
+                <label for="sanc_no" class="col-sm-1 col-form-label">Sanction No:</label>
                 <input type="hidden" name="sanc_nos" id="sanc_nos" >
                 <div class="col-sm-3">
 
                     <select type="text" class="form-control" name="sanc_no" id="sanc_no"> 
-                        <option value="">Select Sanacation</option>    
+                        <option value="">Select Sanction</option>    
 
 
                     </select>
@@ -259,7 +259,7 @@
 
             <div class="form-group row">
 
-                <label for="paid_amt" class="col-sm-1 col-form-label">Paid Amount:</label>
+                <label for="paid_amt" class="col-sm-1 col-form-label">Paid Amount<br>(Rounded off):</label>
 
                 <div class="col-sm-3">
 
