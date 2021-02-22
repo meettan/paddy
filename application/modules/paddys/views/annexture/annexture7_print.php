@@ -66,11 +66,10 @@ tr:hover {background-color: #f5f5f5;}
                     <h3 style="text-align: center">  ANNEXURE-VII</h3>
                     <p>Name of the Agency:<b>Benfed</b>  </p>
                      <h2>CLAIM FOR MILLING CHARGE</h2>
-                    <p>Name of the Rice Mill:  <?php echo $millname->mill_name;    //print_r($bill_dtls);?>  <br>
+                    <p>Name of the Rice Mill: <b> <?php echo $millname->mill_name;    //print_r($bill_dtls);?></b>  <br>
                     Address: </p>
 
-
-                    <p>Claim towards Transport Charges for the KMS <strong><?php echo $this->session->userdata['loggedin']['kms_yr'];?></strong></p>
+                    <p> <strong>Claim towards Transport Charges for the KMS <?php echo $this->session->userdata['loggedin']['kms_yr'];?></strong></p>
 
                     
                     <div class="">
@@ -122,9 +121,30 @@ tr:hover {background-color: #f5f5f5;}
 
                       <tr>
                         <td>&nbsp;</td>
-                        <td><?php if(isset($bill_dtls->wqsc_no)){ echo $bill_dtls->wqsc_no;}?></td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
+                        <td>
+                          <?php if(isset($bill_dtls->wqsc_no)){ 
+         $sql = "SELECT a.kms_id,a.wqsc_no,b.sub_wqsc FROM td_wqsc a,td_wqsc_dtls b where a.id = b.trans_id and  a.wqsc_no ='$bill_dtls->wqsc_no' and  a.kms_id = '".$this->session->userdata['loggedin']['kms_id']."' group by a.kms_id,a.wqsc_no,b.sub_wqsc";
+
+        $row = $this->db->query($sql)->result();
+                  foreach($row as $r){
+
+                    echo $r->sub_wqsc.'</br></br>';
+
+                  }
+
+
+        }?>
+
+                        </td>
+                        <td> <?php if(isset($bill_dtls->wqsc_no)){ 
+         $sql = "SELECT a.kms_id,a.wqsc_no,max(b.trans_dt) as mdate,min(b.trans_dt) as midate FROM td_wqsc a,td_wqsc_dtls b where a.id = b.trans_id and  a.wqsc_no ='$bill_dtls->wqsc_no' and  a.kms_id = '".$this->session->userdata['loggedin']['kms_id']."' group by a.kms_id,a.wqsc_no,b.sub_wqsc, b.trans_dt";
+
+        $row = $this->db->query($sql)->row();
+               
+        echo date('d-m-Y', strtotime($row->mdate)); ?> '<br>TO<br>'  <?php   echo date('d-m-Y', strtotime($row->midate)); 
+
+        }?></td>
+                        <td>District Controller (F& S) U/D</td>
                         <td><?php if(isset($bill_dtls->goodown_name)){ echo $bill_dtls->goodown_name;}?></td>
                         <td>&nbsp;</td>
                         <td><?php if(isset($bill_dtls->paddy_qty)){ echo $bill_dtls->paddy_qty; $qty = $bill_dtls->paddy_qty;
@@ -172,51 +192,8 @@ tr:hover {background-color: #f5f5f5;}
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                       </tr>
-                         <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                      </tr>
-                         <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                      </tr>
-                         <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                      </tr>
+                       
+                      
                     
                  
 
@@ -243,7 +220,7 @@ tr:hover {background-color: #f5f5f5;}
                     <p>&nbsp;</p>
                     <p style="float: right;"><strong>Signature of the Claimant with seal</strong></p>
                     <p>&nbsp;</p>
-                     <p ><strong>Required supporting Documents:</strong></p>
+                    <p ><strong>Required supporting Documents:</strong></p>
         1.Work Order, 2. Copy of Agreement ,3.Miller's Bill, 4. System generated authenticated WQSC, 5. Original Analysis Report, 6. Authenticated Milling Certificate 7. Certificate of Non due Delivery of RCMR 8.Copy of GSTN no of miller
 
 <p><strong>N.B</strong>  Claim will summarily be rejected for payment for want of above noted requisite documents.</p>

@@ -100,7 +100,7 @@ tr:hover {background-color: #f5f5f5;}
                    $distance3 =0;$distance2 =0;$distance1 =0;
                       if($distance->distance > 50){
                         $distance3 =  $tot_dis -50;
-                        $distance2 =  $tot_dis - $distance3 -25 ;
+                        $distance2 =  $tot_dis - $distance3 -25;
                         $distance1 =  25;
                       }else if($tot_dis <=50){
                         $distance2 =  $tot_dis -25 ;

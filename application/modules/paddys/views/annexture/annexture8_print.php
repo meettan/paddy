@@ -64,143 +64,123 @@ tr:hover {background-color: #f5f5f5;}
                      <div class="wrapper_fixed">
   <h2><img src="<?php echo base_url();?>benfed.png" alt=""/></h2>
    <h3 style="text-align: center">  ANNEXURE-VIII</h3>
-  <p>Name of the Agency: </p>
+  <p>Name of the Agency:<b>Benfed</b> </p>
    <h2>    CLAIM FOR USAGE CHARGE FOR GUNNY BAGS FOR PADDY </h2>
   <div class="billDateGroop">
-    <div class="crmBill"> Bill No. <strong>.........</strong></div>                                           
-    <div class="dateTop">Date: <strong>.........</strong>.</div></div>
+    <div class="crmBill"> Bill No. <strong><?php echo $bill_dtls->ho_bill_number;?></strong></div>                                           
+    <div class="dateTop">Date: <strong>
+      <?php if(isset($bill_dtls->ben_bill_dt)){ echo date('d-m-Y', strtotime($bill_dtls->ben_bill_dt)) ;}?></strong>.</div></div>
   <br>
 
-  <p>Name of the Miller:  </p>
+  <p>Name of the Miller:<b> <?php echo $millname->mill_name;    //print_r($bill_dtls);?> </b></p>
 
 
-  <p>Claim towards Cost of Usage charges for Gunny Bags for Paddy to the F&S for the KMS ..... </p>
+  <p>Claim towards Cost of Usage charges for Gunny Bags for Paddy to the F&S for the KMS <?php echo $this->session->userdata['loggedin']['kms_yr']; ?> </p>
   
   <div class="tableBottomBorder">
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tbody>
-    <tr>
-      <td>
-    <table class="table tableCus">
-  <thead>
-    <tr>
-      <th scope="col" class="sl55_3">WQSC</th>
-      <th scope="col" class="sl55_5">Quantity of Paddy</th>
-    
-    <th scope="col" class="sl55_5"><strong> </strong>No of gunny Bags used for paddy      <strong> </strong></th>
-    <th scope="col" class="sl55_5">DO No & Date </th>
-    <th scope="col" class="sl55_5">Rate Of gunny Usage for Paddy</th>
-    
-    <th scope="col" class="sl55_5">Gunny Usage claimed for Paddy</th>
-    
-    <th scope="col" class="sl55_5">Gunny Cut</th>
-    <th scope="col" class="sl55_5">CGST <br>
+    <thead>
+      <tr>
+        <th colspan="3">WQSC</th>
+        <th rowspan="2">Quantity of Paddy</th>
+        <th rowspan="2">No of gunny Bags used for paddy</th>
+        <th rowspan="3">DO No & Date</th>
+        <th rowspan="2">Rate Of gunny Usage for Paddy</th>
+        <th rowspan="2">Gunny Usage claimed for Paddy</th>
+        <th rowspan="2">Gunny Cut</th>
+        <th rowspan="2">CGST <br>
         @2.5% on Milling charge</th>
-    <th scope="col" class="sl55_5">SGST <br>
+        <th rowspan="2">SGST <br>
         @2.5% on Milling charge</th>
-    <th scope="col" class="sl55_5">Gunny Usage Claimed</th>
-    </tr>
-    <tr>
-      <td style="padding: 0;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tbody>
-          <tr>
-            <td class="sl4_1" style="border-top: none; border-left: none;">Variety of Rice</td>
-            <td class="sl4_1" style="border-top: none;">WQSC
-              No</td>
-            <td class="sl4_1" style="border-top: none;">Quantity of CMR</td>
-            </tr>
-          </tbody>
-      </table></td>
-      <td>9</td>
-    
-    <td>10</td>
-    <td>11</td>
-    <td>12</td>
-    <td>13</td>
-    
-    <td>10</td>
-    <td>11</td>
-    <td>12</td>
-    <td>13</td>
-    </tr>
-    <tr>
-      <td style="padding: 0;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tbody>
-          <tr>
-            <td class="sl4_1" style="border-top: none; border-left: none;">&nbsp;</td>
-            <td class="sl4_1" style="border-top: none;">&nbsp;</td>
-            <td class="sl4_1" style="border-top: none;">Qtl</td>
-          </tr>
-        </tbody>
-      </table></td>
-      <td>Qtl</td>
-      <td>Pcs</td>
-      <td>&nbsp;</td>
-      <td>Rs.</td>
-      <td>Rs.</td>
-      <td>Rs.</td>
-      <td>Rs.</td>
-      <td>Rs.</td>
-      <td>Rs.</td>
-    </tr>
-    <tr>
-      <td style="padding: 0;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tbody>
-          <tr>
-            <td class="sl4_1" style="border-top: none; border-left: none;">1</td>
-            <td class="sl4_1" style="border-top: none;">2</td>
-            <td class="sl4_1" style="border-top: none;">3</td>
-          </tr>
-        </tbody>
-      </table></td>
-      <td>4</td>
-      <td>5</td>
-      <td>6</td>
-      <td>7</td>
-      <td>8</td>
-      <td>9</td>
-      <td>10</td>
-      <td>11</td>
-      <td>12</td>
-    </tr>
-    <tr>
-      <td style="padding: 0;">&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td style="padding: 0;">&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-    </tr>
-  </thead>
-  <tbody>
+         <th rowspan="2">Gunny Usage Claimed</th>
+      </tr>
+      <tr>
+        <th rowspan="2">Variety of Rice</th>
+        <th rowspan="2">WQSC No</th>
+        <th>Quantity of CMR</th>
+      </tr>
+      <tr>
+        <th>Qtl</th>
+        <th>Qtl</th>
+        <th>Pcs</th>
+        <th>Rs.</th>
+        <th>Rs.</th>
+        <th>Rs.</th>
+        <th>Rs.</th>
+        <th>Rs.</th>
+        <th>Rs.</th>
 
+      </tr>
+    </thead>
+   
+  <tbody> 
     
-  </tbody>
-</table>
-    </td>
+    <tr>
+      <td style="text-align: center">(1)</td>
+      <td style="text-align: center">(2)</td>
+      <td style="text-align: center">(3)</td>
+      <td style="text-align: center">(4)</td>
+      <td style="text-align: center">(5)</td>
+      <td style="text-align: center">(6)</td>
+      <td style="text-align: center">(7)</td>
+      <td style="text-align: center">(8)</td>
+      <td style="text-align: center">(9)</td>
+      <td style="text-align: center">(10)</td>
+       <td style="text-align: center">(11)</td>
+      <td style="text-align: center">(12)</td>
     </tr>
+    <tr>
+      <td><?php if(isset($bill_dtls->rice_type)){ if($bill_dtls->rice_type == 'P'){ echo "Par Boiled";}else{ echo "Raw Rice"; } }?></td>
+      <td><?php if(isset($bill_dtls->wqsc_no)){ 
+         $sql = "SELECT a.kms_id,a.wqsc_no,b.sub_wqsc FROM td_wqsc a,td_wqsc_dtls b where a.id = b.trans_id and  a.wqsc_no ='$bill_dtls->wqsc_no' and  a.kms_id = '".$this->session->userdata['loggedin']['kms_id']."'";
+
+        $row = $this->db->query($sql)->result();
+                  foreach($row as $r){
+
+                    echo $r->sub_wqsc.'</br></br>';
+
+                  }
+
+
+
+        }?></td>
+      <td><?php if(isset($bill_dtls->paddy_cmr)){ echo $bill_dtls->paddy_cmr;}?></td>
+      <td><?php if(isset($bill_dtls->paddy_qty)){ echo $bill_dtls->paddy_qty;}?></td>
+      <td></td>
+      <td><?php echo $bill_dtls->memo_no;?><br>(<?php if($bill_dtls->pool_type=="C"){echo "Central Pool"; } else{
+             echo "State Pool";}?>)<br>Dated:-<br><?php echo date('d-m-Y', strtotime($bill_dtls->memo_dt)); ?></td>
+      <td><?php if(isset($rate->per_unit)){ echo $rate->per_unit;}?></td>
+      <td><?php if(isset($rate->per_unit)){ echo $rate->per_unit*$bill_dtls->paddy_cmr;}?></td>
+      <td></td>
+      <td><?php if(isset($rate->sgst_amt)){ echo $rate->sgst_amt;}?></td>
+      <td><?php if(isset($rate->sgst_amt)){ echo $rate->sgst_amt;}?></td>
+      <td><?php if(isset($rate->per_unit)){ echo $rate->per_unit*$bill_dtls->paddy_cmr+$rate->sgst_amt+$rate->sgst_amt;
+                                                $total = $rate->per_unit*$bill_dtls->paddy_cmr+$rate->sgst_amt+$rate->sgst_amt;
+
+      }?></td>
+    </tr>
+    <tr>
+      <td style="padding: 0;">&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+       <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+
   </tbody>
 </table>
     
     
   </div>
-
+      <p align="justify" >Amount Rounded off: <strong><?php echo round(abs(round($total) -$total),2)?> </strong><br>
+                    Rupees in Words: <strong><?php echo getIndianCurrency(round($total));?></strong></p>
   
   <h3 >Certified that </h3>
   <ul>
@@ -213,7 +193,7 @@ tr:hover {background-color: #f5f5f5;}
   </ul>
   <h3 >Certified that </h3>
   <ul>
-    <li>The sum of Rupees<strong> ......................</strong> claimed in the bill has not been drawn previously </li>
+    <li>The sum of Rupees<strong> <?php echo round($total);?></strong> claimed in the bill has not been drawn previously </li>
     <li>The details as well as calculations as shown in the Bill have been checked with original documents and found correct </li>
     <li>Any amount found paid in excess at any subsequent date may be adjusted from future Claim. </li>
     <li>Proper noting have been kept to avoid double payment </li>
@@ -221,7 +201,12 @@ tr:hover {background-color: #f5f5f5;}
   
   
      <p>&nbsp;</p>
-     <p><strong>Signature of the Claimant with seal</strong></p>
+       <p style="float: right;"><strong>Signature of the Claimant with seal</strong></p>
+       <p>&nbsp;</p>
+                    <p ><strong>Required Documents:</strong></p>
+        1.Voucher[Original], 2. Copy of Money Receipt ,3.Copy of GSTN no of miller,4. Stock flow statement of Paddy, 5. Stock flow statement of CMR , 6. Stock flow statement of gunny,[ In case milller not claimed GST, a certificate to this effect shall be attached]
+
+<p><strong>N.B</strong>  Claim will summarily be rejected for payment for want of above noted requisite documents.</p>
   </div>
 
 

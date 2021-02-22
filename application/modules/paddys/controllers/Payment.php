@@ -2320,9 +2320,9 @@ class Payment extends MX_Controller {
 
     public function f_annexture8_print(){
 
-            //Bill Details
+          //Bill Details
             $select =  array(
-              "a.paddy_qty","a.mandi_board","a.ben_bill_dt","a.ben_bill_no","b.memo_no","b.memo_dt","a.pool_type","a.soc_id","a.mill_id"
+              "a.paddy_qty","a.mandi_board","a.paddy_cmr","a.ben_bill_dt","a.rice_type","a.ben_bill_no","b.memo_no","b.memo_dt","a.pool_type","a.soc_id","a.mill_id","b.wqsc_no","b.goodown_name","b.goodown_dist","a.ho_bill_number"
             );
             $data  = explode("/",$this->input->get('pmt_bill_no'));
 
@@ -2335,9 +2335,30 @@ class Payment extends MX_Controller {
 
             );
 
-            $data['bill_dtls']       =   $this->Paddy->f_get_particulars("td_payment_bill a,td_wqsc b",$select,$where,1);
-       
-            $data['rate']       =   $this->Paddy->f_get_particulars("md_comm_params",NULL,NULL,0);
+            $data['bill_dtls']  =   $this->Paddy->f_get_particulars("td_payment_bill a,td_wqsc b",$select,$where,1);
+
+            $sel = array("per_unit","cgst_amt","sgst_amt");
+
+            $wheres  =   array(
+
+                "pmt_bill_no"   => $data['0'],
+                "dist"          => $data['1'],
+                "kms_id"        => $data['2'],
+                "account_type"  => '12'
+           
+            );
+
+            $data['rate']       =   $this->Paddy->f_get_particulars("td_payment_bill_dtls",$sel,$wheres,1);
+
+        
+
+            $wheress  =   array(
+
+                "sl_no"  => $data['bill_dtls']->mill_id
+
+            );
+         //   $data['distance']   =   $this->Paddy->f_get_particulars("md_soc_mill",NULL,$wheres,1);
+            $data['millname']   =   $this->Paddy->f_get_particulars("md_mill",NULL,$wheress,1);
 
             $this->load->view('post_login/main');
 
