@@ -1567,7 +1567,7 @@ class Paddy extends CI_Model {
 
     public function get_payment_detail($kms_id,$forward_trans_id){
         
-        $sql="SELECT distinct t.value_date, t.utr_no, t.bank_ref_no,t.cr_acc_no,t.amount, t.status_code,t.status_description,b.bank_name bank_name,t.created_dt
+        $sql="SELECT distinct t.payment_run_date,t.value_date, t.utr_no, t.bank_ref_no,t.cr_acc_no,t.amount, t.status_code,t.status_description,b.bank_name bank_name,t.created_dt
             FROM td_reverse_feed t,md_paddy_bank b
             WHERE t.bank_id = b.bank_id
             AND t.forward_trans_id = '$forward_trans_id'

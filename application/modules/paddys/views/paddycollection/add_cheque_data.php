@@ -278,11 +278,11 @@
 
             ).done(function(data){
 
-                var string = '<table  class="table"><tr><th>Bank</th><th>Value Date</th><th>Utr No</th><th>Bank Ref No</th><th>Cr A/C No</th><th>Amount</th><th>Status Code</th><th>Status Description</th></tr>';
+                var string = '<table  class="table"><tr><th>Payment Run Date</th><th>Value Date</th><th>Utr No</th><th>Bank Ref No</th><th>Cr A/C No</th><th>Amount</th><th>Status Code</th><th>Status Description</th></tr>';
 
                 $.each(JSON.parse(data), function( index, value ) {
 
-                    string += '<tr><td>' + value.bank_name + '</td><td>' + value.value_date + '</td><td>' + value.utr_no + '</td><td>' + value.bank_ref_no + '</td><td>' + value.cr_acc_no + '</td><td>' + value.amount + '</td><td>' + value.status_code + '</td><td>' + value.status_description + '</td></tr>'
+                    string += '<tr><td>'+ value.payment_run_date+ '</td><td>'+ value.value_date + '</td><td>' + value.utr_no + '</td><td>' + value.bank_ref_no + '</td><td>' + value.cr_acc_no + '</td><td>' + value.amount + '</td><td>' + value.status_code + '</td><td>' + value.status_description + '</td></tr>'
 
                 });
 
