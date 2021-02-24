@@ -162,7 +162,7 @@ tr:hover {background-color: #f5f5f5;}
                                 <th>Sl No.</th>
                                 <th>District</th>
                                 <th>Number of Societies which procured paddy</th>
-                                <th>Number of farmers registered</th>
+                                <!--<th>Number of farmers registered</th>-->
                                 <th>Number of farmers benefitted (sold paddy)</th>
                                 <th>Total Quantity of paddy sold by farmers (MT)</th>
                                 <th>Total amount paid to farmers (Rupees)</th>
@@ -201,17 +201,17 @@ tr:hover {background-color: #f5f5f5;}
                                             }   
                                                   
                                          ?></td>
-                                     <td>
+                                     <!--<td>
 
                                         <?php                                   //no.of farmer registered in the dist.
-                                                foreach($reg as $regfarm){                      
+                                               /* foreach($reg as $regfarm){                      
                                                     if($regfarm->dist == $dis->district_code){
                                                          echo $regfarm->reg_farm;
                                                         
                                                     }
-                                                }   
+                                                }   */
                                          ?>
-                                     </td>
+                                     </td>-->
                                      <td><?php                                      //no.of farmer sold paddy
                                                 foreach($collc as $colcDtls){
                                                     if($colcDtls->branch_id == $dis->district_code){
