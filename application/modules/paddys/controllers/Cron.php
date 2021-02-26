@@ -654,7 +654,7 @@ class Cron extends MX_Controller {
             $url = 'https://procurement.wbfood.in/api/Statusupd/Procurementdtls';/*Procurement*/
             $date = date('Y-m-d');
 
-            //$date = '2021-01-05';
+           // $date = '2021-02-18';
 
             $date1 = date("d/m/Y", strtotime($date));
     

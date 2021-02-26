@@ -1800,39 +1800,61 @@ class Payment extends MX_Controller {
     public function f_annexture2(){
 
 
-          if($_SERVER['REQUEST_METHOD'] == "POST") {
+       //   if($_SERVER['REQUEST_METHOD'] == "POST") {
 
-            $dist = $this->input->post('dist');
+           
 
-            $sql ="select a.trans_dt,a.dist,a.kms_id,a.ho_bill_number,a.pmt_bill_no pmt_bill_no, sum(b.payble_amt) payble_amt
-                            from   td_payment_bill a,td_payment_bill_dtls b
-                            where  a.trans_dt = b.trans_dt
-                            and    a.pmt_bill_no = b.pmt_bill_no
-                            and    a.kms_id = b.kms_id
-                            and    a.dist = b.dist
-                            and    a.dist ='$dist'
-                            and    a.ho_status = '1'
-                            group by a.trans_dt,a.ho_bill_number,a.pmt_bill_no,a.dist,a.kms_id
-                            order by a.trans_dt,a.pmt_bill_no";
+            // $sql ="select a.trans_dt,a.dist,a.kms_id,a.ho_bill_number,a.pmt_bill_no pmt_bill_no, sum(b.payble_amt) payble_amt
+            //                 from   td_payment_bill a,td_payment_bill_dtls b
+            //                 where  a.trans_dt = b.trans_dt
+            //                 and    a.pmt_bill_no = b.pmt_bill_no
+            //                 and    a.kms_id = b.kms_id
+            //                 and    a.dist = b.dist
+            //                 and    a.dist ='".$this->session->userdata['loggedin']['branch_id']."'
+            //                 and    a.ho_status = '1'
+            //                 group by a.trans_dt,a.ho_bill_number,a.pmt_bill_no,a.dist,a.kms_id
+            //                 order by a.trans_dt,a.pmt_bill_no";
 
-            $data['bill_dtls']    =  $this->db->query($sql)->result();
+            // $data['bill_dtls']    =  $this->db->query($sql)->result();
+
+            // echo $this->db->last_query();
+
+            // die();
+
+             $select =array( "sum(rate) rate");
+
+
+            $where  =   array(
+
+                "kms_id"     => $this->session->userdata['loggedin']['kms_id'],
+
+                "dist"       => $this->session->userdata['loggedin']['branch_id']
+
+                // "ho_status"  => 1,
+            );
+            $wheres  =   array(
+
+                "kms_id"     => $this->session->userdata['loggedin']['kms_id']
+            );
+
+            $data['bill_dtls']    =   $this->Paddy->f_get_particulars("td_payment_bill",NULL, $where,0);
 
             $this->load->view('post_login/main');
 
             $this->load->view("annexture/annexture2",$data);
 
             $this->load->view('post_login/footer');
-         }else {
+        //  }else {
 
-            $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+        //     $data['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
-            $this->load->view('post_login/main');
+        //     $this->load->view('post_login/main');
 
-            $this->load->view("annexture/annexture2",$data);
+        //     $this->load->view("annexture/annexture2",$data);
 
-            $this->load->view('post_login/footer');
+        //     $this->load->view('post_login/footer');
 
-        }
+        // }
     }
 
     public function f_annexture2_print(){

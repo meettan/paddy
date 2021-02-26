@@ -207,6 +207,7 @@
                             <a href="<?php echo site_url('payment/annexture2'); ?>">ANNEXURE II</a>
 
                               <?php }else{ ?>
+                            <a href="<?php echo site_url('payment/annexture2'); ?>">ANNEXURE II</a>
                             <a href="<?php echo site_url('payment/annexture3'); ?>">ANNEXURE III</a>
                             <!-- <a href="<?php echo site_url('payment/annexture4'); ?>">ANNEXURE IV</a> -->
                             <a href="<?php echo site_url('payment/annexture5'); ?>">ANNEXURE V</a>
@@ -283,6 +284,7 @@
                                <a href="<?php echo site_url('payment/annexture2'); ?>">ANNEXURE II</a>
 
                               <?php }else{ ?>
+                                <a href="<?php echo site_url('payment/annexture2'); ?>">ANNEXURE II</a>
                                 <a href="<?php echo site_url('payment/annexture3'); ?>">ANNEXURE III</a>
                                 <a href="<?php echo site_url('payment/annexture4'); ?>">ANNEXURE IV</a>
                                 <a href="<?php echo site_url('payment/annexture5'); ?>">ANNEXURE V</a>
