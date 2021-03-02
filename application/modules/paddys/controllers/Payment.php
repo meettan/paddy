@@ -1799,36 +1799,14 @@ class Payment extends MX_Controller {
     }
     public function f_annexture2(){
 
-
-       //   if($_SERVER['REQUEST_METHOD'] == "POST") {
-
-           
-
-            // $sql ="select a.trans_dt,a.dist,a.kms_id,a.ho_bill_number,a.pmt_bill_no pmt_bill_no, sum(b.payble_amt) payble_amt
-            //                 from   td_payment_bill a,td_payment_bill_dtls b
-            //                 where  a.trans_dt = b.trans_dt
-            //                 and    a.pmt_bill_no = b.pmt_bill_no
-            //                 and    a.kms_id = b.kms_id
-            //                 and    a.dist = b.dist
-            //                 and    a.dist ='".$this->session->userdata['loggedin']['branch_id']."'
-            //                 and    a.ho_status = '1'
-            //                 group by a.trans_dt,a.ho_bill_number,a.pmt_bill_no,a.dist,a.kms_id
-            //                 order by a.trans_dt,a.pmt_bill_no";
-
-            // $data['bill_dtls']    =  $this->db->query($sql)->result();
-
-            // echo $this->db->last_query();
-
-            // die();
-
              $select =array( "sum(rate) rate");
 
 
             $where  =   array(
 
-                "kms_id"     => $this->session->userdata['loggedin']['kms_id'],
+                "kms_id"     => $this->session->userdata['loggedin']['kms_id']
 
-                "dist"       => $this->session->userdata['loggedin']['branch_id']
+                // "dist"       => $this->session->userdata['loggedin']['branch_id']
 
                 // "ho_status"  => 1,
             );
@@ -1863,7 +1841,7 @@ class Payment extends MX_Controller {
            $data   = explode("/",$this->input->get('pmt_bill_no'));
             //Bill Details
             $select =  array(
-             "ho_bill_number","tot_paddy","tot_cmr","trans_dt"
+             "ho_bill_number","tot_paddy","tot_cmr","trans_dt","gunny_cut","paddy_butta","pool_type","dist","wqsc"
             );
 
             $where  =   array(
@@ -1873,8 +1851,39 @@ class Payment extends MX_Controller {
                 "kms_id"       => $data[2]
             );
 
-            $datas['bill_dtls']       =   $this->Paddy->f_get_particulars("td_payment_bill",$select,$where,1);
-           
+
+            $select_commission = array( "a.*");
+
+            $wherec  =   array(
+
+                 "a.sanc_no      = b.sanc_no"  => NULL,
+
+                "b.kms_id"           => $data[2],
+
+                "b.pmt_bill_no"      => $data[0],
+
+                "b.dist"             => $data[1]
+               
+            );
+
+            $data['comission_rate']    = $this->Paddy->f_get_particulars("td_society_commision a,td_payment_bill b",$select_commission, $wherec,1);
+
+
+            $datas['bill_dtls']          =   $this->Paddy->f_get_particulars("td_payment_bill",$select,$where,1);
+
+            //Code For Mandi Labour Charge
+            
+            $datas['mandil_abour_rate']  =   $this->Paddy->get_param_rate_exist_in_bills($data[0],$data[2],$data[1],2);
+
+             //Code For Commission To Society
+
+            $datas['commission_rate']   =   $this->Paddy->get_param_rate_exist_in_bills($data[0],$data[2],$data[1],8);
+
+            $datas['milling_rate']      =   $this->Paddy->get_param_rate_exist_in_bills($data[0],$data[2],$data[1],9);
+
+    
+          // echo $this->db->last_query();
+
             unset($where);
             $selects =  array(
              "a.*","b.param_name","b.action"

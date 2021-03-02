@@ -29,6 +29,7 @@
                         
                         <th>Payment No.</th>
                         <th>Date</th>
+                         <th>Bill No</th>
                         <th>Society Name</th>
                        <!--  <th>Transfer</th> -->
                         <th>Option</th>
@@ -50,7 +51,8 @@
                             <tr>
 
                                 <td><?php echo $p_dtls->trans_cd; ?></td>
-                                <td><?php echo date('d-m-Y', strtotime($p_dtls->trans_dt)); ?></td>                              
+                                <td><?php echo date('d-m-Y', strtotime($p_dtls->trans_dt)); ?></td> 
+                                <td><?php echo $p_dtls->ho_bill_no; ?> </td>                             
                                 <td><?php echo $p_dtls->soc_name; ?> </td>
                               <!--   <td>
                                     <?php if($p_dtls->approved_status == 'U') { ?> 
@@ -109,6 +111,7 @@
                     
                         <th>Payment No.</th>
                         <th>Date</th>
+                        <th>Bill No</th>
                         <th>Society Name</th>
                        <!--  <th>Transfer</th> -->
                         <th>Option</th>

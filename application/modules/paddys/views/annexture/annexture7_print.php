@@ -192,20 +192,12 @@ tr:hover {background-color: #f5f5f5;}
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                       </tr>
-                       
-                      
-                    
-                 
-
-                      
-                 
-                 
                   
                     </tbody>
                   </table>
                     </div>
 
-                    <p align="justify" >Amount Rounded off: <strong><?php echo round(abs(round($total) -$total),2)?> </strong><br>
+                    <p align="justify" >Amount Rounded off: <strong><?php echo round($total); ?> </strong><br>
                     Rupees in Words: <strong><?php echo getIndianCurrency(round($total));?></strong></p>
                     <p >Certified that the claimed amount on account of GST has actually been paid and reported to the appropriate GST authority  </p>
                     <h3 >Certified that </h3>

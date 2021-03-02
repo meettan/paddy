@@ -207,7 +207,7 @@
                             <a href="<?php echo site_url('payment/annexture2'); ?>">ANNEXURE II</a>
 
                               <?php }else{ ?>
-                            <a href="<?php echo site_url('payment/annexture2'); ?>">ANNEXURE II</a>
+                        <!--     <a href="<?php//echo site_url('payment/annexture2'); ?>">ANNEXURE II</a> -->
                             <a href="<?php echo site_url('payment/annexture3'); ?>">ANNEXURE III</a>
                             <!-- <a href="<?php echo site_url('payment/annexture4'); ?>">ANNEXURE IV</a> -->
                             <a href="<?php echo site_url('payment/annexture5'); ?>">ANNEXURE V</a>
@@ -287,13 +287,7 @@
                                 <a href="<?php echo site_url('payment/annexture2'); ?>">ANNEXURE II</a>
                                 <a href="<?php echo site_url('payment/annexture3'); ?>">ANNEXURE III</a>
                                 <a href="<?php echo site_url('payment/annexture4'); ?>">ANNEXURE IV</a>
-                                <a href="<?php echo site_url('payment/annexture5'); ?>">ANNEXURE V</a>
-                                <a href="<?php echo site_url('payment/annexture6'); ?>">ANNEXURE VI</a>
-                                <a href="<?php echo site_url('payment/annexture7'); ?>">ANNEXURE VII</a>
-                                <a href="<?php echo site_url('payment/annexture8'); ?>">ANNEXURE VIII</a>
-                                <a href="<?php echo site_url('payment/annexture9'); ?>">ANNEXURE IX</a>
-                                <a href="<?php echo site_url('payment/annexture10'); ?>">ANNEXURE X</a>
-                                <a href="<?php echo site_url('payment/annexture11'); ?>">ANNEXURE XI</a>
+                             
                               <?php } ?>
                                
                                 </div>

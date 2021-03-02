@@ -252,7 +252,7 @@ tr:hover {background-color: #f5f5f5;}
 
   <p align="justify" >Amount Rounded off: <strong> &#2352; <?php 
                    
-                                     $amount =round(abs(round($sum+$gum)-($sum+$gum)),2); 
+                                     $amount =round($sum+$gum); 
                                      echo $amount; ?></strong><br>
   Rupees in Words: <strong> <?php    echo getIndianCurrency(round($sum+$gum));?></strong></p>
   <p >Certified that the claimed amount has been the least transportation cost, based on distance covered   through the shortest route(s).</p>

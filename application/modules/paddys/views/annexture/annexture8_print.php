@@ -141,8 +141,6 @@ tr:hover {background-color: #f5f5f5;}
 
                   }
 
-
-
         }?></td>
       <td><?php if(isset($bill_dtls->paddy_cmr)){ echo $bill_dtls->paddy_cmr;}?></td>
       <td><?php if(isset($bill_dtls->paddy_qty)){ echo $bill_dtls->paddy_qty;}?></td>
@@ -179,7 +177,7 @@ tr:hover {background-color: #f5f5f5;}
     
     
   </div>
-      <p align="justify" >Amount Rounded off: <strong><?php echo round(abs(round($total) -$total),2)?> </strong><br>
+      <p align="justify" >Amount Rounded off: <strong><?php echo round($total);?> </strong><br>
                     Rupees in Words: <strong><?php echo getIndianCurrency(round($total));?></strong></p>
   
   <h3 >Certified that </h3>

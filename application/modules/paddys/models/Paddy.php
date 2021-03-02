@@ -412,7 +412,7 @@ class Paddy extends CI_Model {
     //Payment Details
     public function f_get_payments($kms_id,$br_id){
 
-        $sql = "SELECT DISTINCT t.pmt_bill_no,s.soc_name,m.mill_name,t.trans_dt,t.ho_status,t.dist,t.kms_id,t.ben_bill_no
+        $sql = "SELECT DISTINCT t.pmt_bill_no,s.soc_name,m.mill_name,t.trans_dt,t.ho_status,t.dist,t.kms_id,t.ben_bill_no,t.ho_bill_number
                 FROM td_payment_bill t, md_society s,md_mill m
                 WHERE t.soc_id = s.sl_no 
                 and   t.mill_id = m.sl_no
@@ -1619,6 +1619,16 @@ class Paddy extends CI_Model {
     $sql = "SELECT * FROM `td_payment_bill_dtls` where account_type in (3,4,5,11) and kms_id = $kms_id and pmt_bill_no = $bill_no and dist =$dist ";
 
     $query = $this->db->query($sql)->result();
+
+    return $query;
+
+   }
+
+   public function get_param_rate_exist_in_bills($bill_no,$kms_id,$dist,$account_type){
+
+    $sql = "SELECT * FROM `td_payment_bill_dtls` where account_type = '$account_type' and kms_id = '$kms_id' and pmt_bill_no = '$bill_no' and dist ='$dist' ";
+
+    $query = $this->db->query($sql)->row();
 
     return $query;
 

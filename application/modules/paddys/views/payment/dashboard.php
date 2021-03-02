@@ -30,7 +30,7 @@
                         
                         <th>Payment No.</th>
                         <th>Date</th>
-                        <th>Society Name</th>
+                        <th>Bill No</th>
                         <th>Mill Name</th>
                     <!--     <th>Transfer</th> -->
                         <th>Option</th>
@@ -55,7 +55,7 @@
                                 <td><?php echo $p_dtls->pmt_bill_no; ?></td>
                                 
                                 <td><?php echo date('d-m-Y', strtotime($p_dtls->trans_dt)); ?></td>
-                                <td><?php echo $p_dtls->soc_name; ?> </td>
+                                <td><?php echo $p_dtls->ho_bill_number; ?> </td>
 
                                 <td><?php echo $p_dtls->mill_name?></td>
                                 <!--  <td>
@@ -124,7 +124,7 @@
                     
                         <th>Payment No.</th>
                         <th>Date</th>
-                        <th>Society Name</th>
+                        <th>Bill No</th>
                         <th>Mill Name</th>
                      <!--    <th>Transfer</th> -->
                         <th>Option</th>

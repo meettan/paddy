@@ -71,77 +71,246 @@ tr:hover {background-color: #f5f5f5;}
 
   <p>    Claim towards the cost of Par Boiled /Common Raw [FAQ] delivered to the <strong>HO</strong>  for  the KMS <strong><?php echo $this->session->userdata['loggedin']['kms_yr'];?></strong> </p>
   
-  <div class="">
+  
   <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table tableCus">
     <thead>
       <tr>
-      <th scope="col" class="sl_1">Sl No</th>
-      <th scope="col" class="sl_2">Particulars</th>
-      <th scope="col" class="sl_3">Quantity</th>
-      <th scope="col" class="sl_4">Rate/ Qtl</th>
-       <th scope="col" class="sl_5">Total Amount</th>
-      <th scope="col" class="sl_6">Qty</th>
-      <th scope="col" class="sl_7">Rate/ Qtl</th>
-      <th scope="col" class="sl_8">Total Amt</th>
+      <th colspan="5"> Claim Towards the cost of  Parboiled CMR(<?php if($bill_dtls->pool_type == 'C') { echo "CP";}else{
+        echo "SP"; }?>)  Delivered to Food & Supplies Department For the KMS:<?php echo $this->session->userdata['loggedin']['kms_yr'];?></th>
+      <?php $paddy_rate = 0 ;?>
+    
+      </tr>
+       <tr>
+      <th colspan="5">For the Value of  <?=$bill_dtls->tot_cmr?> Quintals    <?php if($bill_dtls->pool_type == 'C') { echo "CP";}else{
+        echo "SP"; }?>   CMR delivery to if <?php if($bill_dtls->pool_type == 'C') { echo "Central Pool ";}else{
+        echo "State Pool"; }?>,  <?php echo get_district_name($bill_dtls->dist); ?> by BENFED <?php echo get_district_name($bill_dtls->dist); ?> Branch under KMS:<?php echo $this->session->userdata['loggedin']['kms_yr'];?> CS No: <?=$bill_dtls->wqsc?></th>
+     
+      <?php  $mandi_labour_rate         = 0.00;
+             $transportation_charge_cmr = 0.00;
+             $gunny_charge_paddy        = 0.00;
+             $transport_charge_paddy    = 0.00;
+             $milling_charge            = 0.00;
+             $subtotal                  = 0.00;
+
+      foreach($particulas as $pa){
+
+                    if($pa->account_type == 2){
+
+                      $mandi_labour_rate = $pa->per_unit;
+                    }elseif($pa->account_type == 11){
+
+                       $transportation_charge_cmr = $pa->per_unit;
+                    }elseif($pa->account_type == 12){
+
+                        $gunny_charge_paddy = $pa->per_unit;
+                    }elseif($pa->account_type == 3){
+
+                      $transport_charge_paddy = $pa->per_unit;
+
+                    }elseif($pa->account_type == 9){
+
+                      $milling_charge  = $pa->per_unit;
+
+                    }
+                  
+          }
+      
+        ?>
+      </tr>
+      <tr>
+      <th>Sl No</th>
+      <th>Particulars</th>
+      <th>Quantity(Quiantals)</th>
+      <th>Rate/ Quiantals(Rs)</th>
+      <th>Total Amount(Rs)</th>
+      
       </tr>
      </thead>
       <tbody>
-   
-          <tr>
-            <td scope="col" class="sl_11">(1)</td>
-            <td scope="col" class="sl_22">(2)</td>
-            <td scope="col" class="sl_33">(3)</td>
-            <td scope="col" class="sl_44">(4)</td>
-            <td scope="col" class="sl_55">(5)</td>
-            <td scope="col" class="sl_66">(6)</td>
-            <td scope="col" class="sl_55">(7)</td>
-            <td scope="col" class="sl_66">(8)</td>
-          </tr>
       
     <tr>
-      <td class="sl_1"></td>
-      <td class="sl_2"></td>
-      <td class="sl_3" colspan="2">Par-Boiled  Rice</td>
-      <td class="sl_4"></td>
-      <td class="sl_5" colspan="2">Raw Rice</td>
-      <td class="sl_6" ></td>
-   
+      <td>1</td>
+      <td>MSP</td>
+      <td rowspan="10" style="text-align: center; "><?=$bill_dtls->tot_paddy;?></td>
+      <td><?php echo get_paddy_price($this->session->userdata['loggedin']['kms_id']);
+                $paddy_rate = get_paddy_price($this->session->userdata['loggedin']['kms_id']);
+      ?></td>
+      <td><?php echo round(($paddy_rate*$bill_dtls->tot_paddy),2); ?></td>
     </tr>
- 
+     <tr>
+      <td>2</td>
+      <td>Market Fee</td>
+      
+      <td>0.00</td>
+      <td>0.00</td>
+    </tr>
+     <tr>
+      <td>3</td>
+      <td>Mandi Labour Charge</td>
+     
+      <td><?php echo $mandil_abour_rate->per_unit; ?></td>
+      <td><?php echo round(($mandil_abour_rate->per_unit*$bill_dtls->tot_paddy),2); ?></td>
+    </tr>
+     <tr>
+      <td>4</td>
+      <td>Transport Charges For Paddy</td>
+      <td><?php echo $transport_charge_paddy; ?></td>
+      
+      <td><?php echo round(($transport_charge_paddy*$bill_dtls->tot_paddy),2); ?></td>
+    </tr>
+     <tr>
+      <td>5</td>
+      <td>Additional Transport Charges for Paddy</td>
+      <td></td>
+      <td></td>
+    </tr>
+     <tr>
+      <td>6</td>
+      <td>Interest Charges</td>
+      <td>0.00</td>
+    
+      <td>0.00</td>
+    </tr>
+     <tr>
+      <td>7</td>
+      <td>Draige</td>
+      <td>0.00</td>
+    
+      <td>0.00</td>
+    </tr>
+     <tr>
+      <td>8</td>
+      <td>Commission to Society</td>
+      <td><?php if(isset($comission_rate->rate)){ echo $comission_rate->rate;}?></td>
+    
+      <td><?php   $comisssion =0.00;
+
+
+      if(isset($comission_rate->rate)){ echo ($comission_rate->rate*$bill_dtls->tot_paddy);
+                          $comisssion =$comission_rate->rate*$bill_dtls->tot_paddy;
+      }?></td>
+    </tr>
+     <tr>
+      <td>9</td>
+      <td>MIlling Charges Inclusive for GST</td>
+      <td><?=$milling_charge?></td>
+     
+      <td><?php echo $milling_rate->total_amt+$milling_rate->cgst_amt+$milling_rate->sgst_amt;?></td>
+    </tr>
+   <tr>
+      <td>10</td>
+      <td>Administrative Charges</td>
+      <td></td>
+      
+      <td></td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td colspan="3">Cost of paddy Milled </td>
+    <td><?php echo round(($paddy_rate*$bill_dtls->tot_paddy+$mandil_abour_rate->per_unit*$bill_dtls->tot_paddy+$transport_charge_paddy*$bill_dtls->tot_paddy+$comisssion+$milling_rate->total_amt+$milling_rate->cgst_amt+$milling_rate->sgst_amt),2);
+          $subtotal = round(($paddy_rate*$bill_dtls->tot_paddy+$mandil_abour_rate->per_unit*$bill_dtls->tot_paddy+$transport_charge_paddy*$bill_dtls->tot_paddy+$comisssion+$milling_rate->total_amt+$milling_rate->cgst_amt+$milling_rate->sgst_amt),2);
+
+     ?></td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td colspan="4">Out Turn Ratio   <span style="float:right">68%</span></td>
+     
+    </tr>
+     <tr>
+      <td>13</td>
+      <td>Sub Total of Common Parboiled Rice</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+     <tr>
+      <td>14</td>
+      <td>Gunny Usages Charges For Used Gunny Bags for Paddy Inclusive GST</td>
+      <td rowspan="2"><?php echo $bill_dtls->tot_cmr;?></td>
+      <td><?=$gunny_charge_paddy;?></td>
+      <td><?php echo round($bill_dtls->tot_cmr*$gunny_charge_paddy,2);?></td>
+    </tr>
+     <tr>
+      <td>15</td>
+      <td>Transport Charge For CMR DELIVERY</td>
+      <td><?=$transportation_charge_cmr?></td>
+     
+      <td><?php echo round($bill_dtls->tot_cmr*$transportation_charge_cmr,2);?></td>
+    </tr>
+     <tr>
+      <td>16</td>
+      <td>Acuitision Cost</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+     <tr>
+      <td>17</td>
+      <td>Less: BUtta Cut</td>
+      <td></td>
+      <td></td>
+      <td><?php echo $bill_dtls->paddy_butta;?></td>
+    </tr>
+     <tr>
+      <td>18</td>
+      <td>Less: Gunny Cut</td>
+      <td></td>
+      <td></td>
+      <td><?php echo $bill_dtls->gunny_cut;?></td>
+    </tr>
+     <tr>
+      <td>19</td>
+      <td>Total Claim</td>
+      <td></td>
+      <td></td>
+      <td><?php echo round($subtotal+ $bill_dtls->tot_cmr*$gunny_charge_paddy+$bill_dtls->tot_cmr*$transportation_charge_cmr,2);
+                 $value = $subtotal+ $bill_dtls->tot_cmr*$gunny_charge_paddy+$bill_dtls->tot_cmr*$transportation_charge_cmr;
+      ?></td>
+    </tr>
+     <tr>
+      <td>20</td>
+      <td>Amount Rounded off:</td>
+      <td></td>
+      <td></td>
+      <td><?php  echo $amount = round($subtotal+ $bill_dtls->tot_cmr*$gunny_charge_paddy+$bill_dtls->tot_cmr*$transportation_charge_cmr);
+
+ //   echo round(abs($amount - $value),2); ?></td>
+    </tr>
     <?php 
            $sum = 0;
-
-    foreach($particulas as $part){?>
-     <tr>
-      <td scope="row">1</td>
-      <td><?php if(isset($part->param_name)){echo $part->param_name;}?></td>
-      <td><?php if($part->param_name == "P"){echo $bill_dtls->tot_cmr;}else{ echo $bill_dtls->tot_paddy;} ?></td>
-      <td><?php if(isset($part->per_unit)){echo $part->per_unit;}?></td>
-      <td><?php if(isset($part->total_amt)){echo $part->payble_amt;
-                                $sum+= $part->payble_amt;
-
-      }?></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-  <?php } ?>
-   
+ ?>
     
-   </tbody>
-    
-
+   </tbody>  
 </table>
-    
-    
-  </div>
-  <h2 align="right" >STATE / CENTRAL POOL </h2>
-  <p align="justify" >Amount Rounded off:<strong>&#2352;  <?php 
-                                         
-                                        $amount = moneyFormatIndia(round($sum)); 
-                                      echo $amount; ?> </strong> </p>
-    <p align="justify" >Rupees in Words:<strong> <?php echo getIndianCurrency(round($sum));?></strong> </p>
+    <p align="justify" >Total:<strong> RS.  <?php echo $amount;?></strong> </p>
+     <p align="justify" >Rupees in Words:<strong> <?php echo getIndianCurrency(round($amount));?></strong> </p>
   <p>&nbsp;</p>
+
+  <table  width="100%" border="">
+    <tr>
+        <td width="25%" style="border: 1px solid #FFFFFF;padding: 0.5rem;">Preapred By Dealing Assistant</td>
+        <td width="25%" style="border: 1px solid #FFFFFF;padding: 0.5rem;">Assistant Manager(Marketing)/DY Manager(Accounts)</td>
+        <td width="25%" style="border: 1px solid #FFFFFF;padding: 0.5rem;">Dy Manager(Marketing)/Assistant Manager/Inspector of Cooperative Societies</td>
+        <td width="25%" style="border: 1px solid #FFFFFF;padding: 0.5rem;">Manager(Accounts)</td>
+
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <table  width="100%" border="">
+    <tr>
+        <td width="25%" style="border: 1px solid #FFFFFF;padding: 0.5rem;"></td>
+        <td width="25%" style="border: 1px solid #FFFFFF;padding: 0.5rem;"></td>
+        <td width="25%" style="border: 1px solid #FFFFFF;padding: 0.5rem;">Manager (Marketing)</td>
+        <td width="25%" style="border: 1px solid #FFFFFF;padding: 0.5rem;">Chief Audit & Account Officer</td>
+
+    </tr>
+  </table>
+  </div>
+ <!--  <h2 align="right" >STATE / CENTRAL POOL </h2> -->
+  
+   <p style="float: right;"><strong>Signature of the Claimant with seal</strong></p>
 </div>
     </div>
 

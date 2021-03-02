@@ -118,17 +118,15 @@ tr:hover {background-color: #f5f5f5;}
 
   <p align="justify">Amount Rounded off: <strong style="">&#2352;  <?php 
 
-     
-  if(isset($bill_dtls->per_qui_rate)){ 
+      $sum = $bill_dtls->per_qui_rate*$bill_dtls->tot_paddy;echo (round($sum));
+  // if(isset($bill_dtls->per_qui_rate)){ 
 
-    $amount = round($bill_dtls->per_qui_rate*$bill_dtls->tot_paddy);
+  //   $amount = round($bill_dtls->per_qui_rate*$bill_dtls->tot_paddy);
 
-    echo round(abs($amount - $value),2);
+  //   echo round(abs($amount - $value),2);
                      
     // echo $amount = moneyFormatIndia( $amount );
- 
-            $sum = $bill_dtls->per_qui_rate*$bill_dtls->tot_paddy;
-  }?></strong></p>
+    ?></strong></p>
   <p align="justify">Rupees in Words: <strong>  <?php echo getIndianCurrency(round($sum));?></strong></p>
   <p>&nbsp;</p>
 
