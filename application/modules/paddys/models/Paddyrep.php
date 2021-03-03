@@ -23,7 +23,11 @@ class Paddyrep extends CI_Model{
                                         b.block_name block_name
                                 from md_society a,md_block b
                                 where   a.block = b.blockcode
-                                and     a.branch_id = $brn");
+                                and     a.branch_id = $brn
+                                and     a.society_code in (select distinct soc_id
+                                                           from td_collections
+                                                           where branch_id = $brn 
+                                                           and   kms_id    = 3)");
 
         return $soc->result();
     }
@@ -109,7 +113,7 @@ class Paddyrep extends CI_Model{
    
 /**Societywise amount of chq cleared beween a date range in given district */
     public function f_getamt_clr($brn,$frmdt,$todt){
-        $collc = $this->db->query("select soc_id,sum(amount) amount_clr
+        $collc = $this->db->query("select soc_id,sum(amount) amount_clr,count(reg_no) farm_rcvd
                                    from   td_collections
                                    where  branch_id = $brn  
                                    and    chq_status in ('C','S')
@@ -118,6 +122,18 @@ class Paddyrep extends CI_Model{
                                    order by soc_id");
         return $collc->result();
     }
+
+/**Remaining farmer no. */
+public function f_getunpaid_farmer($brn,$frmdt,$todt){
+    $collc = $this->db->query("select soc_id,sum(amount) amount_clr,count(reg_no) unpaid_farm_rcvd
+                               from   td_collections
+                               where  branch_id = $brn  
+                               and    chq_status not in ('C','S')
+                               and    trans_dt between '$frmdt' and '$todt'
+                               group by soc_id
+                               order by soc_id");
+    return $collc->result();
+}
 
 /**Districtwise amount of chq cleared beween a date range in given district */
     public function f_getdistamt_clr($frmdt,$todt){

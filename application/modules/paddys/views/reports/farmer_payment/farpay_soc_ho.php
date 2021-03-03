@@ -181,11 +181,13 @@ tr:hover {background-color: #f5f5f5;}
                                 <th>Price of paddy procured at Minimum Support Price (Rupees)</th>
                                 <th>Total amount paid to farmers (Rupees)</th>
                                 <th>Total amount of neft cleared (Rupees)</th>
+                                <th>No.of Farmers Received Amount</th>
                                 <th>Number of neft reissued</th>
                                 <th>Amount for which neft was reissued(Rupees)</th>
                                 <!--<th>Number of cheques reissued next</th>
                                 <th>Amount for which cheque was reissued next (Rupees)</th>-->
                                 <th>Amount of neft yet to be cleared (Rupees)</th>
+                                <th>No.of farmers yet to receive</th>
                             </tr>
                         </thead>
 
@@ -197,13 +199,16 @@ tr:hover {background-color: #f5f5f5;}
 
                                     $i = 1;
                                     $tot_qty_paddy_purchased = 0;
-                                    $tot_benifited_farmer = 0;  $tot_amount = 0;
+                                    $tot_benifited_farmer = 0;  $tot_amount = 0; $benifited_farmer = 0;
                                     $amt  = 0.00;
                                     $amount_cls = 0.00;
                                     $amount_cl = 0;
                                     $chequ_reissue = 0;
                                     $chequ_reis_amt =0;
                                     $tot_remain = 0;
+                                    $tot_farm_recvd = 0;
+                                    $farm_recvd = 0;
+                                    $tot_unpaid =0;
 
                                     foreach($socDtls as $soc){
 
@@ -213,10 +218,13 @@ tr:hover {background-color: #f5f5f5;}
                                      <td><?php echo $i++; ?></td>               <!--sl no-->
                                      <td><?php echo $soc->block_name; ?></td>   <!--block name-->
                                      <td><?php echo $soc->soc_name; ?></td>     <!--society name-->
-                                       <td><?php                                //no.of farmer
+                                       <td><?php          
+                                                                                 //no.of farmer
                                                 foreach($collc as $colcDtls){
+                                                    //$benifited_farmer = 0;
                                                     if($colcDtls->soc_id == $soc->society_code){
                                                          echo $colcDtls->farm_ben;
+                                                         $benifited_farmer      = $colcDtls->farm_ben;
                                                          $tot_benifited_farmer += $colcDtls->farm_ben;
                                                     }
                                                 }   
@@ -231,7 +239,8 @@ tr:hover {background-color: #f5f5f5;}
                                                 }
                                          ?>
                                      </td>
-                <td><?php                                                      //paddy price
+
+                                     <td><?php                                                      //paddy price
                                                echo get_paddy_price($this->session->userdata['loggedin']['kms_id']); 
                                          ?>
                                      </td>
@@ -262,6 +271,22 @@ tr:hover {background-color: #f5f5f5;}
 
                                      <td>
                                          
+                                         <?php                                //no. of farmer received
+                                                foreach($coll as $cos){
+                                                    //$farm_recvd = 0;
+                                                    if($cos->soc_id == $soc->society_code){
+                                                         echo $cos->farm_rcvd;
+                                                         $farm_recvd      = $cos->farm_rcvd;
+                                                         $tot_farm_recvd += $farm_recvd;
+                                                    }                   
+                                                }   
+                                         ?>
+                                     </td>
+
+
+
+                                     <td>
+                                         
                                          <?php                                      //no. of chq reissue
                                                 foreach($reissues as $reiss){
                                                     if($reiss->soc_id == $soc->society_code){
@@ -289,6 +314,17 @@ tr:hover {background-color: #f5f5f5;}
                                      <!--<td></td>-->                     <!--amt of chq reissue 2nd-->
 
                                      <td><?php echo ($amt-$amount_cls)?></td>               <!--total uncleared chq-->
+
+                                     <td>
+                                         <?php
+                                                foreach($unpaid as $unpaidfarm){                   //amt of unpaid
+                                                    if($unpaidfarm->soc_id == $soc->society_code){
+                                                         echo $unpaidfarm->unpaid_farm_rcvd;
+                                                         $tot_unpaid += $unpaidfarm->unpaid_farm_rcvd;
+                                                         }                                              
+                                                }   
+                                         ?>
+                                     </td>              <!--yet to receive-->
                                     
                                 </tr>
                                
@@ -297,18 +333,17 @@ tr:hover {background-color: #f5f5f5;}
                                  $amt  = 0.00;
                                     $amount_cls = 0.00;
                                     }  ?>
-                                     <tr><td colspan="3" style="text-align: center;">Total</td>
+                                    <tr><td colspan="3" style="text-align: center;">Total</td>
                                      	<td><?=$tot_benifited_farmer?></td>
                                      	<td><?=$tot_qty_paddy_purchased?></td>
                                      	<td></td>
                                      	<td><?=$tot_amount?></td>
                                      	<td><?=$amount_cl?></td>
+                                        <td><?=$tot_farm_recvd?></td> 
                                      	<td><?=$chequ_reissue?></td>
                                         <td><?=$chequ_reis_amt?></td>
-                                        <!--<td></td>
-                                        <td></td>-->
                                         <td><?php echo $tot_amount - $amount_cl ?> </td>
-
+                                        <td><?php echo $tot_unpaid; ?> </td>
                                      </tr>
 
                          <?php        }

@@ -562,6 +562,8 @@ class Reports extends MX_Controller {
 
                 $socProc['reissues']  =   $this->Paddyrep->f_getamt_reissue_new($branch_id,$from_dt,$to_dt,$kms_id);
 
+                $socProc['unpaid']    =   $this->Paddyrep->f_getunpaid_farmer($branch_id,$from_dt,$to_dt);
+
                 //echo ($this->db->last_query());die;
                        
                 $this->load->view('post_login/main');
