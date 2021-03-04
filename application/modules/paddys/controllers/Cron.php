@@ -460,6 +460,137 @@ class Cron extends MX_Controller {
        
     }
 
+     //   Code for hdfc reverse file read and store in download folder 04/03/2020  //
+    public function read_hdfc_reversefile_second(){
+
+             $kms_yerr_data = $this->db->query('SELECT * FROM `md_kms_year` 
+                                        where sl_no = (select max(sl_no) from md_kms_year)')->row();
+
+             $kms_year  = $kms_yerr_data->kms_yr;
+             $kms_id    = $kms_yerr_data->sl_no;
+
+             $newest_file = null;
+
+            $path        = $_SERVER['DOCUMENT_ROOT'].'/paddy/hdfc/hdfcreverse/cmsrev2/';
+             
+            $files       = scandir($path,1);
+            
+            $newest_file = $files[0];
+        
+         
+             $handle      = file_get_contents($path.$newest_file);
+
+                    $var_array_parent = explode("\n",$handle);
+                     unset($var_array_parent[0]);
+
+
+                    foreach($var_array_parent as $value)
+                    {
+
+
+                    $var_array = explode(",",$value);
+
+
+                   
+                   if ( ! isset($var_array[5])) {
+
+                            $var_array[0]  = null;
+                            $var_array[1]  = null;
+                            $var_array[2]  = null;
+                            $var_array[3]  = null;
+                            $var_array[4]  = null;
+                            $var_array[5]  = null;
+                            $var_array[6]  = null;
+                            $var_array[7]  = null;
+                            $var_array[8]  = null;
+                            $var_array[9]  = null;
+                            $var_array[10] = null;
+                            $var_array[11] = null;
+                            $var_array[12] = null;
+                            $var_array[13] = null;
+                            $var_array[14] = null;
+                            $var_array[15] = null;
+                            $var_array[16] = null;
+                            $var_array[17] = null;
+                            $var_array[18] = null;
+                            $var_array[19] = null;
+                            $var_array[20] = null;
+                            $var_array[21] = null;
+                            $var_array[22] = null;
+                            $var_array[23] = null;
+                          
+                    }
+
+
+                      if (isset($var_array[5])) {
+
+                      $status  = 'REJECTED';
+                 
+                      $datess = explode('/',$var_array[6]);
+
+                      $select = array("forward_trans_id","book_no","reg_no");
+                      $where  = array("cheque_no" => $var_array[5],'kms_id' => $kms_id);
+
+                     
+                      $result = $this->Paddy->f_get_particulars('td_collections',$select,$where,1);
+
+                     $pay_date = substr($datess[2],0,4).'-'.$datess[1].'-'.$datess[0];
+                    
+                    $data = array(
+                                'kms_id'              => $kms_id,
+                                'bank_id'             => '5',
+                                'forward_trans_id'    => $result->forward_trans_id,
+                                'book_no'             => $result->book_no,
+                                'corporate_code'      => '',
+                                'payment_run_date'    => $pay_date,
+                                'product_code'        => "HDFC",
+                                'utr_no'              => $var_array[5],
+                                'status_code'         => $status,
+                                'status_description'  => $var_array[17].$var_array[19],
+                                'batch_no'            => $var_array[1],
+                                'reg_no'              => $result->reg_no,
+                                'value_date'          => $pay_date,
+                                'bank_ref_no'         => $var_array[4],
+                                'amount'              => $var_array[8],
+                                'dr_ac_no'            => "",
+                                'dr_ifsc_code'        => $var_array[12],
+                                'dr_cr_flag'          => "C",
+                                'cr_acc_no'           => $var_array[11],
+                                'file_no'             => "",
+                                'created_dt'          => date("Y-m-d h:i:s")
+                                );
+
+                        if ( isset($var_array[5])) {
+
+                            
+                        $this->db->insert('td_reverse_feed',$data);
+
+                        }
+
+                    }
+                }    
+
+            $filePath = $path.$newest_file;
+  
+            /* Store the path of destination file */
+            $destinationFilePath = $_SERVER['DOCUMENT_ROOT'].'/downloads/HDFC/return/'.$newest_file;
+              
+            /* Move File from images to copyImages folder */
+
+            if(strlen($newest_file) > 4){
+
+                copy($filePath, $destinationFilePath);
+
+                unlink($filePath);
+
+            }else{
+
+                echo "File Does Not Exit";
+
+            }
+       
+    }
+
     public function farmer_update(){
 
         $date = date('Y-m-d',strtotime("-1 days"));

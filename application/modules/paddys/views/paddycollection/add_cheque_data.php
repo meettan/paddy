@@ -186,9 +186,11 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Payment Status</h4>
         </div>
+        <center>
         <div class="modal-body">
-          
+          <img src="<?=base_url();?>assets/images/Flowinggradient.gif" >
         </div>
+      </center>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" onclick="location.reload();">Close</button>
         </div>
