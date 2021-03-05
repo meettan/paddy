@@ -471,7 +471,7 @@ class Cron extends MX_Controller {
 
              $newest_file = null;
 
-            $path        = $_SERVER['DOCUMENT_ROOT'].'/paddy/hdfc/hdfcreverse/cmsrev2/';
+            $path        = $_SERVER['DOCUMENT_ROOT'].'/hdfc/hdfcreverse/cmsrev2/';
              
             $files       = scandir($path,1);
             
@@ -526,16 +526,22 @@ class Cron extends MX_Controller {
 
                       $status  = 'REJECTED';
                  
-                      $datess = explode('/',$var_array[6]);
-
+                      //$datess = explode('/',$var_array[6]);
+                         $datess = substr($var_array[6],0,10);
+                          
+                           $day     = substr($datess,3,2);
+                           $month  = substr($datess,0,2);
+                           $year     = substr($datess,6,4);
+                     
                       $select = array("forward_trans_id","book_no","reg_no");
                       $where  = array("cheque_no" => $var_array[5],'kms_id' => $kms_id);
 
                      
                       $result = $this->Paddy->f_get_particulars('td_collections',$select,$where,1);
 
-                     $pay_date = substr($datess[2],0,4).'-'.$datess[1].'-'.$datess[0];
-                    
+                      //echo   $pay_date = substr($datess[2],0,4).'-'.$datess[1].'-'.$datess[0];
+                         $pay_date = $year.'-'.$month.'-'.$day;
+                  
                     $data = array(
                                 'kms_id'              => $kms_id,
                                 'bank_id'             => '5',
