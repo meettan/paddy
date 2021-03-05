@@ -131,9 +131,11 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Payment Status</h4>
         </div>
+        <center>
         <div class="modal-body">
-          
+          <img src="<?=base_url();?>assets/images/Flowinggradient.gif" >
         </div>
+      </center>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
@@ -151,9 +153,11 @@
 
 <script>
 
-   // $("#form").validate();
-
-  //  $( ".sch_cd" ).select2();
+  $(document).ready(function(){
+      $('#myModal').on('hidden.bs.modal', function () {
+       location.reload();
+      })
+    })
 
   $('.modal').on('hide.bs.modal', function (e) {
     $("element.style").css("padding-right","0");

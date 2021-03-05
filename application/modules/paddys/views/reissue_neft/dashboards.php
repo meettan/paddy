@@ -80,7 +80,8 @@
                       <td><?php echo $padl_dtl->forwarded_by; ?></td>
                       <td><?php echo $padl_dtl->modified_by; ?><?php if(isset($padl_dtl->modified_dt)){echo '/'.$padl_dtl->modified_dt; } ?></td>
                       <td> 
-                       <?php if($padl_dtl->chq_status == "R" &&  $padl_dtl->modified_by != NULL ) { ?>
+                       <?php //if($padl_dtl->chq_status == "R" &&  $padl_dtl->modified_by != NULL ) { ?>
+                         <?php if($padl_dtl->chq_status == "R" &&  $padl_dtl->status == 0 ) { ?>
                  <a href="<?php echo site_url("paddys/bankintegration/f_paddycol_return_forward");?>?soc_id=<?=$padl_dtl->soc_id;?>&trans_dt=<?=$padl_dtl->trans_dt;?>&forward_bulk_trans_id=<?=base64_encode($padl_dtl->forward_bulk_trans_id);?>&bulk_trans_id=<?=$padl_dtl->bulk_trans_id;?>"><button class="btn btn-primary" id="">Forward</button></a>
                  <?php  } ?> 
              </td>

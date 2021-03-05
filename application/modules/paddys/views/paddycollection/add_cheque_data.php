@@ -6,11 +6,13 @@
             <h4>Paddy Procurement Entry</h4>
       
             </div>
+<?php   foreach($farmer_dtls as $farme);  ?>
 
+   <?php if($farme->status == 0 ) { ?>
             <form method="POST" 
                 id="form"  enctype="multipart/form-data"
                 action="<?php echo site_url("paddys/transactions/f_cheque_add");?>">
-
+          <?php } ?>
                 <div class="form-group row">
 
                 <input type="hidden" value="<?php echo $_GET["soc_id"]?>" name="editdata">
@@ -20,7 +22,7 @@
                     <div class="col-sm-2">
                       <?php 
 
-                      foreach($farmer_dtls as $farme);
+                  //    foreach($farmer_dtls as $farme);
                       
                       if(isset($farme->block_name)){ echo $farme->block_name; }?>
 
@@ -213,7 +215,11 @@
   $('.modal').on('hide.bs.modal', function (e) {
     $("element.style").css("padding-right","0");
 });
-
+   $(document).ready(function(){
+      $('#myModal').on('hidden.bs.modal', function () {
+       location.reload();
+      })
+    })
 </script>
 
 <script>

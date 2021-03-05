@@ -1097,7 +1097,8 @@ class Paddy extends CI_Model {
             and a.kms_id = $kms_id 
             and a.soc_id = '$soc_id' 
             and a.trans_dt = '$trans_dt' 
-            and a.forward_bulk_trans_id = '$forward_bulk_trans_id' 
+            and a.forward_bulk_trans_id = '$forward_bulk_trans_id'
+            and a.status   = '0' 
             and a.dwn_flag = '0' ";
 
         $data = $this->db->query($sql);
