@@ -472,6 +472,8 @@ class Cron extends MX_Controller {
              $newest_file = null;
 
             $path        = $_SERVER['DOCUMENT_ROOT'].'/hdfc/hdfcreverse/cmsrev2/';
+
+            //echo $path;die;
              
             $files       = scandir($path,1);
             
