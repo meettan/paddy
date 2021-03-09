@@ -4343,7 +4343,6 @@ class Transactions extends MX_Controller {
             //District List
             $wqsc['dist']   =  $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
-          
             $where      =   array(
                 
                 "id" => $this->input->get('trans_no')
@@ -4352,7 +4351,7 @@ class Transactions extends MX_Controller {
 
             $wheredl    =   array(
 
-                "wqsc_no"  => $this->input->get('wqsc_no'),
+              //  "wqsc_no"  => $this->input->get('wqsc_no'),
                 "trans_id" => $this->input->get('trans_no')
 
             );

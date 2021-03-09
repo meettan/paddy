@@ -69,6 +69,8 @@
                                 <!-- <td> <?php //echo $wqsc_dtl->modified_by; ?></td> -->
                                 <td>
 
+                             
+
                                 <a href="wqsc_edit?trans_no=<?php echo $wqsc_dtl->id; ?>&wqsc_no=<?php echo $wqsc_dtl->wqsc_no; ?>" data-toggle="tooltip" data-placement="bottom" class="btn btn-primary view">
                                 <i class="fa fa-eye">View/Edit</i>
                                 </a>

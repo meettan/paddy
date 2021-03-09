@@ -11,7 +11,7 @@
 
             <div class="form-group row">
 
-            <label for="tot_do_isseued" class="col-sm-2 col-form-label">WQSC/CS No:</label>
+            <label for="tot_do_isseued" class="col-sm-2 col-form-label">CS No:</label>
 
                     <div class="col-sm-4">
 
