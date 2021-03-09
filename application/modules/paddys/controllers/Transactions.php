@@ -5333,7 +5333,8 @@ class Transactions extends MX_Controller {
               
 
                 $data_arrays = array(
-             
+
+                "bank_sl_no"            =>  $this->input->post('bank_sl_no'),
                 "bulk_trans_id"         =>  $bulk_trs_id,
                 "forward_bulk_trans_id" =>  $new_forward_bulk_trans_id,
                 "chq_status"            =>  "R",
@@ -5398,7 +5399,7 @@ class Transactions extends MX_Controller {
            $wheres      =   array(
             "branch_id" => $this->session->userdata['loggedin']['branch_id']
              );
-
+            $paddycollection['banks']  =   $this->Paddy->f_get_particulars("md_paddy_bank",NULL,NULL, 0);
             //Block List
             $paddycollection['blocks']  =   $this->Paddy->f_get_particulars("md_block",NULL,$wheres, 0);
 

@@ -48,12 +48,30 @@
                  <input type="hidden" name ="forward_bulk_trans_id" value="<?php if(isset($farme->forward_bulk_trans_id)){ echo $farme->forward_bulk_trans_id; }?>">
             <div class="col-sm-2"><b>Bank Name :</b> </div>
              <div class="col-sm-3">
-                  <?php if($farme->bank_sl_no == 1){ echo "Yes Bank"; }
-                        elseif($farme->bank_sl_no == 2){ echo "Bandhan Bank";}
-                        elseif($farme->bank_sl_no == 3){ echo "Icici Bank";}
-                        elseif($farme->bank_sl_no == 4){ echo "Axis Bank";}
-                        else { echo "HDFC Bank"; }
-                  ?> </div>
+
+
+                    <select name="bank_sl_no" id="bank_sl_no" class="form-control" required>
+                    <option value="">Select</option>    
+                    <?php
+
+                             foreach($banks as $bank){
+
+                            ?>
+                         <option value="<?php echo $bank->sl_no;?>" <?php if(isset($farme->bank_sl_no) && $farme->bank_sl_no == $bank->sl_no){ echo "selected"; } ?>> <?php echo $bank->bank_name; ?></option>
+                           <?php
+
+                                 }
+
+                                    ?>  
+                  </select>
+              
+                   <?php   //if($farme->bank_sl_no == 1){ echo "Yes Bank"; }
+                  //       elseif($farme->bank_sl_no == 2){ echo "Bandhan Bank";}
+                  //       elseif($farme->bank_sl_no == 3){ echo "Icici Bank";}
+                  //       elseif($farme->bank_sl_no == 4){ echo "Axis Bank";}
+                  //       else { echo "HDFC Bank"; }
+                  ?> 
+                </div>
 
                      <div class="col-sm-2"><b>Transaction :</b><?php if($farme->trans_type=="N"){ echo "NEFT"; }else{ echo "Cheque"; }?>  </div>
                  </div>            
