@@ -20,7 +20,7 @@ class Reports extends MX_Controller {
         
     }
 
-    public function f_socProc(){
+    public function f_socProc(){            
 
         if($_SERVER['REQUEST_METHOD']=='POST'){
 
@@ -118,7 +118,7 @@ class Reports extends MX_Controller {
         }
     }
 
-    public function f_distPayHo(){                               /**Districtwise Payment Summary Report at HO */            
+    /*public function f_distPayHo(){                                         
 
         if($_SERVER['REQUEST_METHOD']=='POST'){
 
@@ -153,9 +153,9 @@ class Reports extends MX_Controller {
 
             $this->load->view('post_login/footer');
         }
-    }
+    }*/
 
-    public function f_socProcho(){
+    public function f_socProcho(){                          /**Societywise Procurement Summary Report at HO */ 
 
         if($_SERVER['REQUEST_METHOD']=='POST'){
 
@@ -167,9 +167,9 @@ class Reports extends MX_Controller {
 
             $to_dt      = $this->input->post('to_date');
 
-            $socProc['socDtls']    =   $this->Paddyrep->f_get_soc_ho($branch_id);
+            $socProc['socDtls']    =   $this->Paddyrep->f_get_soc_ho($branch_id,$kms_id);
 
-            $socProc['reg']        =   $this->Paddyrep->f_get_reg_farm_ho($branch_id,$from_dt,$to_dt,$kms_id);
+            //$socProc['reg']        =   $this->Paddyrep->f_get_reg_farm_ho($branch_id,$from_dt,$to_dt,$kms_id);
 
             $socProc['collc']      =   $this->Paddyrep->f_get_collc_ho($branch_id,$from_dt,$to_dt);
 

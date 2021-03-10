@@ -16,7 +16,7 @@ class Paddyrep extends CI_Model{
         return $soc->result();
     }
     /**Retrieve all societies and block for a given district */
-    public function f_get_soc_ho($brn){
+    public function f_get_soc_ho($brn,$kms){
         $soc = $this->db->query("select a.society_code society_code,
                                         a.soc_name soc_name,
                                         a.block blockcode,
@@ -27,7 +27,7 @@ class Paddyrep extends CI_Model{
                                 and     a.society_code in (select distinct soc_id
                                                            from td_collections
                                                            where branch_id = $brn 
-                                                           and   kms_id    = 3)");
+                                                           and   kms_id    = $kms)");
 
         return $soc->result();
     }
@@ -52,7 +52,7 @@ class Paddyrep extends CI_Model{
         return $reg->result();
     }
 
-    public function f_get_reg_farm_ho($brn,$frmdt,$todt,$kms_id){
+    /*public function f_get_reg_farm_ho($brn,$frmdt,$todt,$kms_id){
 
         $reg  = $this->db->query("select soc_id,count(reg_no) reg_farm
                                   from   td_farmer_reg
@@ -62,7 +62,7 @@ class Paddyrep extends CI_Model{
                                   order by soc_id");
 
         return $reg->result();
-    }
+    }*/
  /**No. of farmers registered in a district */   
     public function f_getregfarm($kms_id){
         $reg  = $this->db->query("select dist,count(reg_no)reg_farm
@@ -221,7 +221,7 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
         return $cmr->result();
     }
    
-     public function f_get_cmr_ho($brn,$frmdt,$todt){
+     public function f_get_cmr_ho($brn,$frmdt,$todt){               
 
         $cmr = $this->db->query("select soc_id,ifnull(sum(resultant_cmr),0)resultant
                                    from   td_cmr_offered
@@ -675,7 +675,7 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
         $proc   =   $this->db->query("SELECT a.branch_id branch_id,
                                             b.branch_name branch_name,
                                             count(distinct a.soc_id)soc_no,
-                                            count(distinct a.reg_no)farm_no,
+                                            count(a.reg_no)farm_no,
                                             sum(a.quantity)qty,
                                             sum(a.amount)amt 
                                     from td_collections a,md_branch b

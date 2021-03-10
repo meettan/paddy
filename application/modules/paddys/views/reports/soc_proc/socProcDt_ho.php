@@ -6,9 +6,9 @@ table {
 table, td, th {
     border: 1px solid #dddddd;
 
-    padding: 6px;
+    padding: 6px 5px;
 
-    font-size: 14px;
+    font-size: 11px;
 }
 
 th {
@@ -156,24 +156,27 @@ tr:hover {background-color: #f5f5f5;}
                 
                 <div id="divToPrint">
 
-                    <div style="text-align:center;">
+                    <div class="printHeaderNew">
 
-                        <h2>The West Bengal State Co-operative Marketing Federation Ltd.</h2>
+                        <div class="col-sm-3 float-left logoCustom"><img src="<?php echo base_url("/benfed.png");?>"/></div>
 
-                        <h4>Southend Conclave, 3rd Floor,1582 Rajdanga Main Road,Kolkata - 700 107.</h4>
+                        <div class="col-sm-9 float-left logoTextSecRight">
 
-                        <h4>Societywise Paddy Procurement Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h4>
+                            <h2>The West Bengal State Co-operative Marketing Federation Ltd.<span>Southend Conclave, 3rd Floor,1582 Rajdanga Main Road,Kolkata - 700 107.</span></h2>
+
+                            <h3>Societywise Paddy Procurement Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h3>
+                        </div>
 
                     </div>
                     
 
                     <br>
-                     <div class="col-md-12" >  
-                        <div class="col-md-3">
-                        <label>Branch name:</label><?php echo get_district_name($this->input->post("dist")) ?>
-                    </div>
-                    
-                   </div>
+                        <div class="col-md-12" >  
+                            <div class="col-md-3">
+                                <label>Branch name:</label> <?php echo get_district_name($this->input->post("dist")) ?>
+                            </div>
+                        </div>
+
                     <table style="width: 100%;" id="example" >
 
                         <thead>
@@ -188,9 +191,9 @@ tr:hover {background-color: #f5f5f5;}
 
                                 <th>Total Quantity of Paddy Purchased(MT)</th>
 
-                                <th>Total No. of Farmers Registered</th>
+                                <!--<th>Total No. of Farmers Registered</th>--->
 
-                                <th>Total No. of Farmers Benefited</th>
+                                <th>Total No. of Seller Farmers</th>
 
                                 <th>Total No. of Camps Held</th>
 
@@ -247,10 +250,10 @@ tr:hover {background-color: #f5f5f5;}
 
                                 <tr>
                                      <td><?php echo $i++; ?></td>
-                                     <td><?php echo $soc->soc_name; ?></td>
-                                     <td><?php echo $soc->block_name; ?></td>
+                                     <td><?php echo $soc->soc_name;         //society name ?></td>         
+                                     <td><?php echo $soc->block_name;       //block name ?></td>
                                      <td><?php
-                                                foreach($collc as $colcDtls){
+                                                foreach($collc as $colcDtls){               //total quantity purchased
                                                     if($colcDtls->soc_id == $soc->society_code){
                                                          echo $colcDtls->quantity * 0.1;
                                                          $tot_qty_paddy_purchased += $colcDtls->quantity * 0.1;
@@ -258,17 +261,17 @@ tr:hover {background-color: #f5f5f5;}
                                                 }
                                          ?>
                                      </td>
-                                     <td><?php
-                                                foreach($reg as $regfarm){
+                                     <!--<td><?php
+                                               /* foreach($reg as $regfarm){
                                                     if($regfarm->soc_id == $soc->society_code){
                                                          echo $regfarm->reg_farm;
                                                          $tot_registered_farmer += $regfarm->reg_farm;
                                                     }
-                                                }   
+                                                } */  
                                          ?>
-                                     </td>
+                                     </td>-->
                                      <td><?php
-                                                foreach($collc as $colcDtls){
+                                                foreach($collc as $colcDtls){                   //no.of seller farmer
                                                     if($colcDtls->soc_id == $soc->society_code){
                                                          echo $colcDtls->farm_ben;
                                                          $tot_benifited_farmer += $colcDtls->farm_ben;
@@ -277,7 +280,7 @@ tr:hover {background-color: #f5f5f5;}
                                          ?>
                                      </td>
                                      <td><?php
-                                                foreach($collc as $colcDtls){
+                                                foreach($collc as $colcDtls){               //total camps held
                                                     if($colcDtls->soc_id == $soc->society_code){
                                                          echo $colcDtls->camp;
                                                          $tot_camp +=$colcDtls->camp;
@@ -286,7 +289,7 @@ tr:hover {background-color: #f5f5f5;}
                                          ?>
                                      </td>
                                      <td><?php
-                                                foreach($collc as $colcDtls){
+                                                foreach($collc as $colcDtls){           //total farmer payment made
                                                     if($colcDtls->soc_id == $soc->society_code){
                                                          echo $colcDtls->amount;
                                                          $tot_amount += $colcDtls->amount;
@@ -295,23 +298,21 @@ tr:hover {background-color: #f5f5f5;}
                                          ?>
                                      </td>
                                      <td><?php
-                                                foreach($cmr as $cmrDtls){
+                                                foreach($cmr as $cmrDtls){              //resultant CMR
                                                     if($cmrDtls->soc_id == $soc->society_code){
-                                                         echo $cmrDtls->resultant;
-                                                         $tot_resultant_cmr +=$cmrDtls->resultant;
+                                                         echo $cmrDtls->resultant * 0.1;
+                                                         $tot_resultant_cmr +=$cmrDtls->resultant * 0.1;
                                                     }
                                                 }   
                                          ?> 
                                      </td>
                                   
                                      <td><?php
-                                                foreach($offer as $offerDtls){
+                                                foreach($offer as $offerDtls){          //Raw rice offered
                                                     if($offerDtls->soc_id == $soc->society_code){
                                                         if($offerDtls->rice_type == 'R'){
                                                             echo $offerDtls->offered * 0.1;
                                                             $tot_raw_offered_state += $offerDtls->offered * 0.1;
-                                                        }else{
-                                                            echo 0.00;
                                                         }
                                                     }
                                                 }
@@ -321,12 +322,11 @@ tr:hover {background-color: #f5f5f5;}
                                      <td><?php echo 0.00;?></td>
                                      <td>
                                         <?php
-                                                foreach($offer as $offerDtls){
+                                                foreach($offer as $offerDtls){        //Parboiled rice offered              
                                                     if($offerDtls->soc_id == $soc->society_code){
                                                         if($offerDtls->rice_type == 'P'){
                                                             echo $offerDtls->offered * 0.1;
                                                             $tot_boiled_offered_state += $offerDtls->offered * 0.1;
-                                                           // $tot_raw_offered_fci += $offerDtls->offered * 0.1;
                                                         }else{
                                                             echo 0.00;
                                                         }
@@ -337,7 +337,7 @@ tr:hover {background-color: #f5f5f5;}
                                      <td><?php echo 0.00;?></td>
                                      <td>
                                         <?php
-                                                foreach($delv as $delvDtls){
+                                                foreach($delv as $delvDtls){            //Raw rice delivery SP
                                                     if($delvDtls->soc_id == $soc->society_code){
                                                         if($delvDtls->cmr_type == 'R'){
                                                             echo $delvDtls->sp * 0.1;
@@ -351,7 +351,7 @@ tr:hover {background-color: #f5f5f5;}
                                      </td>
                                      <td>
                                        <?php
-                                                foreach($delv as $delvDtls){
+                                                foreach($delv as $delvDtls){        //Raw rice delivery CP
                                                     if($delvDtls->soc_id == $soc->society_code){
                                                         if($delvDtls->cmr_type == 'R'){
                                                             echo $delvDtls->cp * 0.1;
@@ -364,7 +364,7 @@ tr:hover {background-color: #f5f5f5;}
                                          ?>
                                      </td>
                                      <td><?php
-                                                foreach($delv as $delvDtls){
+                                                foreach($delv as $delvDtls){        //Raw rice delivery FCI
                                                     if($delvDtls->soc_id == $soc->society_code){
                                                         if($delvDtls->cmr_type == 'R'){
                                                             echo $delvDtls->fci * 0.1;
@@ -379,7 +379,7 @@ tr:hover {background-color: #f5f5f5;}
                                       
                                   
                                      <td><?php
-                                                foreach($delv as $delvDtls){
+                                                foreach($delv as $delvDtls){        //parboiled rice delivery SP
                                                     if($delvDtls->soc_id == $soc->society_code){
                                                         if($delvDtls->cmr_type == 'P'){
                                                             echo $delvDtls->sp * 0.1;
@@ -392,7 +392,7 @@ tr:hover {background-color: #f5f5f5;}
                                          ?>        
                                      </td>
                                      <td><?php
-                                                foreach($delv as $delvDtls){
+                                                foreach($delv as $delvDtls){        //parboiled rice delivery CP
                                                     if($delvDtls->soc_id == $soc->society_code){
                                                         if($delvDtls->cmr_type == 'P'){
                                                             echo $delvDtls->cp * 0.1;
@@ -405,7 +405,7 @@ tr:hover {background-color: #f5f5f5;}
                                          ?>
                                      </td>
                                      <td><?php
-                                                foreach($delv as $delvDtls){
+                                                foreach($delv as $delvDtls){        //parboiled rice delivery FCI
                                                     if($delvDtls->soc_id == $soc->society_code){
                                                         if($delvDtls->cmr_type == 'P'){
                                                             echo $delvDtls->fci * 0.1;
@@ -418,7 +418,7 @@ tr:hover {background-color: #f5f5f5;}
                                          ?>
                                      </td>
                                      <td><?php
-                                                foreach($remain as $remDtls){
+                                                foreach($remain as $remDtls){       //Pending for delivery
                                                     if($remDtls->soc_id == $soc->society_code){
                                                             echo $remDtls->remain * 0.1;
                                                             $tot_remain += $remDtls->remain * 0.1;
@@ -432,24 +432,24 @@ tr:hover {background-color: #f5f5f5;}
                                 <?php 
 
                                     }  ?>
-                                     <tr><td colspan="3" style="text-align: center;">Total</td>
-                                     	<td><?=$tot_qty_paddy_purchased?></td>
-                                     	<td><?=$tot_registered_farmer?></td>
-                                     	<td><?=$tot_benifited_farmer?></td>
-                                     	<td><?=$tot_camp?></td>
-                                     	<td><?=$tot_amount?></td>
-                                     	<td><?=$tot_resultant_cmr?></td>
-                                        <td><?=$tot_raw_offered_state?></td>
+                                     <tr><td colspan="3" style="text-align:center;font-weight: bold;">Total</td>
+                                     	<td style="text-align:center;font-weight: bold;"><?=$tot_qty_paddy_purchased?></td>
+                                     	<!--<td><?=$tot_registered_farmer?></td>-->
+                                     	<td style="text-align:center;font-weight: bold;"><?=$tot_benifited_farmer?></td>
+                                     	<td style="text-align:center;font-weight: bold;"><?=$tot_camp?></td>
+                                     	<td style="text-align:center;font-weight: bold;"><?=$tot_amount?></td>
+                                     	<td style="text-align:center;font-weight: bold;"><?=$tot_resultant_cmr?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_raw_offered_state?></td>
                                         <td></td>
-                                        <td><?=$tot_boiled_offered_state?></td>
-                                        <td></td>
-                                        <td><?=$tot_raw_rice_delivered_state?></td>
-                                        <td><?=$tot_raw_rice_delivered_center?></td>
-                                        <td><?=$tot_raw_rice_delivered_fci?></td>
-                                        <td><?=$tot_boiled_rice_delivered_state?></td>
-                                        <td><?=$tot_boiled_rice_delivered_center?></td>
-                                        <td><?=$tot_boiled_rice_delivered_fci?></td>
-                                        <td><?=$tot_remain?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_boiled_offered_state?></td>
+                                        <td style="text-align:center;font-weight: bold;"></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_raw_rice_delivered_state?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_raw_rice_delivered_center?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_raw_rice_delivered_fci?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_boiled_rice_delivered_state?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_boiled_rice_delivered_center?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_boiled_rice_delivered_fci?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_remain?></td>
 
                                      </tr>
 
@@ -468,7 +468,7 @@ tr:hover {background-color: #f5f5f5;}
 
                 </div>   
                 
-                <div style="text-align: center;">
+                <div class= "nextPrvBtn">
 
                     <button class="btn btn-primary" type="button" onclick="printDiv();">Print</button>
                      <button class="btn btn-primary" type="button" id="btnExport" >Excel</button>

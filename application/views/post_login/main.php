@@ -48,6 +48,11 @@
     </style>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet"> 
     <link href="<?php echo base_url("/assets/css/apps.css");?>" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url("/assets/css_table/apps.css"); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url("/assets/css_table/apps_inner.css"); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url("/assets/css_table/res.css"); ?>">
+
     </head>  
     <body id="page-top" style="background-color: #eff3f6;">
         <header class="header_class">
@@ -257,10 +262,10 @@
 
                          <?php   if($this->session->userdata['loggedin']['ho_flag'] == "Y" ) {  
                          ?>
-                            <a href="<?php echo site_url('report/distProcho'); ?>">Districtwise Procurement Summary</a>
-                            <?php   if( $this->session->userdata['loggedin']['kms_id'] > 2 ) {   ?>
-                                <a href="<?php echo site_url('report/distPayHo'); ?>">Districtwise Farmer Payment Summary</a>
-                            <?php } ?>
+                            <a href="<?php echo site_url('report/distProcho'); ?>">Districtwise Procurement</a>
+                            <?php  // if( $this->session->userdata['loggedin']['kms_id'] > 2 ) {   ?>
+                              <!--  <a href="<?php //echo site_url('report/distPayHo'); ?>">Districtwise Farmer Payment Summary</a>-->
+                            <?php //} ?>
                             <a href="<?php echo site_url('report/socProcho'); ?>">Societywise Procurement</a>
                             <a href="<?php echo site_url('report/farmerpay'); ?>">Societywise Farmer Payment</a>
                             <a href="<?php echo site_url('report/millProcho'); ?>">Millwise Procurement</a>
