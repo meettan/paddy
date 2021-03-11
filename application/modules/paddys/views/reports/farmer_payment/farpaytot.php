@@ -6,9 +6,9 @@ table {
 table, td, th {
     border: 1px solid #dddddd;
 
-    padding: 6px;
+    padding: 6px 5px;
 
-    font-size: 14px;
+    font-size: 11px;
 }
 
 th {
@@ -137,13 +137,17 @@ tr:hover {background-color: #f5f5f5;}
                 
                 <div id="divToPrint">
 
-                    <div style="text-align:center;">
+                    <div class="printHeaderNew">
 
-                        <h2>The West Bengal State Co-operative Marketing Federation Ltd.</h2>
+                        <div class="col-sm-3 float-left logoCustom"><img src="<?php echo base_url("/benfed.png");?>"/></div>
 
-                        <h4>Southend Conclave, 3rd Floor,1582 Rajdanga Main Road,Kolkata - 700 107.</h4>
+                        <div class="col-sm-9 float-left logoTextSecRight">
 
-                        <h4>Consolidated Report on Farmer Payment <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h4>
+                            <h2>The West Bengal State Co-operative Marketing Federation Ltd.<span>Southend Conclave, 3rd Floor,1582 Rajdanga Main Road,Kolkata - 700 107.</span></h2>
+
+                            <h3>Districtwise Report on Farmer Payment <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h3>
+
+                        </div>
 
                     </div>
                     
@@ -159,29 +163,34 @@ tr:hover {background-color: #f5f5f5;}
                                 <th>Quantity of paddy procured (MT)</th>
                                 <th>Price of paddy procured at Minimum Support Price (Rupees)</th>
                                 <th>Amount paid to farmers (Rupees)</th>
-                                <th>Amount of cheque cleared (Rupees)</th>
-                                <th>Number of cheques reissued</th>
-                                <th>Amount for which cheque was reissued (Rupees)</th>
-                                <!--<th>Number of cheques reissued next</th>
-                                <th>Amount for which cheque was reissued next (Rupees)</th>-->
-                                <th>Amount of cheque yet to be cleared (Rupees)</th>
+                                <th>Amount of neft cleared (Rupees)</th>
+                                <th>No.of Farmers Received Amount</th>
+                                <th>Number of neft reissued</th>
+                                <th>Amount for which neft was reissued (Rupees)</th>
+                                <th>Amount of neft yet to be cleared (Rupees)</th>
+                                <th>No.of farmers yet to receive</th>
+
                             </tr>
                         </thead>
 
                         <tbody>
 
                             <?php
-                    $kms_id = $this->session->userdata['loggedin']['kms_id'];
+                               $kms_id = $this->session->userdata['loggedin']['kms_id'];
                                if(isset($dist)) {
 
                                     $i = 1;
-                                    $tot_qty_paddy_purchased = 0;
-                                    $tot_benifited_farmer = 0;  $tot_amount = 0;
-                                    $amt=0.00;
-                                    $amount_cl = 0.00;
-                                    $chequ_reissue = 0;
+                                    $tot_sellers = 0;
+                                    $tot_qty_paddy = 0;
+                                    $tot_amt_paid = 0;  
+                                    $tot_amr_clrd =0;
+                                    $tot_recv_no =0;
+                                    $tot_reiss_no =0;
                                     $chequ_reis_amt =0;
-                                    $tot_remain = 0;
+                                    $tot_unclr_amt =0;
+                                    $amt = 0;
+                                    $amount_cl =0;
+                                    $tot_unclr_no =0;
 
                                   foreach($dist as $dis) {
 
@@ -201,6 +210,7 @@ tr:hover {background-color: #f5f5f5;}
                                                 foreach($collc as $colcDtls){
                                                     if($colcDtls->branch_id == $dis->district_code){
                                                          echo $colcDtls->farm_ben;
+                                                         $tot_sellers += $colcDtls->farm_ben;
                                                        
                                                     }
                                                 }   
@@ -210,7 +220,7 @@ tr:hover {background-color: #f5f5f5;}
                                                 foreach($collc as $colcDtls){   
                                                     if($colcDtls->branch_id == $dis->district_code){
                                                          echo $colcDtls->quantity*0.1;
-                                                       
+                                                         $tot_qty_paddy += $colcDtls->quantity*0.1;
                                                     }
                                                 }   
                                          ?>
@@ -220,35 +230,47 @@ tr:hover {background-color: #f5f5f5;}
                                          ?>
                                      </td>
                                      <td>
-                                         <?php                                              //total amount
+                                         <?php                                              //total amount paid
                                                 foreach($collc as $colcDtls){
                                                     if($colcDtls->branch_id == $dis->district_code){
                                                          echo $colcDtls->amount;
-                                                       $amt = $colcDtls->amount;
+                                                         $tot_amt_paid += $colcDtls->amount;
+                                                         $amt = $colcDtls->amount;
                                                     }
                                                 }   
                                          ?>
                                      </td>
 
                                      <td>
-                                         
-                                      <?php
-                                                foreach($coll as $cos){                         //total amount of cleared chq
-                                                    if($cos->branch_id == $dis->district_code){
-                                                         echo $cos->amount_clr;
-                                                         $amount_cl = $cos->amount_clr; 
-                                                         }                                              
-                                                }   
-                                         ?>
+                                        <?php
+                                            foreach($coll as $cos){                         //total amount of cleared chq
+                                                if($cos->branch_id == $dis->district_code){
+                                                    echo $cos->amount_clr;
+                                                    $tot_amr_clrd += $cos->amount_clr; 
+                                                    $amount_cl = $cos->amount_clr;
+                                                }                                              
+                                            }   
+                                        ?>
                                      </td>
+
+                                     <td>
+                                         <?php                                             //no of farmers received amt
+                                                foreach($coll as $clrDtls){
+                                                    if($clrDtls->branch_id == $dis->district_code){
+                                                        echo $clrDtls->farm_rcvd;
+                                                        $tot_recv_no += $clrDtls->farm_rcvd;
+                                                    }
+                                                }
+                                         ?>
+                                     </td> 
 
                                      <td>
                                          
                                         <?php
-                                                foreach($reissues as $reiss){                   //no. of chq reissue
+                                                foreach($reissues as $reiss){                   //no. of neft reissue
                                                     if($reiss->branch_id == $dis->district_code){
-                                                         echo $reiss->chequ;
-                                                         $chequ_reissue += $reiss->chequ; 
+                                                         echo $reiss->reissue_no;
+                                                         $tot_reiss_no += $reiss->reissue_no; 
                                                          }                                              
                                                 }   
                                          ?>
@@ -256,21 +278,31 @@ tr:hover {background-color: #f5f5f5;}
 
                                      <td>
                                        
-                                         <?php                                                  //amt of chq reissue          
+                                         <?php                                                  //amt of neft reissue          
                                                 foreach($reissues as $reiss){
                                                     if($reiss->branch_id == $dis->district_code){
-                                                         echo $reiss->amounr;
-                                                         $chequ_reis_amt += $reiss->amounr; 
+                                                         echo $reiss->amt_ressiue;
+                                                         $chequ_reis_amt += $reiss->amt_ressiue; 
                                                          }                                              
                                                 }   
                                          ?>
                                             </td>
-                                  
-                                     <!--<td> </td>
 
-                                     <td></td>-->
-
-                                     <td><?php echo ($amt-$amount_cl)?></td>
+                                     <td><?php echo $amt-$amount_cl;                           //yet to clear
+                                               $tot_unclr_amt += $amt-$amount_cl;                   
+                                         ?>
+                                     </td>    
+                                     
+                                     <td>
+                                         <?php
+                                                foreach($unpaid as $unpaidfarm){                   //amt of unpaid
+                                                    if($unpaidfarm->branch_id == $dis->district_code){
+                                                         echo $unpaidfarm->unpaid_farm_rcvd;
+                                                         $tot_unclr_no += $unpaidfarm->unpaid_farm_rcvd;
+                                                    }                                              
+                                                }   
+                                         ?>
+                                     </td>              <!--yet to receive-->
                                     
                                 </tr>
                                
@@ -279,19 +311,20 @@ tr:hover {background-color: #f5f5f5;}
                                            $amt=0.00;
                                     $amount_cl = 0.00;
                                     }  ?>
-                                    <!--  <tr><td colspan="3" style="text-align: center;">Total</td>
-                                     	<td><?=$tot_benifited_farmer?></td>
-                                     	<td><?=$tot_qty_paddy_purchased?></td>
-                                     	<td></td>
-                                     	<td><?=$tot_amount?></td>
-                                     	<td><?=$amount_cl?></td>
-                                     	<td><?=$chequ_reissue?></td>
-                                        <td><?=$chequ_reis_amt?></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <tr>
+                                            <td colspan="3" style="text-align:center;font-weight: bold;">Total</td>
+                                            <td style="text-align:center;font-weight: bold;"><?=$tot_sellers?></td>
+                                     	    <td style="text-align:center;font-weight: bold;"><?=$tot_qty_paddy?></td>
+                                     	    <td style="text-align:center;font-weight: bold;"></td>
+                                     	    <td style="text-align:center;font-weight: bold;"><?=$tot_amt_paid?></td>
+                                     	    <td style="text-align:center;font-weight: bold;"><?=$tot_amr_clrd?></td>
+                                     	    <td style="text-align:center;font-weight: bold;"><?=$tot_recv_no?></td>
+                                            <td style="text-align:center;font-weight: bold;"><?=$tot_reiss_no?></td>
+                                            <td style="text-align:center;font-weight: bold;"><?=$chequ_reis_amt?></td>
+                                            <td style="text-align:center;font-weight: bold;"><?=$tot_unclr_amt?></td>
+                                            <td style="text-align:center;font-weight: bold;"><?=$tot_unclr_no?></td>
 
-                                     </tr> -->
+                                     </tr>
 
                          <?php        }
                                 else{

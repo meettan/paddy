@@ -6,9 +6,9 @@ table {
 table, td, th {
     border: 1px solid #dddddd;
 
-    padding: 6px;
+    padding: 6px 5px;
 
-    font-size: 14px;
+    font-size: 11px;
 }
 
 th {
@@ -150,19 +150,23 @@ tr:hover {background-color: #f5f5f5;}
                 
                 <div id="divToPrint">
 
-                    <div style="text-align:center;">
+                    <div class="printHeaderNew">
 
-                        <h2>THE WEST BENGAL STATE CO.OP.MARKETING FEDERATION LTD.</h2>
+                        <div class="col-sm-3 float-left logoCustom"><img src="<?php echo base_url("/benfed.png");?>"/></div>
 
-                        <h4>HEAD OFFICE: SOUTHEND CONCLAVE, 3RD FLOOR, 1582 RAJDANGA MAIN ROAD, KOLKATA-700107.</h4>
+                        <div class="col-sm-9 float-left logoTextSecRight">
 
-                        <h4>Millwise Report on paddy procurement & CMR delivery Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h4>
+                            <h2>The West Bengal State Co-operative Marketing Federation Ltd.<span>Southend Conclave, 3rd Floor,1582 Rajdanga Main Road,Kolkata - 700 107.</span></h2>
+
+                            <h3>Millwise Report on paddy procurement & CMR delivery Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h3>
+                        </div>
 
                     </div>
+
                     <br>  
                      <div class="col-md-12" >  
                         <div class="col-md-3">
-                        <label>Branch name:</label><?php echo get_district_name($this->input->post("dist")) ?>
+                        <label>Branch name:</label> <?php echo get_district_name($this->input->post("dist")) ?>
                     </div>
                     
                    </div>
@@ -177,19 +181,21 @@ tr:hover {background-color: #f5f5f5;}
 
                                 <th style="width: 25%">Name of Rice Mill</th>
 
+                                <th>Name of the Block</th>
+
                                 <th>Total Quantity of Paddy Received(MT)</th>
 
                                 <th>Resultant CMR(MT)</th>
 
-                                <th>Total Quantity of Raw Rice Offered State(MT)</th>
+                                <th>Total Quantity of Raw Rice Offered(MT)</th>
 
-                                <th>Total Quantity of Raw Rice Offered FCI(MT)</th>
+                                <!--<th>Total Quantity of Raw Rice Offered FCI(MT)</th>-->
 
-                                <th>Total Quantity of Par Boiled Rice Offered State(MT)</th>
+                                <th>Total Quantity of Par Boiled Rice Offered(MT)</th>
 
-                                <th>Total Quantity of Par Boiled Rice Offered FCI(MT)</th>
+                                <!--<th>Total Quantity of Par Boiled Rice Offered FCI(MT)</th>-->
                                 
-                                <th>Total Quantity of DO Issued Raw Rice State Pool(MT)</th>
+                                <!--<th>Total Quantity of DO Issued Raw Rice State Pool(MT)</th>
                                 
                                 <th>Total Quantity of DO Issued Raw Rice Central Pool(MT)</th>
                                 
@@ -199,7 +205,7 @@ tr:hover {background-color: #f5f5f5;}
                                 
                                 <th>Total Quantity of DO Issued Par Boiled Rice Central Pool(MT)</th>
                                 
-                                <th>Total Quantity of DO Issued Par Boiled Rice FCI(MT)</th>
+                                <th>Total Quantity of DO Issued Par Boiled Rice FCI(MT)</th>--->
 
                                 <th>Total Quantity of Raw Rice Delivered State Pool(MT)</th>
 
@@ -249,9 +255,10 @@ tr:hover {background-color: #f5f5f5;}
 
                                 <tr>
                                      <td><?php echo $i++; ?></td>
-                                     <td><?php echo $mill->mill_name; ?></td>
+                                     <td><?php echo $mill->mill_name; //Mill name ?></td>
+                                     <td><?php echo $mill->block_name; //block name ?></td>
                                      <td><?php
-                                                foreach($collc as $colcDtls){
+                                                foreach($collc as $colcDtls){   //total paddy received 
                                                     if($colcDtls->mill_id == $mill->mill_id){
                                                          echo $colcDtls->quantity * 0.1;
                                                          $tot_qty_paddy_received += $colcDtls->quantity * 0.1;
@@ -260,49 +267,45 @@ tr:hover {background-color: #f5f5f5;}
                                          ?>
                                      </td>
                                   
-                                     <td><?php
+                                     <td><?php                                  //resultant cmr
                                                 foreach($cmr as $cmrDtls){
                                                     if($cmrDtls->mill_id == $mill->mill_id){
-                                                         echo $cmrDtls->resultant;
-                                                         $tot_resultant_cmr += $cmrDtls->resultant;
+                                                         echo $cmrDtls->resultant * 0.1;
+                                                         $tot_resultant_cmr += $cmrDtls->resultant *0.1;
                                                     }
                                                 }   
                                          ?> 
                                      </td>
 
-                                     <td><?php
+                                     <td><?php                                  //cmr offered raw rice
                                                 foreach($offer as $offerDtls){
                                                     if($offerDtls->mill_id == $mill->mill_id){
                                                         if($offerDtls->rice_type == 'R'){
                                                             echo $offerDtls->offered * 0.1;
                                                             $tot_raw_rice_offered_state += $offerDtls->offered * 0.1;
-                                                        }else{
-                                                            echo 0.00;
                                                         }
                                                     }
                                                 }
                                              
                                          ?>
                                      </td>
-                                     <td><?php echo 0.00;?></td>
+                                     <!--<td><?php //echo 0.00;?></td>-->
                                      <td>
                                         <?php
-                                                foreach($offer as $offerDtls){
+                                                foreach($offer as $offerDtls){       //CMR offered boiled rice
                                                     if($offerDtls->mill_id == $mill->mill_id){
                                                         if($offerDtls->rice_type == 'P'){
                                                             echo $offerDtls->offered * 0.1;
                                                             $tot_boiled_rice_offered_state +=$offerDtls->offered * 0.1;
-                                                        }else{
-                                                            echo 0.00;
                                                         }
                                                     }
                                                 }
                                          ?>
                                      </td>
-                                     <td><?php echo 0.00;?></td>
-                                     <td>
+                                     <!--<td><?php //echo 0.00;?></td>-->
+                                     <!--<td>
                                         <?php
-                                                foreach($do as $doDtls){
+                                                /*foreach($do as $doDtls){
                                                     if($doDtls->mill_id == $mill->mill_id){
                                                         if($doDtls->rice_type == 'R'){
                                                             echo $doDtls->sp * 0.1;
@@ -311,12 +314,12 @@ tr:hover {background-color: #f5f5f5;}
                                                             echo 0.00;
                                                         }
                                                     }
-                                                }
+                                                }*/
                                          ?>
                                      </td>
                                      <td>
                                          <?php
-                                                foreach($do as $doDtls){
+                                                /*foreach($do as $doDtls){
                                                     if($doDtls->mill_id == $mill->mill_id){
                                                         if($doDtls->rice_type == 'R'){
                                                             echo $doDtls->cp * 0.1;
@@ -325,12 +328,12 @@ tr:hover {background-color: #f5f5f5;}
                                                             echo 0.00;
                                                         }
                                                     }
-                                                }
+                                                }*/
                                          ?>
                                      </td>
                                      <td>
                                          <?php
-                                                foreach($do as $doDtls){
+                                               /* foreach($do as $doDtls){
                                                     if($doDtls->mill_id == $mill->mill_id){
                                                         if($doDtls->rice_type == 'R'){
                                                             echo $doDtls->fci * 0.1;
@@ -339,12 +342,12 @@ tr:hover {background-color: #f5f5f5;}
                                                             echo 0.00;
                                                         }
                                                     }
-                                                }
+                                                }*/
                                          ?>
                                      </td>
                                      <td> 
                                          <?php
-                                                foreach($do as $doDtls){
+                                                /*foreach($do as $doDtls){
                                                     if($doDtls->mill_id == $mill->mill_id){
                                                         if($doDtls->rice_type == 'P'){
                                                             echo $doDtls->sp * 0.1;
@@ -353,12 +356,12 @@ tr:hover {background-color: #f5f5f5;}
                                                             echo 0.00;
                                                         }
                                                     }
-                                                }
+                                                }*/
                                          ?>
                                      </td>
                                      <td>
                                          <?php
-                                                foreach($do as $doDtls){
+                                               /* foreach($do as $doDtls){
                                                     if($doDtls->mill_id == $mill->mill_id){
                                                         if($doDtls->rice_type == 'P'){
                                                             echo $doDtls->cp * 0.1;
@@ -367,11 +370,11 @@ tr:hover {background-color: #f5f5f5;}
                                                             echo 0.00;
                                                         }
                                                     }
-                                                }
+                                                }*/
                                          ?>
                                      </td>
                                      <td><?php
-                                                foreach($do as $doDtls){
+                                              /*  foreach($do as $doDtls){
                                                     if($doDtls->mill_id == $mill->mill_id){
                                                         if($doDtls->rice_type == 'P'){
                                                             echo $doDtls->fci * 0.1;
@@ -380,12 +383,12 @@ tr:hover {background-color: #f5f5f5;}
                                                             echo 0.00;
                                                         }
                                                     }
-                                                }
+                                                }*/
                                          ?>
-                                     </td>
+                                     </td>--->
                                      <td>
                                         <?php
-                                                foreach($delv as $delvDtls){
+                                                foreach($delv as $delvDtls){              //cmr delivery Raw SP      
                                                     if($delvDtls->mill_id == $mill->mill_id){
                                                         if($delvDtls->cmr_type == 'R'){
                                                             echo $delvDtls->sp * 0.1;
@@ -399,11 +402,11 @@ tr:hover {background-color: #f5f5f5;}
                                      </td>
                                      <td>
                                        <?php
-                                                foreach($delv as $delvDtls){
+                                                foreach($delv as $delvDtls){            //cmr delivery Raw CP
                                                     if($delvDtls->mill_id == $mill->mill_id){
                                                         if($delvDtls->cmr_type == 'R'){
                                                             echo $delvDtls->cp * 0.1;
-                                                             $tot_raw_rice_delivered_center += $delvDtls->sp * 0.1;
+                                                             $tot_raw_rice_delivered_center += $delvDtls->cp * 0.1;
                                                         }else{
                                                             echo 0.00;
                                                         }
@@ -412,11 +415,11 @@ tr:hover {background-color: #f5f5f5;}
                                          ?>
                                      </td>
                                      <td><?php
-                                                foreach($delv as $delvDtls){
+                                                foreach($delv as $delvDtls){                //cmr delivery Raw FCI
                                                     if($delvDtls->mill_id == $mill->mill_id){
                                                         if($delvDtls->cmr_type == 'R'){
                                                             echo $delvDtls->fci * 0.1;
-                                                             $tot_raw_rice_delivered_fci += $delvDtls->sp * 0.1;
+                                                             $tot_raw_rice_delivered_fci += $delvDtls->fci * 0.1;
                                                         }else{
                                                             echo 0.00;
                                                         }
@@ -425,7 +428,7 @@ tr:hover {background-color: #f5f5f5;}
                                          ?>
                                      </td>
                                      <td><?php
-                                                foreach($delv as $delvDtls){
+                                                foreach($delv as $delvDtls){            //cmr delivery Boiled SP     
                                                     if($delvDtls->mill_id == $mill->mill_id){
                                                         if($delvDtls->cmr_type == 'P'){
                                                             echo $delvDtls->sp * 0.1;
@@ -438,7 +441,7 @@ tr:hover {background-color: #f5f5f5;}
                                          ?>        
                                      </td>
                                      <td><?php
-                                                foreach($delv as $delvDtls){
+                                                foreach($delv as $delvDtls){           //cmr delivery Boiled CP
                                                     if($delvDtls->mill_id == $mill->mill_id){
                                                         if($delvDtls->cmr_type == 'P'){
                                                             echo $delvDtls->cp * 0.1;
@@ -451,7 +454,7 @@ tr:hover {background-color: #f5f5f5;}
                                          ?>
                                      </td>
                                      <td><?php
-                                                foreach($delv as $delvDtls){
+                                                foreach($delv as $delvDtls){        //cmr delivery Boiled FCI
                                                     if($delvDtls->mill_id == $mill->mill_id){
                                                         if($delvDtls->cmr_type == 'P'){
 
@@ -465,7 +468,7 @@ tr:hover {background-color: #f5f5f5;}
                                          ?>
                                      </td>
                                      <td><?php
-                                                foreach($remain as $remDtls){
+                                                foreach($remain as $remDtls){       //cmr Yet to deliver
                                                     if($remDtls->mill_id == $mill->mill_id){
                                                             echo $remDtls->remain * 0.1;
                                                             $tot_remain += $remDtls->remain * 0.1;
@@ -478,26 +481,26 @@ tr:hover {background-color: #f5f5f5;}
  
                                 <?php        
                                     }  ?>
-                                      <tr><td colspan="2" style="text-align: center;">Total</td>
-                                      <td><?=$tot_qty_paddy_received?></td>                                  
-                                      <td><?=$tot_resultant_cmr?></td>
-                                      <td><?=$tot_raw_rice_offered_state?></td>
-                                      <td></td>
-                                      <td><?=$tot_boiled_rice_offered_state?></td>
-                                      <td></td>
-                                      <td><?=$tot_raw_rice_do_state ?></td>
-                                     <td><?=$tot_raw_rice_do_center ?></td>
-                                     <td><?=$tot_raw_rice_do_fci ?></td>
-                                     <td><?=$tot_boiled_rice_do_state ?></td>
-                                     <td><?=$tot_boiled_rice_do_center ?></td>
-                                     <td><?=$tot_boiled_rice_do_fci ?></td>
-                                      <td><?=$tot_raw_rice_delivered_state?></td>
-                                      <td><?=$tot_raw_rice_delivered_center?></td>
-                                      <td><?=$tot_raw_rice_delivered_fci?></td>
-                                      <td><?=$tot_boiled_rice_delivered_state?></td>
-                                      <td><?=$tot_boiled_rice_delivered_center?></td>
-                                      <td><?=$tot_boiled_rice_delivered_fci?></td>
-                                      <td><?=$tot_remain?></td>
+                                      <tr><td colspan="3" style="text-align:center;font-weight: bold;">Total</td>
+                                      <td style="text-align:center;font-weight: bold;"><?=$tot_qty_paddy_received?></td>                                  
+                                      <td style="text-align:center;font-weight: bold;"><?=$tot_resultant_cmr?></td>
+                                      <td style="text-align:center;font-weight: bold;"><?=$tot_raw_rice_offered_state?></td>
+                                      
+                                      <td style="text-align:center;font-weight: bold;"><?=$tot_boiled_rice_offered_state?></td>
+                                      
+                                      <!--<td style="text-align:center;font-weight: bold;"><?=$tot_raw_rice_do_state ?></td>
+                                     <td style="text-align:center;font-weight: bold;"><?=$tot_raw_rice_do_center ?></td>
+                                     <td style="text-align:center;font-weight: bold;"><?=$tot_raw_rice_do_fci ?></td>
+                                     <td style="text-align:center;font-weight: bold;"><?=$tot_boiled_rice_do_state ?></td>
+                                     <td style="text-align:center;font-weight: bold;"><?=$tot_boiled_rice_do_center ?></td>
+                                     <td style="text-align:center;font-weight: bold;"><?=$tot_boiled_rice_do_fci ?></td>-->
+                                      <td style="text-align:center;font-weight: bold;"><?=$tot_raw_rice_delivered_state?></td>
+                                      <td style="text-align:center;font-weight: bold;"><?=$tot_raw_rice_delivered_center?></td>
+                                      <td style="text-align:center;font-weight: bold;"><?=$tot_raw_rice_delivered_fci?></td>
+                                      <td style="text-align:center;font-weight: bold;"><?=$tot_boiled_rice_delivered_state?></td>
+                                      <td style="text-align:center;font-weight: bold;"><?=$tot_boiled_rice_delivered_center?></td>
+                                      <td style="text-align:center;font-weight: bold;"><?=$tot_boiled_rice_delivered_fci?></td>
+                                      <td style="text-align:center;font-weight: bold;"><?=$tot_remain?></td>
 
                                      </tr>
 
@@ -516,7 +519,7 @@ tr:hover {background-color: #f5f5f5;}
 
                 </div>   
                 
-                <div style="text-align: center;">
+                <div class= "nextPrvBtn">
 
                     <button class="btn btn-primary" type="button" onclick="printDiv();">Print</button>
                       <button class="btn btn-primary" type="button" id="btnExport">Excel</button>

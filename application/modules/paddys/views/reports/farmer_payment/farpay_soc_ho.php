@@ -6,9 +6,9 @@ table {
 table, td, th {
     border: 1px solid #dddddd;
 
-    padding: 6px;
+    padding: 6px 5px;
 
-    font-size: 14px;
+    font-size: 11px;
 }
 
 th {
@@ -154,20 +154,23 @@ tr:hover {background-color: #f5f5f5;}
                 
                 <div id="divToPrint">
 
-                    <div style="text-align:center;">
+                    <div class="printHeaderNew">
 
-                        <h2>The West Bengal State Co-operative Marketing Federation Ltd.</h2>
+                        <div class="col-sm-3 float-left logoCustom"><img src="<?php echo base_url("/benfed.png");?>"/></div>
 
-                        <h4>Southend Conclave, 3rd Floor,1582 Rajdanga Main Road,Kolkata - 700 107.</h4>
+                        <div class="col-sm-9 float-left logoTextSecRight">
 
-                        <h4>Societywise Report on Farmer Payment <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h4>
+                            <h2>The West Bengal State Co-operative Marketing Federation Ltd.<span>Southend Conclave, 3rd Floor,1582 Rajdanga Main Road,Kolkata - 700 107.</span></h2>
+
+                            <h3>Societywise Report on Farmer Payment <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h3>
+                        </div>
 
                     </div>
                     
                     <br>
                      <div class="col-md-12" >  
                         <div class="col-md-3">
-                        <label>Branch name: </label><?php echo get_district_name($this->input->post("dist")) ?>
+                        <label>Branch name: </label> <?php echo get_district_name($this->input->post("dist")) ?>
                     </div>
                    </div>
                     <table style="width: 100%;" id="example" >
@@ -333,17 +336,17 @@ tr:hover {background-color: #f5f5f5;}
                                  $amt  = 0.00;
                                     $amount_cls = 0.00;
                                     }  ?>
-                                    <tr><td colspan="3" style="text-align: center;">Total</td>
-                                     	<td><?=$tot_benifited_farmer?></td>
-                                     	<td><?=$tot_qty_paddy_purchased?></td>
-                                     	<td></td>
-                                     	<td><?=$tot_amount?></td>
-                                     	<td><?=$amount_cl?></td>
-                                        <td><?=$tot_farm_recvd?></td> 
-                                     	<td><?=$chequ_reissue?></td>
-                                        <td><?=$chequ_reis_amt?></td>
-                                        <td><?php echo $tot_amount - $amount_cl ?> </td>
-                                        <td><?php echo $tot_unpaid; ?> </td>
+                                    <tr><td colspan="3" style="text-align:center;font-weight: bold;">Total</td>
+                                     	<td style="text-align:center;font-weight: bold;"><?=$tot_benifited_farmer?></td>
+                                     	<td style="text-align:center;font-weight: bold;"><?=$tot_qty_paddy_purchased?></td>
+                                     	<td style="text-align:center;font-weight: bold;"></td>
+                                     	<td style="text-align:center;font-weight: bold;"><?=$tot_amount?></td>
+                                     	<td style="text-align:center;font-weight: bold;"><?=$amount_cl?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_farm_recvd?></td> 
+                                     	<td style="text-align:center;font-weight: bold;"><?=$chequ_reissue?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$chequ_reis_amt?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?php echo $tot_amount - $amount_cl ?> </td>
+                                        <td style="text-align:center;font-weight: bold;"><?php echo $tot_unpaid; ?> </td>
                                      </tr>
 
                          <?php        }
@@ -361,7 +364,7 @@ tr:hover {background-color: #f5f5f5;}
 
                 </div>   
                 
-                <div style="text-align: center;">
+                <div class= "nextPrvBtn">
 
                     <button class="btn btn-primary" type="button" onclick="printDiv();">Print</button>
                      <button class="btn btn-primary" type="button" id="btnExport" >Excel</button>

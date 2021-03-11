@@ -267,11 +267,13 @@
                               <!--  <a href="<?php //echo site_url('report/distPayHo'); ?>">Districtwise Farmer Payment Summary</a>-->
                             <?php //} ?>
                             <a href="<?php echo site_url('report/socProcho'); ?>">Societywise Procurement</a>
-                            <a href="<?php echo site_url('report/farmerpay'); ?>">Societywise Farmer Payment</a>
                             <a href="<?php echo site_url('report/millProcho'); ?>">Millwise Procurement</a>
+                            <a href="<?php echo site_url('report/farmerpaytot'); ?>">Districtwise Farmer Payment</a>
+                            <a href="<?php echo site_url('report/farmerpay'); ?>">Societywise Farmer Payment</a>
+                            
                             <a href="<?php echo site_url('report/neftRet'); ?>">Returned NEFT</a>
                             <a href="<?php echo site_url('report/reselling'); ?>">Paddy Repeat Selling</a>
-                            <a href="<?php echo site_url('report/farmerpaytot'); ?>">Farmer Payment</a>
+                            
                             <a href="<?php echo site_url('report/gap_offer_delivery'); ?>">Gap In Offer & Delivery</a>
                             <!-- <a href="<?php echo site_url('report/returncheque'); ?>">Return Cheque</a> -->
                         <?php } ?>

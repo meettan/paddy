@@ -257,7 +257,7 @@ class Reports extends MX_Controller {
         }
     }
 
-    public function f_millProcho(){
+    public function f_millProcho(){                         /**Millwise procurement report in HO */
 
         if($_SERVER['REQUEST_METHOD']=='POST'){
 
@@ -269,7 +269,7 @@ class Reports extends MX_Controller {
 
             $to_dt      = $this->input->post('to_date');
 
-            $millProc['millDtls']    =   $this->Paddyrep->f_get_mill_ho($branch_id);
+            $millProc['millDtls']    =   $this->Paddyrep->f_get_mill_ho($branch_id,$kms_id);
 
             $millProc['collc']      =   $this->Paddyrep->f_get_mil_collc($branch_id,$from_dt,$to_dt);
 
@@ -277,7 +277,7 @@ class Reports extends MX_Controller {
 
             $millProc['offer']      =   $this->Paddyrep->f_get_mill_offer($branch_id,$from_dt,$to_dt);
             
-            $millProc['do']         =   $this->Paddyrep->f_get_mil_do($branch_id,$from_dt,$to_dt,$kms_id);
+            //$millProc['do']         =   $this->Paddyrep->f_get_mil_do($branch_id,$from_dt,$to_dt,$kms_id);
 
             $millProc['delv']       =   $this->Paddyrep->f_get_mill_delv($branch_id,$from_dt,$to_dt,$kms_id);
 
@@ -540,7 +540,7 @@ class Reports extends MX_Controller {
 
             if($kms_id == 2){
 
-                $socProc['socDtls']  =   $this->Paddyrep->f_get_soc_ho($branch_id);
+                $socProc['socDtls']  =   $this->Paddyrep->f_get_soc_ho($branch_id,$kms_id);
 
                 $socProc['collc']    =   $this->Paddyrep->f_get_collc_ho($branch_id,$from_dt,$to_dt);
 
@@ -554,7 +554,7 @@ class Reports extends MX_Controller {
 
                 $this->load->view('post_login/footer');
             }else{
-                $socProc['socDtls']  =   $this->Paddyrep->f_get_soc_ho($branch_id);
+                $socProc['socDtls']  =   $this->Paddyrep->f_get_soc_ho($branch_id,$kms_id);
 
                 $socProc['collc']    =   $this->Paddyrep->f_get_collc_ho($branch_id,$from_dt,$to_dt);
 
@@ -647,7 +647,7 @@ class Reports extends MX_Controller {
             $this->load->view('post_login/footer');
         }
     }
-/**Consolidated report on farmer payment */    
+/**Consolidated report on farmer payment districtwise at HO*/    
     public function f_farmerpaytot(){
 
         if($_SERVER['REQUEST_METHOD']=='POST'){
@@ -667,7 +667,8 @@ class Reports extends MX_Controller {
            
 
             $socProc['coll']    =  $this->Paddyrep->f_getdistamt_clr($from_dt,$to_dt);
-            $socProc['reissues'] = $this->Paddyrep->f_getdisamt_reissue($from_dt,$to_dt);
+            $socProc['reissues'] = $this->Paddyrep->f_getdisamt_reissue($from_dt,$to_dt,$kms_id);
+            $socProc['unpaid'] = $this->Paddyrep->f_getunpaid_farmer_dist($from_dt,$to_dt);
 
                        
             $this->load->view('post_login/main');

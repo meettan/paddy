@@ -135,11 +135,22 @@ public function f_getunpaid_farmer($brn,$frmdt,$todt){
     return $collc->result();
 }
 
+/**Remaining farmer no. */
+public function f_getunpaid_farmer_dist($frmdt,$todt){
+    $collc = $this->db->query("select branch_id,sum(amount) amount_clr,count(reg_no) unpaid_farm_rcvd
+                               from   td_collections
+                               where  trans_dt between '$frmdt' and '$todt'
+                               and    chq_status not in ('C','S') 
+                               group by branch_id
+                               order by branch_id");
+    return $collc->result();
+}
+
 /**Districtwise amount of chq cleared beween a date range in given district */
     public function f_getdistamt_clr($frmdt,$todt){
-        $collc = $this->db->query("select branch_id,sum(amount) amount_clr
+        $collc = $this->db->query("select branch_id,sum(amount) amount_clr,count(reg_no) farm_rcvd
                                    from   td_collections
-                                   where  chq_status = 'C'
+                                   where  chq_status in('C','S')
                                    and    trans_dt between '$frmdt' and '$todt'
                                    group by branch_id
                                    order by branch_id");
@@ -187,24 +198,16 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
 }
 
 /**Districtwise re-issue cheque */    
-    public function f_getdisamt_reissue($frmdt,$todt){
-
-        /*$collc = $this->db->query("select branch_id,count(cheque_no) chequ,
-                                      sum(amount) amounr
-                                   from   td_collections
-                                   where  chq_status = 'I'
-                                   and    trans_dt between '$frmdt' and '$todt'
-                                   group by branch_id
-                                   ");*/
-          $collc = $this->db->query("SELECT b.branch_id branch_id,
-                                            count(a.reg_no)chequ,
-                                            sum(a.amt) amounr
-                                    FROM  td_reissue_chq a,
-                                          td_collections b
-                                    where  a.old_chq_no = b.cheque_no 
-                                    and    a.branch_id  = b.branch_id
-                                    and    a.issue_dt between '$frmdt' and '$todt'
-                                    group by b.branch_id");
+    public function f_getdisamt_reissue($frmdt,$todt,$kms_id){      
+          $collc = $this->db->query("SELECT branch_id,
+                                            count(reg_no)reissue_no,
+                                            sum(amount) amt_ressiue
+                                    FROM   td_collections
+                                    where  Date(forwarded_dt) between '$frmdt' and '$todt'
+                                    and    CAST(book_no AS UNSIGNED) > 0
+                                    and    kms_id = $kms_id
+                                    and    status = '1'
+                                    group by branch_id");
 
         return $collc->result();
     }
@@ -396,18 +399,23 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
 
         return $soc->result();
     }
-    public function f_get_mill_ho($brn){
+
+    public function f_get_mill_ho($brn,$kms){
         $soc = $this->db->query("select a.sl_no mill_id,
                                         a.mill_name mill_name,
                                         a.block blockcode,
                                         b.block_name block_name
-                                from md_mill a,md_block b
+                                from    md_mill a,md_block b
                                 where   a.block = b.blockcode
-                            
-                                and     a.branch_id = $brn");
+                                and     a.branch_id = $brn
+                                and     a.sl_no in (select distinct mill_id
+                                                           from td_received
+                                                           where dist        = $brn 
+                                                           and   kms_year    = $kms)");
 
         return $soc->result();
     }
+
     public function f_get_mil_collc($brn,$frmdt,$todt){
 
         $collc = $this->db->query("select mill_id,sum(paddy_qty) quantity
@@ -442,7 +450,7 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
       return $offer->result();
     }
     
-    public function f_get_mil_do($brn,$frmdt,$todt,$kms_id){
+    /*public function f_get_mil_do($brn,$frmdt,$todt,$kms_id){
 
       $offer = $this->db->query("select mill_id,rice_type,sum(sp) sp,sum(cp) cp,sum(fci) fci
                                  from   td_do_isseued
@@ -452,7 +460,7 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
                                  group by mill_id,rice_type
                                  order by mill_id");
       return $offer->result();
-    }
+    }*/
     
     
     public function f_get_mill_remain($brn,$frmdt,$todt,$kms_id){
@@ -497,6 +505,7 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
                                    order by mill_id");
         return $cmr->result();
     }
+
     public function f_get_cheque_detail($brn,$bnk,$frmdt,$todt){
 
         $cmr = $this->db->query("select a.trans_dt trans_dt,

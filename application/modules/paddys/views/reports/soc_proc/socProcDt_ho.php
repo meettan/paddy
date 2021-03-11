@@ -201,13 +201,13 @@ tr:hover {background-color: #f5f5f5;}
 
                                 <th>Resultant CMR(MT)</th>
 
-                                <th>Total Quantity of Raw Rice Offered State(MT)</th>
+                                <th>Total Quantity of Raw Rice Offered(MT)</th>
 
-                                <th>Total Quantity of Raw Rice Offered FCI(MT)</th>
+                                <!--<th>Total Quantity of Raw Rice Offered FCI(MT)</th>-->
 
-                                <th>Total Quantity of Par Boiled Rice Offered State(MT)</th>
+                                <th>Total Quantity of Par Boiled Rice Offered(MT)</th>
 
-                                <th>Total Quantity of Par Boiled Rice Offered FCI(MT)</th>
+                                <!--<th>Total Quantity of Par Boiled Rice Offered FCI(MT)</th>-->
 
                                 <th>Total Quantity of Raw Rice Delivered State Pool(MT)</th>
 
@@ -319,7 +319,7 @@ tr:hover {background-color: #f5f5f5;}
                                              
                                          ?>
                                      </td>
-                                     <td><?php echo 0.00;?></td>
+                                     <!--<td><?php //echo 0.00;?></td>-->
                                      <td>
                                         <?php
                                                 foreach($offer as $offerDtls){        //Parboiled rice offered              
@@ -334,7 +334,7 @@ tr:hover {background-color: #f5f5f5;}
                                                 }
                                          ?>
                                      </td>
-                                     <td><?php echo 0.00;?></td>
+                                     <!--<td><?php //echo 0.00;?></td>-->
                                      <td>
                                         <?php
                                                 foreach($delv as $delvDtls){            //Raw rice delivery SP
@@ -440,9 +440,9 @@ tr:hover {background-color: #f5f5f5;}
                                      	<td style="text-align:center;font-weight: bold;"><?=$tot_amount?></td>
                                      	<td style="text-align:center;font-weight: bold;"><?=$tot_resultant_cmr?></td>
                                         <td style="text-align:center;font-weight: bold;"><?=$tot_raw_offered_state?></td>
-                                        <td></td>
+                                        <!--<td></td>-->
                                         <td style="text-align:center;font-weight: bold;"><?=$tot_boiled_offered_state?></td>
-                                        <td style="text-align:center;font-weight: bold;"></td>
+                                        <!--<td style="text-align:center;font-weight: bold;"></td>-->
                                         <td style="text-align:center;font-weight: bold;"><?=$tot_raw_rice_delivered_state?></td>
                                         <td style="text-align:center;font-weight: bold;"><?=$tot_raw_rice_delivered_center?></td>
                                         <td style="text-align:center;font-weight: bold;"><?=$tot_raw_rice_delivered_fci?></td>
