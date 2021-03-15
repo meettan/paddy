@@ -62,7 +62,7 @@
                         </select>    
 
                     </div>
-                    <div class="col-sm-3">
+                  <!--   <div class="col-sm-3">
           
                 <label for="rice_mill" class="col-form-label">Rice Mill:</label>
 
@@ -70,7 +70,7 @@
                             <option value="">Select</option>    
                         </select>    
 
-                    </div>
+                    </div> -->
                
 					
 					  <div class="col-sm-2">
@@ -81,7 +81,7 @@
 
             </div>
 
-					
+				<!-- 	
              <div class="col-sm-2">
 					   <label for="soc_name" class="col-form-label">Bank:</label>
                     <select name="bank_sl_no" id="bank_sl_no" class="form-control" required>
@@ -110,7 +110,7 @@
                                ?></option>    
                   <?php } ?>
                   </select>
-                </div>
+                </div> -->
 
 					
 					<div class="alertMsg">

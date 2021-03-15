@@ -418,6 +418,8 @@ class Transactions extends MX_Controller {
 
             $dist_sort_code = $this->session->userdata['loggedin']['dist_sort_code'];
 
+            $district_code  = $this->session->userdata['loggedin']['branch_id'];
+
             $branch_cd      = $this->session->userdata['loggedin']['branch_id'];
 
             $trans_type     = "N";
@@ -488,11 +490,66 @@ class Transactions extends MX_Controller {
 
                 $for_trans_id = $ftrans_id->trans_id;
 
-                
                     
                     while(($line = fgetcsv($csvFile)) !== FALSE){
                         
-                    $data[] = array(
+                    // $data[] = array(
+
+                    //     "kms_id"              =>  $this->session->userdata['loggedin']['kms_id'],
+
+                    //     "camp_no"             =>  "1",
+
+                    //     "branch_id"           =>  $this->session->userdata['loggedin']['branch_id'],
+
+                    //     "block_id"            =>  $this->input->post('block'),
+
+                    //     "soc_id"              =>  $this->input->post('soc_name'),
+
+                    //     "mill_id"             =>  $this->input->post('mill_id'),
+
+                    //     "muster_roll_no"      =>  "1",
+ 
+                    //     "trans_dt"            =>  $trans_dt,
+
+                    //     "trans_id"            =>  $trans_id++,
+
+                    //     'forward_trans_id'    =>  $branch_cd.str_pad($for_trans_id++,8,"0",STR_PAD_LEFT),
+
+                    //     "bulk_trans_id"       => $bulk_trns_id,
+
+                    //     'forward_bulk_trans_id' =>  $dist_sort_code.'_'.substr($kms_year,2).'_'.$bulk_trns_id,
+
+                    //     "bank_sl_no"          => $bank_sl_no,
+
+                    //     "trans_type"          =>  "N",
+
+                    //     "reg_no"              =>  $line[1],
+
+                    //     "quantity"            =>  $line[2],
+
+                    //     "amount"              =>  $line[3],
+
+                    //     "cheque_no"           =>  "",
+
+                    //     "cheque_date"         =>  "",
+
+                    //     "ifsc_code"           =>  $line[4],
+
+                    //     "acc_no"              =>  $line[5],
+
+                    //     "certificate_1"       =>  "Y",
+
+                    //     "certificate_2"       =>  "Y",
+
+                    //     "certificate_4"       =>  "Y",
+
+                    //     "created_by"          =>  $this->session->userdata['loggedin']['user_name'],
+
+                    //     "created_dt"          =>  date('Y-m-d h:i:s')
+
+                    //  );
+
+                        $data[] = array(
 
                         "kms_id"              =>  $this->session->userdata['loggedin']['kms_id'],
 
@@ -504,7 +561,7 @@ class Transactions extends MX_Controller {
 
                         "soc_id"              =>  $this->input->post('soc_name'),
 
-                        "mill_id"             =>  $this->input->post('mill_id'),
+                        "mill_id"             =>  '',
 
                         "muster_roll_no"      =>  "1",
  
@@ -512,37 +569,37 @@ class Transactions extends MX_Controller {
 
                         "trans_id"            =>  $trans_id++,
 
-                        'forward_trans_id'    =>  $branch_cd.str_pad($for_trans_id++,8,"0",STR_PAD_LEFT),
+                        'forward_trans_id'    =>  $district_code.str_pad($for_trans_id++,8,"0",STR_PAD_LEFT),
 
-                        "bulk_trans_id"       => $bulk_trns_id,
+                        "bulk_trans_id"       => "",
 
-                        'forward_bulk_trans_id' =>  $dist_sort_code.'_'.substr($kms_year,2).'_'.$bulk_trns_id,
+                        'forward_bulk_trans_id' =>  "",
 
-                        "bank_sl_no"          => $bank_sl_no,
+                        "bank_sl_no"          => "",
 
                         "trans_type"          =>  "N",
 
                         "reg_no"              =>  $line[1],
 
-                        "quantity"            =>  $line[2],
+                        "farmer_name"         =>  $line[2],
 
-                        "amount"              =>  $line[3],
+                        "quantity"            =>  $line[3]/100,
+
+                        "amount"              =>  $line[4],
 
                         "cheque_no"           =>  "",
 
                         "cheque_date"         =>  "",
 
-                        "ifsc_code"           =>  $line[4],
+                        "ifsc_code"           =>  $line[5],
 
-                        "acc_no"              =>  $line[5],
+                        "acc_no"              =>  $line[6],
 
-                        "certificate_1"       =>  "Y",
+                        "certificate_1"       =>  "N",
 
-                        "certificate_2"       =>  "Y",
+                        "certificate_2"       =>  "N",
 
-                        "certificate_4"       =>  "Y",
-
-                        "created_by"          =>  $this->session->userdata['loggedin']['user_name'],
+                        "certificate_4"       =>  "N",
 
                         "created_dt"          =>  date('Y-m-d h:i:s')
 
@@ -1021,9 +1078,7 @@ class Transactions extends MX_Controller {
             $trans_dt = $editdata["1"];
             $bulk_trans_id = $editdata["2"];
             $chq_status    = $editdata["3"];
-           // $hdfc_sl_no    = '';
 
-            //$trans_type = $this->Paddy->get_transaction_type($soc_id,$trans_dt,$bulk_trans_id,$chq_status);
 
             $reg_no           = $this->input->post('reg_no'); 
             $forward_trans_id = $this->input->post('forward_trans_id'); 
