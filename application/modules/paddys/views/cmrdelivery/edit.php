@@ -19,8 +19,6 @@
 
             <div class="form-group row">
 
-                
-
                 <label for="block" class="col-sm-2 col-form-label">Block:</label>
 
                 <div class="col-sm-4">
@@ -240,10 +238,15 @@
                     <label for="inter_dist" class="col-sm-2 col-form-label">Inter District:</label>
 
                     <div class="col-sm-4">
-                        <input type="text"
+
+                        <select name="inter_dist" class="form-control ">
+                            <option value="Y" <?php if(isset($cmrdelivery_dtls->inter_dist) && $cmrdelivery_dtls->inter_dist == 'Y') echo "selected"; ?>   >Yes</option>
+                            <option value="N" <?php if(isset($cmrdelivery_dtls->inter_dist) && $cmrdelivery_dtls->inter_dist == 'N') echo "selected"; ?>>No</option>
+                        </select>
+                      <!--   <input type="text"
                         class="form-control "
-                        name="inter_dist" value="<?php echo $cmrdelivery_dtls->inter_dist; ?>" readonly 
-                        id="inter_dist"/>   
+                        name="inter_dist" value="<?php //echo $cmrdelivery_dtls->inter_dist; ?>" readonly 
+                        id="inter_dist"/>  -->  
 
                     </div> 
                     <label for="rm_gd_dist" class="col-sm-2 col-form-label">Mill Godown Distance:</label>

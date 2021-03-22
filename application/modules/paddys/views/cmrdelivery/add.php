@@ -250,10 +250,15 @@
                     <label for="inter_dist" class="col-sm-2 col-form-label">Inter District:</label>
 
                     <div class="col-sm-4">
-                         <input type="text"
+
+                          <select name="inter_dist" class="form-control ">
+                            <option value="Y" >Yes</option>
+                            <option value="N" >No</option>
+                        </select>
+                   <!--       <input type="text"
                         class="form-control "
                         name="inter_dist" value="" readonly 
-                        id="inter_dist"/>   
+                        id="inter_dist"/>   --> 
 
                     </div> 
                     <label for="rm_gd_dist" class="col-sm-2 col-form-label">Mill Godown Distance:</label>

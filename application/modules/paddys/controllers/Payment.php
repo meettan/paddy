@@ -520,7 +520,10 @@ class Payment extends MX_Controller {
               
             );
 
-            $payment['bill_dtls']   = $this->Paddy->f_get_particulars("td_fund_requisition a,td_wqsc b",$select, $where,1);           
+            $payment['bill_dtls']   = $this->Paddy->f_get_particulars("td_fund_requisition a,td_wqsc b",$select, $where,1); 
+
+                    // echo $this->db->last_query();
+                    // die();          
          
             $payment['charges']     = $this->Paddy->f_get_particulars("td_fund_requisition_dtls",NULL,$wheres, 0);
 
@@ -1573,7 +1576,7 @@ class Payment extends MX_Controller {
 
         $select =  array(
 
-                "a.*","b.district_name","c.rm_gd_dist"
+                "a.*","b.district_name","c.rm_gd_dist","c.inter_dist"
 
             );
 
@@ -1591,6 +1594,7 @@ class Payment extends MX_Controller {
              );
 
         $socmill  =   $this->Paddy->f_get_particulars("td_wqsc a,md_district b,td_cmr_delivery c",$select,$where, 1);
+
 
         echo json_encode($socmill);
 
