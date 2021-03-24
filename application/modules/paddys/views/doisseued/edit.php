@@ -172,10 +172,16 @@
 
                     <div class="col-sm-4">
 
-                          <input type="text"
+                       <!--    <input type="text"
                         class="form-control"
-                        name="inter_dist" value="<?php echo $doisseued_dtls->inter_dist;?>" readonly
-                        id="inter_dist"/>   
+                        name="inter_dist" value="<?php //echo $doisseued_dtls->inter_dist;?>" readonly
+                        id="inter_dist"/> -->
+
+                <select name="inter_dist"  class="form-control">
+                    <option value="Y" <?php if($doisseued_dtls->inter_dist == 'Y'){ echo "selected";}?>>YES</option>
+                    <option value="N" <?php if($doisseued_dtls->inter_dist == 'N'){ echo "selected";}?>>NO</option>
+
+                </select>   
                         
                           
 
@@ -212,7 +218,7 @@
 
                     <div class="col-sm-4">
 
-                        <input type="text" class="form-control " name="tot_do_issue" id="tot_do_issue"  readonly
+                        <input type="text" class="form-control " name="tot_do_issue" id="tot_do_issue"  
                         value="<?php echo $doisseued_dtls->tot_doisseued;?>">   
                         </div>
 
@@ -238,7 +244,7 @@
                 <div class="col-sm-2">
 
                     <input type="text"
-                        class="form-control offer_type" readonly
+                        class="form-control offer_type" 
                         name="state_pool"
                         id="state_pool"
                         value="<?php echo $doisseued_dtls->sp; ?>"
@@ -251,7 +257,7 @@
                 <div class="col-sm-2">
 
                     <input type="text"
-                        class="form-control offer_type" readonly
+                        class="form-control offer_type" 
                         name="central_pool"
                         id="central_pool"
                         value="<?php echo $doisseued_dtls->cp; ?>"/>
@@ -263,7 +269,7 @@
                 <div class="col-sm-2">
 
                     <input type="text"
-                        class="form-control offer_type" readonly
+                        class="form-control offer_type" 
                         name="fci"
                         id="fci"
                         value="<?php echo $doisseued_dtls->fci; ?>"/>
@@ -275,7 +281,6 @@
             <div class="form-group row">
 
                  
-
                  <label for="tot_cmr_doisseued" class="col-sm-2 col-form-label">DO Yet To Be Issued:</label>
 
                 <div class="col-sm-10">
@@ -431,8 +436,8 @@ $( ".sch_cd" ).select2();
                 $.get('<?php echo site_url("paddys/transactions/f_added_doissue"); ?>',
 
                     {
-                        soc_id:  $('#soc_name').val(),
-                        mill_id:  $('#mill_name').val()
+                        soc_id:  '<?php echo $doisseued_dtls->soc_id; ?>',
+                        mill_id: '<?php echo $doisseued_dtls->mill_id; ?>'
                     }
                 
                 )
@@ -448,9 +453,9 @@ $( ".sch_cd" ).select2();
                     
                     var sum =  rum + gum;
                     
-                    $('#progressive_do_issue').val(sum);
+                    $('#progressive_do_issue').val(rum);
 
-                    $('#do_yet_to_be_issued').val((tum-sum).toFixed(2));
+                    $('#do_yet_to_be_issued').val((tum-rum).toFixed(2));
                 });
             <?php } ?>
 
@@ -476,7 +481,6 @@ $( ".sch_cd" ).select2();
                 let temp = JSON.parse(data);
 
                 $('#tot_cmr_offered').val(temp.tot);
-
                 $('#state_pool_offer').val(temp.sp);
                 $('#central_pool_offer').val(temp.cp);
                 $('#fci_offer').val(temp.fci);
@@ -542,52 +546,72 @@ $( ".sch_cd" ).select2();
 
     $("#trans_dt").change(function(){
 
-          var trans_dt = $('#trans_dt').val();
-         
- var d = new Date();
+              var trans_dt = $('#trans_dt').val();
+             
+     var d = new Date();
 
- var month = d.getMonth()+1;
- var day = d.getDate();
+     var month = d.getMonth()+1;
+     var day = d.getDate();
 
- var output = d.getFullYear() + '-' +
-    (month<10 ? '0' : '') + month + '-' +
-    (day<10 ? '0' : '') + day;
+     var output = d.getFullYear() + '-' +
+        (month<10 ? '0' : '') + month + '-' +
+        (day<10 ? '0' : '') + day;
 
-    console.log(trans_dt,output);
+        console.log(trans_dt,output);
 
-          if(new Date(output) < new Date(trans_dt))
-          {
-          alert("Transaction  Date Can Not Be Greater Than Current Date");
-          $('#submit').attr('type', 'buttom');
-          return false;
-          }else{
-             $('#submit').attr('type', 'submit');
-          }
-})
+              if(new Date(output) < new Date(trans_dt))
+              {
+              alert("Transaction  Date Can Not Be Greater Than Current Date");
+              $('#submit').attr('type', 'buttom');
+              return false;
+              }else{
+                 $('#submit').attr('type', 'submit');
+              }
+    })
 
- $('#form').submit(function(event){
-           
-                var trans_dt = $('#trans_dt').val();
-         
-var d = new Date();
+         $('#form').submit(function(event){
 
- var month = d.getMonth()+1;
- var day = d.getDate();
+        var total = 0;           
+        var trans_dt = $('#trans_dt').val();
+        var tot_do_issue =parseFloat($('#tot_do_issue').val());
+        var tot_cmr_offered = parseFloat(document.getElementById("tot_cmr_offered").value);
+        var progressive_do_issue = parseFloat(document.getElementById("progressive_do_issue").value);
 
- var output = d.getFullYear() + '-' +
-    (month<10 ? '0' : '') + month + '-' +
-    (day<10 ? '0' : '') + day;
+        $('.offer_type').each(function(){
+        
+                    total += +$(this).val();
+                    
+                });
+                 
+            var d = new Date();
+            var month = d.getMonth()+1;
+            var day = d.getDate();
 
-                    if(new Date(output) < new Date(trans_dt)){
+         var output = d.getFullYear() + '-' +
+            (month<10 ? '0' : '') + month + '-' +
+            (day<10 ? '0' : '') + day;
 
-                      alert("Transaction  Date Can Not Be Greater Than Current Date");
-                      event.preventDefault();
-                    }
-                     else 
-                        {
-                    //  alert("Transaction Date Can Not Be Less Than order Date");
+                            if(new Date(output) < new Date(trans_dt)){
 
-                       $('#submit').attr('type', 'submit');
+                              alert("Transaction  Date Can Not Be Greater Than Current Date");
+                              event.preventDefault();
+                            } else if(progressive_do_issue > tot_cmr_offered){
+
+                                alert("Progressive Do Issue Cannot be greater Than Total CMR Offered!");
+                                return false;
+
+                            }else if(total != tot_do_issue ){
+                      
+                   
+                                alert("Pool Calculation is Worng!");
+                                return false;
+
+                            }
+                             else 
+                                {
+                            //  alert("Transaction Date Can Not Be Less Than order Date");
+
+                               $('#submit').attr('type', 'submit');
                        
                       }
             });
@@ -608,5 +632,45 @@ var d = new Date();
           
 
         });
+
+</script>
+
+<script>
+      $(document).ready(function(){
+
+
+         $("#tot_do_issue").change(function(){
+
+                var soc_id  ='<?php echo $doisseued_dtls->soc_id; ?>';
+                var mill_id ='<?php echo $doisseued_dtls->mill_id; ?>';
+                var current_tot = '<?php echo $doisseued_dtls->tot_doisseued;?>';
+
+                 $.get('<?php echo site_url("paddys/transactions/f_tot_doissue"); ?>',
+
+                    {
+                        soc_id: soc_id,
+                        mill_id: mill_id
+                    }
+                
+                )
+                .done(function(data){
+
+                    let temp = JSON.parse(data);
+
+                    var rum = parseFloat(temp.tot)-parseFloat(current_tot);
+
+                    var gum = parseFloat($('#tot_do_issue').val());
+
+                    var tum = parseFloat($('#tot_cmr_offered').val());
+                    
+                    var sum =  rum + gum;
+                    
+                    $('#progressive_do_issue').val(sum);
+
+                    $('#do_yet_to_be_issued').val((tum-sum).toFixed(2));
+                });
+            })
+
+      })
 
 </script>

@@ -39,7 +39,8 @@
 
                 <div class="form-group row">
 
-                    <label for="name" class="col-sm-2 col-form-label">Rice Rate:</label>
+                    <label for="name" class="col-sm-2 col-form-label">Rice Rate<br>
+                    (Gunny):</label>
 
                     <div class="col-sm-8">
 
@@ -50,10 +51,25 @@
 
                     </div>
 
-                    <label for="name" class="col-sm-2 col-form-label">Per Quintal</label>
+                    <!-- <label for="name" class="col-sm-2 col-form-label">Per Quintal</label> -->
 
                 </div> 
+                <div class="form-group row">
 
+                    <label for="name" class="col-sm-2 col-form-label">Rice Rate<br>(HDPE/PP):</label>
+
+                    <div class="col-sm-8">
+
+                        <input type="text"  class= "form-control required"
+                            name = "ppe_rate"
+                            id   = "ppe_rate"
+                            value="<?php echo $rate_dtls->ppe_rate;?>" />
+
+                    </div>
+
+                <!--     <label for="name" class="col-sm-2 col-form-label">Per Quintal</label>
+ -->
+                </div> 
                 
 
                 <div class="form-group row">

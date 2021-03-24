@@ -179,11 +179,14 @@
 
                     <div class="col-sm-4">
 
-                          <input type="text"
+                          <input type="hidden"
                         class="form-control "
                         name="inter_dist" value="" readonly 
                         id="inter_dist"/>   
-                        
+                           <input type="text"
+                        class="form-control "
+                        name="inter_dists" value="" readonly 
+                        id="inter_dists"/> 
                           
 
                     </div> 
@@ -642,9 +645,11 @@ var d = new Date();
         if(current_dist == dist)
             {
                  $("#inter_dist").val("N");
+                 $("#inter_dists").val("NO");
             }else{
 
                      $("#inter_dist").val("Y");
+                     $("#inter_dists").val("YES");
                  }
 
           

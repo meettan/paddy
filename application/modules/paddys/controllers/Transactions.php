@@ -3578,17 +3578,25 @@ class Transactions extends MX_Controller {
 
             $data_array = array(
                 
-                "trans_dt"      =>  $this->input->post('trans_dt'),                
+                "trans_dt"       =>  $this->input->post('trans_dt'),                
 
-                "dist"          =>  $this->input->post('dist'),
+                "dist"           =>  $this->input->post('dist'),
 
-                "inter_dist"    =>  $this->input->post('inter_dist'),
+                "inter_dist"     =>  $this->input->post('inter_dist'),
 
-                "rm_gd_dist"    =>  $this->input->post('rm_gd_dist'),
+                "rm_gd_dist"     =>  $this->input->post('rm_gd_dist'),
 
-                "modified_by"   =>  $this->session->userdata['loggedin']['user_name'],
+                "tot_doisseued"  =>  $this->input->post('tot_do_issue'),
 
-                "modified_dt"   =>  date('Y-m-d h:i:s')
+                "sp"             =>  $this->input->post('state_pool'),
+
+                "cp"            =>  $this->input->post('central_pool'),
+
+                "fci"            =>  $this->input->post('fci'),
+
+                "modified_by"    =>  $this->session->userdata['loggedin']['user_name'],
+
+                "modified_dt"    =>  date('Y-m-d h:i:s')
 
             );
 
@@ -3617,7 +3625,7 @@ class Transactions extends MX_Controller {
             $doisseued['blocks']  =   $this->Paddy->f_get_particulars("md_block",NULL,$wheress, 0);
 
             //District List
-            $doisseued['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+            $doisseued['dist']    =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
 
             //CMR doisseued Details
             $select     =   array("t.*", "m.block",);
@@ -3629,6 +3637,8 @@ class Transactions extends MX_Controller {
                 "t.trans_no" => $this->input->get('trans_no')
 
             );
+
+            
 
             $doisseued['doisseued_dtls']=   $this->Paddy->f_get_particulars("td_do_isseued t, md_society m", $select, $where, 1);
             
@@ -3676,6 +3686,35 @@ class Transactions extends MX_Controller {
     //Total DO Issued from a particular mill from table td_cmr_offered
 
     public function f_added_doissue(){
+
+        $select     =   array(
+            
+            "ifnull(sum(tot_doisseued), 0) tot"
+        
+        );
+
+        $where      =   array(
+
+            "branch_id" => $this->session->userdata['loggedin']['branch_id'],
+            
+            "mill_id"  => $this->input->get('mill_id'),
+
+            "soc_id"   => $this->input->get('soc_id'),
+
+            "kms_year" => $this->session->userdata['loggedin']['kms_id']
+
+        );
+
+        $data = $this->Paddy->f_get_particulars("td_do_isseued", $select, $where, 1);
+
+        echo json_encode($data);   
+
+    }
+
+
+     //Total DO Issued from a particular mill from table td_do_isseued
+
+    public function f_tot_doissue(){
 
         $select     =   array(
             
@@ -4205,31 +4244,33 @@ class Transactions extends MX_Controller {
 
                 "wqsc_date"       =>  $this->input->post('wqsc_date'),
 
-                "rice_mill_qc_no"=>  $this->input->post('rice_mill_qc_no'),
+                "rice_mill_qc_no" =>  $this->input->post('rice_mill_qc_no'),
 
-                "pool"           =>  $this->input->post('pool'),
+                "pool"            =>  $this->input->post('pool'),
 
-                "goodown_name"   =>  $this->input->post('goodown_name'),
+                "goodown_name"    =>  $this->input->post('goodown_name'),
 
-                "goodown_dist"   =>  $this->input->post('goodown_dist'),
+                "goodown_dist"    =>  $this->input->post('goodown_dist'),
 
-                "block"          =>  $this->input->post('block'),
+                "block"           =>  $this->input->post('block'),
 
-                "soc_name"       =>  $this->input->post('soc_name'),
+                "soc_name"        =>  $this->input->post('soc_name'),
 
-                "mill_id"        =>  $this->input->post('mill_name'),
+                "mill_id"         =>  $this->input->post('mill_name'),
 
-                "memo_no"        =>  $this->input->post('memo_no'),
+                "memo_no"         =>  $this->input->post('memo_no'),
 
-                "memo_dt"        =>  $this->input->post('memo_dt'),
+                "memo_dt"         =>  $this->input->post('memo_dt'),
 
-                "rice_type"      =>  $this->input->post('rice_type'),
+                "rice_type"       =>  $this->input->post('rice_type'),
 
-                "remarks"        =>  $this->input->post('remarks'),
+                "bag_type"        =>  $this->input->post('bag_type'),
 
-                "created_by"    =>  $this->session->userdata['loggedin']['user_name'],
+                "remarks"         =>  $this->input->post('remarks'),
 
-                "created_dt"    =>  date('Y-m-d')
+                "created_by"      =>  $this->session->userdata['loggedin']['user_name'],
+
+                "created_dt"      =>  date('Y-m-d')
 
             );
              $where      =   array( "sl_no"  => ($this->input->post('rice_type') == 'P')? 18 : 19);
@@ -4332,6 +4373,8 @@ class Transactions extends MX_Controller {
                 "wqsc_date"         =>  $this->input->post('wqsc_date'),
 
                 "rice_mill_qc_no"   =>  $this->input->post('rice_mill_qc_no'),
+
+                "bag_type"          =>  $this->input->post('bag_type'),
             
                 "remarks"           =>  $this->input->post('remarks')
 

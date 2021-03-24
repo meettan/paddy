@@ -199,16 +199,18 @@
                             id="quantity_cmr"  />
                 </div>
 
+                 <label for="tot_do_isseued" class="col-sm-2 col-form-label">Rice Bag Type:</label>
 
-                 <label for="tot_do_isseued" class="col-sm-2 col-form-label">Rate Per Quintal:</label>
+                    <div class="col-sm-4">
 
-                <div class="col-sm-4">
 
-                    <input type="text"
-                            class="form-control" readonly
-                            name="rate_per_quintal"
-                            id="rate_per_quintal" />
-                </div>
+                       <input type="radio" id="radio_1" name="bag_type" value="1"  <?php if(isset($wqsc_dtls->bag_type) && $wqsc_dtls->bag_type=='1'){ echo "checked";}?>  >
+                        <label for="male" style="margin-right: 10px;">Gunny</label>
+                        <input type="radio" id="radio_2" name="bag_type" value="2" <?php if(isset($wqsc_dtls->bag_type) && $wqsc_dtls->bag_type=='2'){ echo "checked";}?>>
+                        <label for="female">SDPE/PP</label>
+
+                    </div>
+                 
 
             </div>
 
@@ -223,6 +225,17 @@
                             name="curr_paddy_cmr"
                             id="curr_paddy_cmr" />
                     </div>
+
+
+                    <label for="tot_do_isseued" class="col-sm-2 col-form-label">Rate Per Quintal:</label>
+
+                <div class="col-sm-4">
+
+                    <input type="text"
+                            class="form-control" readonly
+                            name="rate_per_quintal"
+                            id="rate_per_quintal" />
+                </div>
 
                  
 
@@ -512,7 +525,7 @@
                          $('#curr_paddy_cmr').val(paddy.toFixed(3));
                     }
                     $('#quantity_cmr').val(temp.tot);
-                    $('#rate_per_quintal').val(temp.rate);
+                  //  $('#rate_per_quintal').val(temp.rate);
 
                     $('#tot_price').val(parseFloat(((temp.rate)*(temp.tot)).toFixed(2)));
 
@@ -621,7 +634,7 @@
 
         $('#intro1').on('change', '.moisture_ext_amt', function(){
 
-            let indexNo = $('.quantity').index(this);
+            let indexNo = $('.moisture_ext_amt').index(this);
         
             $('.tot_price:eq('+indexNo+')').val("");         
             $('.paybel:eq('+indexNo+')').val("");
@@ -647,6 +660,8 @@
 
                         $('#tot_deduction').val(sum_deduct);
 
+                        var price    = 0;
+
                          $('.tot_price').each(function() {
                             price += parseFloat($(this).val());
                         });
@@ -656,15 +671,17 @@
 
         $('#intro1').on('change', '.moisture_extra', function(){
 
-            let indexNo = $('.quantity').index(this);
-        
+                 var price = 0 ;
+
+              // var  indexNo  = $(this).index();
+            var indexNo = $('.moisture_extra').index(this);
+           
             $('.tot_price:eq('+indexNo+')').val("");         
             $('.paybel:eq('+indexNo+')').val("");
 
                     var val    = parseFloat($(this).val());
                     var quantity = parseFloat($('.quantity:eq('+indexNo+')').val());
                     var moisture_extra = parseFloat($('.moisture_extra:eq('+indexNo+')').val());
-                   
                  
                     var tot_amt    = 0.00;
                     var rate   = parseFloat($('#rate_per_quintal').val());
@@ -682,6 +699,8 @@
                         });
 
                         $('#tot_deduction').val(sum_deduct);
+
+                       
 
                         $('.tot_price').each(function() {
                             price += parseFloat($(this).val());
@@ -717,4 +736,70 @@
                        
                       }
             });
+
+        $(document).ready(function () { 
+
+    $("#radio_1, #radio_2").click(function () {
+
+
+           $.get('<?php echo site_url("paddys/transactions/rice_rate"); ?>',
+
+                    {
+                        rice_type: $('#rice_type').val()
+
+                    }
+
+                )
+                .done(function(data){
+
+                    let temp = JSON.parse(data);
+
+                      if ($("#radio_2").is(":checked")) {
+             
+                        $('#rate_per_quintal').val(temp.ppe_rate);
+
+                        }else{
+
+                        $('#rate_per_quintal').val(temp.rate);
+
+                        }
+                   
+                });          
+        
+        });
+    
+   <?php if(isset($wqsc_dtls->id)){ ?>
+
+
+
+     $.get('<?php echo site_url("paddys/transactions/rice_rate"); ?>',
+
+                    {
+                        rice_type: '<?php echo $wqsc_dtls->rice_type; ?>'
+
+                    }
+
+                )
+                .done(function(data){
+
+                    let temp = JSON.parse(data);
+
+                     <?php     if($wqsc_dtls->bag_type == '2') { ?> 
+             
+                        $('#rate_per_quintal').val(temp.ppe_rate);
+
+                      <?php    }else { ?> 
+
+                        $('#rate_per_quintal').val(temp.rate);
+
+                     <?php    } ?> 
+                   
+                });     
+
+
+
+   <?php } ?>
+
+
+});
 </script>

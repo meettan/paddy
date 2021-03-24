@@ -181,14 +181,20 @@
                             id="quantity_cmr"  />
                     </div>
 
-                    <label for="tot_do_isseued" class="col-sm-2 col-form-label">Rate Per Quintal:</label>
+                    <label for="tot_do_isseued" class="col-sm-2 col-form-label">Rice Bag Type:</label>
 
                     <div class="col-sm-4">
 
-                    <input type="text"
+
+                      <input type="radio" id="radio_1" name="bag_type" value="1" checked>
+                        <label for="male" style="margin-right: 10px;">Gunny</label>
+                        <input type="radio" id="radio_2" name="bag_type" value="2">
+                        <label for="female">SDPE/PP</label>
+
+                    <!-- <input type="text"
                             class="form-control" readonly
                             name="rate_per_quintal"
-                            id="rate_per_quintal"  />
+                            id="rate_per_quintal"  /> -->
                     </div>
 
              </div>
@@ -205,8 +211,17 @@
                             id="curr_paddy_cmr" />
                     </div>
 
-                 
+                    <label for="tot_do_isseued" class="col-sm-2 col-form-label">Rate Per Quintal:</label>
 
+                    <div class="col-sm-4">
+
+                    <input type="text"
+                            class="form-control" readonly
+                            name="rate_per_quintal"
+                            id="rate_per_quintal"  />
+                    </div>
+
+                
             </div>
            
             <div class="form-group row">
@@ -556,31 +571,7 @@ $(document).ready(function(){
     
     });
 
-    // $('#form').submit(function(event){
-           
-    //             var  quantity_cmr = parseFloat($('#quantity_cmr').val());
-
-    //             var quantity      = 0;
-
-    //               $('.quantity').each(function() {
-    //                         quantity += parseFloat($(this).val());
-    //                     });
-
-                    
-    //                 if(quantity != quantity_cmr){
-
-    //                   alert("Something Went Wrong Please Check Your Total Quantity");
-
-    //                   event.preventDefault();
-    //                 }
-    //                  else 
-    //                     {
-    //                 //  alert("Transaction Date Can Not Be Less Than order Date");
-
-    //                    $('#submit').attr('type', 'submit');
-                       
-    //                   }
-    //         });
+   
 
             //Millers Payment Details
         $('#intro1').on('change', '.quantity', function(){
@@ -759,7 +750,38 @@ $(document).ready(function(){
         // });
 
 
+$(document).ready(function () { 
 
+    $("#radio_1, #radio_2").click(function () {
+
+
+           $.get('<?php echo site_url("paddys/transactions/rice_rate"); ?>',
+
+                    {
+                        rice_type: $('#rice_type').val()
+
+                    }
+
+                )
+                .done(function(data){
+
+                    let temp = JSON.parse(data);
+
+                      if ($("#radio_2").is(":checked")) {
+             
+                        $('#rate_per_quintal').val(temp.ppe_rate);
+
+                        }else{
+
+                        $('#rate_per_quintal').val(temp.rate);
+
+                        }
+                   
+                });          
+        
+        });
+
+});
 
 
 

@@ -32,7 +32,8 @@
                     
                         <th>Sl. No.</th>
                         <th>Rice Type</th>
-                        <th>Rate/Quintal</th>
+                        <th>Rate/Quintal(Gunny Rate)</th>
+                        <th>Rate/Quintal(HDPE/PP Rate)</th>
                         <th>Effected Date</th>
                         <th>Created Date</th>
                         <th>Option</th>
@@ -56,6 +57,7 @@
                                 <td ><?php echo $i++; ?></td>
                                 <td ><?php echo $ricerate_dtl->rice_type; ?></td>
                                 <td ><?php echo $ricerate_dtl->rate; ?></td>
+                                <td ><?php echo $ricerate_dtl->ppe_rate; ?></td>
                                 <td ><?php echo date('d/m/Y',strtotime($ricerate_dtl->effective_dt)); ?></td>
                                 <td ><?php echo date('d/m/Y',strtotime($ricerate_dtl->created_dt)); ?></td>
                                 <td > 
@@ -87,7 +89,8 @@
                     
                         <th>Sl. No.</th>
                         <th>Rice Type</th>
-                        <th>Rate/Quintal</th>
+                        <th>Rate/Quintal(Gunny Rate)</th>
+                        <th>Rate/Quintal(PPE Rate)</th>
                         <th>Effected Date</th>
                         <th>Created Date</th>
                         <th>Option</th>

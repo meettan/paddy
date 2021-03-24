@@ -7,7 +7,7 @@
 
                 <div class="form-header">
                 
-                    <h4>Rice Rate  Entry</h4>
+                    <h4>Rice Rate  Entry Per Quintal</h4>
                     <span class="confirm-div" style="float:right; color:green;"></span>
                 </div>
 
@@ -20,7 +20,7 @@
 
                </div>
 
-               <label for="name" class="col-sm-2 col-form-label">Rice Type Date:</label>
+               <label for="name" class="col-sm-2 col-form-label">Rice Type:</label>
 
                <div class="col-sm-4">
 
@@ -35,11 +35,22 @@
 
                 <div class="form-group row">
                 
-                    <label for="name" class="col-sm-2 col-form-label">Rice Rate:</label>
+                    <label for="name" class="col-sm-2 col-form-label">Rice Rate<br>
+                    (Gunny):</label>
                     
                     <div class="col-sm-8"><input type="text" class="form-control" name="rate" id="rate"/></div>
 
-                    <label for="name" class="col-sm-2 col-form-label">Per Quintal</label>
+                   <!--  <label for="name" class="col-sm-2 col-form-label">Per Quintal</label> -->
+
+                </div> 
+
+                 <div class="form-group row">
+                
+                    <label for="name" class="col-sm-2 col-form-label">Rice Rate<br>(HDPE/PP):</label>
+                    
+                    <div class="col-sm-8"><input type="text" class="form-control" name="ppe_rate" id="ppe_rate"/></div>
+
+                   <!--  <label for="name" class="col-sm-2 col-form-label">Per Quintal</label> -->
 
                 </div> 
 

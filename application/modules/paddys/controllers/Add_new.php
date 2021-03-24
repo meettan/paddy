@@ -2984,17 +2984,19 @@ class Add_new extends MX_Controller {
 
             $data_array = array(
 
-                "kms_id"   =>  $this->session->userdata['loggedin']['kms_id'],
+                "kms_id"       =>  $this->session->userdata['loggedin']['kms_id'],
 
                 "rice_type"    =>  $this->input->post("rice_type"),
 
-                "rate"    =>  $this->input->post("rate"),
+                "rate"         =>  $this->input->post("rate"),
 
-                "effective_dt"    =>  $this->input->post("effective_dt"),
+                "ppe_rate"     =>  $this->input->post("ppe_rate"),
 
-                "created_by"    =>  $this->session->userdata['loggedin']['user_name'],
+                "effective_dt" =>  $this->input->post("effective_dt"),
 
-                "created_dt"    =>  date('Y-m-d')
+                "created_by"   =>  $this->session->userdata['loggedin']['user_name'],
+
+                "created_dt"   =>  date('Y-m-d')
 
             );
             $query = $this->db->get_where('md_rice_rate', array('kms_id =' => $this->session->userdata['loggedin']['kms_id'],'effective_dt =' => $this->input->post("effective_dt")));
@@ -3034,9 +3036,11 @@ class Add_new extends MX_Controller {
             $data_array = array(
 
                 
-                "rice_type"    =>  $this->input->post('rice_type'),
+                "rice_type"     =>  $this->input->post('rice_type'),
 
-                "rate"    =>  $this->input->post('rate'),
+                "rate"          =>  $this->input->post('rate'),
+
+                "ppe_rate"      =>  $this->input->post('ppe_rate'),
 
                 "modified_by"   =>  $this->session->userdata['loggedin']['user_name'],
 
