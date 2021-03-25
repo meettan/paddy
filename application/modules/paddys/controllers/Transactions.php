@@ -3325,11 +3325,15 @@ class Transactions extends MX_Controller {
 
             $data_array = array(
 
-                "trans_dt"      =>  $this->input->post('trans_dt'),                
+                "trans_dt"         =>  $this->input->post('trans_dt'), 
 
-                "modified_by"   =>  $this->session->userdata['loggedin']['user_name'],
+                "resultant_cmr"    =>  $this->input->post('res_cmr'), 
 
-                "modified_dt"   =>  date('Y-m-d h:i:s')
+                "cmr_offered_now"  =>  $this->input->post('cmr_offered_now'),                
+
+                "modified_by"      =>  $this->session->userdata['loggedin']['user_name'],
+
+                "modified_dt"      =>  date('Y-m-d h:i:s')
 
             );
 

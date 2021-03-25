@@ -76,6 +76,7 @@ tr:hover {background-color: #f5f5f5;}
          $rate2 = 0;
          $rate3 = 0;
          $rate4 = 0;
+         $rate5 = null;
          $sum   = 0;
    foreach($rate as $rt){
 
@@ -87,9 +88,11 @@ tr:hover {background-color: #f5f5f5;}
     }elseif($rt->account_type == 5){
 
       $rate3 = $rt->per_unit;
-    }else{
+    }elseif($rt->account_type == 11){
 
       $rate4 = $rt->per_unit;
+    }else{
+      $rate5 = $rt->per_unit;
     }
 
   }
@@ -121,7 +124,7 @@ tr:hover {background-color: #f5f5f5;}
       <th scope="col" class="sl55_2" rowspan="2">Name of the Transport Agency with Address </th>
       <th scope="col" class="sl55_3" colspan="4">Claim For Paddy</th>
       <th scope="col" class="sl55_4" colspan="4"><span class="sl55_3">Claim For </span>RCMR</th>
-      <th scope="col" class="sl55_5">Total Amount claimed </th>
+      <th scope="col" class="sl55_5" rowspan="2">Total Amount claimed[Rs]</th>
     </tr>
     <tr>
       <th scope="col" class="sl55_3">Distance from Procurement Centre to Rice Mill[Km]</th>
@@ -132,7 +135,7 @@ tr:hover {background-color: #f5f5f5;}
       <th scope="col" class="sl55_3">Quantity of RCMR[Qtl</th>
       <th scope="col" class="sl55_4">Rate[Rs/Qtl]</th>
       <th scope="col" class="sl55_5">Amount for RCMR claimed[Rs]</th>
-      <th scope="col" class="sl55_1">Sl No</th>
+     <!--  <th scope="col" class="sl55_1">Sl No</th> -->
      
     </tr>
      <tr>
@@ -185,7 +188,6 @@ tr:hover {background-color: #f5f5f5;}
                                                 $gum += $rate4*$bill_dtls->paddy_cmr;
                                                  }  ?></td>
       <td scope="col" class="sl55_1"><?php echo round($sum+$gum,2) ?></td>
-     
     </tr>
 
      <tr>
@@ -234,6 +236,23 @@ tr:hover {background-color: #f5f5f5;}
                                               
                                                  }
                                           ?></td>
+     
+    </tr>
+     <tr>
+      <td scope="col" class="sl55_1">4</td>
+      <td scope="col" class="sl55_2">Interdistrict</td>
+      <td scope="col" class="sl55_3"></td>
+      <td scope="col" class="sl55_4"></td>
+      <td scope="col" class="sl55_5"></td>
+      <td scope="col" class="sl55_1"></td>
+      <td scope="col" class="sl55_2"></td>
+      <td scope="col" class="sl55_3"><?php   if(isset($rate5)) echo $bill_dtls->paddy_cmr;?></td>
+      <td scope="col" class="sl55_4"><?php echo $rate5;?></td>
+      <td scope="col" class="sl55_5"><?php if($rate5 > 0 ){
+                                                echo round($rate4*$bill_dtls->paddy_cmr,2); 
+                                                $gum += $rate4*$bill_dtls->paddy_cmr;
+                                                 }  ?></td>
+      <td scope="col" class="sl55_1"><?php if(isset($rate5)) echo round($sum+$gum,2) ?></td>
      
     </tr>
     <tr>  <td colspan="10" style="text-align: center"><b>TOTAL</b></td>

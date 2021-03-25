@@ -1617,7 +1617,7 @@ class Paddy extends CI_Model {
 
    public function get_transport_rate($bill_no,$kms_id,$dist){
 
-    $sql = "SELECT * FROM `td_payment_bill_dtls` where account_type in (3,4,5,11) and kms_id = $kms_id and pmt_bill_no = $bill_no and dist =$dist ";
+    $sql = "SELECT * FROM `td_payment_bill_dtls` where account_type in (3,4,5,6,11) and kms_id = $kms_id and pmt_bill_no = $bill_no and dist =$dist ";
 
     $query = $this->db->query($sql)->result();
 

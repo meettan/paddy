@@ -149,7 +149,7 @@
 
                 <div class="col-sm-4">
 
-                    <input type="text" class="form-control" name="res_cmr" id="res_cmr" readonly="" value="<?php echo $cmroffered_dtls->resultant_cmr; ?>">
+                    <input type="text" class="form-control" name="res_cmr" id="res_cmr" value="<?php echo $cmroffered_dtls->resultant_cmr; ?>">
 
                 </div>      
 
@@ -157,7 +157,7 @@
 
                 <div class="col-sm-4">
 
-                    <input type="text" class="form-control" name="cmr_offered_now" id="cmr_offered_now" value="<?php echo $cmroffered_dtls->cmr_offered_now; ?>" readonly>
+                    <input type="text" class="form-control" name="cmr_offered_now" id="cmr_offered_now" value="<?php echo $cmroffered_dtls->cmr_offered_now; ?>" >
 
                 </div>                
 
@@ -175,12 +175,12 @@
        <input type="text" class="form-control" name="total_progressive_cmr_offered" id="total_progressive_cmr_offered" readonly="" value="<?php echo $cmroffered_dtls->total_progres_cmr_offered; ?>">
       </div>
 
-            <label for="res_cmr" class="col-sm-2 col-form-label">CMR Yet To Be Offered::</label>
+           <!--  <label for="res_cmr" class="col-sm-2 col-form-label">CMR Yet To Be Offered::</label>
             <div class="col-sm-4">
 
-               <input type="text" class="form-control" name="cmr_yet_to_offered" value="<?php echo $cmroffered_dtls->cmr_yet_to_offered; ?>" id="cmr_yet_to_offered"  readonly/>
+               <input type="text" class="form-control" name="cmr_yet_to_offered" value="<?php //echo $cmroffered_dtls->cmr_yet_to_offered; ?>" id="cmr_yet_to_offered"  readonly/>
 
-            </div>
+            </div> -->
 
         </div>    
 
@@ -367,6 +367,7 @@ $(document).ready(function(){
 
     $(document).ready(function(){
 
+
         $('#rice_type').change(function(){
             
             //Progressive Paddy Procurement
@@ -380,7 +381,7 @@ $(document).ready(function(){
             )
             .done(function(data){
                 
-            // $('#res_cmr').val((($('#milled').val() * parseInt(data)) / 100).toFixed(3));
+            
                $('#res_cmr').val((($('#milled').val() * parseInt(data)) / 100));
 
                 if(data == '0.000'){
@@ -397,33 +398,129 @@ $(document).ready(function(){
 
         });
 
+        <?php if(isset( $cmroffered_dtls->trans_no)){ ?>
 
-        $('.offer_type').change(function(){
+             $.get('<?php echo site_url("paddys/transactions/f_totoffer"); ?>',
+
+                    {
+                        soc_id:  '<?php echo $cmroffered_dtls->soc_id; ?>',
+                        mill_id: '<?php echo $cmroffered_dtls->mill_id; ?>'
+                    }
+                
+                )
+                .done(function(data){
+
+                    let temp = JSON.parse(data);
+
+                    var rum = parseFloat(temp.tot);
+
+                    var gum = '<?php echo $cmroffered_dtls->cmr_offered_now; ?>';
+
+                   // var tum = parseFloat($('#tot_cmr_offered').val());
+                    
+                   // var sum =  rum + gum;
+                    
+                    $('#total_progressive_cmr_offered').val(rum-gum);
+
+                 //   $('#do_yet_to_be_issued').val((tum-rum).toFixed(2));
+                });
             
-            let total = 0;
+            // //Progressive Paddy Procurement
+            // $.get('<?php //echo site_url("paddy/ricetype"); ?>',
 
-            $("#tot_cmr_offered").val('');
+            //     {
+
+            //         type: $(this).val()
+
+            //     }
+            // )
+            // .done(function(data){
+                
+            
+            //    $('#res_cmr').val((($('#milled').val() * parseInt(data)) / 100));
+
+            //     if(data == '0.000'){
+
+            //             $('#submit').attr('type', 'button');
+            //         }
+            //         else{
+
+            //             $('#submit').attr('type', 'submit');
+
+            //         }
+                
+            // });
+
+        <?php   } ?>
+
+
+        // $('.offer_type').change(function(){
+            
+        //     let total = 0;
+
+        //     $("#tot_cmr_offered").val('');
   
-            $('.offer_type').each(function(){
+        //     $('.offer_type').each(function(){
                 
-                total += +$(this).val();
+        //         total += +$(this).val();
                 
-            });
+        //     });
 
-            if(total <= $('#res_cmr').val()){
+        //     if(total <= $('#res_cmr').val()){
 
-                $("#tot_cmr_offered").val(total);
+        //         $("#tot_cmr_offered").val(total);
 
-                $('#submit').attr('type', 'submit');
+        //         $('#submit').attr('type', 'submit');
 
-            }
-            else{
+        //     }
+        //     else{
 
-                $('#submit').attr('type', 'button');
-            }
+        //         $('#submit').attr('type', 'button');
+        //     }
 
-        });
+        // });
 
     });
+
+
+    $('#form').submit(function(event){
+
+        var total = 0;           
+        var trans_dt = $('#trans_dt').val();
+  
+        var cmr_offered_now = parseFloat(document.getElementById("cmr_offered_now").value);
+        var res_cmr = parseFloat(document.getElementById("res_cmr").value);
+
+        $('.offer_type').each(function(){
+        
+                    total += +$(this).val();
+                    
+                });
+                 
+            var d = new Date();
+            var month = d.getMonth()+1;
+            var day = d.getDate();
+
+         var output = d.getFullYear() + '-' +
+            (month<10 ? '0' : '') + month + '-' +
+            (day<10 ? '0' : '') + day;
+
+                            if(new Date(output) < new Date(trans_dt)){
+
+                              alert("Transaction  Date Can Not Be Greater Than Current Date");
+                              event.preventDefault();
+                            } else if(cmr_offered_now > res_cmr){
+
+                                alert("CMR offered now Cannot be greater Than resultant CMR Offered!");
+                                return false;
+
+                            }else 
+                                {
+                            //  alert("Transaction Date Can Not Be Less Than order Date");
+
+                               $('#submit').attr('type', 'submit');
+                       
+                            }
+            });
 
 </script>
