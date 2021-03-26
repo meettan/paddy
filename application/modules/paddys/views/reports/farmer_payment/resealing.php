@@ -6,9 +6,9 @@ table {
 table, td, th {
     border: 1px solid #dddddd;
 
-    padding: 6px;
+    padding: 6px 5px;
 
-    font-size: 14px;
+    font-size: 11px;
 }
 
 th {
@@ -52,10 +52,10 @@ tr:hover {background-color: #f5f5f5;}
             WindowObject.close();
         }, 10);
 
-  }
+        }
 
 
-       
+
 
 </script>
 
@@ -140,126 +140,122 @@ tr:hover {background-color: #f5f5f5;}
                 
                 <div id="divToPrint">
 
-                    <div style="text-align:center;">
+                    <div class="printHeaderNew">
+                        <div class="col-sm-3 float-left logoCustom"><img src="<?php echo base_url("/benfed.png");?>"/></div>
+                        <div class="col-sm-9 float-left logoTextSecRight">
 
-                        <h2>The West Bengal State Co-operative Marketing Federation Ltd.</h2>
-
-                        <h4>Southend Conclave, 3rd Floor,1582 Rajdanga Main Road,Kolkata - 700 107.</h4>
-
-                        <h4>Consolidated Report on Repeat Selling <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h4>
-
+                            <h2>The West Bengal State Co-operative Marketing Federation Ltd.<span>Southend Conclave, 3rd Floor,1582 Rajdanga Main Road,Kolkata - 700 107.</span></h2>
+                            <h3>Consolidated Report on Repeat Selling <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h3>
+                        </div>
                     </div>
                     
                     <br>
-                    <!--  <div class="col-md-12" >  
-                        <div class="col-md-3">
-                        <label>Branch name:</label><?php echo get_district_name($this->input->post("dist")) ?>
-                    </div>
-                   </div> -->
+               
                     <table style="width: 100%;" id="example" >
                         <thead>
+
                             <tr>
                                 <th>Sl No.</th>
+
                                 <th>District</th>
-                                <th>Number of Societies which procured paddy</th>
-                                <!--<th>Number of farmers registered</th>-->
-                                <th>Number of farmers benefitted (sold paddy)</th>
+
+                                <th>No.of Societies </th>
+                                
+                                <th>No.of Seller Farmers</th>
+
                                 <th>Total Quantity of paddy sold by farmers (MT)</th>
+
                                 <th>Total amount paid to farmers (Rupees)</th>
+
                                 <th>Number of repeat sellers</th>
-                                <th>Quantity of paddy sold by repeat farmers (MT)
-</th>
-                                <th>Amount paid to repeat seller-farmers (Rupees)
-</th>
+
+                                <th>Quantity of paddy sold by repeat farmers (MT)</th>
+
+                                <th>Amount paid to repeat seller-farmers (Rupees)</th>
                                
                             </tr>
+
                         </thead>
 
                         <tbody>
 
                             <?php
-  $kms_id     = $this->session->userdata['loggedin']['kms_id'];
-                               if(isset($dist)) {
+
+                                $kms_id     = $this->session->userdata['loggedin']['kms_id'];
+
+                                if(isset($dist)) {
 
                                     $i = 1;
+
                                     $tot_qty_paddy_purchased = 0;
-                                    $tot_benifited_farmer = 0;  $tot_amount = 0;
+
+                                    $tot_benifited_farmer    = 0;  
+                                    
+                                    $tot_amount              = 0;
+
+                                    $tot_reseller            = 0;
+
+                                    $tot_resale_qty          = 0;
+
+                                    $tot_resale_amt          = 0;
                                  
                                   
                                     foreach($dist as $dis) {
                             ?>
 
                                 <tr>
-                                     <td><?php echo $i++; ?></td>           <!--sl no-->
-                                     <td><?php echo $dis->district_name; ?></td> <!-- district -->
-                                     <td><?php                                      //no.of society
-                                            foreach($collc as $colcDtls){
-                                                if($colcDtls->branch_id == $dis->district_code){
-                                                     echo $colcDtls->soc_no;
-                                                   
-                                                }
-                                            }   
-                                                  
-                                         ?></td>
-                                     <!--<td>
+                                     <td><?php echo $i++; //Sl no.?></td>
 
-                                        <?php                                   //no.of farmer registered in the dist.
-                                               /* foreach($reg as $regfarm){                      
-                                                    if($regfarm->dist == $dis->district_code){
-                                                         echo $regfarm->reg_farm;
-                                                        
-                                                    }
-                                                }   */
-                                         ?>
-                                     </td>-->
-                                     <td><?php                                      //no.of farmer sold paddy
-                                                foreach($collc as $colcDtls){
-                                                    if($colcDtls->branch_id == $dis->district_code){
-                                                         echo $colcDtls->farm_ben;
-                                                       
-                                                    }
-                                                }   
+                                     <td><?php echo $dis->branch_name; //district ?></td>
+
+                                     <td><?php echo $dis->soc_no; //no.of soc?></td>    
+                                    
+                                     <td><?php                   //no. of seller farmer                  
+                                            echo $dis->farm_no;
+
+                                            $tot_benifited_farmer += $dis->farm_no;
                                          ?>
                                      </td>
+                                     
                                      <td>
-                                        <?php
-                                                foreach($collc as $colcDtls){       //total paddy sold
-                                                    if($colcDtls->branch_id == $dis->district_code){
-                                                         echo $colcDtls->quantity*0.1;
-                                                       
-                                                    }
-                                                }   
+                                        <?php                       //paddy purchased
+                                            echo $dis->qty * 0.1;  
+                                            
+                                            $tot_qty_paddy_purchased += $dis->qty * 0.1; 
                                          ?>
                                      </td>
+
                                      <td>
-                                       <?php
-                                                foreach($collc as $colcDtls){           //total amount paid
-                                                    if($colcDtls->branch_id == $dis->district_code){
-                                                         echo $colcDtls->amount;
-                                                       
-                                                    }
-                                                }   
+                                       <?php                       //Amount paid
+                                            echo $dis->amt;
+
+                                            $tot_amount += $dis->amt;
+                                               
                                          ?>
                                      </td>
 
                                      <td>
                                          
                                         <?php
-                                                foreach($reslno as $reslnodtls){    //no. of resale case
-                                                    if($reslnodtls->branch_id == $dis->district_code){
+                                                foreach($reslno as $reslnodtls){     //No. of resale farmer
+                                                    if($reslnodtls->branch_id == $dis->branch_id){
                                                          echo $reslnodtls->reslno;
+
+                                                         $tot_reseller += $reslnodtls->reslno;
                                                         
-                                                         }                                              
+                                                    }                                              
                                                 }   
                                          ?> 
                                        </td>
 
-                                     <td>
+                                      <td>
                                          
-                                         <?php
+                                         <?php                                      //qty of resale
                                                 foreach($reslno as $reslnodtls){
-                                                    if($reslnodtls->branch_id == $dis->district_code){
+                                                    if($reslnodtls->branch_id == $dis->branch_id){
                                                         echo $reslnodtls->qty;
+
+                                                        $tot_resale_qty +=  $reslnodtls->qty;
                                                     }                                              
                                                 }   
                                          ?>
@@ -267,10 +263,12 @@ tr:hover {background-color: #f5f5f5;}
 
                                      <td>
                                          
-                                         <?php
+                                         <?php                                      //resale amount
                                                 foreach($reslno as $reslnodtls){
-                                                    if($reslnodtls->branch_id == $dis->district_code){
+                                                    if($reslnodtls->branch_id == $dis->branch_id){
                                                         echo $reslnodtls->amt;
+
+                                                        $tot_resale_amt  += $reslnodtls->amt;
                                                     }                                              
                                                 }   
                                          ?>
@@ -282,9 +280,19 @@ tr:hover {background-color: #f5f5f5;}
                                 <?php 
 
                                     }  
-                                    
+                                ?>
 
-                            }
+                                    <tr><td colspan="2" style="text-align:center;font-weight: bold;">Total</td>
+                                        <td></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_benifited_farmer?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_qty_paddy_purchased?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_amount?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_reseller?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_resale_qty?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_resale_amt?></td>
+                                     </tr>
+
+                            <?php }
                                 else{
 
                                     echo "<tr><td colspan='14' style='text-align:center;'>No Data Found</td></tr>";

@@ -602,14 +602,13 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
                   having count(reg_no) > 1)a,
               td_collections b
             where a.reg_no = b.reg_no
-            and   b.trans_dt > trn_dt
             group by a.branch_id";
                
       $data = $this->db->query($sql);     
 
       return  $data->result();
     }
-
+////and   b.trans_dt > trn_dt
     public function f_get_datewise_delivery($brn_id,$from_dt,$to_dt){
         $sql = "select delivery_dt,sum(sp) + sum(cp) state,sum(fci)central
                 from   td_cmr_delivery
@@ -654,6 +653,7 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
         return  $data->row();
   }
 
+  //NEFT Return case KMS ID 19-20
   public function f_get_neft_ret($brn,$from_dt,$to_dt){
     $neft = $this->db->query("select a.dist_id branch_id,
                                     a.trans_dt procurement_dt,
@@ -677,6 +677,31 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
                                     
     return $neft->result();
 }
+
+ //NEFT Return case KMS ID 20-21
+ public function f_get_ret_neft($brn,$from_dt,$to_dt){
+    $neft = $this->db->query("select a.branch_id branch_id,
+                                     a.trans_dt  procurement_dt,
+                                     b.payment_run_date payment_dt,
+                                     a.soc_id,
+                                     c.soc_name soc_name,
+                                     a.reg_no,
+                                     a.farmer_name benf_name, 
+                                     a.ifsc_code ifsc,
+                                     a.acc_no benf_ac_no,
+                                     a.amount amount,
+                                     b.status_description return_remarks
+                              from td_collections a,td_reverse_feed b, md_society c
+                              where a.forward_trans_id = b.forward_trans_id
+                              and   a.soc_id           = c.society_code
+                              and   a.chq_status       In ('R','L')
+                              and   b.status_code      != 'SUCCESS'
+                              and   a.branch_id        = $brn
+                              and   a.trans_dt         between '$from_dt' and '$to_dt' ");
+                                    
+    return $neft->result();
+}
+
 
 //Districtwise procurement 
     public function f_get_dist_proc($from_dt,$to_dt){

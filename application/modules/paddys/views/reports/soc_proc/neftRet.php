@@ -6,9 +6,11 @@ table {
 table, td, th {
     border: 1px solid #dddddd;
 
-    padding: 6px;
+    padding: 6px 5px;
 
     font-size: 14px;
+
+    font-size: 11px;
 }
 
 th {
@@ -53,6 +55,10 @@ tr:hover {background-color: #f5f5f5;}
         }, 10);
 
   }
+
+
+       
+
 </script>
 
 
@@ -157,16 +163,16 @@ tr:hover {background-color: #f5f5f5;}
                 
                 <div id="divToPrint">
 
-                    <div style="text-align:center;">
-
-                        <h2>THE WEST BENGAL STATE CO.OP.MARKETING FEDERATION LTD.</h2>
-
-                        <h4>HEAD OFFICE: SOUTHEND CONCLAVE, 3RD FLOOR, 1582 RAJDANGA MAIN ROAD, KOLKATA-700107.</h4>
-
-                        <h4>NEFT Return List Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h4>
-
+                    <div class="printHeaderNew">
+                        <div class="col-sm-3 float-left logoCustom"><img src="<?php echo base_url("/benfed.png");?>"/></div>
+                        <div class="col-sm-9 float-left logoTextSecRight">
+                            <h2>The West Bengal State Co-operative Marketing Federation Ltd.<span>Southend Conclave, 3rd Floor,1582 Rajdanga Main Road,Kolkata - 700 107.</span></h2>
+                            <h3>Districtwise List of Return NEFT Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h3>
+                        </div>
                     </div>
+
                     <br>  
+
                     <div class="col-md-12" >  
                         <div class="col-md-3">
                         <label>Branch name:</label>  <?php   if($this->session->userdata['loggedin']['ho_flag'] == "Y" ) {
@@ -219,6 +225,7 @@ tr:hover {background-color: #f5f5f5;}
                                 if($neftDtls){ 
 
                                   $i = 1;
+                                  $tot_amt = 0;
 
                                     foreach($neftDtls as $neft){
 
@@ -233,14 +240,33 @@ tr:hover {background-color: #f5f5f5;}
                                      <td><?php echo $neft->benf_name; ?></td>
                                      <td><?php echo $neft->ifsc; ?></td>
                                      <td><?php echo $neft->benf_ac_no; ?></td>
-                                     <td><?php echo $neft->amount; ?></td>
+                                     <td><?php 
+                                                echo $neft->amount; 
+
+                                                $tot_amt += $neft->amount;
+                                         ?>
+                                     </td>
                                      <td><?php echo $neft->return_remarks; ?></td>
                                 </tr>
 
  
                                 <?php        
-                                    }  
-                                }else{
+                                    } 
+                                ?>
+
+                                <tr>
+                                    <td colspan="2" style="text-align:center;font-weight: bold;">Total</td>
+                                    <td></td> 
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align:center;font-weight: bold;"><?=$tot_amt?></td>
+                                    <td></td>
+                                </tr>
+                                    
+                                <?php }else{
                                     echo "<tr><td colspan='14' style='text-align:center;'>No Data Found</td></tr>";
                                 }
 
@@ -252,9 +278,11 @@ tr:hover {background-color: #f5f5f5;}
 
                 </div>   
                 
-                <div style="text-align: center;">
+                <div class="nextPrvBtn">
 
                     <button class="btn btn-primary" type="button" onclick="printDiv();">Print</button>
+                    <button class="btn btn-primary" type="button" id="btnExport" >Excel</button>
+
                 </div>
 
             </div>
@@ -266,3 +294,25 @@ tr:hover {background-color: #f5f5f5;}
     }
 
     ?> 
+
+    <script type="text/javascript">
+        $(function () {
+            $("#btnExport").click(function () {
+                $("#example").table2excel({
+                    filename: "Districtwise List of Return NEFT Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?>.xls"
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $("#form").on('submit',function(){
+
+                if($("#from_date").val() > $("#to_date").val()){
+                    alert("From date must be less than to date!");
+                    return false;
+                }
+            });
+        });
+    </script>

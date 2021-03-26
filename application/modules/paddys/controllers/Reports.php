@@ -613,18 +613,13 @@ class Reports extends MX_Controller {
 
             $to_dt      = $this->input->post('to_date');
 
-          //  $socProc['socDtls']  =   $this->Paddyrep->f_societypaddy_proc($kms_id);
-          //  $socProc['socDtls']  =   $this->Paddyrep->f_get_soc_ho($branch_id);
+            //$socProc['reg']         =   $this->Paddyrep->f_getregfarm($kms_id);
 
-            $socProc['reg']      =   $this->Paddyrep->f_getregfarm($kms_id);
+            //$socProc['collc']       =   $this->Paddyrep->f_getresale($from_dt,$to_dt);
 
-            $socProc['collc']    =   $this->Paddyrep->f_getresale($from_dt,$to_dt);
+            $socProc['reslno']      =   $this->Paddyrep->f_get_resale_no($from_dt,$to_dt);
 
-            $socProc['reslno']    =   $this->Paddyrep->f_get_resale_no($from_dt,$to_dt);
-
-
-            //$socProc['dist']        = $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
-            $socProc['dist']        = $this->Paddy->f_district_orderby();
+            $socProc['dist']        =   $this->Paddyrep->f_get_dist_proc($from_dt,$to_dt);
             
                        
             $this->load->view('post_login/main');
@@ -835,7 +830,15 @@ class Reports extends MX_Controller {
 
             $to_dt      = $this->input->post('to_date');
 
-            $millProc['neftDtls']   =   $this->Paddyrep->f_get_neft_ret($branch_id,$from_dt,$to_dt);
+            if ($kms_id == 2){
+
+                $millProc['neftDtls']   =   $this->Paddyrep->f_get_neft_ret($branch_id,$from_dt,$to_dt);
+            }else{
+
+                $millProc['neftDtls']   =   $this->Paddyrep->f_get_ret_neft($branch_id,$from_dt,$to_dt);
+            }
+
+            //echo $this->db->last_query();die;
             
          
             $this->load->view('post_login/main');

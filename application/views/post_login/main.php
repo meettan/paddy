@@ -145,8 +145,12 @@
                             <a href="<?php echo site_url('paddys/transactions/f_paddycollection_dwn'); ?>">Download Procurement</a> 
                             <a href="<?php echo site_url('paddys/transactions/f_paddycollreissue_dwn'); ?>">Download Cheque Reissue</a>
                         <?php } ?>
+
                         
-                       <a href="<?php echo site_url('paddys/transactions/f_neft_status'); ?>">NEFT Status </a>
+                        
+                            <!--<a href="<?php //echo site_url('paddys/transactions/f_neft_status'); ?>">NEFT Status </a>-->
+
+                      
                           <!-- 
                         <div class="sub-dropdown">
                                <a class="sub-dropbtn">Cheque Reconciliation<i class="fa fa-angle-right" style="float: right;"></i></a> 
@@ -280,8 +284,18 @@
                         <?php   if( $this->session->userdata['loggedin']['kms_id'] == 2 ) {   ?>
                             <a href="<?php echo site_url('report/chequestatus'); ?>">Cheque Status</a>
                         <?php } ?>
-                           <a href="<?php echo site_url('report/neftstatus'); ?>">Neft Status</a>
-                         <a href="<?php echo site_url('report/offer_cmrrep'); ?>">Offer For Delivery Of Cmr</a>
+
+                        <?php   if($this->session->userdata['loggedin']['ho_flag'] != "Y" ) {  ?>
+
+                           <?php if( $this->session->userdata['loggedin']['kms_id'] == 2 ) { ?> 
+
+                                <a href="<?php echo site_url('report/neftstatus'); ?>">Neft Status</a>
+
+                            <?php } ?>
+
+                           <a href="<?php echo site_url('report/offer_cmrrep'); ?>">Offer For Delivery Of Cmr</a>
+
+                        <?php } ?>
 
                          <!--   <div class="sub-dropdown">
                                 <a class="sub-dropbtn">Annexture <i class="fa fa-angle-right" style="float: right;"></i></a>    
