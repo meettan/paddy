@@ -6,10 +6,9 @@ table {
 table, td, th {
     border: 1px solid #dddddd;
 
-    padding: 6px;
+    padding: 6px 5px;
 
-    font-size: 14px;
-}
+    font-size: 11px;
 
 th {
 
@@ -52,10 +51,7 @@ tr:hover {background-color: #f5f5f5;}
             WindowObject.close();
         }, 10);
 
-  }
-
-
-       
+    }
 
 </script>
 
@@ -75,7 +71,7 @@ tr:hover {background-color: #f5f5f5;}
 
                 <div class="form-header">
                 
-                    <h4>GAP IN OFFER & DELIVERY OF CMR AGAINST CUMULATIVE PADDY PROCURED</h4>
+                    <h4>Gap In Offer & Delivery</h4>
                 
                 </div>
 
@@ -139,16 +135,13 @@ tr:hover {background-color: #f5f5f5;}
                 
                 <div id="divToPrint">
 
-                    <div style="text-align:center;">
-
-                        <h2>The West Bengal State Co-operative Marketing Federation Ltd.</h2>
-
-                        <h4>Southend Conclave, 3rd Floor,1582 Rajdanga Main Road,Kolkata - 700 107.</h4>
-
-                        <h4>Gap In Offer & Delivery OF CMR Against Cumulative Paddy Procured Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h4>
-
+                    <div class="printHeaderNew">
+                        <div class="col-sm-3 float-left logoCustom"><img src="<?php echo base_url("/benfed.png");?>"/></div>
+                        <div class="col-sm-9 float-left logoTextSecRight">
+                            <h2>The West Bengal State Co-operative Marketing Federation Ltd.<span>Southend Conclave, 3rd Floor,1582 Rajdanga Main Road,Kolkata - 700 107.</span></h2>
+                            <h3>Gap In Offer & Delivery OF CMR Against Cumulative Paddy Procured Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h3>
+                        </div>
                     </div>
-                    
 
                     <br>
                      
@@ -160,15 +153,17 @@ tr:hover {background-color: #f5f5f5;}
                             
                                 <th>Sl No.</th>
 
-                                <th style="width: 25%">BRANCH</th>
-                                <th>Quantity of PADDY PROCURED (MT)</th>
+                                <th style="width: 25%">District</th>
+
+                                <th>Quantity of Paddy Procured (MT)</th>
+
                                 <th>State Pool(Progressive Quantity of CMR delivered (MT))</th>
-                                <th>Central Pool State A/C(Progressive Quantity of CMR delivered (MT))</th>
-                                <th>Central Pool FCI A/C(Progressive Quantity of CMR delivered (MT))</th>
 
-                                <th>Approx. Resultant CMR (MT)
+                                <th>Central Pool(Progressive Quantity of CMR delivered (MT))</th>
 
-</th>
+                                <th>FCI(Progressive Quantity of CMR delivered (MT))</th>
+
+                                <th>Approx.Resultant CMR (MT)</th>
 
                                 <th>Offer (MT)</th>
 
@@ -178,13 +173,11 @@ tr:hover {background-color: #f5f5f5;}
 
                                 <th>Gap in delivery Against resultant (MT)</th>
 
-                                <th>DELIVERY GAP % Against Total RESULTANT CMR</th>
+                                <th>Delivery Gap % Against Total Resultant CMR</th>
 
                                 <th>Gap in delivery Against offer (MT)</th>
 
-                                <th>DELIVERY GAP % AGAINST OFFER OF CMR</th>
-
-                                
+                                <th>Delivery Gap % Against offer Of CMR</th>
 
                             </tr>
 
@@ -197,196 +190,190 @@ tr:hover {background-color: #f5f5f5;}
                                 if($dist){ 
 
                                     $i = 1;
-                                    $tot_delivery = 0;
-                                    $tot_resultant = 0; 
-                                    $tot_offered = 0;
-                                    $sp = 0;
-                                    $cp = 0;
-                                    $fci = 0;
-                                    $result =0;
-                                    $results = 0;
+
+                                    $tot_proc       = 0;
+
+                                    $tot_delivery   = 0;
+
+                                    $tot_resultant  = 0; 
+
+                                    $tot_offered    = 0;
+
+                                    $tot_sp         = 0;
+
+                                    $tot_cp         = 0;
+
+                                    $tot_fci        = 0;
+
+                                    $tot_gap_resultant  =   0;
+
+                                    $tot_gap_delivery   =   0;
+
+                                    $tot_gap_offer      =   0;
                                   
                                     foreach($dist as $dis){
 
                             ?>
 
                                 <tr>
-                                     <td><?php echo $i++; ?></td>       <!--sl no-->
-                                     <td><?php echo $dis->district_name; ?></td> <!--dist. name-->
-                                     <td><?php                                      //Qty in MT
-                                                foreach($collc as $colcDtls){
-                                                    if($colcDtls->branch_id == $dis->district_code){
-                                                         echo $colcDtls->quantity*0.1;
-                                                       
-                                                    }
-                                                }   
-                                         ?></td>
+                                     <td><?php echo $i++; ?></td> 
+
+                                     <td><?php                                      //district name
+                                              echo $dis->branch_name; 
+                                         ?>
+                                     </td>
+
+                                     <td><?php                                      //Procurred Qty in MT
+                                            echo $dis->qty*0.1;
+                                            $tot_proc += $dis->qty * 0.1;           
+                                         ?>
+                                     </td>
+                                     
                                      <td><?php                                      //SP CMR delivery          
                                                 foreach($delv as $del){
-                                                    if($del->branch_id == $dis->district_code){
+                                                    if($del->branch_id == $dis->branch_id){
                                                          echo $del->sp * 0.1;
-                                                         $sp = $del->sp;
+                                                         $tot_sp += $del->sp * 0.1;
                                                     }
                                                 }
                                          ?>
                                      </td>
+
                                      <td><?php                                      //CP CMR delivery 
                                                 foreach($delv as $del){
-                                                    if($del->branch_id == $dis->district_code){
+                                                    if($del->branch_id == $dis->branch_id){
                                                          echo $del->cp * 0.1;
-                                                        $cp = $del->cp;
+                                                         $tot_cp += $del->cp * 0.1;
                                                     }
                                                 }
                                          ?>
                                      </td>
+
                                      <td><?php                                     //FCI CMR delivery
-                                              foreach($delv as $del){
-                                                  if($del->branch_id == $dis->district_code){
-                                                     echo $del->fci * 0.1;
-
-
-                                                
-                                                  }
+                                                foreach($delv as $del){
+                                                    if($del->branch_id == $dis->branch_id){
+                                                        echo $del->fci * 0.1;
+                                                        $tot_fci +=  $del->fci * 0.1; 
+                                                    }
                                                 }
                                          ?>
                                      </td>
+
                                      <td><?php                                      //resultant CMR                               
                                                 foreach($cmrs as $cmr){
-                                                    if($cmr->branch_id == $dis->district_code){
+                                                    if($cmr->branch_id == $dis->branch_id){
                                                          echo ($cmr->resultant) * 0.1;
-                                                        $tot_resultant = $cmr->resultant* 0.1; 
+                                                        $tot_resultant += $cmr->resultant* 0.1; 
                                                     }
                                                 }
                                          ?>
                                      </td>
-                                     <td><?php                                     //CMR offered
+
+                                     <td><?php                                         //CMR offered
                                                 foreach($cmrs as $cmr){
-                                                    if($cmr->branch_id == $dis->district_code){
+                                                    if($cmr->branch_id == $dis->branch_id){
                                                          echo ($cmr->offered) * 0.1;
-                                                        $tot_offered = $cmr->offered* 0.1;
+                                                        $tot_offered += $cmr->offered* 0.1;
                                                     }
                                                 }
                                          ?>
                                      </td>
-                                     <td> <?php                                 //Gap in offer against resultant
-                                                echo round($tot_resultant- $tot_offered,4);
+
+                                     <td> <?php                                 //Gap in offer against resultant.
+                                                foreach($cmrs as $cmr){
+                                                    if($cmr->branch_id == $dis->branch_id){
+                                                        echo round(($cmr->resultant - $cmr->offered) * 0.1,2);
+                                                        $tot_gap_resultant += round(($cmr->resultant - $cmr->offered) * 0.1,2);
+                                                    }
+                                                }
                                          ?> 
                                      </td>
                                   
                                      <td> <?php                                 //Gap in percentage
-                                                if ($tot_resultant ==0){
-                                                    echo 0;
-                                                }else{     
-                                                    $tot_gap = $tot_resultant - $tot_offered; 
-                                                    echo round($tot_gap/$tot_resultant,4) * 100;             
+                                                foreach($cmrs as $cmr){
+                                                    if($cmr->branch_id == $dis->branch_id){
+
+                                                     echo round((($cmr->resultant - $cmr->offered)*0.1)/($cmr->resultant * 0.1) * 100,2);
+
+                                                    }
                                                 }
                                          ?>
                                      </td>
-                                     <td>
-                                        <?php
-                                                foreach($delv as $del){        //Gap in delivery against CMR
-                                                    if($del->branch_id == $dis->district_code){
-                                                         $cp = $del->cp;
-                                                         $sp = $del->sp;
-                                                         $fci = $del->fci;
-                                                       $tot_delivery =($cp+$sp
-                                                            +$fci)*0.1 ;
 
-                                                       echo round($tot_resultant-$tot_delivery,4);
-                                                    }
+                                     <td>
+                                        <?php                                   //Gap in delivery against resultant CMR
+                                            foreach($delgap as $delvgap){
+                                                if($delvgap->branch_id == $dis->branch_id){
+
+                                                    echo round($delvgap->gap_delivery * 0.1,2);
+
+                                                    $tot_gap_delivery += round($delvgap->gap_delivery * 0.1,2);
                                                 }
+                                            }
                                          ?>
+                                     </td>
 
-                                  </td>
                                      <td>
-                                         <?php
-                                                foreach($delv as $del){         //percentage Gap in delivery against CMR
-                                                    if($del->branch_id == $dis->district_code){
-                                                         $cp = $del->cp;
-                                                         $sp = $del->sp;
-                                                         $fci = $del->fci;
-                                                       $tot_delivery =($cp+$sp
-                                                            +$fci)*0.1 ;
-                                                        $result=  $tot_resultant-$tot_delivery;
+                                         <?php                              //percentage Gap in delivery against resultant CMR
+                                            foreach($delgap as $delvgap){
+                                                if($delvgap->branch_id == $dis->branch_id){
 
-                                                        echo round($result/$tot_resultant,4) * 100;
-                                                    }
+                                                    echo round(($delvgap->gap_delivery *0.1)/($delvgap->resultant * 0.1) * 100,2);
+
                                                 }
+                                            }
                                          ?>
 
                                      </td>
-                                     <td>
-                                      <?php
-                                                foreach($delv as $del){        //gap delivery against offer              
-                                                    if($del->branch_id == $dis->district_code){
-                                                         $cp = $del->cp;
-                                                         $sp = $del->sp;
-                                                         $fci = $del->fci;
-                                                       $tot_delivery =($cp+$sp
-                                                            +$fci)*0.1 ;
 
-                                                       echo $tot_offered-$tot_delivery;
-                                                    }
+                                     <td>
+                                        <?php                                     //Gap in delivery against offer
+                                            foreach($delgap as $delvgap){
+                                                if($delvgap->branch_id == $dis->branch_id){
+
+                                                    echo round($delvgap->offer_gap * 0.1,2);
+
+                                                    $tot_gap_offer += round($delvgap->offer_gap * 0.1,2);
+
                                                 }
-                                         ?>
-                                             
+                                            }      
+                                        ?>
                                     </td>
-                                     <td>
-                                       <?php
-                                                foreach($delv as $del){
-                                                    if($del->branch_id == $dis->district_code){
-                                                         $cp = $del->cp;
-                                                         $sp = $del->sp;
-                                                         $fci = $del->fci;
-                                                       $tot_delivery =($cp+$sp
-                                                            +$fci)*0.1 ;
-                                                  $results=  $tot_offered-$tot_delivery;
 
-                                               echo  round(($results/$tot_offered),4)*100;
-                                            // (($tot_resultant-$tot_delivery)/$tot_resultant)*100);
+                                    <td>
+                                       <?php                                    //percentage Gap in offer against delivery 
+                                            foreach($delgap as $delvgap){
+                                                if($delvgap->branch_id == $dis->branch_id){
 
+                                                    echo round(($delvgap->offer_gap *0.1)/($delvgap->offered_now * 0.1) * 100,2);
 
-                                                    }
                                                 }
-                                         ?>
-                                     </td>
+                                            }      
+                                        ?>
+                                    </td>
                                    
-                                  
-                                 
-                                     
                                 </tr>
                                
  
                                 <?php 
-                                 $tot_delivery = 0;
-                                    $tot_resultant = 0; 
-                                    $tot_offered = 0;
-                                    $sp = 0;
-                                    $cp = 0;
-                                    $fci = 0;
-                                    $result =0;
-                                    $results = 0;
+                                 
                                     }  ?>
-                                     <!-- <tr><td colspan="3" style="text-align: center;">Total</td>
-                                     	<td><?=$tot_qty_paddy_purchased?></td>
-                                     	<td><?=$tot_registered_farmer?></td>
-                                     	<td><?=$tot_benifited_farmer?></td>
-                                     	<td><?=$tot_camp?></td>
-                                     	<td><?=$tot_amount?></td>
-                                     	<td><?=$tot_resultant_cmr?></td>
-                                        <td><?=$tot_raw_offered_state?></td>
-                                        <td></td>
-                                        <td><?=$tot_boiled_offered_state?></td>
-                                        <td></td>
-                                        <td><?=$tot_raw_rice_delivered_state?></td>
-                                        <td><?=$tot_raw_rice_delivered_center?></td>
-                                        <td><?=$tot_raw_rice_delivered_fci?></td>
-                                        <td><?=$tot_boiled_rice_delivered_state?></td>
-                                        <td><?=$tot_boiled_rice_delivered_center?></td>
-                                        <td><?=$tot_boiled_rice_delivered_fci?></td>
-                                        <td><?=$tot_remain?></td>
+                                     <tr><td colspan="2" style="text-align:center;font-weight: bold;">Total</td>
+                                     	<td style="text-align:center;font-weight: bold;"><?=$tot_proc?></td>
+                                     	<td style="text-align:center;font-weight: bold;"><?=$tot_sp ?></td>
+                                     	<td style="text-align:center;font-weight: bold;"><?=$tot_cp?></td>
+                                     	<td style="text-align:center;font-weight: bold;"><?=$tot_fci?></td>
+                                     	<td style="text-align:center;font-weight: bold;"><?=$tot_resultant?></td>
+                                     	<td style="text-align:center;font-weight: bold;"><?=$tot_offered?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_gap_resultant?></td>
+                                        <td style="text-align:center;font-weight: bold;"></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_gap_delivery?></td>
+                                        <td style="text-align:center;font-weight: bold;"></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_gap_offer?></td>
+                                        <td style="text-align:center;font-weight: bold;"></td>
+                                        
 
-                                     </tr> -->
+                                     </tr>
 
                          <?php        }
                                 else{
@@ -403,7 +390,7 @@ tr:hover {background-color: #f5f5f5;}
 
                 </div>   
                 
-                <div style="text-align: center;">
+                <div class="nextPrvBtn">
 
                     <button class="btn btn-primary" type="button" onclick="printDiv();">Print</button>
                      <button class="btn btn-primary" type="button" id="btnExport" >Excel</button>

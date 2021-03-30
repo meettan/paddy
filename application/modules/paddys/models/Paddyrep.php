@@ -235,10 +235,11 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
         return $cmr->result();
     }
 /**Districtwise resultant CMR and CMR offered between a period*/    
-     public function f_getdistcmr($frmdt,$todt){
+     public function f_getdistcmr($frmdt,$todt,$kms){
         $cmr = $this->db->query("select branch_id,sum(resultant_cmr)resultant,sum(cmr_offered_now) offered
-                                   from   td_cmr_offered                            
-                                   where    trans_dt between '$frmdt' and '$todt'
+                                   from td_cmr_offered                            
+                                   where trans_dt between '$frmdt' and '$todt'
+                                   and   kms_year = $kms   
                                    group by branch_id");
         return $cmr->result();
     }
@@ -299,16 +300,36 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
     }
 
 /**Districtwise total CMR delivered by each district in SP,CP & FCI */
-    public function f_getdistdelv($frmdt,$todt){
-      $offer = $this->db->query("select branch_id,sum(sp) sp,sum(cp) cp,sum(fci) fci
+    public function f_getdistdelv($frmdt,$todt,$kms){
+      $offer = $this->db->query("select branch_id,sum(sp)sp,sum(cp)cp,sum(fci) fci
                                  from   td_cmr_delivery
-                                 where    trans_dt between '$frmdt' and '$todt'
+                                 where  trans_dt between '$frmdt' and '$todt'
+                                 and    kms_year = $kms
                                  group by branch_id");
       return $offer->result();
     }
 
 
     ////
+    public function f_delivery_gap($frmdt,$todt,$kms){
+        $delivery_gap = $this->db->query("select branch_id,sum(resultant)resultant,sum(offered_now)offered_now,
+                                          sum(offered_now) - (sum(sp) + sum(cp) + sum(fci)) as offer_gap,
+                                          sum(resultant)-(sum(sp) + sum(cp) + sum(fci)) as gap_delivery
+                                        from(
+                                                SELECT branch_id,0 sp,0 cp,0 fci,sum(resultant_cmr)resultant,sum(cmr_offered_now)offered_now FROM td_cmr_offered
+                                                where kms_year = $kms
+                                                and   trans_dt between '$frmdt' and '$todt'
+                                                group by branch_id
+                                                union
+                                                SELECT branch_id,sum(sp)sp,sum(cp)cp,sum(fci)fci,0 resultant,0 offered_now FROM td_cmr_delivery
+                                                where kms_year = $kms
+                                                and   trans_dt between '$frmdt' and '$todt'
+                                                group by branch_id)a
+                                                group by branch_id"
+                                            );
+        return $delivery_gap->result();
+    }
+    
 
     /*public function f_get_remain($brn,$frmdt,$todt,$block_id){
 

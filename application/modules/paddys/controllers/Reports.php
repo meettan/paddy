@@ -613,9 +613,9 @@ class Reports extends MX_Controller {
 
             $to_dt      = $this->input->post('to_date');
 
-            //$socProc['reg']         =   $this->Paddyrep->f_getregfarm($kms_id);
+            $socProc['reg']         =   $this->Paddyrep->f_getregfarm($kms_id);
 
-            //$socProc['collc']       =   $this->Paddyrep->f_getresale($from_dt,$to_dt);
+            $socProc['collc']       =   $this->Paddyrep->f_getresale($from_dt,$to_dt);
 
             $socProc['reslno']      =   $this->Paddyrep->f_get_resale_no($from_dt,$to_dt);
 
@@ -697,15 +697,15 @@ class Reports extends MX_Controller {
 
             $to_dt      = $this->input->post('to_date');
 
-            $socProc['dist']    =  $this->Paddy->f_district_orderby();
+            $socProc['dist']        =  $this->Paddyrep->f_get_dist_proc($from_dt,$to_dt);
              
-            $socProc['collc']   = $this->Paddyrep->f_getresale($from_dt,$to_dt);
+            //$socProc['collc']   = $this->Paddyrep->f_getresale($from_dt,$to_dt);
 
-            $socProc['delv']    = $this->Paddyrep->f_getdistdelv($from_dt,$to_dt);
+            $socProc['delv']        = $this->Paddyrep->f_getdistdelv($from_dt,$to_dt,$kms_id);
 
-            $socProc['cmrs']    = $this->Paddyrep->f_getdistcmr($from_dt,$to_dt);
+            $socProc['delgap']      = $this->Paddyrep->f_delivery_gap($from_dt,$to_dt,$kms_id);
 
-           // $socProc['offer']   = $this->Paddyrep->f_getdistoffer($from_dt,$to_dt);
+            $socProc['cmrs']        = $this->Paddyrep->f_getdistcmr($from_dt,$to_dt,$kms_id);
          
             $this->load->view('post_login/main');
 
