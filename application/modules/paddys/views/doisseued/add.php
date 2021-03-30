@@ -397,13 +397,19 @@
 
                     var tot_cmr         = parseFloat($('#tot_cmr_offered').val());
 
-                     $('#progressive_do_issue').val(do_prev + do_supplied);
+                    /*console.log('do_prev '+ do_prev);
+
+                    console.log('do_supplied '+ do_supplied);
+
+                    console.log('tot_cmr '+ tot_cmr);*/
+
+                     $('#progressive_do_issue').val((do_prev + do_supplied).toFixed(5));
 
                    $('#do_yet_to_be_issued').val((tot_cmr-(do_prev + do_supplied)).toFixed(5));
 
 
-                    if((do_prev + do_supplied)  > tot_cmr){
-                        console.log(do_prev + do_supplied);
+                    if(((do_prev + do_supplied).toFixed(5))  > tot_cmr){
+                        //console.log(do_prev + do_supplied);
 
                         alert("Progressive Do Issue Cannot Be Greater Than Total Cmr Offered");
                         $('#progressive_do_issue').val("");

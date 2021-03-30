@@ -3711,6 +3711,8 @@ class Transactions extends MX_Controller {
 
         $data = $this->Paddy->f_get_particulars("td_do_isseued", $select, $where, 1);
 
+        //echo $this->db->last_query();die;
+
         echo json_encode($data);   
 
     }
