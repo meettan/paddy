@@ -869,6 +869,50 @@ class Reports extends MX_Controller {
     }
 
 
+    public function f_distIncPay(){                 /**Districtwise Payment of Incidentals Report at HO */                   
+
+        if($_SERVER['REQUEST_METHOD']=='POST'){
+
+            $kms_id     = $this->session->userdata['loggedin']['kms_id'];
+
+            //$branch_id  = $this->input->post('dist');
+
+            $from_dt    = $this->input->post('from_date');
+
+            $to_dt      = $this->input->post('to_date');
+
+            $distProc['procDtls']   =   $this->Paddyrep->f_get_tot_paddy_cmr($from_dt,$to_dt);
+
+            $distProc['comm']       =   $this->Paddyrep->f_get_tot_soc_comm($from_dt,$to_dt);
+
+            $distProc['mill']       =   $this->Paddyrep->f_get_tot_mill_comm($from_dt,$to_dt);
+
+            $distProc['tot']        =   $this->Paddyrep->f_get_tot_incidental($from_dt,$to_dt);
+
+            $distProc['remain']     =   $this->Paddyrep->f_get_remain_dist($from_dt,$to_dt,$kms_id);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/dist_proc/dist_inc_pay.php", $distProc);
+
+            $this->load->view('post_login/footer');
+
+
+        }else{
+
+            $socProc['sys_date']   =   $_SESSION['sys_date'];
+
+            $socProc['dists']  =   $this->Paddy->f_get_particulars("md_district",NULL,NULL, 0);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/dist_proc/dist_inc_pay.php", $socProc);
+
+            $this->load->view('post_login/footer');
+        }
+    }
+
+
 }
 
 ?>

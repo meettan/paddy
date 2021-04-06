@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Paddyrep extends CI_Model{
+
 /**Retrieve all societies for a given district and block */
     public function f_get_soc($brn,$block_id){
         $soc = $this->db->query("select a.society_code society_code,
@@ -823,5 +824,57 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
         return $pay->result();
     }
 
+    //Districtwise total paddy total cmr for incidental payment
+    public function f_get_tot_paddy_cmr($from_dt,$to_dt){
+
+        $proc   =   $this->db->query("SELECT a.dist branch_id,
+                                             b.branch_name branch_name,
+                                             sum(a.tot_paddy)qty,
+                                             sum(a.tot_cmr)cmr 
+                                    from td_payment_bill a,md_branch b
+                                    where a.dist = b.id
+                                    and   a.trans_dt between '$from_dt' and '$to_dt' 
+                                    group by a.dist 
+                                    order by a.dist");
+
+        return $proc->result();
+    }
+
+    public function f_get_tot_soc_comm($from_dt,$to_dt){
+
+        $proc   =   $this->db->query("SELECT branch_id,
+                                             sum(tot_amt)soc_comm
+                                      from  td_society_commision
+                                      where trans_dt between '$from_dt' and '$to_dt'
+                                      group by branch_id  
+                                      order by branch_id");
+
+        return $proc->result();
+    }
+
+    public function f_get_tot_mill_comm($from_dt,$to_dt){
+
+        $proc   =   $this->db->query("SELECT dist branch_id,
+                                             account_type,
+                                             sum(total_amt)mill_comm
+                                      from  td_payment_bill_dtls
+                                      where trans_dt between '$from_dt' and '$to_dt'
+                                      group by dist,account_type  
+                                      order by dist,account_type");
+
+        return $proc->result();
+    }
+
+    public function f_get_tot_incidental($from_dt,$to_dt){
+
+        $proc   =   $this->db->query("SELECT dist branch_id,
+                                             sum(total_amt)tot_amt
+                                      from  td_payment_bill_dtls
+                                      where trans_dt between '$from_dt' and '$to_dt'
+                                      group by dist  
+                                      order by dist");
+
+        return $proc->result();
+    }
 }
 ?>

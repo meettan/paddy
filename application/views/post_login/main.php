@@ -279,6 +279,7 @@
                             <a href="<?php echo site_url('report/reselling'); ?>">Paddy Repeat Selling</a>
                             
                             <a href="<?php echo site_url('report/gap_offer_delivery'); ?>">Gap In Offer & Delivery</a>
+                            <a href="<?php echo site_url('report/distIncPay'); ?>">Districtwise Payment of Incidentals</a>
                             <!-- <a href="<?php echo site_url('report/returncheque'); ?>">Return Cheque</a> -->
                         <?php } ?>
                         <?php   if( $this->session->userdata['loggedin']['kms_id'] == 2 ) {   ?>
