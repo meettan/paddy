@@ -834,7 +834,7 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
                                     from td_payment_bill a,md_branch b
                                     where a.dist = b.id
                                     and   a.trans_dt between '$from_dt' and '$to_dt' 
-                                    group by a.dist 
+                                    group by a.dist,b.branch_name 
                                     order by a.dist");
 
         return $proc->result();
@@ -876,5 +876,87 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
 
         return $proc->result();
     }
+
+    //Societywise total paddy for incidental payment
+    public function f_get_tot_paddy_cmr_soc($from_dt,$to_dt,$brn_id){
+
+        $proc   =   $this->db->query("SELECT a.soc_id,
+                                             b.soc_name,
+                                             sum(a.tot_paddy)qty,
+                                             sum(a.tot_cmr)cmr 
+                                    from td_payment_bill a,md_society b
+                                    where a.soc_id = b.society_code
+                                    and   a.trans_dt between '$from_dt' and '$to_dt' 
+                                    and   a.dist   = $brn_id
+                                    group by a.soc_id,soc_name
+                                    order by a.soc_id");
+
+        return $proc->result();
+    }
+
+    public function f_get_comm_soc($from_dt,$to_dt,$brn_id){
+
+        $proc   =   $this->db->query("SELECT soc_id,
+                                             sum(tot_amt)soc_comm,
+                                             sum(tds_amt)tds_amt,
+                                             (sum(tot_amt) - sum(tds_amt))paid_amt
+                                      from  td_society_commision
+                                      where trans_dt between '$from_dt' and '$to_dt'
+                                      and   branch_id = $brn_id
+                                      group by soc_id  
+                                      order by soc_id");
+
+        return $proc->result();
+    }
+
+    //Millwisewise total paddy total cmr for incidental payment
+    public function f_get_tot_paddy_cmr_mill($from_dt,$to_dt,$brn_id){
+
+        $proc   =   $this->db->query("SELECT a.mill_id,
+                                             b.mill_name,
+                                             sum(a.tot_paddy)qty,
+                                             sum(a.tot_cmr)cmr 
+                                    from td_payment_bill a,md_mill b
+                                    where a.mill_id = b.mill_code
+                                    and   a.trans_dt between '$from_dt' and '$to_dt' 
+                                    and   a.dist   = $brn_id
+                                    group by a.mill_id,b.mill_name 
+                                    order by a.dist");
+
+        return $proc->result();
+    }
+
+
+    public function f_get_mill_comm($from_dt,$to_dt,$brn_id){
+
+        $proc   =   $this->db->query("SELECT a.mill_id,
+                                             b.account_type,
+                                             sum(b.total_amt)mill_comm
+                                      from   td_payment_bill a,td_payment_bill_dtls b
+                                      where  a.trans_dt  = b.trans_dt 
+                                      and    a.pmt_bill_no = b.pmt_bill_no
+                                      and    b.trans_dt between '$from_dt' and '$to_dt'
+                                      and    b.dist = $brn_id
+                                      group by a.mill_id,b.account_type  
+                                      order by a.mill_id,b.account_type");
+
+        return $proc->result();
+    }
+
+    public function f_get_tot_incidental_brn($from_dt,$to_dt,$brn_id){
+
+        $proc   =   $this->db->query("SELECT a.mill_id,
+                                             sum(b.total_amt)tot_amt
+                                      from  td_payment_bill a,td_payment_bill_dtls b
+                                      where  a.trans_dt  = b.trans_dt 
+                                      and    a.pmt_bill_no = b.pmt_bill_no
+                                      and    b.trans_dt between '$from_dt' and '$to_dt'
+                                      and    b.dist = $brn_id
+                                      group by a.mill_id  
+                                      order by a.mill_id");
+
+        return $proc->result();
+    }
+
 }
 ?>

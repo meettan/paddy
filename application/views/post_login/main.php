@@ -295,6 +295,8 @@
                             <?php } ?>
 
                            <a href="<?php echo site_url('report/offer_cmrrep'); ?>">Offer For Delivery Of Cmr</a>
+                           <a href="<?php echo site_url('report/socyIncPay'); ?>">Societywise Payment of Incidentals</a>
+                           <a href="<?php echo site_url('report/millIncPay'); ?>">Millwise Payment of Incidentals</a>
 
                         <?php } ?>
 

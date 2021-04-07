@@ -10,7 +10,7 @@
 
         </div>
 
-        <div class="col-lg-12 container contant-wraper">    
+        <div class="col-lg-12 container contant-wraper" style="font-size: 10px;">    
 
             <h3>
 
@@ -33,6 +33,8 @@
                         <th>Date</th>
                         <th>Society Name</th>
                         <th>Mill Name</th>
+                        <th>Total Paddy</th>
+                        <th>Total CMR</th>
                         <th>Transfer</th>
                         <th>Marketing</th>
                         <th>Accounts</th>
@@ -62,6 +64,8 @@
                                 <td><?php echo date('d/m/Y', strtotime($p_dtls->req_dt)); ?></td>
                                 <td><?php echo $p_dtls->soc_name; ?> </td>
                                 <td><?php echo $p_dtls->mill_name?></td>
+                                <td><?php echo $p_dtls->tot_paddy?></td>
+                                <td><?php echo $p_dtls->tot_cmr?></td>
                                 <td>
                                     <?php if($p_dtls->ho_flag == 0) { ?> 
                                    
@@ -187,6 +191,8 @@
                         <th>Date</th>
                         <th>Society Name</th>
                         <th>Mill Name</th>
+                        <th>Total Paddy</th>
+                        <th>Total CMR</th>
                         <th>Transfer</th>
                         <th>Marketing</th>
                         <th>Accounts</th>

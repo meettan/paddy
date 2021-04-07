@@ -893,7 +893,7 @@ class Reports extends MX_Controller {
 
             $this->load->view('post_login/main');
 
-            $this->load->view("reports/dist_proc/dist_inc_pay.php", $distProc);
+            $this->load->view("reports/incidental/dist_inc_pay.php", $distProc);
 
             $this->load->view('post_login/footer');
 
@@ -906,12 +906,83 @@ class Reports extends MX_Controller {
 
             $this->load->view('post_login/main');
 
-            $this->load->view("reports/dist_proc/dist_inc_pay.php", $socProc);
+            $this->load->view("reports/incidental/dist_inc_pay.php", $socProc);
 
             $this->load->view('post_login/footer');
         }
     }
 
+    public function f_socyIncPay(){                 /**Societywise Payment of Incidentals Report at Branch */                   
+
+        if($_SERVER['REQUEST_METHOD']=='POST'){
+
+            $kms_id     = $this->session->userdata['loggedin']['kms_id'];
+
+            $branch_id  = $this->session->userdata['loggedin']['branch_id'];
+
+            $from_dt    = $this->input->post('from_date');
+
+            $to_dt      = $this->input->post('to_date');
+
+            $socProc['procDtls']   =   $this->Paddyrep->f_get_tot_paddy_cmr_soc($from_dt,$to_dt,$branch_id);
+
+            $socProc['comm']       =   $this->Paddyrep->f_get_comm_soc($from_dt,$to_dt,$branch_id);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/incidental/soc_inc_pay.php", $socProc);
+
+            $this->load->view('post_login/footer');
+
+
+        }else{
+
+            $socProc['sys_date']   =   $_SESSION['sys_date'];
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/incidental/soc_inc_pay.php",$socProc);
+
+            $this->load->view('post_login/footer');
+        }
+    }
+
+    public function f_millIncPay(){                 /**Millwise Payment of Incidentals Report at Branch */                   
+
+        if($_SERVER['REQUEST_METHOD']=='POST'){
+
+            $kms_id     = $this->session->userdata['loggedin']['kms_id'];
+
+            $branch_id  = $this->session->userdata['loggedin']['branch_id'];
+
+            $from_dt    = $this->input->post('from_date');
+
+            $to_dt      = $this->input->post('to_date');
+
+            $socProc['procDtls']   =   $this->Paddyrep->f_get_tot_paddy_cmr_mill($from_dt,$to_dt,$branch_id);
+
+            $socProc['mill']       =   $this->Paddyrep->f_get_mill_comm($from_dt,$to_dt,$branch_id);
+
+            $socProc['tot']        =   $this->Paddyrep->f_get_tot_incidental_brn($from_dt,$to_dt,$branch_id);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/incidental/mill_inc_pay.php", $socProc);
+
+            $this->load->view('post_login/footer');
+
+
+        }else{
+
+            $socProc['sys_date']   =   $_SESSION['sys_date'];
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/incidental/mill_inc_pay.php",$socProc);
+
+            $this->load->view('post_login/footer');
+        }
+    }
 
 }
 
