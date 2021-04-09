@@ -885,6 +885,7 @@
                 $.get('<?php echo site_url("paddy/billMasterDetails"); ?>',{
 
                     riceType: $('#rice_type').val(),
+                    effectdt: $('#req_dt').val(),
                     sl_no: $(this).val()
 
                 }).done(function(data){
@@ -956,6 +957,7 @@
             $('.payble_amount').val(sumValuesOf('paybel').toFixed());      
 
             var  val    =  $('.particulars:eq('+indexNo+')').val();
+
 
             if(val == 6){
 
@@ -1185,7 +1187,6 @@
                    //var sl_no = $(this).find('td:eq(0) .particulars').val();
                    let indexNo = $('.particulars').index(this);
 
-
                    $.get('<?php echo site_url("paddys/payment/check_parti"); ?>',{
 
                  //   riceType: $('#rice_type').val(),
@@ -1203,11 +1204,8 @@
                         $('.particulars:eq('+indexNo+')').css("background-color", "red");
                         $('.particulars:eq('+indexNo+')').prop( "disabled", true );
                      
-                      
                     }
-                    
-                  
-               
+                                   
                 });
 
         })      

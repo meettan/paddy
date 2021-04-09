@@ -738,10 +738,10 @@
                      $('#rice_type').val(temp.rice_type);
                      $('#rice_types').val("Raw Rice");
                 }
-                if(temp.pool = "C"){
+                if(temp.pool == "C"){
                      $('#pool').val(temp.pool);
                      $('#pools').val("Central Pool");
-                }else if(temp.pool = "S"){
+                }else if(temp.pool == "S"){
                      $('#pool').val(temp.pool);
                      $('#pools').val("State Pool");
                 }else{

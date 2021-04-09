@@ -916,7 +916,7 @@ class Payment extends MX_Controller {
 
             "a.wqsc_no  = b.id"        => NULL,
             "b.id       = c.trans_id"  => NULL,
-            "b.wqsc_date  = c.trans_dt"=> NULL,
+            // "b.wqsc_date  = c.trans_dt"=> NULL,
             "b.wqsc_no  = c.wqsc_no"   => NULL,
             "a.req_no"                 => $this->input->post("req_no"),
             "a.kms_id"                 => $this->session->userdata['loggedin']['kms_id']

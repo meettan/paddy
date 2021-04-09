@@ -1635,6 +1635,17 @@ class Paddy extends CI_Model {
 
    }
 
+   public function get_tsd_rate($charge_head,$effective_date){
+
+
+     $sql  = "select tds_rate as tds  from  md_tds_rate where  effective_date = (select max(effective_date) from   md_tds_rate
+                         where  effective_date <= '$effective_date') and charge_head = '$charge_head' ";
+
+    $query = $this->db->query($sql)->row();
+
+     return $query;                   
+   }
+
 
 
 }

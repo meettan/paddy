@@ -4153,12 +4153,14 @@ class Paddys extends MX_Controller {
 
         if($this->input->get('riceType') == 'P'){
             
-            $select = array('boiled_val val', 'action','tds','cgst','sgst');
+            //$select = array('boiled_val val', 'action','tds','cgst','sgst');
+            $select = array('boiled_val val', 'action','cgst','sgst');
 
         }
         else{
 
-            $select = array('raw_val val', 'action','tds','cgst','sgst');
+            //$select = array('raw_val val', 'action','tds','cgst','sgst');
+            $select = array('raw_val val', 'action','cgst','sgst');
 
         }
 
@@ -4166,9 +4168,20 @@ class Paddys extends MX_Controller {
             'sl_no' => $this->input->get('sl_no')
         );
 
+        
+
+            $charge_head     = $this->input->get('sl_no');
+            $effective_date  = $this->input->get('effectdt');
+       
+
         $data = $this->Paddy->f_get_particulars("md_comm_params", $select, $where, 1);
 
-        echo json_encode($data);
+        $tds  = $this->Paddy->get_tsd_rate($charge_head,$effective_date);
+
+        $obj_merged = (object) array_merge(
+        (array) $data, (array) $tds);
+
+        echo json_encode($obj_merged);
     }
 
     //Bill Master Details
