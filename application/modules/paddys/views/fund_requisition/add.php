@@ -754,7 +754,10 @@
               //   $.get('<?php //echo site_url("paddys/payment/transport_rate"); ?>',{
                  $.get('<?php echo site_url("paddy/billMasterDetails"); ?>',{
                  //   riceType: $('#rice_type').val(),
-                    sl_no: $(this).val()
+                    sl_no: $(this).val(),
+                    riceType: $('#rice_type').val(),
+                    effectdt: $('#req_dt').val()
+
 
                 }).done(function(data){
 
