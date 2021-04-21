@@ -472,7 +472,7 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
       return $offer->result();
     }
     
-    /*public function f_get_mil_do($brn,$frmdt,$todt,$kms_id){
+   public function f_get_mil_do($brn,$frmdt,$todt,$kms_id){
 
       $offer = $this->db->query("select mill_id,rice_type,sum(sp) sp,sum(cp) cp,sum(fci) fci
                                  from   td_do_isseued
@@ -482,7 +482,7 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
                                  group by mill_id,rice_type
                                  order by mill_id");
       return $offer->result();
-    }*/
+    }
     
     
     public function f_get_mill_remain($brn,$frmdt,$todt,$kms_id){

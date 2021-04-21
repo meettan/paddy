@@ -6,9 +6,9 @@ table {
 table, td, th {
     border: 1px solid #dddddd;
 
-    padding: 6px;
+    padding: 6px 5px;
 
-    font-size: 14px;
+    font-size: 11px;
 }
 
 th {
@@ -53,6 +53,10 @@ tr:hover {background-color: #f5f5f5;}
         }, 10);
 
   }
+
+
+       
+
 </script>
 
 
@@ -82,10 +86,10 @@ tr:hover {background-color: #f5f5f5;}
                     <div class="col-sm-10">
 
                         <input type="date"
+                               id="from_date" 
                                name="from_date"
                                class="form-control required"
-                               value="<?php echo $sys_date;?>"
-                        />
+                               value="<?php echo $sys_date;?>" />
 
                     </div>
 
@@ -98,16 +102,16 @@ tr:hover {background-color: #f5f5f5;}
                     <div class="col-sm-10">
 
                         <input type="date"
+                               id="to_date"
                                name="to_date"
                                class="form-control required"
-                               value="<?php echo $sys_date;?>"
-                            />
+                               value="<?php echo $sys_date;?>" />
 
                     </div>
 
                 </div>
-
-                 <div class="form-group row">
+				
+	    <div class="form-group row">
 
                   <label for="block" class="col-sm-2 col-form-label">Block:</label>
 
@@ -144,9 +148,7 @@ tr:hover {background-color: #f5f5f5;}
     }
     
     else if($_SERVER['REQUEST_METHOD'] == 'POST') { 
-
-      foreach($millDtls as $mill);
-        
+     
     ?>
 
         <div class="wraper"> 
@@ -155,34 +157,33 @@ tr:hover {background-color: #f5f5f5;}
                 
                 <div id="divToPrint">
 
-                    <div style="text-align:center;">
-
-                        <h2>THE WEST BENGAL STATE CO.OP.MARKETING FEDERATION LTD.</h2>
-
-                        <h4>HEAD OFFICE: SOUTHEND CONCLAVE, 3RD FLOOR, 1582 RAJDANGA MAIN ROAD, KOLKATA-700107.</h4>
-
-                        <h4>Millwise Report on paddy procurement & CMR delivery Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h4>
-
+                    <div class="printHeaderNew">
+                        <div class="col-sm-3 float-left logoCustom"><img src="<?php echo base_url("/benfed.png");?>"/></div>
+                        <div class="col-sm-9 float-left logoTextSecRight">
+                            <h2>The West Bengal State Co-operative Marketing Federation Ltd.<span>Southend Conclave, 3rd Floor,1582 Rajdanga Main Road,Kolkata - 700 107.</span></h2>
+                  <h3>Millwise Report on paddy procurement & CMR delivery Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?></h3>            
+						
+                        </div>
                     </div>
-                    <br>  
-                    <div class="col-md-12" >  
-                        <div class="col-md-3">
-                        <label>Branch name:</label><?php if(isset($this->session->userdata['loggedin']['branch_name'])){ echo $this->session->userdata['loggedin']['branch_name'];}?>
-                    </div>
-                    <div class="col-md-3">
+                    
+
+                    <br>
+                        <div class="col-md-12" >  
+                            <div class="col-md-3">
+                                <label>Branch name:</label><?php echo $this->session->userdata['loggedin']['branch_name']; ?>
+                            </div>
+							 <div class="col-md-3">
                         <label>Block name:</label><span>  <?php if(isset($mill->block_name)){
                           echo $mill->block_name;
                         } ; ?></span>
                         </div>
-                   </div>
-
+                        </div>
                     <table style="width: 100%;" id="example">
 
                         <thead>
 
                             <tr>
-                            
-                                <th>Sl No.</th>
+                              <th>Sl No.</th>
 
                                 <th style="width: 25%">Name of Rice Mill</th>
 
@@ -520,16 +521,14 @@ tr:hover {background-color: #f5f5f5;}
                             ?>
 
                         </tbody>
-
                     </table>
 
                 </div>   
                 
-                <div style="text-align: center;">
+                 <div style="text-align: center;">
 
                     <button class="btn btn-primary" type="button" onclick="printDiv();">Print</button>
-                    <button class="btn btn-primary" type="button" id="btnExport">Excel</button>
-
+                    <button class="btn btn-primary" type="button" id="btnExport" >Excel</button>
                 </div>
 
             </div>
@@ -541,14 +540,25 @@ tr:hover {background-color: #f5f5f5;}
     }
 
     ?> 
+
      <script type="text/javascript">
         $(function () {
             $("#btnExport").click(function () {
                 $("#example").table2excel({
-                    filename: "<?php if(isset($mill->block_name)){
-                          echo $mill->block_name;
-                        } ; ?> Block Millwise Paddy Procurement Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?>.xls"
+                    filename: "Millwise Incidental Payment Between <?php echo date("d-m-Y", strtotime($this->input->post('from_date'))).' To '.date("d-m-Y", strtotime($this->input->post('to_date')));?>.xls"
                 });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $("#form").on('submit',function(){
+
+                if($("#from_date").val() > $("#to_date").val()){
+                    alert("From date must be less than to date!");
+                    return false;
+                }
             });
         });
     </script>
