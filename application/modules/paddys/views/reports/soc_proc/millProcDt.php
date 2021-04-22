@@ -477,7 +477,11 @@ tr:hover {background-color: #f5f5f5;}
                                      <td><?php
                                                 foreach($remain as $remDtls){
                                                     if($remDtls->mill_id == $mill->mill_id){
+														//echo $remDtls->mill_id.'<br>';
+														//echo $mill->mill_id.'<br>';
                                                             echo $remDtls->remain * 0.1;
+														   
+														   // echo $remDtls->remain;
                                                             $tot_remain += $remDtls->remain * 0.1;
                                                     }
                                                 }

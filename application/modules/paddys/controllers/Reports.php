@@ -229,7 +229,7 @@ class Reports extends MX_Controller {
             $millProc['delv']       =   $this->Paddyrep->f_get_mill_delv($branch_id,$from_dt,$to_dt,$kms_id);
 
             $millProc['remain']     =   $this->Paddyrep->f_get_mill_remain($branch_id,$from_dt,$to_dt,$kms_id);
-
+			
          
             $this->load->view('post_login/main');
 
