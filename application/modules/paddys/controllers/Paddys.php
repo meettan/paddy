@@ -406,6 +406,40 @@ class Paddys extends MX_Controller {
         $this->load->view('post_login/footer');
         
     }
+	
+	 #Society List from table md_society
+    public function f_societyl() {
+
+        //Retriving Society Details
+        $select     =   array(  "sl_no",
+                                "soc_name",
+								"block",
+								"society_code",
+								"inchargename",
+                                "reg_no",
+                                "ph_no",
+                                "dist" 
+                            );
+							
+		$where      = array( "dist" => $this->session->userdata['loggedin']['branch_id'] );					
+
+        $society['society_dtls']  =   $this->Paddy->f_get_particulars("md_society", $select, $where, 0);
+
+        //District List
+        $society['dist']          =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+		
+		//Block List
+		$society['block']   =   $this->Paddy->f_get_particulars("md_block", NULL, NULL, 0);
+
+        $this->load->view('post_login/main');
+
+        $this->load->view("society/societylist", $society);
+
+        $this->load->view('search/search');
+
+        $this->load->view('post_login/footer');
+        
+    }
 
     //New Society add in the table md_society
     public function f_society_add() {

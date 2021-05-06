@@ -1202,53 +1202,11 @@ class Add_new extends MX_Controller {
             
             $data_array = array (
 
-                "society_code"  =>  $this->input->post('society_code'),
-
-                "soc_name"      =>  $this->input->post('name'),
-
-                "inchargename"      =>  $this->input->post('inchargename'),
-
-                "agreementno"      =>  $this->input->post('agreementno'),
-
-                "reg_no"        =>  $this->input->post('reg_no'),
-
-                "reg_date"      =>  $this->input->post('reg_date'),
-
-                "tan"           =>  $this->input->post('tan'),
-
-                "police_station"=>  $this->input->post('police_station'),
-
-                "post_office"   =>  $this->input->post('post_office'),
-
-                "pin"           =>   $this->input->post('pin'),
-
-                "soc_addr"      =>  $this->input->post('addr'),
-
-                "branch_id"     =>  $this->session->userdata['loggedin']['branch_id'],
-
-                "block"         =>  $this->input->post('block'),
-
-                "dist"          =>  $this->input->post('dist'),
-
-                "ph_no"         =>  $this->input->post('ph_no'),
-
-                "email"         =>  $this->input->post('email'),
-
                 "bank_name"     =>  $this->input->post('bnk_name'),
-
-                "branch_name"   =>  $this->input->post('brnch_name'),
-
-                "acc_type"      =>  $this->input->post('acc_type'),
 
                 "acc_no"        =>  $this->input->post('acc_no'),
 
                 "ifsc_code"     =>  $this->input->post('ifsc'),
-
-                "pan_no"        =>  $this->input->post('pan'),
-
-                "gst_no"        =>  $this->input->post('gst_no'),
-
-                "guide_lines_id"  => implode(",",$this->input->post('guide_lines_id')),
 
                 "modified_by"    =>  $this->session->userdata['loggedin']['user_name'],
 
@@ -1268,7 +1226,7 @@ class Add_new extends MX_Controller {
             //For notification storing message
             $this->session->set_flashdata('msg', 'Successfully updated!');
 
-            redirect('paddys/add_new/f_society');
+            redirect('paddy/societyl');
 
         }
 
@@ -1409,6 +1367,41 @@ class Add_new extends MX_Controller {
             $this->load->view('post_login/main');
 
             $this->load->view("mill/dashboard", $mill);
+
+            $this->load->view('search/search');
+
+            $this->load->view('post_login/footer');
+
+        
+    }
+	
+	    public function f_milll() {
+
+
+            //Retriving mill Details
+               $select     =   array(  "sl_no",
+               "mill_name","mill_code","block",
+               "reg_no",
+                "ph_no",
+                 "dist" );
+
+               $where = array(
+
+                "branch_id" => $this->session->userdata['loggedin']['branch_id']
+               );
+
+            $mill['mill_dtls']    =   $this->Paddy->f_get_particulars("md_mill", $select,$where, 0);
+
+            //District List
+            $mill['dist']         =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
+
+            $mill['tot_row']      =$this->Paddy->f_get_total_without_kms_id("md_mill");
+
+            $mill['tots_rows']      =$this->Paddy->f_get_mill_district_wise("md_mill");
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("mill/mill_list", $mill);
 
             $this->load->view('search/search');
 
@@ -1664,51 +1657,11 @@ class Add_new extends MX_Controller {
             
             $data_array = array (
 
-                "mill_code"     =>  $this->input->post('mill_code'),
-
-                "mill_name"     =>  $this->input->post('name'),
-
-                "reg_no"        =>  $this->input->post('reg_no'),
-
-                "reg_date"      =>  $this->input->post('reg_date'),
-
-                "boiler_reg_no" =>  $this->input->post('boiler_reg_no'),
-
-                "tan"           =>  $this->input->post('tan'),
-
-                "police_station" =>  $this->input->post('police_station'),
-
-                "post_office"    =>  $this->input->post('post_office'),
-
-                "pin"            =>  $this->input->post('pin'),
-
-                "mill_addr"     =>  $this->input->post('addr'),
-
-                "branch_id"     =>  $this->session->userdata['loggedin']['branch_id'],
-
-                "block"         =>  $this->input->post('block'),
-
-                "dist"          =>  $this->session->userdata['loggedin']['districts_catered'],
-
-                "ph_no"         =>  $this->input->post('ph_no'),
-
-                "email"         =>  $this->input->post('email'),
-
                 "bank_name"     =>  $this->input->post('bnk_name'),
-
-                "branch_name"   =>  $this->input->post('brnch_name'),
-
-                "acc_type"      =>  $this->input->post('acc_type'),
 
                 "acc_no"        =>  $this->input->post('acc_no'),
 
                 "ifsc_code"     =>  $this->input->post('ifsc'),
-
-                "pan_no"        =>  $this->input->post('pan'),
-
-                "gst_no"        =>  $this->input->post('gst_no'),
-
-                "guide_lines_id"  => implode(",",$this->input->post('guide_lines_id')),
 
                 "modified_by"   =>  $this->session->userdata['loggedin']['user_name'],
 
@@ -1729,7 +1682,7 @@ class Add_new extends MX_Controller {
 
             
 
-            redirect('paddys/add_new/f_mill');
+            redirect('paddys/add_new/f_milll');
 
         }
 

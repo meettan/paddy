@@ -97,7 +97,10 @@
                             <a href="<?php echo site_url('paddys/add_new/f_paddy_bank');?>">Bank</a>
                             <?php } ?>
                             <?php if( $this->session->userdata['loggedin']['ho_flag']=="N" ){?> 
+							<a href="<?php echo site_url('paddy/societyl');?>">Society</a>
+							 <a href="<?php echo site_url('paddys/add_new/f_milll');?>">Mill</a>
                             <a href="<?php echo site_url('paddys/add_new/f_society_mill');?>">Society Mill Connection</a> 
+							
                             <?php } ?> 
                         <?php if($this->session->userdata['loggedin']['user_type']=="A" && $this->session->userdata['loggedin']['ho_flag']=="Y"){?>   
                             <a href="<?php echo site_url('paddys/add_new/f_farmer');?>">Farmer's Registration</a>
