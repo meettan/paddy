@@ -949,6 +949,9 @@
 
         $('#intro1').on('change', '.amounts', function(){
 
+
+            console.log("ddddd");
+
             let indexNo = $('.amounts').index(this);
             var amount  = $(this).val();
          
@@ -966,7 +969,9 @@
 
                  $.get('<?php echo site_url("paddy/billMasterDetails"); ?>',{
                  //   riceType: $('#rice_type').val(),
-                    sl_no: val
+                    sl_no   : val,
+                    riceType: $('#rice_type').val(),
+                    effectdt: $('#req_dt').val()
 
                 }).done(function(data){
 
