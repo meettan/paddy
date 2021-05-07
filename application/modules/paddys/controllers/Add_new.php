@@ -1246,6 +1246,12 @@ class Add_new extends MX_Controller {
                 "branch_id"    =>  $this->session->userdata['loggedin']['branch_id']
 
             );
+
+            $whereb = array(
+
+                "1 ORDER BY bank_name"    =>  NULL
+
+            );
            
             //District List
             $society['dist']    =   $this->Paddy->f_get_particulars("md_district", NULL, NULL, 0);
@@ -1255,6 +1261,10 @@ class Add_new extends MX_Controller {
           
             //Society list of latest month
             $society['society_dtls']    =   $this->Paddy->f_get_particulars("md_society", NULL, $where, 1);
+
+            //Society list of latest month
+            $society['bank_dtls']    =   $this->Paddy->f_get_particulars("md_bank_dtls", NULL, $whereb, 0);
+
 
             //Guidelines List
             $society['guidelines']    =   $this->Paddy->f_get_particulars("md_fs_guide_lines", NULL, NULL, 0);
@@ -1701,7 +1711,11 @@ class Add_new extends MX_Controller {
 
             );//Block List
             
-           
+           $whereb = array(
+
+                "1 ORDER BY bank_name"    =>  NULL
+
+            );
 
              
             $mill['block']   =   $this->Paddy->f_get_particulars("md_block", NULL,$wheres, 0);
@@ -1712,6 +1726,9 @@ class Add_new extends MX_Controller {
 
             //Mill list of latest month
             $mill['mill_dtls']    =   $this->Paddy->f_get_particulars("md_mill", NULL, $where, 1);
+
+            //Bank list of latest month
+            $mill['bank_dtls']    =   $this->Paddy->f_get_particulars("md_bank_dtls", NULL, $whereb, 0);
 
 
             $this->load->view('post_login/main');

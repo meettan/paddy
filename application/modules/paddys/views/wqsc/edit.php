@@ -722,7 +722,7 @@
                         });
 
                     
-                    if(quantity != quantity_cmr){
+                    if(quantity.toFixed() != quantity_cmr.toFixed()){
 
                       alert("Something Went Wrong Please Check Your Total quantity");
 

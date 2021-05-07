@@ -81,12 +81,23 @@
 
                     <div class="col-sm-10">
 
-                        <input type = "text"
+                      <!--   <input type = "text"
                             class= "form-control"
                             name = "bnk_name"
                             id   = "bnk_name"
-                            value="<?php echo $mill_dtls->bank_name;?>"
-                        />
+                            value="<?php //echo $mill_dtls->bank_name;?>"
+                        /> -->
+
+                           <select class= "form-control" name = "bnk_name" id= "bnk_name" required>
+                            <option value="">Select a Bank</option>
+                                <?php foreach($bank_dtls as $bank){?>
+                                <option value="<?php if(isset($bank->sl_no)) { echo $bank->sl_no; }  ?>"
+                                    <?php   if($mill_dtls->bank_name == $bank->sl_no) { echo "selected" ;} ?>
+
+                                 ><?php if(isset($bank->bank_name)) { echo $bank->bank_name; }?></option>
+                            <?php }?>
+
+                        </select>
 
                     </div>
 
@@ -100,7 +111,7 @@
 
                     <div class="col-sm-4">
 
-                        <input type = "text"
+                        <input type = "number"
                             class= "form-control"
                             name = "acc_no"
                             id   = "acc_no"
@@ -145,7 +156,40 @@
 
     $("#form").validate();
 
-   
+    //  *** Code Start For Validaton of IFS is Alpha numeric  on 07/05/2021  //
+
+        $('#form').submit(function(event){
+           
+                var ifsc = $('#ifsc').val();
+               
+                if (ifsc.match(/[^a-zA-Z0-9 ]/g)) {
+
+                    alert("IFS Code Must Be Alpha Numeric");
+
+                    event.preventDefault();
+
+                }else{
+
+                    if (!ifsc.match(/[a-z]/)) {
+
+                         alert("IFS Code did not Contain Letter!");
+                         event.preventDefault();
+                     }else if(!ifsc.match(/[0-9]/)){
+
+                        alert("IFS Code did not Contain Numeric Value!");
+                         event.preventDefault();
+                       }else{
+
+                        $('#submit').attr('type', 'submit');
+                       }
+
+                    
+                }
+
+                    
+        });
+
+    //  *** Code End For Validaton of IFS is Alpha numeric  on 07/05/2021  // 
 
 
        // Listen for click on toggle checkbox
