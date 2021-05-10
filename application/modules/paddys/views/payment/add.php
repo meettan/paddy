@@ -14,7 +14,7 @@
 
             <div class="form-group row">
 
-                <label for="trans_dt" class="col-sm-1 col-form-label">Transaction Date:</label>
+                <label for="trans_dt" class="col-sm-1 col-form-label">Payment Date:</label>
 
                 <div class="col-sm-3">
 
@@ -368,7 +368,7 @@
                     <tr>
                     
                         <td colspan="7" style="text-align: right;">Payble Amount:</td>
-                        <td><input type="text" class="form-control payble_amount" readonly required></td>
+                        <td><input type="text" class="form-control payble_amount" readonly required id="total"></td>
 
                     </tr>
 
@@ -397,7 +397,8 @@
 
                 <tbody id="bank" class="tables">
                     <tr>
-                        <td>  <select class="form-control" required
+                        <td> 
+                        <select class="form-control" required
                             name="pay_mode" id="pay_mode">
 
                         <option value="">Select</option>
@@ -405,31 +406,31 @@
                         <option value="R">RTGS</option>
                         <option value="N">NEFT</option>
 
-                    </select></td>
+                        </select>
+                       </td>
                         <td>
 
-                 <select name="bank_id" id="bank_id" class="form-control" required>
-                 <option value="">Select</option>    
-                <?php foreach($banks as $bank) { ?>
-                <option value="<?php if(isset($bank->sl_no)){ echo $bank->sl_no; }?>">
-                  <?php if(isset($bank->bank_id) && $bank->bank_id=="1")
-                               { echo 'Yes Bank';}
-                        elseif($bank->bank_id=="2"){
-                             echo 'Bandhan Bank';  
-                                                                }
-                         elseif($bank->bank_id=="3"){
-                            echo 'Icici Bank';  
-                         }
-                          elseif($bank->bank_id=="4"){
-                            echo 'Axis Bank';  
-                         }
-                         else{
-                            echo 'Hdfc Bank';
-                         }                                         
-                               ?></option>    
-                  <?php } ?>
-                  </select>
-
+                        <select name="bank_id" id="bank_id" class="form-control" required>
+                        <option value="">Select</option>    
+                        <?php foreach($banks as $bank) { ?>
+                        <option value="<?php if(isset($bank->sl_no)){ echo $bank->sl_no; }?>">
+                          <?php if(isset($bank->bank_id) && $bank->bank_id=="1")
+                                       { echo 'Yes Bank';}
+                                elseif($bank->bank_id=="2"){
+                                     echo 'Bandhan Bank';  
+                                        }
+                                 elseif($bank->bank_id=="3"){
+                                    echo 'Icici Bank';  
+                                 }
+                                  elseif($bank->bank_id=="4"){
+                                    echo 'Axis Bank';  
+                                 }
+                                 else{
+                                    echo 'Hdfc Bank';
+                                 }                                         
+                                       ?></option>    
+                          <?php } ?>
+                          </select>
                          
                         </td>
                         <td><input type="text" class="form-control ref_no" name="ref_no" ></td>
@@ -586,7 +587,7 @@
             )
             .done(function(data){
 
-                var string = '<table class="table" ><thead><tr><th>Particulars.</th><th>Rate/Qtls Paddy</th><th>Total Amount(Rs)</th><th>TDS Amount (Less)@2.00%</th><th>CGST (Add)@2.5%</th><th>SGST(Add)@2.5%</th><th>Claimed Amount(Rs)</th><th>Payable Amount(Rs) </th></tr></thead><tbody>';
+                var string = '<table class="table" ><thead><tr><th>Particulars.</th><th>Rate/Qtls Paddy</th><th>Total Amount(Rs)</th><th>TDS Amount (Less)</th><th>Recalculate TDS</th><th>CGST (Add)@2.5%</th><th>SGST(Add)@2.5%</th><th>Claimed Amount(Rs)</th><th>Payable Amount(Rs) </th></tr></thead><tbody id="intro">';
                     
                 var price_sum       = 0;
 
@@ -597,7 +598,11 @@
 
                     if(value.payment_flag == "1"){
 
-                         string += '<tr><td>' + value.param_name + '<input type="hidden" class="form-control" readonly name="particulars[]" value="' + value.sl_no +'"/></td><td>' + value.per_unit_rate + '<input type="hidden" class="form-control" readonly name="rate_per_qtls[]" value="' + value.per_unit_rate +'"/></td><td>' + value.total_amt + '<input type="hidden" class="form-control" readonly name="amounts[]" value="' + value.total_amt +'"/></td><td>' + value.tds_amt + '<input type="hidden" class="form-control" readonly name="tds_amount[]" value="' + value.tds_amt +'"/></td><td>' + value.cgst_amt + '<input type="hidden" class="form-control" readonly name="cgst[]" value="' + value.cgst_amt +'"/></td><td>' + value.sgst_amt + '<input type="hidden" class="form-control" readonly name="sgst[]" value="' + value.sgst_amt +'"/></td><td>' + value.claim_amt + '<input type="hidden" class="form-control" readonly name="claim_amt[]" value="' + value.claim_amt +'"/></td><td>' + value.payble_amt + '<input type="hidden" class="form-control" readonly name="paybel[]" value="' + value.payble_amt +'"/></td></tr>';
+                         string += '<tr><td>' + value.param_name + '<input type="hidden" class="form-control sl_no" readonly name="particulars[]" value="' + value.sl_no +'"/></td><td>' + value.per_unit_rate + '<input type="hidden" class="form-control" readonly name="rate_per_qtls[]" value="' + value.per_unit_rate +'"/></td><td>' + value.total_amt + '<input type="hidden" class="form-control amounts" readonly name="amounts[]" value="' + value.total_amt +'"/></td><td><span class="tds">' + value.tds_amt + '</span><input type="hidden" class="form-control tds_amount" readonly name="tds_amount[]" value="' + value.tds_amt +'"/></td><td>';
+                          if(value.tds_amt > 0){
+                         string +='<button class="calculate" type="button" value="' + value.sl_no +'">Calculate</button>';
+                            }
+                          string += '</td><td>' + value.cgst_amt + '<input type="hidden" class="form-control" readonly name="cgst[]" value="' + value.cgst_amt +'"/></td><td>' + value.sgst_amt + '<input type="hidden" class="form-control" readonly name="sgst[]" value="' + value.sgst_amt +'"/></td><td>' + value.claim_amt + '<input type="hidden" class="form-control" readonly name="claim_amt[]" value="' + value.claim_amt +'"/></td><td><span class="pay">' + value.payble_amt + '</span><input type="hidden" class="form-control paybel" readonly name="paybel[]" value="' + value.payble_amt +'"/></td></tr>';
 
                     price_sum    += parseFloat(value.payble_amt); 
 
@@ -1347,7 +1352,51 @@
 
     });
 
-   
+
+   $(document).ready(function(){
+   $(document).ajaxComplete(function() {
+
+         $(".calculate").click(function(){
+
+            let row          = $(this).closest('tr');
+            var amt = $(this).parents('tr').find('td:eq(2) .amounts').val();
+            var tds_amt = 0;
+            var tds     = 0;
+
+            var sum     = 0;
+
+
+           $.get('<?php echo site_url("paddys/payment/f_tdsrate"); ?>',{
+                   
+                     effectdt: $('#trans_dt').val(),
+                    sl_no: $(this).parents('tr').find('td:eq(0) .sl_no').val()
+
+               }).done(function(data){
+
+                    let values  = JSON.parse(data);
+                        tds     = values.tds;
+                        tds_amt = ((amt*tds)/100).toFixed(2);
+                    
+                    row.find('td:eq(3) .tds_amount').val(tds_amt);
+                    row.find('td:eq(3) .tds').html(tds_amt);
+                    row.find('td:eq(8) .paybel').val((amt - tds_amt).toFixed(2));
+                    row.find('td:eq(8) .pay').html((amt - tds_amt).toFixed(2));
+
+
+                    $("input[class *= 'paybel']").each(function(){
+            
+                    sum += parseFloat($(this).val());
+                      
+                    });
+
+                    $('#tot_rice').val(sum.toFixed(2));
+                    $('#total').val(sum.toFixed(2));
+               })
+
+           })
+})
+
+})
 
       // $('#form').submit(function(event){
            

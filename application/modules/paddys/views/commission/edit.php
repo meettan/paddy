@@ -217,16 +217,24 @@
 
                     <input type="text"
                             class="form-control" readonly
-                            name = "tot_rceived"
+                            name = "tot_rceived" value="<?php echo $paddy->paddy_qty; ?>"
                             id = "tot_rceived" /> 
 
                 </div>
 
             </div>
 
-            <div id="bill_dtls">
+          <!--   <div id="bill_dtls">
                 
-            </div>
+            </div> -->
+            <?php $paddy = $paddy->paddy_qty;
+                  $rate  = $bill_dtl->rate;
+
+                  $tot_amt = $paddy*$rate;
+
+             ?>
+
+            <div id=""><div class="form-header"><h4>Bill Details</h4></div><table class="table"><thead><tr><th>Particulars.</th><th>Rate/Qtls Paddy</th><th>Total Amount(Rs)</th><th>TDS Amount (Less)</th><th>CGST (Add)@2.5%</th><th>SGST(Add)@2.5%</th><th>Payable Amount(Rs) </th></tr></thead><tbody><tr><td>Commission to Society</td><td><?php if(isset($bill_dtl->rate)){ echo $bill_dtl->rate;}  ?></td><td><?=round($tot_amt, 2);?></td><td><?php if(isset($bill_dtl->tds_amt)){ echo $bill_dtl->tds_amt;}  ?></td><td>0.00</td><td>0.00</td><td><?php if(isset($bill_dtl->tot_amt)){ echo $bill_dtl->tot_amt;}  ?></td></td></tr></tbody></table></div>
         
            <div class="form-group row">
 
@@ -379,7 +387,7 @@
 console.log(data);
                     var datas = JSON.parse(data);
 
-                    $('#tot_rceived').val(datas.paddy_qty);
+                   // $('#tot_rceived').val(datas.paddy_qty);
                     
                 });
 

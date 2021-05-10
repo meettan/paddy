@@ -170,11 +170,12 @@
 
                 }else{
 
-                    if (!ifsc.match(/[a-z]/)) {
+                    // if (!ifsc.match(/[a-z]/)) {
 
-                         alert("IFS Code did not Contain Letter!");
-                         event.preventDefault();
-                     }else if(!ifsc.match(/[0-9]/)){
+                    //      alert("IFS Code did not Contain Letter!");
+                    //      event.preventDefault();
+                    //  }else
+                      if(!ifsc.match(/[0-9]/)){
 
                         alert("IFS Code did not Contain Numeric Value!");
                          event.preventDefault();

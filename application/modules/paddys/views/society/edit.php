@@ -216,11 +216,14 @@
 
                 }else{
 
-                    if (!ifsc.match(/[a-z]/)) {
+                    // if (!ifsc.match(/[a-z]/)) {
+                    //    // /^[a-zA-Z0-9]+$/.test(ifsc)
 
-                         alert("IFS Code did not Contain Letter!");
-                         event.preventDefault();
-                     }else if(!ifsc.match(/[0-9]/)){
+                    //      alert("IFS Code did not Contain Letter!");
+                    //      event.preventDefault();
+                    //  }else  
+
+                     if(!ifsc.match(/[0-9]/)){
 
                         alert("IFS Code did not Contain Numeric Value!");
                          event.preventDefault();
@@ -230,10 +233,26 @@
                        }
 
                     
-                }
+               }
 
                     
         });
+
+
+        // $('#form').submit(function(event){
+           
+        //         var ifsc = $('#ifsc').val();
+
+        //         if (! /^[0-9a-zA-Z]+$/.test(ifsc)) {
+
+        //                     alert("IFS Code Must Be Alpha Numeric");
+
+        //                    event.preventDefault();
+
+        //         }
+
+                    
+        // });
 
     //  *** Code End For Validaton of IFS is Alpha numeric  on 07/05/2021  //   
 

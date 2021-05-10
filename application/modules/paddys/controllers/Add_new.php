@@ -1221,6 +1221,11 @@ class Add_new extends MX_Controller {
             );
 
             $this->Paddy->f_edit('md_society', $data_array, $where);
+
+
+            // echo $this->db->last_query();
+
+            // die();
          
             
             //For notification storing message

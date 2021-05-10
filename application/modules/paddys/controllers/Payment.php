@@ -832,7 +832,22 @@ class Payment extends MX_Controller {
         echo json_encode($sancs);
 
     }
-    
+
+    // Code Start Getting Tds Rate On payment Date on 10/05/2020   ///
+
+    public function f_tdsrate(){
+        
+
+         $charge_head     = $this->input->get('sl_no');
+         $effective_date  = $this->input->get('effectdt');
+       
+        $tds  = $this->Paddy->get_tsd_rate($charge_head,$effective_date);
+
+        echo json_encode($tds);
+    }
+
+    /// Code End  Getting Tds Rate On payment Date    ///
+
     ///*********  Code Written for Total Requisition Amount on 12/11/2020      *******///
 
     public function tot_requisition_amt() {
@@ -1034,7 +1049,7 @@ class Payment extends MX_Controller {
     
                    // "qty"                 =>  $this->input->post('qty'),
 
-                   // "amount_claimed"      =>  $this->input->post('amount_claimed'),
+                    "amount_claimed"      =>  $this->input->post('claim_amount'),
     
                     "tot_amt"             =>  $this->input->post('paid_amt'),
 
@@ -1057,6 +1072,9 @@ class Payment extends MX_Controller {
                     "created_dt"          =>  date('Y-m-d')
     
                 );
+
+
+
 
             $this->Paddy->f_insert('td_society_commision', $data_array);
 
@@ -1205,11 +1223,28 @@ class Payment extends MX_Controller {
             );
 
             $commission['bill_dtl']    =   $this->Paddy->f_get_particulars("td_society_commision",NULL,$where, 1);
+
+            
+            
             $wheres      =   array(
 
                 "branch_id" => $this->session->userdata['loggedin']['branch_id']
             );
             $commission['blocks']    =   $this->Paddy->f_get_particulars("md_block", NULL,$wheres, 0);
+
+              $sel   = array("sum(c.paddy_qty) paddy_qty","sum(c.quantity) totCmr");
+
+            $whe = array(
+
+            "a.wqsc_no  = b.id"        => NULL,
+            "b.id       = c.trans_id"  => NULL,
+            "b.wqsc_date  = c.trans_dt"=> NULL,
+            "b.wqsc_no  = c.wqsc_no"   => NULL,
+            "a.sanc_no"                => $commission['bill_dtl']->sanc_no,
+            "a.kms_id"                 => $this->session->userdata['loggedin']['kms_id']
+
+            );
+           $commission['paddy']  =   $this->Paddy->f_get_particulars("td_fund_requisition a,td_wqsc b,td_wqsc_dtls c",$sel,$whe, 1);
           
             $this->load->view('post_login/main');
 

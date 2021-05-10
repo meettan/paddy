@@ -236,16 +236,6 @@
 
                 </div>
 
-             	
-<!-- 
-                <label for="totPaddy" class="col-sm-1 col-form-label">Billed Paddy:</label>
-
-                <div class="col-sm-3">
-
-                    <input type="text" class="form-control" required  name="qty" id="qty"/>
-
-                </div> -->
-
                
 
             </div>
@@ -263,10 +253,7 @@
 
                 <div class="col-sm-3">
 
-                    <input type="text"
-                            class="form-control" readonly 
-                            name="paid_amt"
-                            id="paid_amt" />
+                   <input type="text" class="form-control" name="paid_amt" value="" id="paid_amt" readonly/>
 
                 </div>
 
@@ -420,13 +407,13 @@
             )
             .done(function(data){
 
-                var string = '<div class="form-header"><h4>Bill Details</h4></div><table class="table" ><thead><tr><th>Particulars.</th><th>Rate/Qtls Paddy</th><th>Total Amount(Rs)</th><th>TDS Amount (Less)@2.00%</th><th>CGST (Add)@2.5%</th><th>SGST(Add)@2.5%</th><th>Claimed Amount(Rs)</th><th>Payable Amount(Rs) </th></tr></thead><tbody>';
+                var string = '<div class="form-header"><h4>Bill Details</h4></div><table class="table" ><thead><tr><th>Particulars.</th><th>Rate/Qtls Paddy</th><th>Total Amount(Rs)</th><th>TDS Amount (Less)</th><th>Recalculate TDS</th><th>CGST (Add)@2.5%</th><th>SGST(Add)@2.5%</th><th>Claimed Amount(Rs)</th><th>Payable Amount(Rs) </th></tr></thead><tbody>';
                     
                 var price_sum    = 0;
 
                 $.each(JSON.parse(data), function( index, value ) {
 
-                    string += '<tr><td>' + value.param_name + '</td><td><input type="hidden" name="rate" value="'+ value.per_unit_rate +'">' + value.per_unit_rate + '</td><td>' + value.total_amt + '</td><td><input type="hidden" name="tds_amt" value="'+ value.tds_amt +'">' + value.tds_amt + '</td><td>' + value.cgst_amt + '</td><td>' + value.sgst_amt + '</td><td>' + value.claim_amt + '</td><td>' + value.payble_amt + '</td></tr>';
+                    string += '<tr><td>' + value.param_name + '</td><td><input type="hidden" name="rate" value="'+ value.per_unit_rate +'">' + value.per_unit_rate + '</td><td>' + value.total_amt + '</td><td><input type="hidden" class="tds_amount" name="tds_amt" value="'+ value.tds_amt +'"><span class="tds">' + value.tds_amt + '</span></td><td><button class="calculate" type="button" value="' + value.sl_no +'">Calculate</button></td><td>' + value.cgst_amt + '</td><td>' + value.sgst_amt + '</td><td><input type="hidden" class="claim_amount" name="claim_amount" value="'+ value.claim_amt +'">' + value.claim_amt + '</td><td><span class="pay">' + value.payble_amt + '</span></td></tr>';
 
                     price_sum    += parseFloat(value.payble_amt); 
                      
@@ -816,6 +803,48 @@
                 }
 
     });
-   
+
+
+$(document).ready(function(){
+
+   $(document).ajaxComplete(function() {
+
+         $(".calculate").click(function(){
+
+            let row          = $(this).closest('tr');
+            var amt = $(this).parents('tr').find('td:eq(2)').html();
+            var tds_amt = 0;
+            var tds     = 0;
+
+            var sum     = 0;
+
+
+           $.get('<?php echo site_url("paddys/payment/f_tdsrate"); ?>',{
+                   
+                    effectdt: $('#trans_dt').val(),
+                    sl_no: 8
+
+               }).done(function(data){
+
+                    let values  = JSON.parse(data);
+                        tds     = values.tds;
+                        tds_amt = ((amt*tds)/100).toFixed(2);
+                       var paid = (amt - tds_amt).toFixed();
+                       var paids = (amt - tds_amt).toFixed(2);
+                    
+                    row.find('td:eq(3) .tds_amount').val(tds_amt);
+                    row.find('td:eq(3) .tds').html(tds_amt);
+                  
+                    row.find('td:eq(8) .pay').html(paids);
+
+                   // var   paid_amt  = paid.toFixed(0);
+                    $('#paid_amt').val(paid);
+                    $('#tot_rice').val(paid);
+               })
+
+           })
+    })
+
+})
 
 </script>
