@@ -630,7 +630,9 @@
             .done(function(data){
 
                  requisition_amt = JSON.parse(data);
-                 $('#requisition_amt').html(requisition_amt.payble_amt);
+
+                 var requisition  = Number((requisition_amt.payble_amt)).toFixed(0);
+                 $('#requisition_amt').html(requisition);
 
                 
             });
@@ -646,7 +648,7 @@
             .done(function(data){
 
                  allocated_amt = JSON.parse(data);
-                 $('#allocated_amt').html(allocated_amt.payble_amt);
+                 $('#allocated_amt').html(Number(allocated_amt.payble_amt).toFixed(0));
 
                 
             });
@@ -1389,8 +1391,8 @@
                       
                     });
 
-                    $('#tot_rice').val(sum.toFixed(2));
-                    $('#total').val(sum.toFixed(2));
+                    $('#tot_rice').val(Number(sum).toFixed());
+                    $('#total').val(Number(sum).toFixed());
                })
 
            })

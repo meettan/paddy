@@ -418,7 +418,7 @@
                     price_sum    += parseFloat(value.payble_amt); 
                      
                 });
-                        string +='<tr><td colspan="7">Total</td><td> <input type="text" class="form-control" id="tot_rice" value="'+price_sum+'" readonly></td> <td></td></tr></tbody></table>';
+                        string +='<tr><td colspan="7">Total</td><td> <input type="text" class="form-control" id="tot_rice" value="'+price_sum.toFixed()+'" readonly></td> <td></td></tr></tbody></table>';
 
                     $('#bill_dtls').html(string);
                     $('#paid_amt').val((price_sum.toFixed()));
