@@ -41,13 +41,16 @@
                         <th>Sl No.</th>
                         <th style="display:none">Year</th>
                         <th style="display:none">Month</th>
-                        <th>Date</th>
+                        <th>Requisition Date</th>
                         <th>District</th>
                         <th>Requisition No.</th>
-                        <th>Wqsc/CS No.</th>
+                   <!-- <th>Wqsc/CS No.</th>  -->
                         <th>Society Name</th>
                         <th>Mill Name</th>
                         <th>Status</th>
+						<th>Accounts</th>
+                        <th>Admin</th>
+                        <th>Fund Allocation</th>
                         <th>Option</th>
 
 
@@ -72,7 +75,7 @@
                                 <td><?php echo date('d/m/Y', strtotime($p_dtls->req_dt)); ?></td>
                                 <td><?php echo get_district_name($p_dtls->branch_id); ?></td>
                                 <td><?php echo $p_dtls->req_no; ?></td>
-                                <td><?php echo $p_dtls->wqsc; ?></td>
+                               <!-- <td><?php //echo $p_dtls->wqsc; ?></td> -->
                                 
                                 <td><?php echo $p_dtls->soc_name; ?> </td>
                                 <td><?php echo $p_dtls->mill_name?></td>
@@ -89,6 +92,36 @@
                                             echo '<span style="color:red">Hold</span>';
 
                                            } ?>
+                                </td>
+								 <td><?php if($p_dtls->approve2 == "0") {
+
+                                            echo '<span style="color:blue">Pending</span>';
+
+                                     } elseif($p_dtls->approve2 == "1"){ 
+
+                                            echo '<span style="color:Green">Recommend</span>';
+
+                                     } else{ echo '<span style="color:red">Hold</span>';} ?>
+                                         
+                                </td>
+                                <td><?php if($p_dtls->approve3 == "0") {
+
+                                            echo '<span style="color:blue">Pending</span>';
+
+                                     } elseif($p_dtls->approve3 == "1"){ 
+
+                                            echo '<span style="color:Green">Approved</span>';
+
+                                     } else{ echo '<span style="color:red">Hold</span>';} ?>
+                                         
+                                </td>
+                                <td>
+                                    <?php if($p_dtls->fund_flag == "1") {
+
+                                            echo '<span style="color:orange">YES</span>';
+
+                                     }  else{ echo '<span style="color:red">NO</span>';} ?>
+
                                 </td>
                                 <td>
                                 
@@ -130,10 +163,13 @@
                         <th>Date</th>
                         <th>District</th>
                         <th>Requisition No.</th>
-                        <th>Wqsc/CS No.</th>
+                  <!--      <th>Wqsc/CS No.</th>  -->
                         <th>Society Name</th>
                         <th>Mill Name</th>
                         <th>Status</th>
+						<th>Accounts</th>
+                        <th>Admin</th>
+                        <th>Fund Allocation</th>
                         <th>Option</th>
 
                     </tr>
