@@ -489,7 +489,7 @@
                     }
 
                // $('select[name^="rice_type"] option[value="'+temp.rice_type+'"]').attr("selected","selected");
-                if(temp.rice_type = "P"){
+                if(temp.rice_type == "P"){
                      $('#rice_type').val(temp.rice_type);
                      $('#rice_types').val("Par Boiled Rice");
                 }else{

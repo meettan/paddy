@@ -3307,6 +3307,160 @@ class Add_new extends MX_Controller {
         }
 
     }
+	
+	  /*********************For Bill Screen********************/
+    #List of Bill Notice Details from table md_comm_params
+    public function notice() {
+
+       //  $where  =   array("kms_id"     =>  $this->session->userdata['loggedin']['kms_id']   );
+
+        //Retriving Bill Master
+        $notice['notice'] =   $this->Paddy->f_get_particulars("md_notice", NULL, NULL, 0);
+
+        $this->load->view('post_login/main');
+
+        $this->load->view("notice/dashboard", $notice);
+
+        $this->load->view('post_login/footer');
+
+    }
+
+    //New Notice Add in the table md_notice
+    public function notice_add() {
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+			
+		  
+			   $config['upload_path']          = './uploads/notice/';
+               $config['allowed_types']        = 'gif|jpg|png|jpeg';
+               $config['max_size']             = 10000;
+               $config['max_width']            = 8000;
+               $config['max_height']           = 8000;
+			   $config['file_name']            = time().str_replace(' ', '_', $_FILES['userfile']['name']);
+			   $data['image']                  = $config['file_name'];
+			   $this->load->library('upload', $config);
+			   
+                if ( ! $this->upload->do_upload('userfile'))
+                {
+                   $error = array('error' => $this->upload->display_errors());
+                }
+
+            $data_array     =   array(
+
+                "number"         =>  $this->input->post('number'),
+
+                "notice_date"    =>  $this->input->post('notice_date'),
+
+                "file"           =>  $data['image'],
+
+                "created_by"     =>  $this->session->userdata['loggedin']['user_name'],
+
+                "created_dt"     =>  date('Y-m-d h:i:s')
+
+            );
+
+            $this->Paddy->f_insert("md_notice", $data_array);
+
+            //For notification storing message
+            $this->session->set_flashdata('msg', 'Successfully Added!');
+    
+            redirect("paddys/add_new/notice");
+
+        }
+        else {
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("notice/add");
+
+            $this->load->view('search/search');
+
+            $this->load->view('post_login/footer');
+
+        }
+
+    }
+
+    //Edit Bill Master Add in the table md_comm_params    
+    public function notice_edit() {
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+			
+			
+			  if($_FILES["userfile"]["name"]!=''){
+				  
+			   $config['upload_path']          = './uploads/notice/';
+               $config['allowed_types']        = 'gif|jpg|png|jpeg';
+               $config['max_size']             = 10000;
+               $config['max_width']            = 8000;
+               $config['max_height']           = 8000;
+			   $config['file_name'] = time().str_replace(' ', '', $_FILES['userfile']['name']);
+			   $data['image'] = $config['file_name'];
+			   $this->load->library('upload', $config);
+                if ( ! $this->upload->do_upload('userfile'))
+                {
+                   $error = array('error' => $this->upload->display_errors());
+                }
+		    }
+            else{
+	        $data['image'] = $this->input->post('image');
+                }
+
+             
+
+            $data_array     =   array(
+
+                "number"          =>  $this->input->post('number'),
+
+                "notice_date"     =>  $this->input->post('notice_date'),
+
+                "file"            =>  $data['image'],
+
+                "modified_by"     =>  $this->session->userdata['loggedin']['user_name'],
+
+                "modified_dt"     =>  date('Y-m-d h:i:s')
+
+            );
+
+            $this->Paddy->f_edit("md_notice", $data_array, array("id" => $this->input->post('sl_no')));
+
+            $this->session->set_flashdata('msg', 'Successfully Updated!');
+    
+            redirect("paddys/add_new/notice");
+
+        }
+        else {
+
+            //Retriving Bill Master
+            $notice['notice'] =   $this->Paddy->f_get_particulars("md_notice", NULL, array("id" => $this->input->get('slno')), 1);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("notice/edit", $notice);
+
+            $this->load->view('post_login/footer');
+
+        }
+
+    }
+	
+	 //Paddy Collection Delete from table td_collections
+    public function notice_delete() {
+
+        $where = array(
+		
+            "id"    =>  $this->input->get('sl_no')
+			
+        );
+		
+        $this->Paddy->f_delete('md_notice', $where);
+
+        //For notification storing message
+        $this->session->set_flashdata('msg', 'Successfully deleted!');
+
+        redirect("paddys/add_new/notice");
+
+    }
 
       
 }    

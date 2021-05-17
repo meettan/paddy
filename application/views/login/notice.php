@@ -50,7 +50,7 @@
 		<ul>
 		<li><a href="<?php echo base_url(); ?>">Home</a></li>
 		<li><a href="#">Old KMS</a></li>
-		<li><a href="<?php echo base_url(); ?>index.php/User_Login/notice">Notice</a></li>
+		<li><a href="#">Notice</a></li>
 		<li><a href="#">Contacts</a></li>
 		</ul>
 		</div>
@@ -62,75 +62,7 @@
 		
 		<!--Take this area from developed code Div Classs Name "wrap-login100" (Start Point)-->
 		<div class="wrap-login100">
-				<form class="login100-form validate-form flex-sb flex-w" id="login" method="POST" action="<?php echo site_url("User_Login/index") ?>">
-					<!--<div class="login100_logo">
-					<h2><img src="https://www.benfed.in/benfed.png" alt="logo"></h2>
-					<h3>The West Bengal  State Co-Operative Marketing Federation Ltd (Benfed)</h3>	
-					</div>-->
-					<div class="login100_logo"><h2>Login</h2></div>
-					 <span class="login100-form-title p-b-10" style="color:red">
-                        <?php echo $this->session->flashdata('login_error');?>
-					 </span> 
-					
-					<span class="txt1 p-b-11">
-						Username
-					</span>
-					<div class="wrap-input100 validate-input m-b-36" data-validate="Please supply a valid User Id">
-						<input class="input100" type="text" name="user_id" id="user_id">
-						<span class="focus-input100"></span>
-					</div>
-					<span class="txt1 p-b-11">
-						Password
-					</span>
-					<div class="wrap-input100 validate-input m-b-12" data-validate="Please supply password">
-						<span class="btn-show-pass">
-							<i class="fa fa-eye"></i>
-						</span>
-						<input class="input100" type="password" name="user_pwd">
-						<span class="focus-input100"></span>
-					</div>
-					<div class="select_main">
-					<div class="select_1">
 
-							<select class="form-control" name="kms_yr" id="kms_yr">
-
-								<option value="">Please Select KMS Year</option>
-
-                                    <?php
-
-                                        foreach($kms_yr as $row){ ?>
-
-                                            <option value="<?php echo $row->sl_no ?>"><?php echo $row->kms_yr; ?></option>
-
-                                        <?php
-                                            }
-                                        ?>
-									
-							</select>
-
-					</div>
-					
-
-					<div class="select_2"> 
-
-                        <select class="form-control" name="branch_id" id="test" style="display:none" >
-							<option value="" >Please Select Branch Name</option>
-							<?php foreach($branch_data as $branch){ ?>
-								<option value="<?php echo $branch->id; ?>" ><?php echo $branch->branch_name; ?></option>
-							<?php } ?>
-						</select>                          
-
-					</div>
-					</div>
-					
-
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Login
-						</button>
-					</div>
-					
-				</form>
 			</div>
 		<!--Take this area from developed code Div Classs Name "wrap-login100" (End Point)-->
 	</div>

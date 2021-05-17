@@ -208,7 +208,25 @@
                     </div>
 
                   
+            <?php   if($this->session->userdata['loggedin']['ho_flag'] == "Y" ) {  ?>
+			
+			  <div class="dropdown">
+                        <div class="dropbtn">
+                            <i class="fa fa-group" aria-hidden="true"></i>Notice
+                            <i class="fa fa-angle-down"></i>
+                        </div>
+                        <div class="dropdown-content">
+                              <?php   if($this->session->userdata['loggedin']['ho_flag'] == "Y" ) {  ?>
+                            
+							<a href="<?php echo site_url('paddys/add_new/notice'); ?>">Upload Notice</a>
 
+                              <?php } ?>
+                        </div>
+                    </div>
+			
+			<?php }else{ ?>
+			
+			
                     <div class="dropdown">
                         <div class="dropbtn">
                             <i class="fa fa-group" aria-hidden="true"></i>ANNEXURE
@@ -216,7 +234,8 @@
                         </div>
                         <div class="dropdown-content">
                               <?php   if($this->session->userdata['loggedin']['ho_flag'] == "Y" ) {  ?>
-                            <a href="<?php echo site_url('payment/annexture2'); ?>">ANNEXURE II</a>
+                            
+							<a href="<?php echo site_url('paddys/add_new/notice'); ?>">Upload Notice</a>
 
                               <?php }else{ ?>
                         <!--     <a href="<?php//echo site_url('payment/annexture2'); ?>">ANNEXURE II</a> -->
@@ -232,6 +251,8 @@
                         <?php } ?>
                         </div>
                     </div>
+					
+			<?php } ?>
 
                     <?php   if($this->session->userdata['loggedin']['ho_flag'] == "N" ) {  ?>
 
@@ -288,7 +309,7 @@
                         <?php   if( $this->session->userdata['loggedin']['kms_id'] == 2 ) {   ?>
                             <a href="<?php echo site_url('report/chequestatus'); ?>">Cheque Status</a>
                         <?php } ?>
-
+									<a href="<?php echo site_url('payment/annexture2'); ?>">ANNEXURE II</a>
                         <?php   if($this->session->userdata['loggedin']['ho_flag'] != "Y" ) {  ?>
 
                            <?php if( $this->session->userdata['loggedin']['kms_id'] == 2 ) { ?> 

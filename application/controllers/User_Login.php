@@ -118,7 +118,13 @@
 			}
 			
 		}
+		public function notice(){
 
+			
+
+				$this->load->view('login/notice');
+			
+		}
 
 		public function login(){
 
