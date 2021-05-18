@@ -3332,7 +3332,7 @@ class Add_new extends MX_Controller {
 			
 		  
 			   $config['upload_path']          = './uploads/notice/';
-               $config['allowed_types']        = 'gif|jpg|png|jpeg';
+               $config['allowed_types']        = 'gif|pdf';
                $config['max_size']             = 10000;
                $config['max_width']            = 8000;
                $config['max_height']           = 8000;
@@ -3390,13 +3390,14 @@ class Add_new extends MX_Controller {
 			  if($_FILES["userfile"]["name"]!=''){
 				  
 			   $config['upload_path']          = './uploads/notice/';
-               $config['allowed_types']        = 'gif|jpg|png|jpeg';
+               $config['allowed_types']        = 'gif|pdf';
                $config['max_size']             = 10000;
                $config['max_width']            = 8000;
                $config['max_height']           = 8000;
 			   $config['file_name'] = time().str_replace(' ', '', $_FILES['userfile']['name']);
 			   $data['image'] = $config['file_name'];
 			   $this->load->library('upload', $config);
+			   $this->upload->initialize($config);
                 if ( ! $this->upload->do_upload('userfile'))
                 {
                    $error = array('error' => $this->upload->display_errors());

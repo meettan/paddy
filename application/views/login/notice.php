@@ -8,6 +8,13 @@
 
 <link rel="shortcut icon" href="<?php echo base_url("/assets/login_page/images/favicon.png");?>" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="<?php echo base_url("/assets/login_page/css/bootstrap.css"); ?>">
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+      <link href="<?php echo base_url("/assets/css/bootstrap-toggle.css");?>" rel="stylesheet">
+      <link href="<?php echo base_url("/assets/css/jquery.dataTables.css");?>" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   
+  
+ <script type="text/javascript" src="<?php echo base_url("/assets/js/jquery.dataTables.js")?>"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url("/assets/login_page/css/font-awesome.css"); ?>">
 
 <!--<link rel="stylesheet" type="text/css" href="<?php //echo base_url("/assets/login/css/apps_login.css")?>">-->
@@ -50,7 +57,7 @@
 		<ul>
 		<li><a href="<?php echo base_url(); ?>">Home</a></li>
 		<li><a href="#">Old KMS</a></li>
-		<li><a href="#">Notice</a></li>
+		<li><a href="<?php echo base_url(); ?>index.php/User_Login/notice">Notice</a></li>
 		<li><a href="#">Contacts</a></li>
 		</ul>
 		</div>
@@ -61,9 +68,76 @@
 	<div class="wrapper_Dash">
 		
 		<!--Take this area from developed code Div Classs Name "wrap-login100" (Start Point)-->
-		<div class="wrap-login100">
+	
+		
+		<table class="table table-bordered table-hover" id="myTable">
 
-			</div>
+                <thead>
+
+                    <tr>
+                    
+                        <th>Sl. No.</th>
+                        <th>Number</th>
+                        <th>Date</th>
+                        <th>PDF</th>
+                        
+
+                    </tr>
+
+                </thead>
+
+                <tbody> 
+
+                    <?php 
+                    
+                    if($notice) {
+                        $i = 1;
+                        foreach($notice as $n) {
+
+                    ?>
+
+                            <tr>
+
+                                <td><?php echo $i++; ?></td>
+                                <td><?php if(isset($n->number)){ echo $n->number; }  ?></td>
+                                <td><?php echo date('d/m/Y',strtotime($n->notice_date)); ?></td>
+					
+                                <td><a href="<?=base_url()?>uploads/notice/<?php if(isset($n->file)){ echo $n->file; }  ?>" download>Download</a></td>
+                              
+
+                            </tr>     
+                    <?php
+                    
+                        }
+
+                    }
+
+                    else {
+
+                        echo "<tr><td colspan='10' style='text-align: center;'>No data Found</td></tr>";
+
+                    }
+
+                    ?>
+                
+                </tbody>
+
+                <tfoot>
+
+                    <tr>
+                    
+                        <th>Sl. No.</th>
+                        <th>Number</th>
+                        <th>Date</th>
+                        <th>PDF</th>
+
+                    </tr>
+                
+                </tfoot>
+
+            </table>
+
+			
 		<!--Take this area from developed code Div Classs Name "wrap-login100" (End Point)-->
 	</div>
 </div>
@@ -86,60 +160,16 @@
 </footer>
 
 <!--===============================================================================================-->
-<script src="<?php echo base_url("/assets/login/vendor/jquery/jquery-3.2.1.min.js")?>"></script>
-<!--===============================================================================================-->
-	<script src="<?php echo base_url("/assets/login/vendor/animsition/js/animsition.min.js")?>"></script>
-<!--===============================================================================================-->
-	<script src="<?php echo base_url("/assets/login/vendor/bootstrap/js/popper.js")?>"></script>
-	<script src="<?php echo base_url("/assets/login/vendor/bootstrap/js/bootstrap.min.js")?>"></script>
-<!--===============================================================================================-->
-	<script src="<?php echo base_url("/assets/login/vendor/select2/select2.min.js")?>"></script>
-<!--===============================================================================================-->
-	<script src="<?php echo base_url("/assets/login/")?>vendor/daterangepicker/moment.min.js"></script>
-	<script src="<?php echo base_url("/assets/login/vendor/daterangepicker/daterangepicker.js")?>"></script>
-<!--===============================================================================================-->
-	<script src="<?php echo base_url("/assets/login/vendor/countdowntime/countdowntime.js")?>"></script>
-<!--===============================================================================================-->
 	<script src="<?php echo base_url("/assets/login/js/main.js")?>"></script>
 
 	<script>
-	$('#user_id').keyup(function(e) { // <--- THIS IS THE CHANGE
- 
-     var user_id = $('#user_id').val();
-	 
-      $.ajax({
-	  type: "POST",
-	  url: "<?php echo site_url("User_Login/check_user") ?>",
-	  data: {user_id:user_id}, 
-	  dataType: "html",
-	  success: function(data){
-		if(data=="A"){
-		$('#test').show(data);
-		$('#test').prop('required',true);
-		}else{
-			$('#test').hide(data);	
-		}
-	  },
-	 // error: function() { alert("Error posting feed."); }
-    });
+	   $(document).ready(function() {
+    $('#myTable').DataTable();
+} );
 
-    });
   </script>
 
-	<script>
-		$(document).ready(function(){
-			$("#login").on('submit',function(){
-
-				var kmyr = $("#kms_yr").val();
-
-				if(kmyr == ""){
-					alert("Please select KMS year");
-					return false;
-				}
-			});
-		});
-
-	</script>
+	
 
 </body>
 </html>

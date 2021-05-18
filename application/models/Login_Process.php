@@ -266,6 +266,13 @@
             return $data->row();
 		}
 		
+		public function f_get_notice(){
+			$sql = "select * from md_notice order by notice_date desc";
+			$data = $this->db->query($sql)->result();
+			
+			return $data;
+		}
+		
 		
 
 	}	

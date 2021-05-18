@@ -2,7 +2,7 @@
 
         <div class="col-md-6 container form-wraper">   
 
-            <form method="POST"  id="form"
+            <form method="POST"  id="form"  enctype="multipart/form-data"
                 action="<?php echo site_url("paddys/add_new/notice_edit");?>" >
 
                 <div class="form-header">

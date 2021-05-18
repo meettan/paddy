@@ -121,8 +121,8 @@
 		public function notice(){
 
 			
-
-				$this->load->view('login/notice');
+				$data['notice'] =   $this->Login_Process->f_get_notice();
+				$this->load->view('login/notice',$data);
 			
 		}
 

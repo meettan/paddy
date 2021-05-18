@@ -53,7 +53,7 @@
 
                                 <td><?php echo $i++; ?></td>
                                 <td><?php if(isset($n->number)){ echo $n->number; }  ?></td>
-                                <td><?php if(isset($n->notice_date)){ echo $n->notice_date; }  ?></td>
+                                <td><?php echo date('d/m/Y',strtotime($n->notice_date)); ?></td>
                                 <td><a href="<?=base_url()?>uploads/notice/<?php if(isset($n->file)){ echo $n->file; }  ?>">PDF</a></td>
                                 <td>
                                 
