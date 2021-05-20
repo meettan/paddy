@@ -602,7 +602,7 @@
                           if(value.tds_amt > 0){
                          string +='<button class="calculate" type="button" value="' + value.sl_no +'">Calculate</button>';
                             }
-                          string += '</td><td>' + value.cgst_amt + '<input type="hidden" class="form-control" readonly name="cgst[]" value="' + value.cgst_amt +'"/></td><td>' + value.sgst_amt + '<input type="hidden" class="form-control" readonly name="sgst[]" value="' + value.sgst_amt +'"/></td><td>' + value.claim_amt + '<input type="hidden" class="form-control" readonly name="claim_amt[]" value="' + value.claim_amt +'"/></td><td><span class="pay">' + value.payble_amt + '</span><input type="hidden" class="form-control paybel" readonly name="paybel[]" value="' + value.payble_amt +'"/></td></tr>';
+                          string += '</td><td>' + value.cgst_amt + '<input type="hidden" class="form-control cgst" readonly name="cgst[]" value="' + value.cgst_amt +'"/></td><td>' + value.sgst_amt + '<input type="hidden" class="form-control sgst" readonly name="sgst[]" value="' + value.sgst_amt +'"/></td><td>' + value.claim_amt + '<input type="hidden" class="form-control" readonly name="claim_amt[]" value="' + value.claim_amt +'"/></td><td><span class="pay">' + value.payble_amt + '</span><input type="hidden" class="form-control paybel" readonly name="paybel[]" value="' + value.payble_amt +'"/></td></tr>';
 
                     price_sum    += parseFloat(value.payble_amt); 
 
@@ -1361,11 +1361,19 @@
          $(".calculate").click(function(){
 
             let row          = $(this).closest('tr');
-            var amt = $(this).parents('tr').find('td:eq(2) .amounts').val();
+            var amt  = $(this).parents('tr').find('td:eq(2) .amounts').val();
+			var cgst = $(this).parents('tr').find('td:eq(5) .cgst').val();
+			var sgst = $(this).parents('tr').find('td:eq(6) .sgst').val();
             var tds_amt = 0;
             var tds     = 0;
-
             var sum     = 0;
+			var less_tds = 0;
+			
+			var tot_c_s_gst = parseFloat(cgst) + parseFloat(sgst);
+			
+			var tax_amt  = parseFloat(amt) + parseFloat(tot_c_s_gst);
+			
+			
 
 
            $.get('<?php echo site_url("paddys/payment/f_tdsrate"); ?>',{
@@ -1381,10 +1389,10 @@
                     
                     row.find('td:eq(3) .tds_amount').val(tds_amt);
                     row.find('td:eq(3) .tds').html(tds_amt);
-                    row.find('td:eq(8) .paybel').val((amt - tds_amt).toFixed(2));
-                    row.find('td:eq(8) .pay').html((amt - tds_amt).toFixed(2));
+                    row.find('td:eq(8) .paybel').val((tax_amt - tds_amt).toFixed(2));
+                    row.find('td:eq(8) .pay').html((tax_amt - tds_amt).toFixed(2));
 
-
+                       console.log(tax_amt,tds_amt,cgst,sgst);
                     $("input[class *= 'paybel']").each(function(){
             
                     sum += parseFloat($(this).val());
