@@ -222,7 +222,9 @@ tr:hover {background-color: #f5f5f5;}
                                     $tot_cmr_trans       = 0;
                                     $tot_inter_cmr_trans = 0;
                                     $tot_gunny_use       = 0;
+									$tot_sing_row        = 0;
                                     $tot_inc_amt         = 0;
+									
                                      
                                     
                                     
@@ -264,7 +266,8 @@ tr:hover {background-color: #f5f5f5;}
                                                 foreach($comm as $commDtls){           //Society Commission
                                                     if($commDtls->branch_id == $proc->branch_id){
                                                          echo $commDtls->soc_comm;
-                                                         $tot_soc_comm +=$commDtls->soc_comm;
+                                                         $tot_soc_comm += $commDtls->soc_comm;
+														 $tot_sing_row  = $commDtls->soc_comm;
                                                     }
                                                 }   
                                          ?> 
@@ -382,8 +385,10 @@ tr:hover {background-color: #f5f5f5;}
                                     <td><?php
                                                 foreach($tot as $totDtls){            //Total Incidental
                                                     if($totDtls->branch_id == $proc->branch_id){
-                                                        echo $totDtls->tot_amt;
-                                                             $tot_inc_amt +=$totDtls->tot_amt;
+                                                        echo $totDtls->tot_amt+ $tot_sing_row;
+                                                             $tot_inc_amt +=$totDtls->tot_amt + $tot_sing_row;
+															 // $tot_inc_amt +=$totDtls->tot_amt;
+															 $tot_sing_row = 0;
                                                         
                                                     }
                                                 }
@@ -393,8 +398,8 @@ tr:hover {background-color: #f5f5f5;}
                                
  
                                 <?php 
-
-                                    }  ?>
+                                        
+                                    }   ?>
 
                                     <tr><td colspan="2" style="text-align:center;font-weight: bold;">Total</td>
                                         <!--<td style="text-align:center;font-weight: bold;"><?=$tot_soc?></td>
