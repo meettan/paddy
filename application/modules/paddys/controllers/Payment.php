@@ -1630,7 +1630,6 @@ class Payment extends MX_Controller {
 
         $socmill  =   $this->Paddy->f_get_particulars("td_wqsc a,md_district b,td_cmr_delivery c",$select,$where, 1);
 
-
         echo json_encode($socmill);
 
     }

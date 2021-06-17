@@ -284,6 +284,10 @@
 				$dash_data["tot_mill_payment_ho"]= $this->Login_Process->f_get_tot_mill_payment_ho($kms_id);
 				$dash_data["tot_socy_payment"]= $this->Login_Process->f_get_tot_socy_payment($kms_id,$branch_id);
 				$dash_data["tot_socy_payment_ho"]= $this->Login_Process->f_get_tot_socy_payment_ho($kms_id);
+				$dash_data["tot_req_fwd"]= $this->Login_Process->f_get_tot_req_fwd($kms_id,$branch_id);
+				$dash_data["tot_req_fwd_ho"]= $this->Login_Process->f_get_tot_req_fwd_ho($kms_id);
+				$dash_data["tot_req_sanc"]= $this->Login_Process->f_get_tot_req_sanc($kms_id,$branch_id);
+				$dash_data["tot_req_sanc_ho"]= $this->Login_Process->f_get_tot_req_sanc_ho($kms_id);
 				
 
 				$this->load->view('post_login/main');

@@ -272,6 +272,56 @@
 			
 			return $data;
 		}
+
+		public function f_get_tot_req_fwd($kms_id,$branch_id){
+
+			$sql = "SELECT sum(a.total_amt)total_amt
+					FROM td_fund_requisition_dtls a,
+						 td_fund_requisition b
+					where a.req_no = b.req_no
+					and   b.kms_id = '$kms_id'
+					and   b.branch_id = '$branch_id'";
+			$data=$this->db->query($sql);
+            return $data->row();
+		}
+
+		public function f_get_tot_req_fwd_ho($kms_id){
+
+			$sql = "SELECT sum(a.total_amt)total_amt
+					FROM td_fund_requisition_dtls a,
+						td_fund_requisition b
+					where a.req_no = b.req_no
+					and   b.kms_id = '$kms_id'";
+	
+			$data=$this->db->query($sql);
+            return $data->row();
+		}
+
+		public function f_get_tot_req_sanc($kms_id,$branch_id){
+
+			$sql = "SELECT sum(a.total_amt)total_amt
+					FROM td_fund_requisition_dtls a,
+						 td_fund_requisition b
+					where a.req_no = b.req_no
+					and   b.fund_flag = '1'
+					and   b.kms_id = '$kms_id'
+					and   b.branch_id = '$branch_id'";
+			$data=$this->db->query($sql);
+            return $data->row();
+		}
+
+		public function f_get_tot_req_sanc_ho($kms_id){
+
+			$sql = "SELECT sum(a.total_amt)total_amt
+					FROM td_fund_requisition_dtls a,
+						td_fund_requisition b
+					where a.req_no = b.req_no
+					and   b.fund_flag = '1'
+					and   b.kms_id = '$kms_id'";
+	
+			$data=$this->db->query($sql);
+            return $data->row();
+		}
 		
 		
 

@@ -278,15 +278,18 @@
                             <i class="fa fa-angle-down"></i>
                         </div>
                         <div class="dropdown-content">
+
+                         <a href="<?php echo site_url('report/summary'); ?>">KMS Summary</a> 
                          
                          <?php   if($this->session->userdata['loggedin']['ho_flag'] == "N" ) {  
                          ?>
+                            
                             <a href="<?php echo site_url('report/socProc'); ?>">Societywise Procurement</a>
                             <a href="<?php echo site_url('report/millProc'); ?>">Millwise Procurement</a>
                             <?php   if( $this->session->userdata['loggedin']['kms_id'] == 2 ) {   ?>
                                 <a href="<?php echo site_url('report/neftRet'); ?>">Returned NEFT</a>
                             
-                        <?php } } ?>
+                            <?php } } ?>
 
                          <?php   if($this->session->userdata['loggedin']['ho_flag'] == "Y" ) {  
                          ?>

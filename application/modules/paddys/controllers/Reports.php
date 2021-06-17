@@ -9,6 +9,7 @@ class Reports extends MX_Controller {
 
         $this->load->model('Paddyrep');
         $this->load->model('Paddy');
+        $this->load->model('Login_Process');
         $this->load->helper('paddyrate');
         
         //For User's Authentication
@@ -983,6 +984,81 @@ class Reports extends MX_Controller {
 
             $this->load->view('post_login/footer');
         }
+    }
+
+    public function f_summary(){
+
+        $kms_id     = $this->session->userdata['loggedin']['kms_id'];
+
+        $branch_id  = $this->session->userdata['loggedin']['branch_id'];
+
+        $dash_data["tot_paddy_procurement"]     = $this->Login_Process->f_get_tot_paddy_procurement($kms_id,$branch_id);
+
+        $dash_data["tot_paddy_procurement_ho"]  = $this->Login_Process->f_get_tot_paddy_procurement_ho($kms_id);
+
+        if($this->session->userdata['loggedin']['ho_flag'] =="N"){
+
+           $where    =   array("kms_year"    => $kms_id,"branch_id" =>$branch_id);
+
+        }else{
+
+            $where   =   array("kms_year"    => $kms_id);
+        }
+
+        $dash_data["tot_paddy_dispatch"]= $this->Login_Process->f_tot_paddy_dispatch($where);
+
+        if($kms_id == '2'){  
+          $dash_data["tot_cheque_cleared"]= $this->Login_Process->f_get_tot_cheque_cleared($kms_id,$branch_id);
+        }else{
+
+            $dash_data["tot_cheque_cleared"]= $this->Login_Process->f_get_tot_amount_cleared($kms_id,$branch_id);
+        }
+
+        if($kms_id == '2'){  
+
+        $dash_data["tot_cheque_cleared_ho"]= $this->Login_Process->f_get_tot_cheque_cleared_ho($kms_id);
+
+        }else{
+
+        $dash_data["tot_cheque_cleared_ho"]= $this->Login_Process->f_get_tot_amount_cleared_ho($kms_id);
+        }
+
+        $dash_data["tot_cmr_offered"]= $this->Login_Process->f_get_tot_cmr_offered($kms_id,$branch_id);
+
+        $dash_data["tot_cmr_offered_ho"]= $this->Login_Process->f_get_tot_cmr_offered_ho($kms_id,$branch_id);
+
+        $dash_data["tot_cmr_delivery"]= $this->Login_Process->f_get_tot_cmr_delivery($kms_id,$branch_id);
+
+        $dash_data["tot_cmr_delivery_ho"]= $this->Login_Process->f_get_tot_cmr_delivery_ho($kms_id);
+
+        $dash_data["tot_wqsc_upload"]= $this->Login_Process->f_get_tot_wqsc_upload($kms_id,$branch_id);
+
+        $dash_data["tot_wqsc_upload_ho"]= $this->Login_Process->f_get_tot_wqsc_ho($kms_id);
+
+        $dash_data["tot_mill_payment"]= $this->Login_Process->f_get_tot_mill_payment($kms_id,$branch_id);
+
+        $dash_data["tot_mill_payment_ho"]= $this->Login_Process->f_get_tot_mill_payment_ho($kms_id);
+
+        $dash_data["tot_socy_payment"]= $this->Login_Process->f_get_tot_socy_payment($kms_id,$branch_id);
+
+        $dash_data["tot_socy_payment_ho"]= $this->Login_Process->f_get_tot_socy_payment_ho($kms_id);
+
+        $dash_data["tot_req_fwd"]= $this->Login_Process->f_get_tot_req_fwd($kms_id,$branch_id);
+
+        $dash_data["tot_req_fwd_ho"]= $this->Login_Process->f_get_tot_req_fwd_ho($kms_id);
+
+        $dash_data["tot_req_sanc"]= $this->Login_Process->f_get_tot_req_sanc($kms_id,$branch_id);
+
+        $dash_data["tot_req_sanc_ho"]= $this->Login_Process->f_get_tot_req_sanc_ho($kms_id);
+
+        $this->load->view('post_login/main');
+
+        $this->load->view("reports/summary/kms_summary.php",$dash_data);
+
+        $this->load->view('post_login/footer');
+
+
+
     }
 
 }

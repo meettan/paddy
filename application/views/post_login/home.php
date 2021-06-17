@@ -75,7 +75,7 @@
                                     ?> <strong>Qnt</strong>
                 </div>
             </div>
-        <h3>Total Paddy Dispatch</h3>
+        <h3>Total Paddy Despatched</h3>
         </div>
     </div>
 
@@ -148,6 +148,34 @@
         <h3>Total WQSC Uploaded</h3>
         </div>
     </div>
+
+    <div class="col-sm-4">
+        <div class="daseSmBox">
+            <div class="subBox">
+                <div class="icon4"><img src="<?php echo base_url('assets/images/box_d.png'); ?>"></div>
+                <div class="value"><strong>&#8377; </strong><?php if($this->session->userdata['loggedin']['ho_flag']=="Y")
+                                          {
+                                            echo $tot_req_fwd_ho->total_amt; 
+                                          }else{echo $tot_req_fwd->total_amt; }?></div>
+            </div>
+        <h3>Total Fund Requisition(Gross)</h3>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="daseSmBox">
+            <div class="subBox">
+                <div class="icon2"><img src="<?php echo base_url('assets/images/box_b.png'); ?>"></div>
+                <div class="value"><strong>&#8377; </strong><?php if($this->session->userdata['loggedin']['ho_flag']=="Y")
+                                {
+                                    echo $tot_req_sanc_ho->total_amt; 
+                                }else{echo $tot_req_sanc->total_amt; }?>
+                </div>
+            </div>
+        <h3>Fund Requisition Sanctioned</h3>
+        </div>
+    </div>
+
 
     <div class="col-sm-4">
         <div class="daseSmBox">
