@@ -958,5 +958,23 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
         return $proc->result();
     }
 
+    public function f_get_paddy_despatch($from_dt,$to_dt,$brn_id){
+
+        $despatch   =   $this->db->query("SELECT a.branch_id,
+                                                 b.soc_name,
+                                                 c.mill_name,
+                                                 sum(a.paddy_qty)paddy_qty
+                                         FROM td_received a,
+                                              md_society b,
+                                              md_mill c
+                                         where a.soc_id = b.society_code
+                                         and   a.mill_id = c.mill_code
+                                         and   a.trans_dt between '$from_dt' and '$to_dt'
+                                         and   a.branch_id = '$brn_id'
+                                         group by a.branch_id,b.soc_name,c.mill_name");
+
+        return $despatch->result();
+    }
+
 }
 ?>

@@ -283,7 +283,7 @@
                          
                          <?php   if($this->session->userdata['loggedin']['ho_flag'] == "N" ) {  
                          ?>
-                            
+                            <a href="<?php echo site_url('report/paddyDespatch'); ?>">Paddy Despatch Report</a> 
                             <a href="<?php echo site_url('report/socProc'); ?>">Societywise Procurement</a>
                             <a href="<?php echo site_url('report/millProc'); ?>">Millwise Procurement</a>
                             <?php   if( $this->session->userdata['loggedin']['kms_id'] == 2 ) {   ?>

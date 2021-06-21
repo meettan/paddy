@@ -556,16 +556,15 @@
 
     $('#wqsc').change(function(){
 
-         $('#totCmr').val("10.00");
+         //$('#totCmr').val("10.00");
 
-         console.log($(this).val());
+         //console.log($(this).val());
             
             //Total Paddy Received
             $.post('<?php echo site_url("paddys/payment/tot_paddy_onwqsc"); ?>',
             
                 {
-                    
-
+                   
                     wqsc:    $(this).val()
                 }
 

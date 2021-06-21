@@ -1056,9 +1056,39 @@ class Reports extends MX_Controller {
         $this->load->view("reports/summary/kms_summary.php",$dash_data);
 
         $this->load->view('post_login/footer');
+    }
+
+    public function f_paddyDespatch(){                 /**Society Mill Paddy Despatched at Branch */                   
+
+        if($_SERVER['REQUEST_METHOD']=='POST'){
+
+            $kms_id     = $this->session->userdata['loggedin']['kms_id'];
+
+            $branch_id  = $this->session->userdata['loggedin']['branch_id'];
+
+            $from_dt    = $this->input->post('from_date');
+
+            $to_dt      = $this->input->post('to_date');
+
+            $socProc['despatchDtls']   =   $this->Paddyrep->f_get_paddy_despatch($from_dt,$to_dt,$branch_id);
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/despatch/paddy_despatch.php", $socProc);
+
+            $this->load->view('post_login/footer');
 
 
+        }else{
 
+            $socProc['sys_date']   =   $_SESSION['sys_date'];
+
+            $this->load->view('post_login/main');
+
+            $this->load->view("reports/despatch/paddy_despatch.php",$socProc);
+
+            $this->load->view('post_login/footer');
+        }
     }
 
 }

@@ -3193,12 +3193,12 @@ class Transactions extends MX_Controller {
 
             "t.branch_id"             => $this->session->userdata['loggedin']['branch_id'],
 
-            "kms_year"             => $this->session->userdata['loggedin']['kms_id']
+            "t.kms_year"             => $this->session->userdata['loggedin']['kms_id']
 
         );
 
         $cmroffered['cmroffered_dtls']    =   $this->Paddy->f_get_particulars("td_cmr_offered t, md_society s, md_mill md", $select, $where, 0);
-        
+
         $this->load->view('post_login/main');
 
         $this->load->view("cmroffered/dashboard", $cmroffered);
@@ -3402,6 +3402,7 @@ class Transactions extends MX_Controller {
         );
 
         $data["receved"] = $this->Paddy->f_get_particulars("td_received", array("ifnull(sum(paddy_qty), 0) sum","Max(trans_dt) as trans_dt"), $where, 1);
+       
         $data["wr_order"] = $this->Paddy->f_get_particulars("td_cmr_offered", array("ifnull(sum(milled), 0) sums"), $where, 1);
 
         echo json_encode($data);
