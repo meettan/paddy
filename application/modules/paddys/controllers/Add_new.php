@@ -1669,8 +1669,10 @@ class Add_new extends MX_Controller {
 
 
         if($_SERVER['REQUEST_METHOD'] == "POST") {
-            
+
             $data_array = array (
+
+                "guide_lines_id"=>  $this->input->post('mill_type'),
 
                 "bank_name"     =>  $this->input->post('bnk_name'),
 

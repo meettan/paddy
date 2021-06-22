@@ -1,4 +1,3 @@
-  
     <div class="wraper">      
 
         <div class="col-md-6 container form-wraper" style="margin-left: 0px;">
@@ -63,6 +62,18 @@
                     </select>
                 </div>
 
+                <label for="mill_type" class="col-sm-2 col-form-label">Mill Type:</label>
+
+                    <div class="col-sm-4">
+
+                        <select class= "form-control" name = "mill_type" id= "mill_type" required>
+                            <option value="">Select</option>
+                            <option value="P" <?php echo ($mill_dtls->guide_lines_id == 'O')? 'selected' : '';?>>Others</option> 
+                            <option value="P" <?php echo ($mill_dtls->guide_lines_id == 'P')? 'selected' : '';?>>Proprietary</option>
+                        </select>
+
+                    </div>
+
                 </div>  
 
                
@@ -120,7 +131,7 @@
 
                     </div>
 					
-					 <label for="ifsc" class="col-sm-2 col-form-label">IFS Code.:</label>
+					 <label for="ifsc" class="col-sm-2 col-form-label">IFS Code:</label>
 
                     <div class="col-sm-4">
 
