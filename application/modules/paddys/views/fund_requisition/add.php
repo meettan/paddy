@@ -88,6 +88,8 @@
 
                     </select>
 
+                    <input type=hidden name = mill_type id=mill_type />
+
                 </div>
 
 
@@ -267,6 +269,9 @@
                 <h4>Bill Details</h4>
             
             </div>
+            <div>
+                <span style="color:red;text-align:center">TDS Rates for Proprietary ownership of Mill : 1% , Other than Proprietary ownership : 2% , Society : 5%, CGST : 2.50% & SGST : 2.50%</span>
+            </div>
             
             <table class="table">
 
@@ -435,7 +440,7 @@
 
                 });
 
-                 $.post( 
+                $.post( 
                     '<?php echo site_url("paddys/payment/soc_mill_distance");?>',
 
                     { 
@@ -450,6 +455,18 @@
                     var string = JSON.parse(data);
 
                     $('#soc_mill_dis').val(string.distance);
+
+                });
+
+                $.post(
+                    '<?php echo site_url("paddys/payment/mill_type"); ?>',
+                    {
+                        mill_id : $(this).val()
+                    }
+                ).done(function(data){
+                    var mill_type = JSON.parse(data);
+
+                    $('#mill_type').val(mill_type.guide_lines_id);
 
                 });
 
@@ -745,7 +762,8 @@
             $('.payble_amount').val(sumValuesOf('paybel').toFixed());      
 
 
-            var  val    = $(this).val();
+            var  val       = $(this).val();
+            var  mill_type = $("#mill_type").val();
 
                 if(val == 3 || val == 4 || val == 5){
 
@@ -755,7 +773,7 @@
                  //   riceType: $('#rice_type').val(),
                     sl_no: $(this).val(),
                     riceType: $('#rice_type').val(),
-                    effectdt: $('#req_dt').val()
+                    effectdt: $('#req_dt').val(),
 
 
                 }).done(function(data){
@@ -767,7 +785,12 @@
                     var distance_1  = 0;
                     var distance_2  = 0;
                     var distance_3  = 0;
-                    var tds         = values.tds;
+                    var tds         = 0;
+                    if(mill_type    == 'P'){
+                       tds         = values.prop_tds;
+                    }else{
+                        tds         = values.tds;
+                    }
                     var cgst        = 0.00;
                     var payable_amt = 0.00;
                     var tot_amt     = 0.00;
@@ -893,13 +916,23 @@
                 }).done(function(data){
 
                     let values = JSON.parse(data);
+
                     let action = values.action;
                     
                     $('.rate_per_qtls:eq('+indexNo+')').val(values.val);
 
                     if(action == 'P'){
 
-                        var tds_rt  = parseFloat(values.tds);
+                        var tds_rt  = 0 ;           /////////
+
+                        if(mill_type    == 'P'){
+                            tds_rt  = parseFloat(values.prop_tds);
+                            
+                        }else{
+                            tds_rt  = parseFloat(values.tds);
+                           
+                        }
+
                         var cgst_rt = parseFloat(values.cgst);
 
                         var tot_amt = parseFloat(values.val) * parseFloat($('#totPaddy').val());
@@ -917,7 +950,14 @@
 
                     }else if(action == 'C'){
 
-                        var tds_rt  = parseFloat(values.tds);
+                        var tds_rt  = 0 ;           /////////
+
+                        if(mill_type    == 'P'){
+                            tds_rt  = parseFloat(values.prop_tds);
+                        }else{
+                            tds_rt  = parseFloat(values.tds);
+                        }
+
                         var cgst_rt = parseFloat(values.cgst);
 
                         var tot_amt = parseFloat(values.val) * parseFloat($('#totCmr').val());
@@ -963,6 +1003,8 @@
 
             var  val    =  $('.particulars:eq('+indexNo+')').val();
 
+            var  mill_type = $("#mill_type").val();
+
 
             if(val == 6){
 
@@ -975,7 +1017,16 @@
                 }).done(function(data){
 
                     let values      = JSON.parse(data);
-                    var tds         = values.tds;
+
+                    //var tds         = values.tds;
+
+                    var tds  = 0 ;           /////////
+
+                    if(mill_type    == 'P'){
+                        tds  = parseFloat(values.prop_tds);
+                    }else{
+                        tds  = parseFloat(values.tds);
+                    }
                 
                     var payable_amt = 0.00;
                     var cgst        = 0.00;

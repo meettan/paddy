@@ -1590,7 +1590,7 @@ class Payment extends MX_Controller {
         echo json_encode($socmill);
 
     }
-     public function soc_mill_distance() {
+    public function soc_mill_distance() {
 
         $select   =  array("distance");
 
@@ -1607,6 +1607,22 @@ class Payment extends MX_Controller {
         echo json_encode($socmill);
 
     }
+
+    public function mill_type(){
+
+        $select = array("guide_lines_id");
+
+        $where  = array(
+
+            "mill_code" => $this->input->post("mill_id")
+        );
+
+        $socmill   =   $this->Paddy->f_get_particulars("md_mill",$select,$where, 1);
+
+      //  echo $this->db->last_query();die;
+        echo json_encode($socmill);
+    }
+
     public function wqsc_qty() {
 
         $select =  array(
