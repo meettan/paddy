@@ -420,7 +420,17 @@ tr:hover {background-color: #f5f5f5;}
                                      <td><?php
                                                 foreach($remain as $remDtls){       //Pending for delivery
                                                     if($remDtls->soc_id == $soc->society_code){
-                                                            echo $remDtls->remain * 0.1;
+                                                            
+                                                           $todel = $remDtls->remain * 0.1;
+
+                                                            if($todel < 0){
+                                                                $todel = 0;
+                                                            }else{
+                                                                $todel = $todel;
+                                                            }
+
+                                                            echo $todel;
+ 
                                                             $tot_remain += $remDtls->remain * 0.1;
                                                     }
                                                 }
