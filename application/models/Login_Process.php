@@ -195,6 +195,7 @@
 			$data=$this->db->get('td_cmr_offered');
             return $data->row();
 		}
+		
 		public function f_get_tot_cmr_delivery($kms_id,$branch_id){
 		
 			$this->db->select('ifnull(SUM(tot_delivery), 0) tot_delivery');
@@ -210,6 +211,23 @@
 			$data=$this->db->get('td_cmr_delivery');
             return $data->row();
 		}
+
+		public function f_get_tot_do_issued($kms_id,$branch_id){
+		
+			$this->db->select('SUM(sp)+sum(cp)+sum(fci) tot_do');
+			$this->db->where('kms_year',$kms_id);
+			$this->db->where('branch_id',$branch_id);
+			$data=$this->db->get('td_do_isseued');
+            return $data->row();
+		}
+		public function f_get_tot_do_issued_ho($kms_id){
+		
+			$this->db->select('ifnull(SUM(sp+cp+fci), 0) tot_do');
+			$this->db->where('kms_year',$kms_id);
+			$data=$this->db->get('td_do_isseued');
+            return $data->row();
+		}
+
 
 		public function f_get_tot_wqsc_upload($kms_id,$branch_id){
 

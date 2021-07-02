@@ -234,7 +234,7 @@ tr:hover {background-color: #f5f5f5;}
                                      <td><?php if($this->session->userdata['loggedin']['ho_flag']=="Y"){
                                                  echo '<b>Rs</B> '.$tot_paddy_procurement_ho->amount;
                                                 }else{
-                                                  echo '<b>Rs</B> '.$tot_paddy_procurement_ho->amount;  
+                                                  echo '<b>Rs</B> '.$tot_paddy_procurement->amount;  
                                                 } 
                                         ?>
                                      </td>
@@ -276,6 +276,22 @@ tr:hover {background-color: #f5f5f5;}
                                 <tr>
                                      <td> 6 </td>
 
+                                     <td>Total DO Issued</td>
+
+                                     <td><?php 
+                                            if($this->session->userdata['loggedin']['ho_flag']=="Y"){
+                                                echo $tot_do_issued_ho->tot_do.' <b>Qnt</b>';
+                                            }else{
+                                                echo $tot_do_issued->tot_do.' <b>Qnt</b>';
+                                            }
+                                        ?>
+                                    </td>
+        
+                                </tr>
+
+                                <tr>
+                                     <td> 7 </td>
+
                                      <td>Total CMR Delivered</td>
 
                                      <td><?php 
@@ -290,7 +306,7 @@ tr:hover {background-color: #f5f5f5;}
                                 </tr>
 
                                 <tr>
-                                     <td> 7 </td>
+                                     <td> 8 </td>
 
                                      <td>Total WQSC Uploaded</td>
 
@@ -306,7 +322,7 @@ tr:hover {background-color: #f5f5f5;}
                                 </tr>
 
                                 <tr>
-                                     <td> 8 </td>
+                                     <td> 9 </td>
 
                                      <td>Total Gross Fund Requisition</td>
 
@@ -322,7 +338,7 @@ tr:hover {background-color: #f5f5f5;}
                                 </tr>
 
                                 <tr>
-                                     <td> 9 </td>
+                                     <td> 10 </td>
 
                                      <td>Total Sanctioned Fund</td>
 
@@ -338,7 +354,7 @@ tr:hover {background-color: #f5f5f5;}
                                 </tr>
 
                                 <tr>
-                                     <td> 10 </td>
+                                     <td> 11 </td>
 
                                      <td>Total Mill Payment</td>
 
@@ -354,7 +370,7 @@ tr:hover {background-color: #f5f5f5;}
                                 </tr>
 
                                 <tr>
-                                     <td> 11 </td>
+                                     <td> 12 </td>
 
                                      <td>Total Society Payment</td>
 

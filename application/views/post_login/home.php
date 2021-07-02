@@ -123,6 +123,20 @@
     <div class="col-sm-4">
         <div class="daseSmBox">
             <div class="subBox">
+                <div class="icon2"><img src="<?php echo base_url('assets/images/box_b.png'); ?>"></div>
+                <div class="value"><?php if($this->session->userdata['loggedin']['ho_flag']=="Y")
+                                          {
+                                            echo $tot_do_issued_ho->tot_do; 
+                                          }else{echo $tot_do_issued->tot_do;}?> <strong>Qnt</strong></div>
+            </div>
+            <h3>Total DO issued</h3>
+        </div>
+    </div>
+
+
+    <div class="col-sm-4">
+        <div class="daseSmBox">
+            <div class="subBox">
                 <div class="icon6"><img src="<?php echo base_url('assets/images/box_f.png'); ?>"></div>
                 <div class="value"><?php if($this->session->userdata['loggedin']['ho_flag']=="Y")
                                           {

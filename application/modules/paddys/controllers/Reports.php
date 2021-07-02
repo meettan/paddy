@@ -1027,6 +1027,10 @@ class Reports extends MX_Controller {
 
         $dash_data["tot_cmr_offered_ho"]= $this->Login_Process->f_get_tot_cmr_offered_ho($kms_id,$branch_id);
 
+        $dash_data["tot_do_issued"]= $this->Login_Process->f_get_tot_do_issued($kms_id,$branch_id);
+
+        $dash_data["tot_do_issued_ho"]= $this->Login_Process->f_get_tot_do_issued_ho($kms_id,$branch_id);
+
         $dash_data["tot_cmr_delivery"]= $this->Login_Process->f_get_tot_cmr_delivery($kms_id,$branch_id);
 
         $dash_data["tot_cmr_delivery_ho"]= $this->Login_Process->f_get_tot_cmr_delivery_ho($kms_id);
