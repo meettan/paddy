@@ -285,7 +285,7 @@
                         <th>CGST <br> (Add) </th>
                         <th>SGST <br> (Add) </th>
                         <th>Claimed Amount(Rs)</th>
-                        <th>Payable Amount(Rs)</th>
+                        <th>Net Payable(Rs)</th>
                         <th><button type="button" class="btn btn-success addAnotherRow"><i class="fa fa-plus"></i></button></th>
 
                     </tr>
@@ -319,7 +319,7 @@
                         <td><input type="text" class="form-control cgst" name="cgst[]" readonly></td>
                         <td><input type="text" class="form-control sgst" name="sgst[]" readonly></td>
                          <td><input type="text" class="form-control claim_amt" name="claim_amt[]" ></td>
-                        <td><input type="text" class="form-control paybel" name="paybel[]"></td>
+                        <td><input type="text" class="form-control paybel" name="paybel[]" readonly></td>
                         <td><button type="button" class="btn btn-danger removeRow"><i class="fa fa-remove"></i></button></td>
                     </tr>
 
@@ -329,10 +329,14 @@
                  
 
                     <tr>
-                    
-                        <td colspan="7" style="text-align: right;">Payble Amount:</td>
-                        <td><input type="text" class="form-control payble_amount" readonly></td>
-
+                        <td></td>
+                        <td></td>
+                        <td><input type="text" class="form-control gross_amt" style="text-align: right;font-size:12px" readonly></td>
+                        <td><input type="text" class="form-control tds_amt"   style="text-align: right;font-size:12px" readonly></td>  
+                        <td><input type="text" class="form-control cgst_amt"  style="text-align: right;font-size:12px" readonly></td>
+                        <td><input type="text" class="form-control sgst_amt"  style="text-align: right;font-size:12px" readonly></td>          
+                        <td style="text-align: right;font-size:12px">Net Payable:</td>
+                        <td><input type="text" class="form-control payble_amount"style="text-align: right;font-size:12px" readonly></td>
                     </tr>
 
                 </tfoot>
@@ -687,7 +691,7 @@
                         '<td><input type="text" class="form-control cgst" name="cgst[]" readonly></td>' +
                         '<td><input type="text" class="form-control sgst" name="sgst[]" readonly></td>' +
                         '<td><input type="text" class="form-control claim_amt" name="claim_amt[]"></td>'+
-                        '<td><input type="text" class="form-control paybel" name="paybel[]"></td>' +
+                        '<td><input type="text" class="form-control paybel" name="paybel[]" readonly></td>' +
                         '<td><button type="button" class="btn btn-danger removeRow"><i class="fa fa-remove"></i></button></td>' +
                     '</tr>';
 
@@ -760,6 +764,10 @@
             $('.claim_amt:eq('+indexNo+')').val("");
             $('.paybel:eq('+indexNo+')').val("");
             $('.payble_amount').val(sumValuesOf('paybel').toFixed());      
+            $('.gross_amt').val(sumValuesOf('amounts').toFixed(2));
+            $('.tds_amt').val(sumValuesOf('tds_amount').toFixed(2));
+            $('.cgst_amt').val(sumValuesOf('cgst').toFixed(2));
+            $('.sgst_amt').val(sumValuesOf('sgst').toFixed(2));
 
 
             var  val       = $(this).val();
@@ -820,6 +828,10 @@
 
                           $('.paybel:eq('+indexNo+')').val(payable_amt.toFixed(2));
                           $('.payble_amount').val(sumValuesOf('paybel').toFixed());
+                          $('.gross_amt').val(sumValuesOf('amounts').toFixed(2));
+                          $('.tds_amt').val(sumValuesOf('tds_amount').toFixed(2));
+                          $('.cgst_amt').val(sumValuesOf('cgst').toFixed(2));
+                          $('.sgst_amt').val(sumValuesOf('sgst').toFixed(2));
 
                     }else if(val == 4){
 
@@ -852,6 +864,10 @@
                           
                           $('.paybel:eq('+indexNo+')').val(payable_amt.toFixed(2));
                           $('.payble_amount').val(sumValuesOf('paybel').toFixed());
+                          $('.gross_amt').val(sumValuesOf('amounts').toFixed(2));
+                          $('.tds_amt').val(sumValuesOf('tds_amount').toFixed(2));
+                          $('.cgst_amt').val(sumValuesOf('cgst').toFixed(2));
+                          $('.sgst_amt').val(sumValuesOf('sgst').toFixed(2));
 
                         }else{
                         
@@ -886,7 +902,11 @@
                            var payable_amt = parseFloat(tot_amt-tds+cgst+cgst);
                           
                            $('.paybel:eq('+indexNo+')').val(payable_amt.toFixed(2));
-                           $('.payble_amount').val(sumValuesOf('paybel').toFixed());  
+                           $('.payble_amount').val(sumValuesOf('paybel').toFixed());
+                           $('.gross_amt').val(sumValuesOf('amounts').toFixed(2));
+                           $('.tds_amt').val(sumValuesOf('tds_amount').toFixed(2));
+                           $('.cgst_amt').val(sumValuesOf('cgst').toFixed(2));
+                           $('.sgst_amt').val(sumValuesOf('sgst').toFixed(2));  
 
                        }else{
                                  alert("You Selected Particular Above Distance");
@@ -947,6 +967,10 @@
                          $('.paybel:eq('+indexNo+')').val(payable_amt.toFixed(2));
 
                          $('.payble_amount').val(sumValuesOf('paybel').toFixed());
+                         $('.gross_amt').val(sumValuesOf('amounts').toFixed(2));
+                         $('.tds_amt').val(sumValuesOf('tds_amount').toFixed(2));
+                         $('.cgst_amt').val(sumValuesOf('cgst').toFixed(2));
+                         $('.sgst_amt').val(sumValuesOf('sgst').toFixed(2));
 
                     }else if(action == 'C'){
 
@@ -974,6 +998,10 @@
                          $('.paybel:eq('+indexNo+')').val(payable_amt.toFixed(2));
 
                          $('.payble_amount').val(sumValuesOf('paybel').toFixed());
+                         $('.gross_amt').val(sumValuesOf('amounts').toFixed(2));
+                         $('.tds_amt').val(sumValuesOf('tds_amount').toFixed(2));
+                         $('.cgst_amt').val(sumValuesOf('cgst').toFixed(2));
+                         $('.sgst_amt').val(sumValuesOf('sgst').toFixed(2));
 
                     }
 
@@ -999,7 +1027,11 @@
             $('.sgst:eq('+indexNo+')').val("");
             $('.claim_amt:eq('+indexNo+')').val("");
             $('.paybel:eq('+indexNo+')').val("");
-            $('.payble_amount').val(sumValuesOf('paybel').toFixed());      
+            $('.payble_amount').val(sumValuesOf('paybel').toFixed());
+            $('.gross_amt').val(sumValuesOf('amounts').toFixed(2));
+            $('.tds_amt').val(sumValuesOf('tds_amount').toFixed(2));
+            $('.cgst_amt').val(sumValuesOf('cgst').toFixed(2));
+            $('.sgst_amt').val(sumValuesOf('sgst').toFixed(2));      
 
             var  val    =  $('.particulars:eq('+indexNo+')').val();
 
@@ -1041,6 +1073,10 @@
 
                         $('.paybel:eq('+indexNo+')').val(payable_amt.toFixed(2));
                         $('.payble_amount').val(sumValuesOf('paybel').toFixed());
+                        $('.gross_amt').val(sumValuesOf('amounts').toFixed(2));
+                        $('.tds_amt').val(sumValuesOf('tds_amount').toFixed(2));
+                        $('.cgst_amt').val(sumValuesOf('cgst').toFixed(2));
+                        $('.sgst_amt').val(sumValuesOf('sgst').toFixed(2));
 
                 });
 
@@ -1220,6 +1256,10 @@
 
             $('.tot_payble').val(sumValuesOf('paybel'));
             $('.payble_amount').val(sumValuesOf('paybel').toFixed());
+            $('.gross_amt').val(sumValuesOf('amounts').toFixed(2));
+            $('.tds_amt').val(sumValuesOf('tds_amount').toFixed(2));
+            $('.cgst_amt').val(sumValuesOf('cgst').toFixed(2));
+            $('.sgst_amt').val(sumValuesOf('sgst').toFixed(2)); 
             $('.less_butta').change();
             
         });

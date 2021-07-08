@@ -686,7 +686,7 @@
                     var tot_amt    = 0.00;
                     var rate   = parseFloat($('#rate_per_quintal').val());
 
-                        var moisture_amt = parseFloat(rate * moisture_extra);
+                        var moisture_amt = parseFloat(rate * quantity * moisture_extra);
                         var tot_amt = parseFloat(rate * quantity);
                         var amt     = parseFloat(tot_amt-moisture_amt);
                              $('.tot_price:eq('+indexNo+')').val(amt.toFixed(2));

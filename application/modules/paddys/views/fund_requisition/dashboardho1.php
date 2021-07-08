@@ -10,7 +10,7 @@
 
         </div>
 
-        <div class="col-lg-12 container contant-wraper">    
+        <div class="col-lg-12 container contant-wraper" style="font-size: 10px;">    
 
            
               <div class="col-sm-12">

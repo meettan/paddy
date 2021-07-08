@@ -423,7 +423,7 @@
                         <th>CGST <br> (Add) <br> @2.5%</th>
                         <th>SGST <br> (Add) <br> @2.5%</th>
                         <th>Claimed Amount(Rs)</th>
-                        <th>Payable Amount(Rs)</th>
+                        <th>Net Amount(Rs)</th>
                     <!--     <th><button type="button" class="btn btn-success addAnotherRow"><i class="fa fa-plus"></i></button></th> -->
 
                     </tr>
@@ -433,10 +433,18 @@
                 <tbody id="intro1" class="tables">
                     
                     
-                    <?php  $sum = 0;
-                        $flag = false;
-                           unset($bill_master[4]);
+                    <?php  
+                            $gross_amt       = 0;
+                            $tds_amt         = 0;
+                            $cgst_amt        = 0;
+                            $sgst_amt        = 0;
+                            $sum             = 0;
+                            $allocate_amount = 0;
+                            $flag            = false;
+
+                           //unset($bill_master[4]);
                         foreach($charges as $c_list){
+
                     ?>
                         <tr>
                             <td><select class="form-control particulars" name="particulars[]" disabled>
@@ -505,19 +513,19 @@
                           </td>
                             <td><input type="text" 
                                        class="form-control amounts required"
-                                       value="<?php echo $c_list->total_amt; ?>"  readonly
+                                       value="<?php echo $c_list->total_amt; $gross_amt +=$c_list->total_amt;?>"  readonly
                                        name="amounts[]"
                                        >
                             </td>
                             <td><input type="text" 
                                        class="form-control tds_amount" 
-                                       value="<?php echo $c_list->tds_amt; ?>" readonly
+                                       value="<?php echo $c_list->tds_amt; $tds_amt +=$c_list->tds_amt; ?>" readonly
                                        name="tds_amount[]"
                                        >
                             </td>
                             <td><input type="text" 
                                        class="form-control cgst"
-                                       value="<?php echo $c_list->cgst_amt; ?>"  readonly
+                                       value="<?php echo $c_list->cgst_amt; $cgst_amt +=$c_list->cgst_amt; ?>"  readonly
                                        name="cgst[]"
                                        >
                                        
@@ -525,7 +533,7 @@
                             <td><input type="text" 
                                        class="form-control sgst" 
                                        name="sgst[]" 
-                                       value="<?php echo $c_list->sgst_amt; ?>" readonly
+                                       value="<?php echo $c_list->sgst_amt; $sgst_amt +=$c_list->sgst_amt; ?>" readonly
                                        >
                             </td>
                             <td><input type="text" 
@@ -565,8 +573,20 @@
                 <tfoot>
                     <tr>
                     
-                        <td colspan="7" style="text-align: right;">Total Amount:</td>
-                        <td colspan="2"><?php echo $sum ?></td>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align: right;"><b><?php echo $gross_amt; ?></b></td>
+                        <td style="text-align: right;"><b><?php echo $tds_amt; ?></b></td>
+                        <td style="text-align: right;"><b><?php echo $cgst_amt; ?></b></td>
+                        <td style="text-align: right;"><b><?php echo $sgst_amt; ?></b></td>
+
+                        <!--<td  colspan="3"  style="text-align: right;color:green"><b>Allocate Amount:</b></td>
+                        <td  style="text-align: right;" ><b id="allocate_amount"><?php echo round($allocate_amount); ?></b></td>-->
+                        <td style="text-align: right;"><b>Net Amount:</b></td>
+                        <td style="text-align: right;"><b><?php echo round($sum); ?></b></td>
+                        <td></td>    
+                    </tr>
 
                     </tr>
 
@@ -586,10 +606,10 @@
 
                     <tr>
                     
-                        <td colspan="7" style="text-align: right;">Payble Amount:</td>
+                        <td colspan="7" style="text-align: right;"><b>Net Payble:</b></td>
                         <td>    <?php $tot = $sum-($bill_dtls->paddy_butta)-($bill_dtls->gunny_cut);?>
  
-                            <input type="text" class="form-control tot"  value="<?php echo round($tot); ?>" readonly >
+                                <b><input type="text" class="form-control tot"  value="<?php echo round($tot); ?>" readonly ></b>
 
                             </td>
 
