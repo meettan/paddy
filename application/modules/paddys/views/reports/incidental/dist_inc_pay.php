@@ -195,7 +195,13 @@ tr:hover {background-color: #f5f5f5;}
 
                                 <th>Usage Charges for Gunny Bags(Rs)</th>
 
-                                <th>Total Incidental(Rs)</th>
+                                <th>Gross Amount(Rs)</th>
+
+                                <th>TDS(Rs)</th>
+
+                                <th>GST(Rs)</th>
+
+                                <th>Net Amount(Rs)</th>
 
                             </tr>
 
@@ -224,7 +230,11 @@ tr:hover {background-color: #f5f5f5;}
                                     $tot_gunny_use       = 0;
 									$tot_sing_row        = 0;
                                     $tot_inc_amt         = 0;
-									
+                                    $tot_tds_amt         = 0;
+                                    $tot_commtds_amt     = 0;
+                                    $tot_gst_amt         = 0;
+                                    $tot_net_amt         = 0;
+                                  
                                      
                                     
                                     
@@ -268,6 +278,7 @@ tr:hover {background-color: #f5f5f5;}
                                                          echo $commDtls->soc_comm;
                                                          $tot_soc_comm += $commDtls->soc_comm;
 														 $tot_sing_row  = $commDtls->soc_comm;
+                                                         $tot_commtds_amt = $commDtls->tds_amt;
                                                     }
                                                 }   
                                          ?> 
@@ -394,6 +405,48 @@ tr:hover {background-color: #f5f5f5;}
                                                 }
                                          ?>
                                     </td>
+
+                                    <td><?php
+                                                foreach($tot as $totDtls){            //Total TDS
+                                                    if($totDtls->branch_id == $proc->branch_id){
+                                                        echo $totDtls->tds_amt+ $tot_commtds_amt;
+                                                             $tot_tds_amt +=$totDtls->tds_amt + $tot_commtds_amt;
+															 // $tot_inc_amt +=$totDtls->tot_amt;
+															 $tot_sing_row = 0;
+                                                             $tot_commtds_amt = 0;
+                                                        
+                                                    }
+                                                }
+                                         ?>
+                                    </td>
+
+                                    <td><?php
+                                                foreach($tot as $totDtls){            //Total TDS
+                                                    if($totDtls->branch_id == $proc->branch_id){
+                                                        echo $totDtls->cgst_amt+ $totDtls->sgst_amt;
+                                                             $tot_gst_amt +=$totDtls->cgst_amt+ $totDtls->sgst_amt;
+															 // $tot_inc_amt +=$totDtls->tot_amt;
+															 $tot_sing_row = 0;
+                                                             $tot_commtds_amt = 0;
+                                                        
+                                                    }
+                                                }
+                                         ?>
+                                    </td>
+
+                                    <td><?php
+                                                foreach($tot as $totDtls){            //Net Amount
+                                                    if($totDtls->branch_id == $proc->branch_id){
+                                                        echo $totDtls->net_amt;
+                                                             $tot_net_amt +=$totDtls->net_amt;
+															 // $tot_inc_amt +=$totDtls->tot_amt;
+															 $tot_sing_row = 0;
+                                                             $tot_commtds_amt = 0;
+                                                        
+                                                    }
+                                                }
+                                         ?>
+                                    </td>
                                 </tr>
                                
  
@@ -417,6 +470,9 @@ tr:hover {background-color: #f5f5f5;}
                                         <td style="text-align:center;font-weight: bold;"><?=$tot_inter_cmr_trans?></td>
                                         <td style="text-align:center;font-weight: bold;"><?=$tot_gunny_use?></td>
                                         <td style="text-align:center;font-weight: bold;"><?=$tot_inc_amt?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_tds_amt?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_gst_amt?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_net_amt?></td>
                                      </tr>
 
                          <?php        }

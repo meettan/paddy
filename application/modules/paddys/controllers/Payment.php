@@ -856,8 +856,10 @@ class Payment extends MX_Controller {
 
         $where = array(
 
-            "req_no"        => $this->input->post("req_no")
-            
+            "req_no"        => $this->input->post("req_no"),
+
+            "account_type != 8" => Null
+
         );
 
         $sancs   =   $this->Paddy->f_get_particulars("td_fund_requisition_dtls",$select,$where,1);
@@ -875,7 +877,8 @@ class Payment extends MX_Controller {
         $where = array(
 
             "req_no"        => $this->input->post("req_no"),
-            "payment_flag"  => '1'
+            "payment_flag"  => '1',
+            "account_type != 8" => Null
             
         );
 

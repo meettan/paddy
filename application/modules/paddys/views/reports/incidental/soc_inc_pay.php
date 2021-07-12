@@ -172,11 +172,11 @@ tr:hover {background-color: #f5f5f5;}
 
                                 <th>Quantity of CMR(Qnt)</th>
 
-                                <th>Commission To Socities(Rs)</th>
+                                <th>Gross Amount(Rs)</th>
 
-                                <!--<th>TDS(Rs)</th>
+                                <th>TDS(Rs)</th>
 
-                                <th>Paid Amount(Rs)</th>-->
+                                <th>Net Amount(Rs)</th>
 
                             </tr>
 
@@ -226,7 +226,7 @@ tr:hover {background-color: #f5f5f5;}
                                          ?> 
                                      </td>
                                      
-                                     <!--<td>
+                                     <td>
                                         <?php
                                                foreach($comm as $commDtls){           //TDS Amount
                                                     if($commDtls->soc_id == $proc->soc_id){
@@ -246,7 +246,7 @@ tr:hover {background-color: #f5f5f5;}
                                                     }
                                                 }   
                                          ?>
-                                     </td>-->
+                                     </td>
                                      
                                 </tr>
                                
@@ -259,8 +259,8 @@ tr:hover {background-color: #f5f5f5;}
                                         <td style="text-align:center;font-weight: bold;"><?=$tot_proc?></td>
                                         <td style="text-align:center;font-weight: bold;"><?=$tot_cmr?></td>
                                         <td style="text-align:center;font-weight: bold;"><?=$tot_soc_comm?></td>
-                                        <!--<td style="text-align:center;font-weight: bold;"><?=$tot_tds_amt?></td>
-                                        <td style="text-align:center;font-weight: bold;"><?=$tot_paid_amt?></td>-->
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_tds_amt?></td>
+                                        <td style="text-align:center;font-weight: bold;"><?=$tot_paid_amt?></td>
                                  
                                      </tr>
 

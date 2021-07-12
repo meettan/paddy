@@ -843,7 +843,8 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
     public function f_get_tot_soc_comm($from_dt,$to_dt){
 
         $proc   =   $this->db->query("SELECT branch_id,
-                                             sum(tot_amt)soc_comm
+                                             sum(tot_amt)soc_comm,
+                                             sum(tds_amt)tds_amt
                                       from  td_society_commision
                                       where trans_dt between '$from_dt' and '$to_dt'
                                       group by branch_id  
@@ -868,7 +869,11 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
     public function f_get_tot_incidental($from_dt,$to_dt){
 
         $proc   =   $this->db->query("SELECT dist branch_id,
-                                             sum(total_amt)tot_amt
+                                             sum(total_amt)tot_amt,
+                                             sum(tds_amt)tds_amt,
+                                             sum(sgst_amt)sgst_amt,
+                                             sum(cgst_amt)cgst_amt,
+                                             sum(payble_amt)net_amt
                                       from  td_payment_bill_dtls
                                       where trans_dt between '$from_dt' and '$to_dt'
                                       group by dist  
@@ -946,7 +951,11 @@ public function f_getamt_reissue_new($brn,$frmdt,$todt,$kms_id){
     public function f_get_tot_incidental_brn($from_dt,$to_dt,$brn_id){
 
         $proc   =   $this->db->query("SELECT a.mill_id,
-                                             sum(b.total_amt)tot_amt
+                                             sum(b.total_amt)tot_amt,
+                                             sum(b.tds_amt)tds_amt,
+                                             sum(b.sgst_amt)sgst_amt,
+                                             sum(b.cgst_amt)cgst_amt,
+                                             sum(b.payble_amt)net_amt
                                       from  td_payment_bill a,td_payment_bill_dtls b
                                       where  a.trans_dt  = b.trans_dt 
                                       and    a.pmt_bill_no = b.pmt_bill_no

@@ -359,7 +359,7 @@
                     </tr>
 
                     <tr>
-                        <td  style="text-align:left;color:green" class="col-sm-3">Allocated Ammount:</td>
+                        <td  style="text-align:left;color:green" class="col-sm-3">Sanctioned Ammount:</td>
                          <td class="col-sm-2" ><b id="allocated_amt"></b></td>
                         <td colspan="5" style="text-align: right;">Less Gunny Cut:</td>
                         <td><input type="text" class="form-control less_gunny" name="gunny_cut" value="0.00"></td>
@@ -587,9 +587,13 @@
             )
             .done(function(data){
 
-                var string = '<table class="table" ><thead><tr><th>Particulars.</th><th>Rate/Qtls Paddy</th><th>Total Amount(Rs)</th><th>TDS Amount (Less)</th><th>Recalculate TDS</th><th>CGST (Add)@2.5%</th><th>SGST(Add)@2.5%</th><th>Claimed Amount(Rs)</th><th>Payable Amount(Rs) </th></tr></thead><tbody id="intro">';
+                var string = '<table class="table" ><thead><tr><th>Particulars.</th><th>Rate/Qtls Paddy</th><th>Total Amount(Rs)</th><th>TDS Amount (Less)</th><th>Recalculate TDS</th><th>CGST (Add)@2.5%</th><th>SGST(Add)@2.5%</th><th>Claimed Amount(Rs)</th><th>Net Amount(Rs) </th></tr></thead><tbody id="intro">';
                     
                 var price_sum       = 0;
+                var gross_amt       = 0;
+                var tds_amt         = 0;
+                var cgst_amt        = 0;
+                var sgst_amt        = 0;
 
                 $.each(JSON.parse(data), function( index, value ) {
 
@@ -606,11 +610,20 @@
 
                     price_sum    += parseFloat(value.payble_amt); 
 
+                    gross_amt    += parseFloat(value.total_amt);
+
+                    tds_amt      += parseFloat(value.tds_amt);
+
+                    cgst_amt     += parseFloat(value.cgst_amt);
+
+                    sgst_amt     += parseFloat(value.sgst_amt);
 
                     }
                      
                 });
-                        string +='<tr><td colspan="7">Payable Amt</td><td> <input type="text" class="form-control" id="tot_rice" value="'+price_sum.toFixed()+'" readonly></td> <td></td></tr></tbody></table>';
+                        /*string +='<tr><td colspan="7">Payable Amt</td><td> <input type="text" class="form-control" id="tot_rice" value="'+price_sum.toFixed()+'" readonly></td> <td></td></tr></tbody></table>';*/
+
+                        string +='<tr><td><b>Total:</b></td><td></td><td id=gross_amt><b>'+gross_amt.toFixed(2)+'</b></td><td id=tds_amt><b>'+tds_amt.toFixed(2)+'</b></td><td></td><td id=cgst_amt><b>'+cgst_amt.toFixed(2)+'</b></td><td id=sgst_amt><b>'+sgst_amt.toFixed(2)+'</b></td><td></td><td id=net_amt><b>'+price_sum.toFixed()+'</b></td></tr></tbody></table>';
 
                     $('#bill_dtls').html(string);
                     $('.payble_amount').val(  (price_sum.toFixed()) );
@@ -1368,7 +1381,8 @@
             var tds     = 0;
             var sum     = 0;
 			var less_tds = 0;
-			
+            var string
+
 			var tot_c_s_gst = parseFloat(cgst) + parseFloat(sgst);
 			
 			var tax_amt  = parseFloat(amt) + parseFloat(tot_c_s_gst);
@@ -1392,11 +1406,11 @@
                     row.find('td:eq(8) .paybel').val((tax_amt - tds_amt).toFixed(2));
                     row.find('td:eq(8) .pay').html((tax_amt - tds_amt).toFixed(2));
 
-                       console.log(tax_amt,tds_amt,cgst,sgst);
+                      // console.log(tax_amt,tds_amt,cgst,sgst);
                     $("input[class *= 'paybel']").each(function(){
             
-                    sum += parseFloat($(this).val());
-                      
+                        sum += parseFloat($(this).val());
+
                     });
 
                     $('#tot_rice').val(Number(sum).toFixed());
