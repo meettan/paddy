@@ -1,0 +1,10 @@
+Sl.No.,Registration No.,Farmer Name,Quantity(In Quintal),Amount,IFS Code,"Beneficiary A/C No.
+(Please put a ' mark before a/c no.)"
+1,192000233220021,Ram,1000,55000,SBI1043,001234567856
+2,192000233220022,Sam,1000,55000,SBI1043,001234567856
+3,192000233220023,Tam,1000,55000,SBI1043,1234567856
+4,192000233220024,Demo,1000,55000,SBI1043,1234567856
+,,,,,,
+,,,,,,
+,,,,,,
+,Please save the file in .csv format and upload,,,,,

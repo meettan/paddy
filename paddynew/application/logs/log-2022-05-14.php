@@ -1,0 +1,31 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2022-05-14 15:36:32 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-05-14 16:09:05 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-05-14 16:11:40 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-05-14 16:22:44 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-05-14 16:23:13 --> Severity: Notice --> Undefined offset: 1 C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\modules\paddys\controllers\Transactions.php 748
+ERROR - 2022-05-14 16:23:13 --> Severity: Notice --> Undefined offset: 2 C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\modules\paddys\controllers\Transactions.php 749
+ERROR - 2022-05-14 16:23:13 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-05-14 16:29:29 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-05-14 16:31:04 --> Severity: Notice --> Undefined offset: 1 C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\modules\paddys\controllers\Transactions.php 748
+ERROR - 2022-05-14 16:31:04 --> Severity: Notice --> Undefined offset: 2 C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\modules\paddys\controllers\Transactions.php 749
+ERROR - 2022-05-14 16:31:04 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-05-14 16:59:48 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-05-14 17:01:05 --> Severity: Notice --> Undefined offset: 1 C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\modules\paddys\controllers\Transactions.php 748
+ERROR - 2022-05-14 17:01:05 --> Severity: Notice --> Undefined offset: 2 C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\modules\paddys\controllers\Transactions.php 749
+ERROR - 2022-05-14 17:01:05 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-05-14 17:06:42 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-05-14 17:07:26 --> Severity: Notice --> Undefined offset: 1 C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\modules\paddys\controllers\Transactions.php 748
+ERROR - 2022-05-14 17:07:26 --> Severity: Notice --> Undefined offset: 2 C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\modules\paddys\controllers\Transactions.php 749
+ERROR - 2022-05-14 17:07:26 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-05-14 17:11:17 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-05-14 17:12:37 --> Severity: Notice --> Undefined offset: 1 C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\modules\paddys\controllers\Transactions.php 748
+ERROR - 2022-05-14 17:12:38 --> Severity: Notice --> Undefined offset: 2 C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\modules\paddys\controllers\Transactions.php 749
+ERROR - 2022-05-14 17:12:38 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-05-14 17:16:21 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-05-14 17:16:47 --> Severity: Notice --> Undefined offset: 1 C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\modules\paddys\controllers\Transactions.php 748
+ERROR - 2022-05-14 17:16:47 --> Severity: Notice --> Undefined offset: 2 C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\modules\paddys\controllers\Transactions.php 749
+ERROR - 2022-05-14 17:16:48 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-05-14 17:21:02 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-05-14 17:21:17 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241

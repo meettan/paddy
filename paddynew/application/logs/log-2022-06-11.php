@@ -1,0 +1,12 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+
+ERROR - 2022-06-11 02:11:47 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-06-11 08:23:25 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-06-11 08:24:06 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-06-11 08:24:09 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-06-11 08:25:29 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-06-11 08:25:44 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-06-11 08:25:47 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-06-11 08:26:03 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-06-11 15:40:57 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
+ERROR - 2022-06-11 15:41:01 --> Severity: Warning --> Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) C:\inetpub\vhosts\benfed.in\httpdocs\paddynew\application\views\post_login\main.php 241
