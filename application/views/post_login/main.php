@@ -166,12 +166,10 @@
                        <!--  <a href="<?php //echo site_url('paddys/transactions/f_neft_reconcil'); ?>">NEFT Reconciliation</a> -->
                       <!--   <a href="<?php //echo site_url('paddys/transactions/f_singlecheque'); ?>">Cheque Detail</a> -->
                            <?php 
-                        
                         if($this->session->userdata['loggedin']['ho_flag'] =="Y"){
-                        if($this->session->userdata['loggedin']['user_id']=="bholanathm" || $this->session->userdata['loggedin']['user_id'] =="barund"){
+                        if($this->session->userdata['loggedin']['user_id']=="bholanathm" || $this->session->userdata['loggedin']['user_id'] =="barund" || $this->session->userdata['loggedin']['user_id'] =="GMB"){
                         ?>
                         <a href="<?php echo site_url('payment/requisitionho'); ?>">Fund Requisition</a>
-
                         <?php } 
                                     }?>
                         <?php if($this->session->userdata['loggedin']['user_id']=="anirbanc" && $this->session->userdata['loggedin']['ho_flag'] =="Y"){ ?>
