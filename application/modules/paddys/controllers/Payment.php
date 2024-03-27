@@ -49,7 +49,7 @@ class Payment extends MX_Controller {
 
     public function f_requisitionho(){
 
-        if($this->session->userdata['loggedin']['user_id']=="bholanathm" || $this->session->userdata['loggedin']['user_id'] =="barund"){
+        if($this->session->userdata['loggedin']['user_id']=="bholanathm" || $this->session->userdata['loggedin']['user_id'] =="barund" || $this->session->userdata['loggedin']['user_id'] =="GMB"){
 
         $select    = array("a.*","b.soc_name","c.mill_name","d.wqsc_no wqsc");
     
