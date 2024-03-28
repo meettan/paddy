@@ -179,7 +179,7 @@
                         <?php if($this->session->userdata['loggedin']['ho_flag'] =="Y"){ ?>
                         <?php if($this->session->userdata['loggedin']['user_id']=="GMB" && $this->session->userdata['loggedin']['ho_flag'] =="Y"){ ?>
                          <?php } ?>
-                        <a href="<?php echo site_url('payment/requisitionho3'); ?>">Fund Requisition</a>
+                        <a href="<?php echo site_url('payment/requisitionho3'); ?>">Fund Requisition GMB</a>
 
                         <?php }?>
                          <?php if($this->session->userdata['loggedin']['user_id']=="anirbanc" && $this->session->userdata['loggedin']['ho_flag'] =="Y"){ ?>
