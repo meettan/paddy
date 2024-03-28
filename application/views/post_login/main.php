@@ -167,7 +167,7 @@
                       <!--   <a href="<?php //echo site_url('paddys/transactions/f_singlecheque'); ?>">Cheque Detail</a> -->
                            <?php 
                         if($this->session->userdata['loggedin']['ho_flag'] =="Y"){
-                        if($this->session->userdata['loggedin']['user_id']=="bholanathm" || $this->session->userdata['loggedin']['user_id'] =="barund" || $this->session->userdata['loggedin']['user_id'] =="GMB"){
+                        if($this->session->userdata['loggedin']['user_id']=="bholanathm" || $this->session->userdata['loggedin']['user_id'] =="barund" ){
                         ?>
                         <a href="<?php echo site_url('payment/requisitionho'); ?>">Fund Requisition</a>
                         <?php } 
@@ -176,9 +176,9 @@
                         <a href="<?php echo site_url('payment/requisitionho2'); ?>">Fund Requisition</a>
 
                         <?php }?>
-
-                        <?php if($this->session->userdata['loggedin']['user_id']=="anupamm" && $this->session->userdata['loggedin']['ho_flag'] =="Y"){ ?>
-
+                        <?php if($this->session->userdata['loggedin']['ho_flag'] =="Y"){ ?>
+                        <?php if($this->session->userdata['loggedin']['user_id']=="GMB" && $this->session->userdata['loggedin']['ho_flag'] =="Y"){ ?>
+                         <?php } ?>
                         <a href="<?php echo site_url('payment/requisitionho3'); ?>">Fund Requisition</a>
 
                         <?php }?>

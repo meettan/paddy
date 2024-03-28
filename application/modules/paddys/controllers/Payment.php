@@ -49,7 +49,7 @@ class Payment extends MX_Controller {
 
     public function f_requisitionho(){
 
-        if($this->session->userdata['loggedin']['user_id']=="bholanathm" || $this->session->userdata['loggedin']['user_id'] =="barund" || $this->session->userdata['loggedin']['user_id'] =="GMB"){
+        if($this->session->userdata['loggedin']['user_id']=="bholanathm" || $this->session->userdata['loggedin']['user_id'] =="barund" ){
 
         $select    = array("a.*","b.soc_name","c.mill_name","d.wqsc_no wqsc");
     
@@ -112,8 +112,9 @@ class Payment extends MX_Controller {
         
     }
     public function f_requisitionho3(){
+        if($this->session->userdata['loggedin']['ho_flag'] =="Y"){
 
-        if($this->session->userdata['loggedin']['user_id']=="anupamm" && $this->session->userdata['loggedin']['ho_flag'] =="Y"){
+        if($this->session->userdata['loggedin']['user_id']=="anupamm" || $this->session->userdata['loggedin']['user_id']=="GMB"){
 
         $select    = array("a.*","b.soc_name","c.mill_name","d.wqsc_no wqsc");
     
@@ -144,7 +145,7 @@ class Payment extends MX_Controller {
 
             redirect('User_Login/login');
         }  
-        
+      }
     }
     public function f_fundallocation(){
 
